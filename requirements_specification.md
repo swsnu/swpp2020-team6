@@ -2,7 +2,7 @@
 
 - 2020/10/17, ver 1.0
 
-![image-20201017112613558](/Users/hailey/1_swpp/0_Rotus/Sprint1/image-20201017112613558.png)
+<img width="162" alt="image-20201017112613558" src="https://user-images.githubusercontent.com/35529999/96331725-9c67fa00-109a-11eb-8449-833b23963313.png">
 
 ##### Document Revision History
 
@@ -34,7 +34,7 @@ Specifically, Rotus works best for those
 
 ## Competitive Landscape
 
-![competitive landscape](/Users/hailey/1_swpp/0_Rotus/Sprint1/competitive landscape.JPG)
+![competitive landscape](https://user-images.githubusercontent.com/35529999/96331726-a38f0800-109a-11eb-8444-22ace93aac0e.JPG)
 
 
 
@@ -530,7 +530,7 @@ Exceptions
 
 ### Overall UI
 
-![그림1](/Users/hailey/1_swpp/0_Rotus/Sprint1/그림1.png)
+<img width="938" alt="그림1" src="https://user-images.githubusercontent.com/35529999/96331731-ae499d00-109a-11eb-85cf-e09721f54eec.png">
 
 
 
@@ -538,23 +538,25 @@ Exceptions
 
 #### 1. Create Roadmap
 
-![[major view] create](/Users/hailey/1_swpp/0_Rotus/Sprint1/[major view] create.png)
+![major flow  create](https://user-images.githubusercontent.com/35529999/96331736-b86b9b80-109a-11eb-90aa-94adc167c6bf.png)
 
-![[major flow] create](/Users/hailey/1_swpp/0_Rotus/Sprint1/[major flow] create-2917175.png)
+![major flow  create-2917175](https://user-images.githubusercontent.com/35529999/96331739-bbff2280-109a-11eb-86d5-f5ffde37839b.png)
+
 
 
 
 #### 2. Roadmap Detail
 
-![[major view] detail](/Users/hailey/1_swpp/0_Rotus/Sprint1/[major view] detail.png)
+![major view  detail](https://user-images.githubusercontent.com/35529999/96331752-dc2ee180-109a-11eb-9649-64a6b8856089.png)
 
-![[major flow] detail](/Users/hailey/1_swpp/0_Rotus/Sprint1/[major flow] detail.png)
+![major flow  detail](https://user-images.githubusercontent.com/35529999/96331754-df29d200-109a-11eb-8300-1aee3a315073.png)
 
 
 
 #### 3. Edit Roadmap
 
-![[major flow] edit](/Users/hailey/1_swpp/0_Rotus/Sprint1/[major flow] edit.png)
+![major flow  edit](https://user-images.githubusercontent.com/35529999/96331756-e5b84980-109a-11eb-96fe-4accc4a8972b.png)
+
 
 
 
