@@ -2,7 +2,7 @@
 
 - 2020/10/17, ver 1.0
 
-<img width="162" alt="image-20201017112613558" src="https://user-images.githubusercontent.com/35529999/96331725-9c67fa00-109a-11eb-8449-833b23963313.png">
+<img width="400" alt="image-20201017112613558" src="https://user-images.githubusercontent.com/35529999/96331725-9c67fa00-109a-11eb-8449-833b23963313.png">
 
 ##### Document Revision History
 
@@ -55,17 +55,17 @@ Specifically, Rotus works best for those
   4. The user clicks the “OK” button on the alert.
      - The user is redirected to the *Home* page, signed in as their new account.
 
-```python
+```
 Acceptance Test
-		GIVEN the user filled up all the required fields (Email: ‘swpp@snu.ac.kr’, Username: ‘swpp’, Password: ‘iluvswpp’, Password confirm: ‘iluvswpp’)
+    GIVEN the user filled up all the required fields (Email: ‘swpp@snu.ac.kr’, Username: ‘swpp’, Password: ‘iluvswpp’, Password confirm: ‘iluvswpp’)
 confirm)
     WHEN the user clicks the “Sign Up” button
-		THEN the alert “Your account is successfully created!” is shown
+    THEN the alert “Your account is successfully created!” is shown
 
 Exceptions
     The user does not fill out all required fields to sign up.
-		The user types the input in the wrong format.
-		The user types Email or Username that already exists.
+    The user types the input in the wrong format.
+    The user types Email or Username that already exists.
 ```
 
 
@@ -86,11 +86,11 @@ Exceptions
   4. The user clicks the “OK” button on the alert.
      - The user is redirected to the *Home* page, signed in as their new account.
 
-```python
+```
 Acceptance Test
     GIVEN the user filled up the Email ‘swpp@snu.ac.kr’ and password ‘iluvswpp’
-		WHEN the user clicks the “Sign In” button
-		THEN the user is signed in and redirected to the Home page.
+    WHEN the user clicks the “Sign In” button
+    THEN the user is signed in and redirected to the Home page.
 
 Exceptions
     The user does not fill out all required fields to sign in.
@@ -112,14 +112,14 @@ Exceptions
      - The user profile is updated.
      - The user is redirected to *MyPage* page.
 
-```python
+```
 Acceptance Test
     GIVEN the user edited profile image to ‘default_image1.png’ and password to ‘ihatebugs’
     WHEN the user clicks the “Confirm” button
     THEN the profile is updated and the user is redirected to MyPage page.
 
 Exceptions
-		The Image file is in the wrong format.
+    The Image file is in the wrong format.
 ```
 
 
@@ -144,7 +144,7 @@ Exceptions
      - A new Roadmap is created.
      - The user is redirected to the *RoadmapDetail* page of the new Roadmap.
 
-```python
+```
 Acceptance Test
     WHEN the user clicks the “New Section” button
     THEN the user can create a separate section for the Roadmap
@@ -184,7 +184,7 @@ Exceptions
      - The Roadmap is deleted from the Roadmap List in the *MyPage* page and the database.
      - The user is redirected to the *MyPage* page.
 
-```python
+```
 Acceptance Test
     GIVEN the user is the author of the Roadmap
     WHEN the user clicks the “Delete Roadmap” button
@@ -213,7 +213,7 @@ Exceptions
      - The Roadmap is updated to the edited version.
      - The user is redirected to the *RoadmapDetail* page of the edited Roadmap.
 
-```python
+```
 Acceptance Test
     GIVEN the user has edited the Roadmap without any empty contents or input fields
     WHEN the user clicks “Confirm Edit” button
@@ -245,7 +245,7 @@ Exceptions
      - The user sees an alert “Duplicated Successfully!”.
   5. The user can see the duplicated Roadmap in the MyRoadmap tab in the *MyPage* page.
 
-```python
+```
 Acceptance Test
     WHEN the user clicks the “Duplicate” button
     THEN the user sees an alert “Do you want to duplicate this Roadmap to My Roadmap?”.
@@ -277,15 +277,15 @@ Exceptions
   5. The user clicks the “Search” button.
      - The user is redirected to the *SearchResult* page, and it displays the matching Roadmap list and the “Advanced Search Option” box on the left side.
 
-```python
+```
 Acceptance Test
     GIVEN the user is on the Home page,
     WHEN the user clicks the “Advanced Search” button in the “Search” bar,
     THEN it displays the “Advanced Search Option” box under the “Search” bar.
 
-		GIVEN the user has selected the “Title” checkbox in the “Keyword Matching” option, the “Beginner” checkbox in the “Filtering” option, and “New” checkbox in “Sorting” option, and filled out the input field of “Search” bar with ‘Python’,
-		WHEN the user clicks “Search” button,
-		THEN the user is redirected to the SearchResult page, and it displays the matching Roadmap list in the middle and “Advanced Search Option” box on the left side.    
+    GIVEN the user has selected the “Title” checkbox in the “Keyword Matching” option, the “Beginner” checkbox in the “Filtering” option, and “New” checkbox in “Sorting” option, and filled out the input field of “Search” bar with ‘Python’,
+    WHEN the user clicks “Search” button,
+    THEN the user is redirected to the SearchResult page, and it displays the matching Roadmap list in the middle and “Advanced Search Option” box on the left side.    
 
 Exceptions
     The user leaves the input field of “Search” bar empty
@@ -307,7 +307,7 @@ Exceptions
   5. The user clicks the “Search” button.
      - The advanced search on the former input keywords is done according to the changed options.
 
-```python
+```
 Acceptance Test
     GIVEN the user on any page except Sign Up or Sign In page has put ‘JavaScript’ in the input field of the “Search” bar in the top bar of the page,
     WHEN the user clicks the “Search” button,
@@ -334,7 +334,7 @@ Exceptions
      - The user clicks the thumbnail image of a Roadmap.
        - The user is redirected to the *RoadmapDetail* page of the selected Roadmap.
 
-```python
+```
 Acceptance Test
     GIVEN the user is signed in,
     WHEN the user clicks “Rotus” image in the top bar, 
@@ -345,7 +345,7 @@ Acceptance Test
     THEN the user is redirected to the Home page and it displays Best and New Roadmaps.
     
 Exceptions
-		No Roadmap data in database.
+    No Roadmap data in database.
 ```
 
 
@@ -369,7 +369,7 @@ Exceptions
   6. The user clicks the *MyPage* button on the top bar.
      - The user is redirected to the *MyPage* page and the unpinned Roadmap is removed from the “Pinned Roadmaps” tab.
 
-```python
+```
 Acceptance Test
     GIVEN the user has signed in and on the RoadmapDetail page of an unpinned Roadmap,
     WHEN the user clicks the “Pin” button,
@@ -380,7 +380,7 @@ Acceptance Test
     THEN the color of the “Pin” button returns, the number on the button decreases by 1, and the Roadmap is removed from the “Pinned Roadmaps” tab on the MyPage page.
     
 Exceptions
-		The user has not signed in.
+    The user has not signed in.
 ```
 
 
@@ -396,7 +396,7 @@ Exceptions
   3. The user clicks the “Like” button.
      - The color of the “Like” button returns and the number on the button decreases by 1.
 
-```python
+```
 Acceptance Test
     GIVEN the user has signed in and is on the RoadmapDetail page of an unliked Roadmap,
     WHEN the user clicks the “Like” button,
@@ -406,7 +406,7 @@ Acceptance Test
     THEN the color of the “Like” button returns, and the number on the button decreases by 1.
     
 Exceptions
-		The user has not signed in.
+    The user has not signed in.
 ```
 
 
@@ -424,7 +424,7 @@ Exceptions
   3. The user clicks the “Quit” button.
   4. The “Progress Status” bar and the “Finished” checkboxes are removed, and the “Quit” button returns to the “Start” button.
 
-```python
+```
 Acceptance Test
     GIVEN the user has signed in and is on the RoadmapDetail page of one of “My Roadmaps” that has not been started,
     WHEN the user clicks the “Start” button,
@@ -435,7 +435,7 @@ Acceptance Test
     THEN the “Progress Status” bar and “Finished” checkboxes are removed, and the “Quit” button changes to the “Start” button.
     
 Exceptions
-		The user has not signed in.
+    The user has not signed in.
 ```
 
 
@@ -455,7 +455,7 @@ Exceptions
      - The “Progress Status” bar and the “Finished” checkboxes are removed.
      - The “Clear” button changes to the “Start” button.
 
-```python
+```
 Acceptance Test
     GIVEN the user has signed in and on RoadmapDetail page of one of “My Roadmaps” that has been started,
     WHEN the user clicks the “Finished” checkbox of the first Node,
@@ -482,7 +482,7 @@ Exceptions
   2. The user fills out the input field of the “New Comment” box and clicks the “Confirm” button
      - The new comment is added at the bottom of the comment list.
 
-```python
+```
 Acceptance Test
     GIVEN the user has signed in and is on the RoadmapDetail page,
     WHEN the user fills out the input field of the “New Comment” box with ‘I like your Roadmap!’ and clicks the “Confirm” button,
@@ -506,7 +506,7 @@ Exceptions
   3. The user fills out the input field and clicks the “Confirm” button.
      - The comment is updated.
 
-```python
+```
 Acceptance Test
     GIVEN the user has signed in and is on the RoadmapDetail page,
     WHEN the user clicks the “Edit” button next to the comment that the user wrote,
