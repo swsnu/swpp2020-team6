@@ -39,11 +39,11 @@ def user(request):
     elif request.method == 'GET':
         if request.user.is_authenticated:
             response_user = {
-                "isLoggedIn": True
+                "is_signed_in": True
             }
         else:
             response_user = {
-                "isLoggedIn": False
+                "is_signed_in": False
             }
         return JsonResponse(response_user, status=200)
     else:
