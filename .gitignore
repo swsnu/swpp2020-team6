@@ -95,3 +95,6 @@ local_settings.py
 *.sqlite3
 .coverage
 .coverage.*
+
+backend/.python-version
+backend/htmlcov

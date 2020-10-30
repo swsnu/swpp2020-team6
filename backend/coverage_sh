@@ -1,0 +1,3 @@
+coverage run --source='./user' manage.py test
+coverage run --branch --source='./user' manage.py test
+coverage html
