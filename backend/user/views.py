@@ -15,8 +15,8 @@ import json
 def token(request):
     if request.method == 'GET':
         return HttpResponse(status=204)
-    else:
-        return HttpResponseNotAllowed(['GET'])
+
+    return HttpResponseNotAllowed(['GET'])
 
 
 def user(request):
@@ -56,14 +56,14 @@ def signin(request):
             password = req_data['password']
         except (KeyError, JSONDecodeError):
             return HttpResponseBadRequest()
-        user = authenticate(request, username=username, password=password)
+        signin_user = authenticate(request, username=username, password=password)
         if user is not None:
-            login(request, user)
+            login(request, signin_user)
             return HttpResponse(status=204)
-        else:
-            return HttpResponse(status=401)
-    else:
-        return HttpResponseNotAllowed(['POST'])
+
+        return HttpResponse(status=401)
+
+    return HttpResponseNotAllowed(['POST'])
 
 
 def signout(request):
@@ -71,15 +71,14 @@ def signout(request):
         if request.user.is_authenticated:
             logout(request)
             return HttpResponse(status=204)
-        else:
-            return HttpResponse(status=401)
-    else:
-        return HttpResponseNotAllowed(['GET'])
+        return HttpResponse(status=401)
+
+    return HttpResponseNotAllowed(['GET'])
 
 
 def users(request):
     if request.method == 'GET':
         user_list = [user for user in User.objects.all().values('id', 'username', 'email')]
         return JsonResponse(user_list, safe=False)
-    else:
-        return HttpResponseNotAllowed(['GET'])
+
+    return HttpResponseNotAllowed(['GET'])

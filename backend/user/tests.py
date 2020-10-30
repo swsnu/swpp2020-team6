@@ -1,5 +1,5 @@
-from django.test import TestCase, Client
 import json
+from django.test import TestCase, Client
 from .models import User
 
 
