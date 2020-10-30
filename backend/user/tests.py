@@ -21,8 +21,9 @@ class UserTestCase(TestCase):
         self.assertEqual(user.__str__(), self.dump_user["username"])
 
     def signin(self, client):
+        csrftoken = self.get_csrf(client)
         path = self.user_path + 'signin/'
-        response = client.post(path, self.dump_user_json, content_type=self.json_type)
+        response = client.post(path, self.dump_user_json, content_type=self.json_type, HTTP_X_CSRFTOKEN=csrftoken)
         self.assertEqual(response.status_code, 204)
 
     def test_csrf(self):
@@ -40,60 +41,63 @@ class UserTestCase(TestCase):
         self.assertEqual(response.status_code, 405)
 
     def test_signup(self):
-        client = Client()
+        client = Client(enforce_csrf_checks=True)
+        csrftoken = self.get_csrf(client)
         path = self.user_path
 
         # 405 test (PUT, DELETE)
-        response = client.delete(path)
+        response = client.delete(path, HTTP_X_CSRFTOKEN=csrftoken)
         self.assertEqual(response.status_code, 405)
 
         # 400 test
-        response = client.post(path, json.dumps({}), content_type=self.json_type)
+        response = client.post(path, json.dumps({}), content_type=self.json_type, HTTP_X_CSRFTOKEN=csrftoken)
         self.assertEqual(response.status_code, 400)
 
         # 201 test (request successfully)
-        response = client.post(path, self.dump_user_json, content_type=self.json_type)
+        response = client.post(path, self.dump_user_json, content_type=self.json_type, HTTP_X_CSRFTOKEN=csrftoken)
         self.assertEqual(response.status_code, 201)
 
         # 400 test (duplicated username)
-        response = client.post(path, self.dump_user_json, content_type=self.json_type)
+        response = client.post(path, self.dump_user_json, content_type=self.json_type, HTTP_X_CSRFTOKEN=csrftoken)
         self.assertEqual(response.status_code, 400)
 
     def test_get_authentication(self):
-        client = Client()
+        client = Client(enforce_csrf_checks=True)
+        csrftoken = self.get_csrf(client)
         path = self.user_path
 
         # 201 test (get authentication before login)
-        response = client.get(path)
+        response = client.get(path, HTTP_X_CSRFTOKEN=csrftoken)
         self.assertEqual(response.status_code, 200)
         self.assertTrue("false" in response.content.decode())
 
         self.signup()
         self.signin(client)
         # 201 test (get authentication before login)
-        response = client.get(path)
+        response = client.get(path, HTTP_X_CSRFTOKEN=csrftoken)
         self.assertEqual(response.status_code, 200)
         self.assertTrue("true" in response.content.decode())
 
     def test_signin(self):
-        client = Client()
+        client = Client(enforce_csrf_checks=True)
+        csrftoken = self.get_csrf(client)
         path = self.user_path + 'signin/'
 
         # 405 test
-        response = client.get(path)
+        response = client.get(path, HTTP_X_CSRFTOKEN=csrftoken)
         self.assertEqual(response.status_code, 405)
 
         # 400 test
-        response = client.post(path, json.dumps({}), content_type=self.json_type)
+        response = client.post(path, json.dumps({}), content_type=self.json_type, HTTP_X_CSRFTOKEN=csrftoken)
         self.assertEqual(response.status_code, 400)
 
         # 401 test (before sign up)
-        response = client.post(path, self.dump_user_json, content_type=self.json_type)
+        response = client.post(path, self.dump_user_json, content_type=self.json_type, HTTP_X_CSRFTOKEN=csrftoken)
         self.assertEqual(response.status_code, 401)
 
         # 204 test (request successfully)
         self.signup()
-        response = client.post(path, self.dump_user_json, content_type=self.json_type)
+        response = client.post(path, self.dump_user_json, content_type=self.json_type, HTTP_X_CSRFTOKEN=csrftoken)
         self.assertEqual(response.status_code, 204)
 
     def test_signout(self):
