@@ -1,11 +1,9 @@
 import json
-from django.shortcuts import render
+from json import JSONDecodeError
 from django.http import HttpResponse, HttpResponseNotAllowed, JsonResponse, HttpResponseBadRequest
-from django.views.decorators.csrf import ensure_csrf_cookie, csrf_exempt
+from django.views.decorators.csrf import ensure_csrf_cookie
 from django.contrib.auth import authenticate, login, logout
 from django.db.utils import IntegrityError
-
-from json import JSONDecodeError
 from .models import User
 
 
@@ -57,7 +55,7 @@ def signin(request):
         except (KeyError, JSONDecodeError):
             return HttpResponseBadRequest()
         signin_user = authenticate(request, username=username, password=password)
-        if user is not None:
+        if signin_user is not None:
             login(request, signin_user)
             return HttpResponse(status=204)
 
