@@ -24,7 +24,6 @@ matrix:
       install:
         - pip install -r requirements.txt
       script:              
-        - pylint **/*.py --load-plugins pylint_django
         - coverage run --source='.' manage.py test
         - coverage xml
 
