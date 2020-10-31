@@ -11,7 +11,7 @@ cd ./frontend
 yarn install & yarn start
 ```
 
-##### Testing
+##### Testing (Not yet)
 
 ```shell
 yarn test --coverage --watchAll=False
@@ -37,7 +37,7 @@ coverage run --source='.' manage.py test
 
 
 
-### [개발 전 필수] git commit message template 설정ㄴ
+### [개발 전 필수] git commit message template 설정
 
 ```shell
 # 템플릿 설정
