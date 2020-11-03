@@ -4,28 +4,34 @@ from .models import User
 
 
 class UserTestCase(TestCase):
-    dump_user = {'username': 'chris', 'email': 'chris@gmail.com', 'password': 'chris'}
+    dump_user = {"username": "chris", "email": "chris@gmail.com", "password": "chris"}
     dump_user_json = json.dumps(dump_user)
-    json_type = 'application/json'
-    user_path = '/api/user/'
-    csrf_token_path = user_path + 'token/'
+    json_type = "application/json"
+    user_path = "/api/user/"
+    csrf_token_path = user_path + "token/"
 
     def get_csrf(self, client):
         path = self.csrf_token_path
         response = client.get(path)
-        return response.cookies['csrftoken'].value
+        return response.cookies["csrftoken"].value
 
     def signup(self):
-        user = User.objects.create_user(username=self.dump_user["username"],
-                                        email=self.dump_user["email"],
-                                        password=self.dump_user["password"])
+        user = User.objects.create_user(
+            username=self.dump_user["username"],
+            email=self.dump_user["email"],
+            password=self.dump_user["password"],
+        )
         self.assertEqual(user.__str__(), self.dump_user["username"])
 
     def signin(self, client):
         csrftoken = self.get_csrf(client)
-        path = self.user_path + 'signin/'
-        response = client.post(path, self.dump_user_json, content_type=self.json_type,
-                               HTTP_X_CSRFTOKEN=csrftoken)
+        path = self.user_path + "signin/"
+        response = client.post(
+            path,
+            self.dump_user_json,
+            content_type=self.json_type,
+            HTTP_X_CSRFTOKEN=csrftoken,
+        )
         self.assertEqual(response.status_code, 204)
 
     def test_csrf(self):
@@ -35,8 +41,12 @@ class UserTestCase(TestCase):
         path = self.csrf_token_path
         csrftoken = self.get_csrf(client)
 
-        response = client.post(self.user_path, self.dump_user_json,
-                               content_type=self.json_type, HTTP_X_CSRFTOKEN=csrftoken)
+        response = client.post(
+            self.user_path,
+            self.dump_user_json,
+            content_type=self.json_type,
+            HTTP_X_CSRFTOKEN=csrftoken,
+        )
         self.assertEqual(response.status_code, 201)  # Pass csrf protection
 
         response = client.delete(path, HTTP_X_CSRFTOKEN=csrftoken)
@@ -52,18 +62,30 @@ class UserTestCase(TestCase):
         self.assertEqual(response.status_code, 405)
 
         # 400 test
-        response = client.post(path, json.dumps({}), content_type=self.json_type,
-                               HTTP_X_CSRFTOKEN=csrftoken)
+        response = client.post(
+            path,
+            json.dumps({}),
+            content_type=self.json_type,
+            HTTP_X_CSRFTOKEN=csrftoken,
+        )
         self.assertEqual(response.status_code, 400)
 
         # 201 test (request successfully)
-        response = client.post(path, self.dump_user_json, content_type=self.json_type,
-                               HTTP_X_CSRFTOKEN=csrftoken)
+        response = client.post(
+            path,
+            self.dump_user_json,
+            content_type=self.json_type,
+            HTTP_X_CSRFTOKEN=csrftoken,
+        )
         self.assertEqual(response.status_code, 201)
 
         # 400 test (duplicated username)
-        response = client.post(path, self.dump_user_json, content_type=self.json_type,
-                               HTTP_X_CSRFTOKEN=csrftoken)
+        response = client.post(
+            path,
+            self.dump_user_json,
+            content_type=self.json_type,
+            HTTP_X_CSRFTOKEN=csrftoken,
+        )
         self.assertEqual(response.status_code, 400)
 
     def test_get_authentication(self):
@@ -86,32 +108,44 @@ class UserTestCase(TestCase):
     def test_signin(self):
         client = Client(enforce_csrf_checks=True)
         csrftoken = self.get_csrf(client)
-        path = self.user_path + 'signin/'
+        path = self.user_path + "signin/"
 
         # 405 test
         response = client.get(path, HTTP_X_CSRFTOKEN=csrftoken)
         self.assertEqual(response.status_code, 405)
 
         # 400 test
-        response = client.post(path, json.dumps({}), content_type=self.json_type,
-                               HTTP_X_CSRFTOKEN=csrftoken)
+        response = client.post(
+            path,
+            json.dumps({}),
+            content_type=self.json_type,
+            HTTP_X_CSRFTOKEN=csrftoken,
+        )
         self.assertEqual(response.status_code, 400)
 
         # 401 test (before sign up)
-        response = client.post(path, self.dump_user_json, content_type=self.json_type,
-                               HTTP_X_CSRFTOKEN=csrftoken)
+        response = client.post(
+            path,
+            self.dump_user_json,
+            content_type=self.json_type,
+            HTTP_X_CSRFTOKEN=csrftoken,
+        )
         self.assertEqual(response.status_code, 401)
 
         # 204 test (request successfully)
         self.signup()
-        response = client.post(path, self.dump_user_json, content_type=self.json_type,
-                               HTTP_X_CSRFTOKEN=csrftoken)
+        response = client.post(
+            path,
+            self.dump_user_json,
+            content_type=self.json_type,
+            HTTP_X_CSRFTOKEN=csrftoken,
+        )
         self.assertEqual(response.status_code, 204)
 
     def test_signout(self):
         client = Client(enforce_csrf_checks=True)
         csrftoken = self.get_csrf(client)
-        path = self.user_path + 'signout/'
+        path = self.user_path + "signout/"
 
         # 405 test
         response = client.post(path, data=None, HTTP_X_CSRFTOKEN=csrftoken)
@@ -134,7 +168,7 @@ class UserTestCase(TestCase):
     def test_get_user_list(self):
         client = Client(enforce_csrf_checks=True)
         csrftoken = self.get_csrf(client)
-        path = self.user_path + 'users/'
+        path = self.user_path + "users/"
 
         # 405 test (PUT, DELETE, POST)
         response = client.post(path, data=None, HTTP_X_CSRFTOKEN=csrftoken)
