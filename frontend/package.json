@@ -8,6 +8,7 @@
     "@testing-library/react": "^11.1.1",
     "@testing-library/user-event": "^12.2.0",
     "axios": "^0.19.0",
+    "babel-eslint": "^10.1.0",
     "connected-react-router": "^6.5.2",
     "enzyme": "^3.11.0",
     "enzyme-adapter-react-16": "^1.15.5",

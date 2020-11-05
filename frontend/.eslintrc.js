@@ -6,6 +6,7 @@ module.exports = {
     jest: true,
   },
   extends: ["plugin:react/recommended", "airbnb", "prettier"],
+  parser: "babel-eslint",
   parserOptions: {
     ecmaFeatures: {
       jsx: true,
@@ -15,6 +16,10 @@ module.exports = {
   },
   plugins: ["react"],
   rules: {
+    "no-underscore-dangle": 0,
     "react/jsx-filename-extension": [1, { extensions: [".js"] }],
+    "no-param-reassign": 0,
+    "no-use-before-define": [2, { functions: false }],
+    "react/state-in-constructor": 0,
   },
 };

@@ -11,8 +11,8 @@ class CreateRoadmap extends Component {
     authorname: this.props.selectedUser.username,
   };
 
-  onClickLevel = (level) => {
-    this.setState({ level: level });
+  onClickLevel = (num) => {
+    this.setState({ level: num });
   };
 
   onClickCreateSection = () => {};
@@ -30,6 +30,8 @@ class CreateRoadmap extends Component {
   };
 
   render() {
+    const State = this.state;
+
     return (
       <div className="CreateRoadmap">
         <h1>Create Roadmap</h1>
@@ -37,7 +39,7 @@ class CreateRoadmap extends Component {
           <input
             id="roadmap-title"
             type="text"
-            value={this.state.title}
+            value={State.title}
             onChange={(event) => this.setState({ title: event.target.value })}
           />
           <input
