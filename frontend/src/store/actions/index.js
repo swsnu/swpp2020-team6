@@ -1,4 +1,1 @@
-export {
-    getUserAuth,
-    signIn
-} from './user';
+export { getUserAuth, signIn } from "./user";

@@ -1,4 +1,4 @@
-import * as actionTypes from '../actions/actionTypes';
+import * as actionTypes from "../actions/actionTypes";
 
 const initialState = {
   is_signed_in: false,
