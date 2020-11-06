@@ -1,7 +1,7 @@
 from django.db.models.fields.related import ManyToManyField
 
 
-def model_to_dict(instance):
+def to_dict(instance):
     """
     :param instance: django model
     :return: dictionary type
