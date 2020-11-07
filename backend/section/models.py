@@ -4,4 +4,4 @@ from task.models import Task
 
 class Section(models.Model):
     title = models.CharField(max_length=64, default="")
-    tasks = models.ManyToManyField(Task, related_name="section")
+    tasks = models.ManyToManyField(Task, related_name="section", blank=True)
