@@ -1,15 +1,15 @@
 import * as actionTypes from "../actions/actionTypes";
 
 const initialState = {
-  is_signed_in: false,
+  selectedUser: undefined,
 };
 
 const reducer = (state = initialState, action) => {
   switch (action.type) {
     case actionTypes.GET_USER_AUTH:
-      return { ...state, is_signed_in: action.is_signed_in };
+      return { ...state, selectedUser: action.userData };
     case actionTypes.SIGN_IN:
-      return { ...state, is_signed_in: action.is_signed_in };
+      return { ...state, selectedUser: action.userData };
     default:
       break;
   }

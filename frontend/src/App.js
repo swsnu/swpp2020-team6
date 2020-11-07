@@ -4,25 +4,50 @@ import { ConnectedRouter } from "connected-react-router";
 import { connect } from "react-redux";
 import PropTypes from "prop-types";
 
+import CreateRoadmap from "./containers/CreateRoadmap/CreateRoadmap";
+import EditRoadmap from "./containers/EditRoadmap/EditRoadmap";
 import * as actionCreators from "./store/actions/index";
 
 import "./App.css";
 
 class App extends React.Component {
   componentDidMount() {
-    const Props = this.props;
-    if (!Props.sign_in_status) {
-      Props.getUserAuth();
-    }
+    const { onGetUserAuth } = this.props;
+    onGetUserAuth();
   }
 
   render() {
-    const Props = this.props;
+    const { selectedUser, history } = this.props;
+
+    if (selectedUser === undefined) return <div />;
     return (
-      <ConnectedRouter history={Props.history}>
+      <ConnectedRouter history={history}>
         <div className="App">
           <Switch>
             <Route path="/home" exact render={() => <h1>Home</h1>} />
+            <Route path="/signin" exact render={() => <h1>Sign In</h1>} />
+            <Route
+              path="/roadmap/create"
+              exact
+              render={() => {
+                return (
+                  <div>
+                    <CreateRoadmap selectedUser={selectedUser} />
+                  </div>
+                );
+              }}
+            />
+            <Route
+              path="/roadmap/edit"
+              exact
+              render={() => {
+                return (
+                  <div>
+                    <EditRoadmap selectedUser={selectedUser} />
+                  </div>
+                );
+              }}
+            />
             <Redirect exact from="/" to="/home" />
             <Route render={() => <h1>Not Found</h1>} />
           </Switch>
@@ -33,20 +58,20 @@ class App extends React.Component {
 }
 
 App.propTypes = {
-  sign_in_status: PropTypes.bool.isRequired,
-  getUserAuth: PropTypes.func.isRequired,
+  selectedUser: PropTypes.objectOf(PropTypes.any).isRequired,
+  onGetUserAuth: PropTypes.func.isRequired,
   history: PropTypes.objectOf(PropTypes.any).isRequired,
 };
 
 const mapStateToProps = (state) => {
   return {
-    sign_in_status: state.user.is_signed_in,
+    selectedUser: state.user.selectedUser,
   };
 };
 
 const mapDispatchToProps = (dispatch) => {
   return {
-    getUserAuth: () => dispatch(actionCreators.getUserAuth()),
+    onGetUserAuth: () => dispatch(actionCreators.getUserAuthKHK()),
   };
 };
 
