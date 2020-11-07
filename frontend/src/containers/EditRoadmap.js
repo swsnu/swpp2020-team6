@@ -4,28 +4,36 @@ import { withRouter } from "react-router";
 import PropTypes from "prop-types";
 import * as actionCreators from "../store/actions/index";
 
-import CreateSection from "../components/CreateSection";
+import EditSection from "../components/CreateSection";
 import { levelType } from "../constants";
 
-class CreateRoadmap extends Component {
+class EditRoadmap extends Component {
   state = {
     title: "",
-    level: levelType.BASIC,
+    level: 0,
     sections: [],
   };
 
   componentDidMount() {
-    const { selectedUser, history } = this.props;
+    const { selectedUser, selectedRoadmap, getRoadmap, history } = this.props;
     if (selectedUser === null) {
+      alert("Please sign in!");
       history.push("/signin");
-    }
+    } else if (selectedRoadmap === undefined) {
+      getRoadmap(history.match.params.id);
+    } else
+      this.setState({
+        title: selectedRoadmap.title,
+        level: selectedRoadmap.level,
+        sections: selectedRoadmap.sections,
+      });
   }
 
   onClickLevel = (level) => {
     this.setState({ level });
   };
 
-  onClickCreateSection = () => {
+  onClickEditSection = () => {
     const { sections } = this.state;
     this.setState({ sections: sections.concat({ title: "", tasks: [] }) });
   };
@@ -86,15 +94,12 @@ class CreateRoadmap extends Component {
     this.setState({
       sections: sections.map((section, index) => {
         if (index === tmpSectionId) {
-          return {
-            ...section,
-            tasks: section.tasks.concat({
-              title: "",
-              type: 0,
-              url: "",
-              description: "",
-            }),
-          };
+          return section.tasks.concat({
+            title: "",
+            type: 0,
+            url: "",
+            description: "",
+          });
         }
         return section;
       }),
@@ -244,18 +249,17 @@ class CreateRoadmap extends Component {
     });
   };
 
-  onClickCreateBack = () => {
+  onClickEditBack = () => {
     const { history } = this.props;
-    const { title, level, sections } = this.state;
-    if (title !== "" || level !== levelType.BASIC || sections.length !== 0) {
-      const back = confirm("Leave the page? Changes you made will be deleted.");
-      if (back) {
-        history.goBack();
-      }
+    // const {selectedRoadmap} = this.props;
+    // const { title, level, sections } = this.state;
+    const back = confirm("Leave the page? Changes you made will be deleted.");
+    if (back) {
+      history.goBack();
     }
   };
 
-  onClickCreateConfirm = () => {
+  onClickEditConfirm = () => {
     const { title, level, sections } = this.state;
     const { selectedUser } = this.props;
     const roadmapData = {
@@ -264,15 +268,15 @@ class CreateRoadmap extends Component {
       level,
       sections,
     };
-    this.onCreateRoadmap(roadmapData);
+    this.onEditRoadmap(roadmapData);
   };
 
   render() {
-    const { sections, title } = this.state;
+    const { sections, level, title } = this.state;
 
-    const CreateSections = sections.map((section, index) => {
+    const EditSections = sections.map((section, index) => {
       return (
-        <CreateSection
+        <EditSection
           tmpSectionId={index}
           sectionLastId={sections.length - 1}
           title={section.title}
@@ -293,55 +297,39 @@ class CreateRoadmap extends Component {
       );
     });
 
+    const { selectedRoadmap } = this.props;
+
+    if (selectedRoadmap === undefined) {
+      return <div />;
+    }
     return (
-      <div className="CreateRoadmap">
-        <h1>Create Roadmap</h1>
+      <div className="EditRoadmap">
+        <h1>Edit Roadmap</h1>
         <div className="roadmap">
-          <label>Title</label>
           <input
             id="roadmap-title"
             type="text"
             value={title}
             onChange={(event) => this.setState({ title: event.target.value })}
           />
-          <label>Basic</label>
-          <input
-            type="radio"
-            id="roadmap-level-basic"
-            value={levelType.BASIC}
-            onClick={() => {
-              this.onClickLevel(levelType.BASIC);
-            }}
-            checked
-          />
-          <label>Intermediate</label>
-          <input
-            type="radio"
-            id="roadmap-level-intermediate"
-            value={levelType.INTERMEDIATE}
-            onClick={() => {
-              this.onClickLevel(levelType.INTERMEDIATE);
-            }}
-          />
-          <label>Advanced</label>
-          <input
-            type="radio"
-            id="roadmap-level-advanced"
-            value={levelType.ADVANCED}
-            onClick={() => {
-              this.onClickLevel(levelType.ADVANCED);
-            }}
-          />
+          <select
+            id="roadmap-level"
+            value={level}
+            onChange={(event) => this.onClickLevel(event.target.value)}
+          >
+            Level
+            <option value={levelType.BASIC}>Basic</option>
+            <option value={levelType.INTERMEDIATE}>Intermediate</option>
+            <option value={levelType.ADVANCED}>Advanced</option>
+          </select>
           <div className="Section">
-            {CreateSections}
+            {EditSections}
             <button
               type="button"
-              id="create-section-button"
-              onClick={() => {
-                this.onClickCreateSection();
-              }}
+              id="edit-section-button"
+              onClick={() => this.onClickEditSection()}
             >
-              Create Section
+              Edit Section
             </button>
           </div>
         </div>
@@ -350,16 +338,29 @@ class CreateRoadmap extends Component {
   }
 }
 
-CreateRoadmap.propTypes = {
+EditRoadmap.propTypes = {
   selectedUser: PropTypes.objectOf(PropTypes.any).isRequired,
+  selectedRoadmap: PropTypes.objectOf(PropTypes.any).isRequired,
+  getRoadmap: PropTypes.func.isRequired,
   history: PropTypes.objectOf(PropTypes.any).isRequired,
+};
+
+const mapStateToProps = (state) => {
+  return {
+    selectedRoadmap: state.roadmap.selectedRoadmap,
+  };
 };
 
 const mapDispatchToProps = (dispatch) => {
   return {
-    onCreateRoadmap: (roadmapData) =>
-      dispatch(actionCreators.createRoadmap(roadmapData)),
+    onGetRoadmap: (roadmapId) =>
+      dispatch(actionCreators.getRoadmapKHK(roadmapId)),
+    onEditRoadmap: (roadmapData) =>
+      dispatch(actionCreators.editRoadmap(roadmapData)),
   };
 };
 
-export default connect(null, mapDispatchToProps)(withRouter(CreateRoadmap));
+export default connect(
+  mapStateToProps,
+  mapDispatchToProps,
+)(withRouter(EditRoadmap));
