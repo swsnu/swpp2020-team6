@@ -4,7 +4,7 @@ import { connectRouter, routerMiddleware } from "connected-react-router";
 import { createBrowserHistory } from "history";
 
 import userReducer from "./reducers/user";
-import roadmapReducer from "./reducers/user";
+import roadmapReducer from "./reducers/roadmap";
 
 export const history = createBrowserHistory();
 const rootReducer = combineReducers({
