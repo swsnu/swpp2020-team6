@@ -22,7 +22,7 @@ matrix:
         - ./node_modules/.bin/eslint src/
         - yarn test --coverage --watchAll=false
       after_success:
-        - cat ./coverage/lcov.info | coveralls
+        - COVERALLS_REPO_TOKEN=$COVERALLS_REPO_TOKEN coveralls
         - sonar-scanner
 
     - language: python
@@ -52,4 +52,4 @@ matrix:
         - coverage xml
       after_success:
         - sonar-scanner
-        - coveralls
+        - COVERALLS_REPO_TOKEN=$COVERALLS_REPO_TOKEN coveralls
