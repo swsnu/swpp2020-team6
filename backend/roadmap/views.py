@@ -15,6 +15,9 @@ from django.http import (
 from django.core.exceptions import ObjectDoesNotExist
 from django.core import serializers
 from utils.model_to_dict import to_dict
+from datetime import datetime
+from section.models import Section
+from task.models import Task
 
 
 def roadmap(request):
@@ -34,14 +37,71 @@ def roadmap_id(request, roadmap_id):
         except ObjectDoesNotExist:
             return HttpResponseNotFound()
 
-        roadmap_dict = model_to_dict(roadmap)
+        roadmap_dict = roadmap.to_dict()
         return JsonResponse(roadmap_dict)
 
     elif request.method == "PUT":
-        return
+        if not request.user.is_authenticated:
+            return HttpResponse(status=401)
+        try:
+            roadmap = Roadmap.objects.get(id=roadmap_id)
+        except ObjectDoesNotExist:
+            return HttpResponseNotFound()
+        if not roadmap.author_id == request.user.id:
+            return HttpResponseForbidden()
+        try:
+            req_data = json.loads(request.body.decode())
+            new_title = req_data["title"]
+            new_level = req_data["level"]
+            section_list = req_data["sections"]
+
+        except (KeyError, JSONDecodeError):
+            return HttpResponseBadRequest()
+
+        # Edit
+        roadmap.delete_sections()
+        roadmap.title = new_title
+        roadmap.level = new_level
+        for section in section_list:
+            new_section = Section(title=section["title"], roadmap=roadmap).save()
+
+            task_list = section["tasks"]
+            for task in task_list:
+                Task(
+                    title=task["title"],
+                    url=task["url"],
+                    type=task["type"],
+                    description=task["description"],
+                    roadmap=roadmap,
+                    section=new_section,
+                ).save()
+
+        print(roadmap.section_roadmap)
+
+        # Set default value or non-changing
+        roadmap.date = datetime.now()
+        roadmap.like_count = 0
+        roadmap.comment_count = 0
+        roadmap.pin_count = 0
+        roadmap.progress = 1
+        roadmap.author = request.user
+
+        # roadmap.save()
+        roadmap_dict = roadmap.to_dict()
+        return JsonResponse(roadmap_dict)
 
     elif request.method == "DELETE":
-        return
+        if not request.user.is_authenticated:
+            return HttpResponse(status=401)
+        try:
+            roadmap = Roadmap.objects.get(id=roadmap_id)
+        except ObjectDoesNotExist:
+            return HttpResponseNotFound()
+        if not roadmap.author_id == request.user.id:
+            return HttpResponseForbidden()
+
+        roadmap.delete()
+        return HttpResponse(status=200)
 
     return HttpResponseNotAllowed(["GET", "PUT", "DELETE"])
 
