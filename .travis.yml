@@ -1,4 +1,3 @@
-# project_root/.travis.yml
 matrix:
   include:
     - language: node_js
