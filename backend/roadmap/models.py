@@ -45,7 +45,7 @@ class Roadmap(models.Model):
                 data["author_user_picture_url"] = author.user_picture_url
             elif f.name == "original_author":
                 original_author = User.objects.get(id=f.value_from_object(self))
-                data["original_author"] = original_author.id
+                data["original_author_id"] = original_author.id
                 data["original_author_name"] = original_author.username
             else:
                 data[f.name] = f.value_from_object(self)
@@ -59,9 +59,11 @@ class Roadmap(models.Model):
             elif f.name == "sections":
                 data[f.name] = list(
                     {
+                        "section_id": section.id,
                         "section_title": section.title,
                         "tasks": list(
                             {
+                                "task_id": task.id,
                                 "task_title": task.title,
                                 "task_type": task.type,
                                 "task_url": task.url,
@@ -76,6 +78,7 @@ class Roadmap(models.Model):
 
         data["comments"] = list(
             {
+                "comment_id": comment.id,
                 "roadmap_id": comment.roadmap_id,
                 "content": comment.content,
                 "author_id": comment.author_id,
