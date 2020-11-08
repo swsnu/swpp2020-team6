@@ -14,7 +14,7 @@ yarn install & yarn start
 ##### Testing (Not yet)
 
 ```shell
-yarn test --coverage --watchAll=False
+yarn test --coverage --watchAll=false
 ```
 
 
