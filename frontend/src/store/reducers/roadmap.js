@@ -4,7 +4,7 @@ const initialState = {
   selectedRoadmap: undefined,
   selectedRoadmapErrorStatus: null,
   createRoadmapErrorStatus: null,
-  editRaodmapErrorStatus: null,
+  editRoadmapErrorStatus: null,
 };
 
 const reducer = (state = initialState, action) => {

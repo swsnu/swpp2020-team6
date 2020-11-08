@@ -21,6 +21,10 @@ export const getRoadmapKHK = (roadmapId) => {
       .catch((error) => {
         dispatch(getRoadmapKHKFail_(error.response.status));
         switch (error.response.status) {
+          case 404:
+            dispatch(alert("No such Roadmap!"));
+            dispatch(push("/home"));
+            break;
           case 400:
             dispatch(alert("Parsing error!"));
             dispatch(push("/home"));
