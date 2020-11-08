@@ -3,15 +3,17 @@ from section.models import Section
 from tag.models import Tag
 from itertools import chain
 from user.models import User
+from _datetime import datetime
 
 
 class Roadmap(models.Model):
     title = models.CharField(max_length=64, default="")
-    date = models.DateTimeField(blank=True)
+    date = models.DateTimeField(blank=True, default=datetime.now)
     level = models.IntegerField(default=0)
     like_count = models.IntegerField(default=0)
     comment_count = models.IntegerField(default=0)
     pin_count = models.IntegerField(default=0)
+    progress = models.IntegerField(default=1)
     original_author = models.ForeignKey(
         "user.User",
         on_delete=models.CASCADE,
@@ -21,15 +23,12 @@ class Roadmap(models.Model):
     author = models.ForeignKey(
         "user.User", on_delete=models.CASCADE, related_name="author_roadmap", blank=True
     )
-    sections = models.ManyToManyField(
-        Section, related_name="section_roadmap", blank=True
-    )
     tags = models.ManyToManyField(Tag, related_name="tags_roadmap", blank=True)
 
     def __str__(self):
         return "{}".format(self.title)
 
-    def to_roadmap_object(self):
+    def to_dict(self):
         """
         :return: Roadmap Object Dictionary (contain author/tags/sections/tasks/comments info)
         """
@@ -56,25 +55,25 @@ class Roadmap(models.Model):
                     {"tag_id": tag.id, "tag_name": tag.tag_name}
                     for tag in f.value_from_object(self)
                 )
-            elif f.name == "sections":
-                data[f.name] = list(
+
+        data["sections"] = list(
+            {
+                "section_id": section.id,
+                "section_title": section.title,
+                "tasks": list(
                     {
-                        "section_id": section.id,
-                        "section_title": section.title,
-                        "tasks": list(
-                            {
-                                "task_id": task.id,
-                                "task_title": task.title,
-                                "task_type": task.type,
-                                "task_url": task.url,
-                                "task_description": task.description,
-                                "task_checked": task.checked,
-                            }
-                            for task in section.tasks.all()
-                        ),
+                        "task_id": task.id,
+                        "task_title": task.title,
+                        "task_type": task.type,
+                        "task_url": task.url,
+                        "task_description": task.description,
+                        "task_checked": task.checked,
                     }
-                    for section in f.value_from_object(self)
-                )
+                    for task in section.task_section.all()
+                ),
+            }
+            for section in self.section_roadmap.all()
+        )
 
         data["comments"] = list(
             {
@@ -88,3 +87,7 @@ class Roadmap(models.Model):
             for comment in self.roadmap_comment.all()
         )
         return data
+
+    def delete_sections(self):
+        for section in self.section_roadmap.all():
+            section.delete()

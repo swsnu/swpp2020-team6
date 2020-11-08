@@ -4,7 +4,12 @@ from task.models import Task
 
 class Section(models.Model):
     title = models.CharField(max_length=64, default="")
-    tasks = models.ManyToManyField(Task, related_name="section", blank=True)
+    roadmap = models.ForeignKey(
+        "roadmap.Roadmap",
+        on_delete=models.CASCADE,
+        related_name="section_roadmap",
+        null=True,
+    )
 
     def __str__(self):
         return "{}".format(self.title)
