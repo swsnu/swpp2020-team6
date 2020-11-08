@@ -7,7 +7,7 @@ matrix:
       cache:
         - yarn: true
       addons:
-        sonarclound:
+        sonarcloud:
           organization: "swsnu"
           token:
             secure: "oCZTSZtk6ycy9lYHjw/dHry6uACqDBibwpbegX4CTK9G8LR1QgbiVtg/mMDgBDUoOLUUKN4RPc93xrNB/bEH/+wXMeyLrjWjol3IAzO5iib9yvC+EhSsppFLkEYSeblzgGNERFzi7hOFcrkDktArgW4VtN9LFjvyj2mzRK4cgEWITzvBx42kQZ6JsTB+VmnwPVl0ttSnumEtrJxbDgf9kxzIXGxsjtdtkk6hu/6nQP66kJc+mg02SpIMwvzWwFUCRiT5uTrXx2vdytjeldwM0c48ljEsmH602Jtq+g5vz0tWVcmqg6VhocC7Sqiy6vLKae9sPQ5GZYbbrRjCIgEFq8cmrD3XSdniwQapflehf0YCSmHDGoCwqNyQpFHEQKtZuwhZ3gJNI3q1JbGQFdFlp8UipU9M6s7d/2YnuN88b6K71aO1U1f1wd5wXrAnyWwEn9KJYubFhFmaHXEXcqJqaodHcOpHohNwhcCd2p93BIrRAE+MNEGayNnyXRRJHo9ryeBZtrfZaoarBaap2GEYK3G/w2YxZ0fhDXZglrb1bEalCigXQpb/bT5NexE4hHX+4B21tHoEebDyzpcb7mwUaV3TWQkOh/U/CEWRyy5/TXu7qw/RpU3oZKQi8Pm5U6Q4ZTCW8lMtFBmJRYf++MogL+URhyeQdRdhq9oCiJJw8a8="
@@ -33,7 +33,7 @@ matrix:
       cache:
         - pip: true
       addons:
-        sonarclound:
+        sonarcloud:
           organization: "swsnu"
           token:
             secure: "oCZTSZtk6ycy9lYHjw/dHry6uACqDBibwpbegX4CTK9G8LR1QgbiVtg/mMDgBDUoOLUUKN4RPc93xrNB/bEH/+wXMeyLrjWjol3IAzO5iib9yvC+EhSsppFLkEYSeblzgGNERFzi7hOFcrkDktArgW4VtN9LFjvyj2mzRK4cgEWITzvBx42kQZ6JsTB+VmnwPVl0ttSnumEtrJxbDgf9kxzIXGxsjtdtkk6hu/6nQP66kJc+mg02SpIMwvzWwFUCRiT5uTrXx2vdytjeldwM0c48ljEsmH602Jtq+g5vz0tWVcmqg6VhocC7Sqiy6vLKae9sPQ5GZYbbrRjCIgEFq8cmrD3XSdniwQapflehf0YCSmHDGoCwqNyQpFHEQKtZuwhZ3gJNI3q1JbGQFdFlp8UipU9M6s7d/2YnuN88b6K71aO1U1f1wd5wXrAnyWwEn9KJYubFhFmaHXEXcqJqaodHcOpHohNwhcCd2p93BIrRAE+MNEGayNnyXRRJHo9ryeBZtrfZaoarBaap2GEYK3G/w2YxZ0fhDXZglrb1bEalCigXQpb/bT5NexE4hHX+4B21tHoEebDyzpcb7mwUaV3TWQkOh/U/CEWRyy5/TXu7qw/RpU3oZKQi8Pm5U6Q4ZTCW8lMtFBmJRYf++MogL+URhyeQdRdhq9oCiJJw8a8="
