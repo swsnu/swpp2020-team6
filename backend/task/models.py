@@ -10,3 +10,6 @@ class Task(models.Model):
     roadmap = models.ManyToManyField(
         "roadmap.Roadmap", related_name="task_roadmap", blank=True
     )
+
+    def __str__(self):
+        return "{}".format(self.title)
