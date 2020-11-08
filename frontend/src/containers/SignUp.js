@@ -32,7 +32,7 @@ class SignUp extends Component {
     const passwordMatch = State.password === State.passwordConfirm;
 
     return (
-      <div className="SignInPage">
+      <div className="SignUpPage">
         Email
         <input
           id="email-input"

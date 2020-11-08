@@ -7,6 +7,7 @@ import PropTypes from "prop-types";
 import * as actionCreators from "./store/actions/index";
 import SignUp from "./containers/SignUp";
 import SignIn from "./containers/SignIn";
+import Home from "./containers/Home";
 
 import "./App.css";
 
@@ -24,10 +25,10 @@ class App extends React.Component {
       <ConnectedRouter history={Props.history}>
         <div className="App">
           <Switch>
-            <Route path="/home" exact render={() => <h1>Home</h1>} />
+            <Route path="/home" exact component={Home} />
             <Route path="/signup" exact component={SignUp} />
             <Route path="/signin" exact component={SignIn} />
-            <Redirect exact from="/" to="/signin" />
+            <Redirect exact from="/" to="/home" />
             <Route render={() => <h1>Not Found</h1>} />
           </Switch>
         </div>
