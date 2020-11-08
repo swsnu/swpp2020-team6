@@ -21,7 +21,7 @@ matrix:
         - ./node_modules/.bin/eslint src/
         - yarn test --coverage --watchAll=false
       after_success:
-        - coveralls
+        - cat ./coverage/lcov.info | ./node_modules/coveralls/bin/coveralls.js
         - sonar-scanner
 
     - language: python
