@@ -6,25 +6,49 @@ matrix:
         - '12'
       cache:
         - yarn: true
+      addons:
+        sonarclound:
+          organization: "swsnu"
+          token:
+            secure: "oCZTSZtk6ycy9lYHjw/dHry6uACqDBibwpbegX4CTK9G8LR1QgbiVtg/mMDgBDUoOLUUKN4RPc93xrNB/bEH/+wXMeyLrjWjol3IAzO5iib9yvC+EhSsppFLkEYSeblzgGNERFzi7hOFcrkDktArgW4VtN9LFjvyj2mzRK4cgEWITzvBx42kQZ6JsTB+VmnwPVl0ttSnumEtrJxbDgf9kxzIXGxsjtdtkk6hu/6nQP66kJc+mg02SpIMwvzWwFUCRiT5uTrXx2vdytjeldwM0c48ljEsmH602Jtq+g5vz0tWVcmqg6VhocC7Sqiy6vLKae9sPQ5GZYbbrRjCIgEFq8cmrD3XSdniwQapflehf0YCSmHDGoCwqNyQpFHEQKtZuwhZ3gJNI3q1JbGQFdFlp8UipU9M6s7d/2YnuN88b6K71aO1U1f1wd5wXrAnyWwEn9KJYubFhFmaHXEXcqJqaodHcOpHohNwhcCd2p93BIrRAE+MNEGayNnyXRRJHo9ryeBZtrfZaoarBaap2GEYK3G/w2YxZ0fhDXZglrb1bEalCigXQpb/bT5NexE4hHX+4B21tHoEebDyzpcb7mwUaV3TWQkOh/U/CEWRyy5/TXu7qw/RpU3oZKQi8Pm5U6Q4ZTCW8lMtFBmJRYf++MogL+URhyeQdRdhq9oCiJJw8a8="
+      env:
+        - COVERALLS_PARALLEL=true
       before_install:
         - cd frontend
       install:
         - yarn install
+        - yarn add coveralls
       script:
         - ./node_modules/.bin/eslint src/
         - yarn test --coverage --watchAll=false
+      after_success:
+        - cat ./coverage/lcov.info | coveralls
+        - sonar-scanner
 
     - language: python
       python:
         - "3.7"
+      env:
+        - COVERALLS_PARALLEL=true
       cache:
         - pip: true
+      addons:
+        sonarclound:
+          organization: "swsnu"
+          token:
+            secure: "oCZTSZtk6ycy9lYHjw/dHry6uACqDBibwpbegX4CTK9G8LR1QgbiVtg/mMDgBDUoOLUUKN4RPc93xrNB/bEH/+wXMeyLrjWjol3IAzO5iib9yvC+EhSsppFLkEYSeblzgGNERFzi7hOFcrkDktArgW4VtN9LFjvyj2mzRK4cgEWITzvBx42kQZ6JsTB+VmnwPVl0ttSnumEtrJxbDgf9kxzIXGxsjtdtkk6hu/6nQP66kJc+mg02SpIMwvzWwFUCRiT5uTrXx2vdytjeldwM0c48ljEsmH602Jtq+g5vz0tWVcmqg6VhocC7Sqiy6vLKae9sPQ5GZYbbrRjCIgEFq8cmrD3XSdniwQapflehf0YCSmHDGoCwqNyQpFHEQKtZuwhZ3gJNI3q1JbGQFdFlp8UipU9M6s7d/2YnuN88b6K71aO1U1f1wd5wXrAnyWwEn9KJYubFhFmaHXEXcqJqaodHcOpHohNwhcCd2p93BIrRAE+MNEGayNnyXRRJHo9ryeBZtrfZaoarBaap2GEYK3G/w2YxZ0fhDXZglrb1bEalCigXQpb/bT5NexE4hHX+4B21tHoEebDyzpcb7mwUaV3TWQkOh/U/CEWRyy5/TXu7qw/RpU3oZKQi8Pm5U6Q4ZTCW8lMtFBmJRYf++MogL+URhyeQdRdhq9oCiJJw8a8="
       before_install:
         - cd backend
       install:
         - pip install -r requirements.txt
+        - pip install coverage pyyaml coveralls
+      before_script:
+        - python3 manage.py makemigrations user roadmap section task tag comment
+        - python3 manage.py migrate
       script:              
         - pylint --rcfile=./.pylintrc ./backend --disable='fixme, duplicate-code'
-        - coverage run --source='.' manage.py test
-        - coverage xml
-
+        - coverage run --source="./user/","./roadmap/" --omit='manage.py','*/__init__.py','backend/*' manage.py test
+        - coverage report
+      after_success:
+        - coveralls
+        - sonar-scanner
