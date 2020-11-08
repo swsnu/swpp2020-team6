@@ -22,8 +22,8 @@ matrix:
         - ./node_modules/.bin/eslint src/
         - yarn test --coverage --watchAll=false
       after_success:
-        - cat ./coverage/lcov.info | ./node_modules/coveralls/bin/coveralls.js
-        - cd .. && sonar-scanner
+        - cat ./coverage/lcov.info | coveralls
+        - sonar-scanner
 
     - language: python
       python:
@@ -43,11 +43,12 @@ matrix:
         - pip install -r requirements.txt
         - pip install coverage pyyaml coveralls
       before_script:
+        - python3 manage.py makemigrations user roadmap section task tag comment
         - python3 manage.py migrate
       script:              
         - pylint --rcfile=./.pylintrc ./backend --disable='fixme, duplicate-code'
         - coverage run --source="./user/","./roadmap/" --omit='manage.py','*/__init__.py','backend/*' manage.py test
         - coverage report
       after_success:
-        - cd .. && sonar-scanner
         - coveralls
+        - sonar-scanner
