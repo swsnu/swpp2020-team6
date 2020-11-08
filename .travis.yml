@@ -46,7 +46,7 @@ matrix:
         - python3 manage.py migrate
       script:              
         - pylint --rcfile=./.pylintrc ./backend --disable='fixme, duplicate-code'
-        - coverage run --source="./user/", "./roadmap" manage.py test
+        - coverage run --source="./user/", "./roadmap/" manage.py test
       after_success:
         - cd .. && sonar-scanner
         - coveralls
