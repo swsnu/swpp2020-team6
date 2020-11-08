@@ -49,6 +49,7 @@ matrix:
         - pylint --rcfile=./.pylintrc ./backend --disable='fixme, duplicate-code'
         - coverage run --source="./user/","./roadmap/" --omit='manage.py','*/__init__.py','backend/*' manage.py test
         - coverage report
+        - coverage xml
       after_success:
         - sonar-scanner
         - coveralls
