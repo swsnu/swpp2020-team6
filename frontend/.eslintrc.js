@@ -21,5 +21,8 @@ module.exports = {
     "no-param-reassign": 0,
     "no-use-before-define": [2, { functions: false }],
     "react/state-in-constructor": 0,
+    "no-alert": 0,
+    "no-restricted-globals": 0,
+    "object-curly-newline": 0,
   },
 };
