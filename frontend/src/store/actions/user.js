@@ -2,14 +2,14 @@ import axios from "axios";
 
 import * as actionTypes from "./actionTypes";
 
-export const getUserAuthKHKSuccess_ = (userData) => {
+export const getUserAuthSuccess_ = (userData) => {
   return { type: actionTypes.GET_USER_AUTH, userData };
 };
 
-export const getUserAuthKHK = () => {
+export const getUserAuth = () => {
   return (dispatch) => {
     return axios.get("/api/user/").then((res) => {
-      dispatch(getUserAuthKHKSuccess_(res.data));
+      dispatch(getUserAuthSuccess_(res.data));
     });
   };
 };

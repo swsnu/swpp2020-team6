@@ -5,6 +5,7 @@ import PropTypes from "prop-types";
 import * as actionCreators from "../../store/actions/index";
 
 import CreateSection from "../../components/CreateSection/CreateSection";
+import Error from "../../components/Error/Error";
 import { levelType } from "../../constants";
 
 class CreateRoadmap extends Component {
@@ -13,13 +14,6 @@ class CreateRoadmap extends Component {
     level: levelType.BASIC,
     sections: [],
   };
-
-  componentDidMount() {
-    const { selectedUser, history } = this.props;
-    if (selectedUser === null) {
-      history.push("/signin");
-    }
-  }
 
   onChangeTitle = (title) => {
     this.setState({ title });
@@ -272,8 +266,19 @@ class CreateRoadmap extends Component {
   };
 
   render() {
-    const { sections, level, title } = this.state;
+    const { selectedUser } = this.props;
+    if (selectedUser === null) {
+      alert("Please sign in!");
+      return (
+        <div className="EditRoadmap">
+          <div className="error">
+            <Error />
+          </div>
+        </div>
+      );
+    }
 
+    const { sections, level, title } = this.state;
     const CreateSections = sections.map((section, index) => {
       return (
         <CreateSection
@@ -299,7 +304,7 @@ class CreateRoadmap extends Component {
 
     return (
       <div className="CreateRoadmap">
-        <h1>Create Roadmap</h1>
+        <h1 className="header">Create Roadmap</h1>
         <div className="roadmap">
           <label>Title</label>
           <input
@@ -318,7 +323,7 @@ class CreateRoadmap extends Component {
             <option value={levelType.INTERMEDIATE}>Intermediate</option>
             <option value={levelType.ADVANCED}>Advanced</option>
           </select>
-          <div className="Section">
+          <div className="sections">
             {CreateSections}
             <button
               type="button"
@@ -330,7 +335,7 @@ class CreateRoadmap extends Component {
               Create Section
             </button>
           </div>
-          <div className="Back-Confirm">
+          <div className="buttons">
             <button
               id="back-create-roadmap-button"
               type="button"

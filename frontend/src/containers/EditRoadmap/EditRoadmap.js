@@ -5,6 +5,7 @@ import PropTypes from "prop-types";
 import * as actionCreators from "../../store/actions/index";
 
 import EditSection from "../../components/CreateSection/CreateSection";
+import Error from "../../components/Error/Error";
 import { levelType } from "../../constants";
 
 class EditRoadmap extends Component {
@@ -15,23 +16,8 @@ class EditRoadmap extends Component {
   };
 
   componentDidMount() {
-    const { selectedUser, selectedRoadmap, onGetRoadmap, history } = this.props;
-    if (selectedUser === null) {
-      alert("Please sign in!");
-      history.push("/signin");
-    } else {
-      onGetRoadmap(history.match.params.id).then(() => {
-        if (selectedRoadmap === null) {
-          alert("No Such Roadmap!");
-          history.goBack();
-        } else
-          this.setState({
-            title: selectedRoadmap.title,
-            level: selectedRoadmap.level,
-            sections: selectedRoadmap.sections,
-          });
-      });
-    }
+    const { onGetRoadmap } = this.props;
+    onGetRoadmap(history.match.params.id);
   }
 
   onClickLevel = (level) => {
@@ -255,10 +241,10 @@ class EditRoadmap extends Component {
   };
 
   onClickEditBack = () => {
-    const { history } = this.props;
+    const { selectedRoadmap, history } = this.props;
     const back = confirm("Leave the page? Changes you made will be deleted.");
     if (back) {
-      history.goBack();
+      history.push(`/roadmap/${selectedRoadmap.roadmap_id}`);
     }
   };
 
@@ -275,7 +261,44 @@ class EditRoadmap extends Component {
   };
 
   render() {
+    const { selectedUser, selectedRoadmap } = this.props;
+    if (selectedUser === null) {
+      alert("Please sign in!");
+      return (
+        <div className="EditRoadmap">
+          <div className="error">
+            <Error />
+          </div>
+        </div>
+      );
+    }
+    if (selectedRoadmap === undefined) {
+      return (
+        <div className="EditRoadmap">
+          <div className="loading" />
+        </div>
+      );
+    }
+    if (selectedRoadmap === null) {
+      alert("No such Roadmap!");
+      return (
+        <div className="EditRoadmap">
+          <div className="error">
+            <Error />
+          </div>
+        </div>
+      );
+    }
+
     const { sections, level, title } = this.state;
+
+    if (level === 0) {
+      this.setState({
+        title: selectedRoadmap.title,
+        level: selectedRoadmap.level,
+        sections: selectedRoadmap.sections,
+      });
+    }
 
     const EditSections = sections.map((section, index) => {
       return (
@@ -300,11 +323,6 @@ class EditRoadmap extends Component {
       );
     });
 
-    const { selectedRoadmap } = this.props;
-
-    if (selectedRoadmap === undefined) {
-      return <div />;
-    }
     return (
       <div className="EditRoadmap">
         <h1>Edit Roadmap</h1>
@@ -325,7 +343,7 @@ class EditRoadmap extends Component {
             <option value={levelType.INTERMEDIATE}>Intermediate</option>
             <option value={levelType.ADVANCED}>Advanced</option>
           </select>
-          <div className="Section">
+          <div className="sections">
             {EditSections}
             <button
               type="button"
@@ -335,7 +353,7 @@ class EditRoadmap extends Component {
               Create Section
             </button>
           </div>
-          <div className="Back-Confirm">
+          <div className="buttons">
             <button
               id="back-edit-roadmap-button"
               type="button"

@@ -2,25 +2,27 @@ import * as actionTypes from "../actions/actionTypes";
 
 const initialState = {
   selectedRoadmap: undefined,
-  selectedRoadmapErrorStatus: null,
-  createRoadmapErrorStatus: null,
-  editRoadmapErrorStatus: null,
+  errorStatus: null,
 };
 
 const reducer = (state = initialState, action) => {
   switch (action.type) {
     case actionTypes.GET_ROADMAP_SUCCESS:
-      return { ...state, selectedRoadmap: action.roadmapData };
+      return {
+        ...state,
+        selectedRoadmap: action.roadmapData,
+        errorStatus: false,
+      };
     case actionTypes.GET_ROADMAP_FAILURE:
-      return { ...state, selectedRoadmapErrorStatus: action.errorStatus };
+      return { ...state, selectedRoadmap: undefined, errorStatus: true };
     case actionTypes.CREATE_ROADMAP_SUCCESS:
-      return { ...state, createRoadmapErrorStatus: null };
+      return { ...state, selectedRoadmap: undefined, errorStatus: false };
     case actionTypes.CREATE_ROADMAP_FAILURE:
-      return { ...state, createRoadmapErrorStatus: action.errorStatus };
+      return { ...state, selectedRoadmap: undefined, errorStatus: true };
     case actionTypes.EDIT_ROADMAP_SUCCESS:
-      return { ...state, editRoadmapErrorStatus: null };
+      return { ...state, selectedRoadmap: undefined, errorStatus: false };
     case actionTypes.EDIT_ROADMAP_FAILURE:
-      return { ...state, editRoadmapErrorStatus: action.errorStatus };
+      return { ...state, selectedRoadmap: undefined, errorStatus: true };
     default:
       break;
   }

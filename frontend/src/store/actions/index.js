@@ -1,2 +1,2 @@
-export { getUserAuthKHK } from "./user";
-export { getRoadmapKHK, createRoadmap, editRoadmap } from "./roadmap";
+export { getUserAuth } from "./user";
+export { getRoadmap, createRoadmap, editRoadmap } from "./roadmap";

@@ -19,7 +19,13 @@ class App extends React.Component {
   render() {
     const { selectedUser, history } = this.props;
 
-    if (selectedUser === undefined) return <div />;
+    if (selectedUser === undefined) {
+      return (
+        <div className="App">
+          <div className="loading" />
+        </div>
+      );
+    }
     return (
       <ConnectedRouter history={history}>
         <div className="App">
@@ -71,7 +77,7 @@ const mapStateToProps = (state) => {
 
 const mapDispatchToProps = (dispatch) => {
   return {
-    onGetUserAuth: () => dispatch(actionCreators.getUserAuthKHK()),
+    onGetUserAuth: () => dispatch(actionCreators.getUserAuth()),
   };
 };
 
