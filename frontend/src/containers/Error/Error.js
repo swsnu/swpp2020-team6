@@ -27,7 +27,7 @@ Error.propTypes = {
 const mapDispatchToProps = (dispatch) => {
   return {
     onResetRoadmapErrorStatus: () =>
-      dispatch(actionCreators.onResetRoadmapErrorStatus()),
+      dispatch(actionCreators.resetRoadmapErrorStatus_()),
   };
 };
 

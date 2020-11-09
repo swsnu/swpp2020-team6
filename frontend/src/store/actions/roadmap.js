@@ -14,7 +14,7 @@ export const getRoadmapFail_ = () => {
 export const getRoadmap = (roadmapId) => {
   return (dispatch) => {
     return axios
-      .get(`/api/roadmap/${roadmapId}`)
+      .get(`/api/roadmap/${roadmapId}/`)
       .then((response) => {
         dispatch(getRoadmapSuccess_(response.data));
       })
@@ -76,7 +76,7 @@ export const editRoadmapFail_ = () => {
 export const editRoadmap = (roadmapData) => {
   return (dispatch) => {
     return axios
-      .post(`/api/roadmap/${roadmapData.id}`)
+      .post(`/api/roadmap/${roadmapData.id}/`)
       .then((response) => {
         dispatch(push(`/roadmap/${response.data.id}`));
       })
