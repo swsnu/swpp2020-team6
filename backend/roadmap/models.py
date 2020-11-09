@@ -29,6 +29,7 @@ class Roadmap(models.Model):
 
     def to_dict(self):
         """
+        Gather all infos about roadmap and return dictionary object
         :return: Roadmap Object Dictionary (contain author/tags/sections/tasks/comments info)
         """
         options = self._meta
@@ -85,6 +86,33 @@ class Roadmap(models.Model):
             }
             for comment in self.roadmap_comment.all()
         )
+        return data
+
+    def to_dict_simple(self):
+        """
+        Gather simple infos about roadmap and return dictionary object
+         :return:
+        """
+        options = self._meta
+        data = {}
+        for f in chain(options.concrete_fields):
+            if f.name == "date":
+                data[f.name] = f.value_from_object(self).strftime("%Y-%m-%d %H:%M:%S")
+            elif f.name == "author":
+                author = User.objects.get(id=f.value_from_object(self))
+                data["author_id"] = author.id
+                data["author_name"] = author.username
+                data["author_user_picture_url"] = author.user_picture_url
+            else:
+                data[f.name] = f.value_from_object(self)
+
+        for f in chain(options.many_to_many):
+            if f.name == "tags":
+                data[f.name] = list(
+                    {"tag_id": tag.id, "tag_name": tag.tag_name}
+                    for tag in f.value_from_object(self)
+                )
+
         return data
 
     def delete_sections(self):

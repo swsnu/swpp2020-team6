@@ -88,7 +88,7 @@ class UserTestCase(TestCase):
         )
         self.assertEqual(response.status_code, 400)
 
-    def test_get_authentication(self):
+    def test_get_current_authentication(self):
         client = Client(enforce_csrf_checks=True)
         csrftoken = self.get_csrf(client)
         path = self.user_path
