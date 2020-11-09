@@ -1,3 +1,4 @@
+# project_root/.travis.yml
 matrix:
   include:
     - language: node_js
@@ -21,7 +22,7 @@ matrix:
         - ./node_modules/.bin/eslint src/
         - yarn test --coverage --watchAll=false
       after_success:
-        - cat ./coverage/lcov.info | ./node_modules/coveralls/bin/coveralls.js
+        - cat ./coverage/lcov.info | coveralls
         - sonar-scanner
 
     - language: python
