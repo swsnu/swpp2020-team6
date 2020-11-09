@@ -18,8 +18,8 @@ class Home extends Component {
   };
 
   onClickSignOut = () => {
-    const Props = this.props;
-    Props.onSignOut();
+    const { onSignOut } = this.props;
+    onSignOut();
   };
 
   render() {
@@ -27,25 +27,13 @@ class Home extends Component {
 
     return (
       <div className="SignInPage">
-        <button
-          id="signin-button"
-          onClick={() => this.onClickSignIn(State)}
-          type="button"
-        >
+        <button id="signin-button" onClick={() => this.onClickSignIn(State)} type="button">
           Sign In
         </button>
-        <button
-          id="signup-button"
-          onClick={() => this.onClickSignUp()}
-          type="button"
-        >
+        <button id="signup-button" onClick={() => this.onClickSignUp()} type="button">
           Sign Up
         </button>
-        <button
-          id="signout-button"
-          onClick={() => this.onClickSignOut()}
-          type="button"
-        >
+        <button id="signout-button" onClick={() => this.onClickSignOut()} type="button">
           Sign Out
         </button>
       </div>

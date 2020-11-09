@@ -1,16 +1,10 @@
 import * as actionTypes from "../actions/actionTypes";
 
 const initialState = {
-  is_signed_in: false,
+  is_signed_in: false, // camelCase
 
-  myRoadmaps: [],
-  pinnedRoadmaps: [],
-  likedRoadmaps: [],
-  recommendedRoadmaps: [],
   selectedUser: undefined,
   allUsers: undefined,
-
-  errStatus: null,
 };
 
 const reducer = (state = initialState, action) => {

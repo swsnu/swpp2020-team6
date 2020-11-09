@@ -23,65 +23,49 @@ class SignUp extends Component {
   };
 
   render() {
-    const State = this.state;
+    const { email, username, password, passwordConfirm } = this.state;
 
     const emailRegexOne = /^[a-zA-Z0-9.!#$%&'*+/=?^_`{|}~-]+@[a-zA-Z0-9!#$%&'*+/=?^_`{|}~-]+.[a-zA-z]{2,3}$/;
     const emailRegexTwo = /^[a-zA-Z0-9.!#$%&'*+/=?^_`{|}~-]+@[a-zA-Z0-9!#$%&'*+/=?^_`{|}~-]+.[a-zA-z]+.[a-zA-z]{2,3}$/;
-    const validEmail =
-      emailRegexOne.test(State.email) || emailRegexTwo.test(State.email);
-    const passwordMatch = State.password === State.passwordConfirm;
+    const validEmail = emailRegexOne.test(email) || emailRegexTwo.test(email);
+    const passwordMatch = password === passwordConfirm;
 
     return (
-      <div className="SignUpPage">
+      <div className="SignUp">
         <label>Email</label>
         <input
           id="email-input"
           type="email"
-          value={State.email}
+          value={email}
           onChange={(event) => this.setState({ email: event.target.value })}
         />
         <label>Username</label>
         <input
           id="username-input"
           type="username"
-          value={State.username}
+          value={username}
           onChange={(event) => this.setState({ username: event.target.value })}
         />
         <label>Password</label>
         <input
           id="password-input"
           type="password"
-          value={State.password}
+          value={password}
           onChange={(event) => this.setState({ password: event.target.value })}
         />
         <label>Password Confirm</label>
         <input
           id="password-confirm-input"
-          type="password-confirm"
-          value={State.passwordConfirm}
-          onChange={
-            (event) => this.setState({ passwordConfirm: event.target.value })
-            // eslint-disable-next-line react/jsx-curly-newline
-          }
+          type="password"
+          value={passwordConfirm}
+          onChange={(event) => this.setState({ passwordConfirm: event.target.value })}
         />
-        <button
-          id="signin-button"
-          onClick={() => this.onClickSignIn()}
-          type="button"
-        >
+        <button id="signin-button" onClick={() => this.onClickSignIn()} type="button">
           Sign In
         </button>
         <button
           id="signup-button"
-          onClick={
-            () =>
-              this.onClickSignUp({
-                email: State.email,
-                username: State.username,
-                password: State.password,
-              })
-            // eslint-disable-next-line react/jsx-curly-newline
-          }
+          onClick={() => this.onClickSignUp({ email, username, password })}
           type="button"
           disabled={!(validEmail && passwordMatch)}
         >
@@ -105,8 +89,7 @@ const mapStateToProps = (state) => {
 
 const mapDispatchToProps = (dispatch) => {
   return {
-    onSignUp: (userCredentials) =>
-      dispatch(actionCreators.signUp(userCredentials)),
+    onSignUp: (userCredentials) => dispatch(actionCreators.signUp(userCredentials)),
   };
 };
 

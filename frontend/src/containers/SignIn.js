@@ -1,4 +1,4 @@
-import React, { Component } from "react";
+import React, { Component } from "react"; // meaning of bracket
 import { connect } from "react-redux";
 import PropTypes from "prop-types";
 
@@ -13,8 +13,8 @@ class SignIn extends Component {
   };
 
   onClickSignIn = (userCredentials) => {
-    const Props = this.props;
-    Props.onSignIn(userCredentials);
+    const { onSignIn } = this.props; // TODO
+    onSignIn(userCredentials);
   };
 
   onClickSignUp = () => {
@@ -32,10 +32,11 @@ class SignIn extends Component {
   };
 
   render() {
-    const State = this.state;
+    const State = this.state; // TODO : camelCase
+    // const {username, password} = this.state;
 
     return (
-      <div className="SignInPage">
+      <div className="SignIn">
         <label>Username</label>
         <input
           id="username-input"
@@ -58,11 +59,7 @@ class SignIn extends Component {
         >
           Sign In
         </button>
-        <button
-          id="signup-button"
-          onClick={() => this.onClickSignUp()}
-          type="button"
-        >
+        <button id="signup-button" onClick={() => this.onClickSignUp()} type="button">
           Sign Up
         </button>
         <button
@@ -72,11 +69,7 @@ class SignIn extends Component {
         >
           Forgot Password
         </button>
-        <button
-          id="signout-button"
-          onClick={() => this.onClickSignOut()}
-          type="button"
-        >
+        <button id="signout-button" onClick={() => this.onClickSignOut()} type="button">
           Sign Out
         </button>
       </div>
@@ -92,14 +85,13 @@ SignIn.propTypes = {
 
 const mapStateToProps = (state) => {
   return {
-    is_signed_in: state.user.is_signed_in,
+    is_signed_in: state.user.is_signed_in, // TODO: camelcase
   };
 };
 
 const mapDispatchToProps = (dispatch) => {
   return {
-    onSignIn: (userCredentials) =>
-      dispatch(actionCreators.signIn(userCredentials)),
+    onSignIn: (userCredentials) => dispatch(actionCreators.signIn(userCredentials)),
     onSignOut: () => dispatch(actionCreators.signOut()),
   };
 };
