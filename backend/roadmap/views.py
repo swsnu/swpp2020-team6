@@ -129,11 +129,7 @@ def roadmap_id(request, roadmap_id):
 
         # Set default value or non-changing
         roadmap.date = datetime.now()
-        roadmap.like_count = 0
-        roadmap.comment_count = 0
-        roadmap.pin_count = 0
         roadmap.progress = 1
-        roadmap.author = request.user
 
         roadmap.save()
 
@@ -172,5 +168,5 @@ def roadmap_id(request, roadmap_id):
     return HttpResponseNotAllowed(["GET", "PUT", "DELETE"])
 
 
-def roadmap_id_progess(request):
+def roadmap_id_progress(request):
     return
