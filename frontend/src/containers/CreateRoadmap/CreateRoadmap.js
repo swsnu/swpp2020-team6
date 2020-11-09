@@ -267,7 +267,7 @@ class CreateRoadmap extends Component {
 
   render() {
     const { selectedUser } = this.props;
-    if (selectedUser === null) {
+    if (selectedUser === undefined) {
       alert("Please sign in!");
       return (
         <div className="EditRoadmap">

@@ -16,8 +16,8 @@ class EditRoadmap extends Component {
   };
 
   componentDidMount() {
-    const { onGetRoadmap } = this.props;
-    onGetRoadmap(history.match.params.id);
+    const { onGetRoadmap, match } = this.props;
+    onGetRoadmap(match.params.id);
   }
 
   onClickLevel = (level) => {
@@ -262,7 +262,7 @@ class EditRoadmap extends Component {
 
   render() {
     const { selectedUser, selectedRoadmap, errorStatus } = this.props;
-    if (selectedUser === null) {
+    if (selectedUser === undefined) {
       alert("Please sign in!");
       return (
         <div className="EditRoadmap">
@@ -381,6 +381,7 @@ EditRoadmap.propTypes = {
   errorStatus: PropTypes.bool.isRequired,
   onGetRoadmap: PropTypes.func.isRequired,
   history: PropTypes.objectOf(PropTypes.any).isRequired,
+  match: PropTypes.objectOf(PropTypes.any).isRequired,
 };
 
 const mapStateToProps = (state) => {

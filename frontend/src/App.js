@@ -17,9 +17,9 @@ class App extends React.Component {
   }
 
   render() {
-    const { selectedUser, history } = this.props;
+    const { isSignedIn, selectedUser, history } = this.props;
 
-    if (selectedUser === undefined) {
+    if (isSignedIn === undefined) {
       return (
         <div className="App">
           <div className="loading" />
@@ -44,7 +44,7 @@ class App extends React.Component {
               }}
             />
             <Route
-              path="/roadmap/edit"
+              path="/roadmap/:id/edit"
               exact
               render={() => {
                 return (
@@ -64,6 +64,7 @@ class App extends React.Component {
 }
 
 App.propTypes = {
+  isSignedIn: PropTypes.bool.isRequired,
   selectedUser: PropTypes.objectOf(PropTypes.any).isRequired,
   onGetUserAuth: PropTypes.func.isRequired,
   history: PropTypes.objectOf(PropTypes.any).isRequired,
@@ -71,6 +72,7 @@ App.propTypes = {
 
 const mapStateToProps = (state) => {
   return {
+    isSignedIn: state.user.isSignedIn,
     selectedUser: state.user.selectedUser,
   };
 };

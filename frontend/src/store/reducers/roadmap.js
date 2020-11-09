@@ -14,7 +14,7 @@ const reducer = (state = initialState, action) => {
         errorStatus: false,
       };
     case actionTypes.GET_ROADMAP_FAILURE:
-      return { ...state, selectedRoadmap: null, errorStatus: true };
+      return { ...state, selectedRoadmap: undefined, errorStatus: true };
     case actionTypes.CREATE_ROADMAP_SUCCESS:
       return { ...state, selectedRoadmap: undefined, errorStatus: false };
     case actionTypes.CREATE_ROADMAP_FAILURE:
@@ -24,7 +24,7 @@ const reducer = (state = initialState, action) => {
     case actionTypes.EDIT_ROADMAP_FAILURE:
       return { ...state, selectedRoadmap: undefined, errorStatus: true };
     case actionTypes.RESET_ROADMAP_ERRORSTATUS:
-      return { ...state, selectedRoadmp: undefined, errorStatus: false };
+      return { ...state, selectedRoadmap: undefined, errorStatus: false };
     default:
       break;
   }
