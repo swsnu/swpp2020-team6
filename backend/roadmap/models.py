@@ -3,12 +3,11 @@ from section.models import Section
 from tag.models import Tag
 from itertools import chain
 from user.models import User
-from _datetime import datetime
 
 
 class Roadmap(models.Model):
     title = models.CharField(max_length=64, default="")
-    date = models.DateTimeField(blank=True, default=datetime.now)
+    date = models.DateTimeField(auto_now_add=True)
     level = models.IntegerField(default=0)
     like_count = models.IntegerField(default=0)
     comment_count = models.IntegerField(default=0)
