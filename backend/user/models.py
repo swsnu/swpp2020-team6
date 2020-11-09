@@ -7,9 +7,6 @@ class User(AbstractUser):
     pinned_roadmaps = models.ManyToManyField(
         "roadmap.Roadmap", related_name="pinned_roadmap_user", blank=True
     )
-    my_roadmaps = models.ManyToManyField(
-        "roadmap.Roadmap", related_name="my_roadmap_user", blank=True
-    )
     liked_roadmaps = models.ManyToManyField(
         "roadmap.Roadmap", related_name="liked_roadmap_user", blank=True
     )
