@@ -102,6 +102,8 @@ def roadmap_id(request, roadmap_id):
             new_title = req_data["title"]
             new_level = req_data["level"]
             section_list = req_data["sections"]
+            added_tag_list = req_data["addedTagList"]
+            deleted_tag_list = req_data["deletedTagList"]
 
         except (KeyError, JSONDecodeError):
             return HttpResponseBadRequest()
@@ -132,6 +134,24 @@ def roadmap_id(request, roadmap_id):
         roadmap.pin_count = 0
         roadmap.progress = 1
         roadmap.author = request.user
+
+        roadmap.save()
+
+        # Delete tags in roadmap
+        for tag in deleted_tag_list:
+            tag_query = roadmap.tags.filter(tag_name__iexact=tag)
+            if tag_query.exists():
+                roadmap.tags.remove(tag_query.first())
+
+        # Add new tags m2m field in roadmap
+        for tag in added_tag_list:
+            tag_query = Tag.objects.filter(tag_name__iexact=tag)
+            if tag_query.exists():
+                roadmap.tags.add(tag_query.first())
+            else:
+                new_tag = Tag(tag_name=tag)
+                new_tag.save()
+                roadmap.tags.add(new_tag)
 
         roadmap.save()
         return HttpResponse(status=204)
