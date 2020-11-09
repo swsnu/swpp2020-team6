@@ -4,6 +4,8 @@ import PropTypes from "prop-types";
 
 import * as actionCreators from "../store/actions/index";
 
+import "./SignIn.scss";
+
 class SignIn extends Component {
   state = {
     username: "",
@@ -34,17 +36,17 @@ class SignIn extends Component {
 
     return (
       <div className="SignInPage">
-        Username
+        <label>Username</label>
         <input
           id="username-input"
-          type="text"
+          type="username"
           value={State.username}
           onChange={(event) => this.setState({ username: event.target.value })}
         />
-        Password
+        <label>Password</label>
         <input
           id="password-input"
-          type="text"
+          type="password"
           value={State.password}
           onChange={(event) => this.setState({ password: event.target.value })}
         />

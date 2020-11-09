@@ -33,31 +33,31 @@ class SignUp extends Component {
 
     return (
       <div className="SignUpPage">
-        Email
+        <label>Email</label>
         <input
           id="email-input"
-          type="text"
+          type="email"
           value={State.email}
           onChange={(event) => this.setState({ email: event.target.value })}
         />
-        Username
+        <label>Username</label>
         <input
           id="username-input"
-          type="text"
+          type="username"
           value={State.username}
           onChange={(event) => this.setState({ username: event.target.value })}
         />
-        Password
+        <label>Password</label>
         <input
           id="password-input"
-          type="text"
+          type="password"
           value={State.password}
           onChange={(event) => this.setState({ password: event.target.value })}
         />
-        Password Confirm
+        <label>Password Confirm</label>
         <input
           id="password-confirm-input"
-          type="text"
+          type="password-confirm"
           value={State.passwordConfirm}
           onChange={
             (event) => this.setState({ passwordConfirm: event.target.value })

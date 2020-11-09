@@ -28,7 +28,7 @@ class App extends React.Component {
             <Route path="/home" exact component={Home} />
             <Route path="/signup" exact component={SignUp} />
             <Route path="/signin" exact component={SignIn} />
-            <Redirect exact from="/" to="/home" />
+            <Redirect exact from="/" to="/signin" />
             <Route render={() => <h1>Not Found</h1>} />
           </Switch>
         </div>
