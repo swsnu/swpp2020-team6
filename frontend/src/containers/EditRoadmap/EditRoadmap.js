@@ -5,7 +5,7 @@ import PropTypes from "prop-types";
 import * as actionCreators from "../../store/actions/index";
 
 import EditSection from "../../components/CreateSection/CreateSection";
-import Error from "../../components/Error/Error";
+import Error from "../Error/Error";
 import { levelType } from "../../constants";
 
 class EditRoadmap extends Component {

@@ -101,3 +101,7 @@ export const editRoadmap = (roadmapData) => {
       });
   };
 };
+
+export const resetRoadmapErrorStatus_ = () => {
+  return { type: actionTypes.RESET_ROADMAP_ERRORSTATUS };
+};
