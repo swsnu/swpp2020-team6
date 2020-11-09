@@ -261,9 +261,19 @@ class EditRoadmap extends Component {
   };
 
   render() {
-    const { selectedUser, selectedRoadmap } = this.props;
+    const { selectedUser, selectedRoadmap, errorStatus } = this.props;
     if (selectedUser === null) {
       alert("Please sign in!");
+      return (
+        <div className="EditRoadmap">
+          <div className="error">
+            <Error />
+          </div>
+        </div>
+      );
+    }
+    if (errorStatus === true) {
+      alert("No such Roadmap!");
       return (
         <div className="EditRoadmap">
           <div className="error">
@@ -276,16 +286,6 @@ class EditRoadmap extends Component {
       return (
         <div className="EditRoadmap">
           <div className="loading" />
-        </div>
-      );
-    }
-    if (selectedRoadmap === null) {
-      alert("No such Roadmap!");
-      return (
-        <div className="EditRoadmap">
-          <div className="error">
-            <Error />
-          </div>
         </div>
       );
     }
@@ -378,6 +378,7 @@ class EditRoadmap extends Component {
 EditRoadmap.propTypes = {
   selectedUser: PropTypes.objectOf(PropTypes.any).isRequired,
   selectedRoadmap: PropTypes.objectOf(PropTypes.any).isRequired,
+  errorStatus: PropTypes.bool.isRequired,
   onGetRoadmap: PropTypes.func.isRequired,
   history: PropTypes.objectOf(PropTypes.any).isRequired,
 };
@@ -385,6 +386,7 @@ EditRoadmap.propTypes = {
 const mapStateToProps = (state) => {
   return {
     selectedRoadmap: state.roadmap.selectedRoadmap,
+    errorStatus: state.roadmap.errorStatus,
   };
 };
 
