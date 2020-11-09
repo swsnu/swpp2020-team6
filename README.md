@@ -26,24 +26,15 @@ yarn test --coverage --watchAll=false
 ```shell
 cd ./backend
 pip install -r requirements.txt
+python3 manage.py makemigrations user roadmap section task tag comment
+python3 manage.py migrate
+
 python3 manage.py runserver	
 ```
 
 ##### Testing
 
 ```shell
-coverage run --source='.' manage.py test
-```
-
-
-
-### [개발 전 필수] git commit message template 설정
-
-```shell
-# 템플릿 설정
-git config commit.template ./.gitmessage.txt
-
-# 템플릿을 사용해서 commit
-git commit 
+coverage run --source="./user/","./roadmap/","./section/","./task/","./tag/","./comment/" --omit='manage.py','*/__init__.py','backend/*' manage.py test
 ```
 
