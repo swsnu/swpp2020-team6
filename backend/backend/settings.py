@@ -32,6 +32,11 @@ ALLOWED_HOSTS = []
 
 INSTALLED_APPS = [
     "user.apps.UserConfig",
+    "roadmap.apps.RoadmapConfig",
+    "comment.apps.CommentConfig",
+    "section.apps.SectionConfig",
+    "tag.apps.TagConfig",
+    "task.apps.TaskConfig",
     "django.contrib.admin",
     "django.contrib.auth",
     "django.contrib.contenttypes",

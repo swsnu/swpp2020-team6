@@ -390,8 +390,7 @@ const mapStateToProps = (state) => {
 
 const mapDispatchToProps = (dispatch) => {
   return {
-    onGetRoadmap: (roadmapId) =>
-      dispatch(actionCreators.getRoadmapKHK(roadmapId)),
+    onGetRoadmap: (roadmapId) => dispatch(actionCreators.getRoadmap(roadmapId)),
     onEditRoadmap: (roadmapData) =>
       dispatch(actionCreators.editRoadmap(roadmapData)),
   };
