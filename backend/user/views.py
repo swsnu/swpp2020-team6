@@ -60,7 +60,8 @@ def signin(request):
         signin_user = authenticate(request, username=username, password=password)
         if signin_user is not None:
             login(request, signin_user)
-            return HttpResponse(status=204)
+            response_user = signin_user.to_dict()
+            return JsonResponse(response_user, status=200)
 
         return HttpResponse(status=401)
 
