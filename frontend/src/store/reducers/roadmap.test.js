@@ -4,7 +4,7 @@ import { taskType, levelType, progressState } from "../../constants";
 
 const initialState = {
   selectedRoadmap: null,
-  errStatus: null,
+  getSelectedRoadmapErrStatus: null,
 };
 
 const roadmapSample = {
@@ -77,7 +77,7 @@ describe("Roadmap Reducer", () => {
     expect(newState).toEqual({
       ...initialState,
       selectedRoadmap: roadmapSample,
-      errStatus: null,
+      getSelectedRoadmapErrStatus: null,
     });
   });
 
@@ -89,7 +89,7 @@ describe("Roadmap Reducer", () => {
     expect(newState).toEqual({
       ...initialState,
       selectedRoadmap: null,
-      errStatus: 400,
+      getSelectedRoadmapErrStatus: 400,
     });
   });
 });
