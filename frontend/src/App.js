@@ -5,6 +5,9 @@ import { connect } from "react-redux";
 import PropTypes from "prop-types";
 
 import * as actionCreators from "./store/actions/index";
+// import SignUp from "./containers/SignUp";
+// import SignIn from "./containers/SignIn";
+// import Home from "./containers/Home";
 import RoadmapDetail from "./containers/RoadmapDetail/RoadmapDetail";
 
 import "./App.css";

@@ -3,6 +3,9 @@ import { push } from "connected-react-router";
 
 import * as actionTypes from "./actionTypes";
 
+axios.defaults.xsrfCookieName = "csrftoken";
+axios.defaults.xsrfHeadName = "X-CSRFTOKEN";
+
 export const getRoadmapSuccess_ = (roadmapData) => {
   return { type: actionTypes.GET_ROADMAP_SUCCESS, roadmapData };
 };

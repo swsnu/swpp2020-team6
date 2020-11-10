@@ -23,6 +23,7 @@ class RoadmapDetail extends Component {
     } = this.props;
     if (selectedUser !== null && !roadmapErrorStatus) {
       onGetRoadmap(parseInt(match.params.id, 10));
+      console.log("hi");
     }
   }
 
@@ -65,13 +66,14 @@ class RoadmapDetail extends Component {
   render() {
     const {
       selectedUser,
+      isSignedIn,
       match,
       selectedRoadmap,
       roadmapErrorStatus,
     } = this.props;
     const roadmapId = parseInt(match.params.id, 10);
 
-    if (selectedUser === null) {
+    if (isSignedIn === null) {
       // unsigned in user
       return (
         <div className="roadmap-detail">
@@ -199,7 +201,7 @@ class RoadmapDetail extends Component {
                 </p>
                 <p id="roadmap-pin-count">
                   pinned
-                  {selectedRoadmap.pinned_count}
+                  {selectedRoadmap.pin_count}
                 </p>
                 <p id="roadmap-comment-count">
                   comments
@@ -235,6 +237,7 @@ class RoadmapDetail extends Component {
 
 RoadmapDetail.propTypes = {
   selectedUser: PropTypes.objectOf(PropTypes.any).isRequired,
+  isSignedIn: PropTypes.bool.isRequired,
   match: PropTypes.objectOf(PropTypes.any).isRequired,
   history: PropTypes.objectOf(PropTypes.any).isRequired,
 
@@ -256,6 +259,7 @@ const mapDispatchToProps = (dispatch) => {
 const mapStateToProps = (state) => {
   return {
     selectedUser: state.user.selectedUser,
+    isSignedIn: state.user.isSignedIn,
     selectedRoadmap: state.roadmap.selectedRoadmap,
     roadmapErrorStatus: state.roadmap.errorStatus,
   };
