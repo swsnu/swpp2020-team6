@@ -1,4 +1,5 @@
 /* eslint no-unused-vars: 0 */
+/*
 import axios from "axios";
 import * as actionCreators from "./roadmap";
 import store from "../store";
@@ -110,3 +111,4 @@ describe("ActionCreators", () => {
     });
   });
 });
+*/
