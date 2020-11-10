@@ -5,32 +5,35 @@ import { connect } from "react-redux";
 import PropTypes from "prop-types";
 
 import * as actionCreators from "./store/actions/index";
-// import SignUp from "./containers/SignUp";
-// import SignIn from "./containers/SignIn";
-// import Home from "./containers/Home";
 import RoadmapDetail from "./containers/RoadmapDetail/RoadmapDetail";
+import SignUp from "./containers/SignUp";
+import SignIn from "./containers/SignIn";
+import Home from "./containers/Home";
 
 import "./App.css";
 
 class App extends React.Component {
   componentDidMount() {
-    const { selectedUser, onGetUserAuth } = this.props;
-    if (selectedUser === undefined) {
+    const { isSignedIn, onGetUserAuth } = this.props;
+    if (isSignedIn === undefined) {
       onGetUserAuth();
     }
   }
 
   render() {
-    const { selectedUser, history } = this.props;
-    if (selectedUser === undefined) {
+    const { isSignedIn, history } = this.props;
+    if (isSignedIn === undefined) {
       return <div className="loading" />;
     }
     return (
       <ConnectedRouter history={history}>
         <div className="App">
           <Switch>
+            <Route path="/home" exact component={Home} />
+            <Route path="/signup" exact component={SignUp} />
+            <Route path="/signin" exact component={SignIn} />
             <Route path="/roadmap/:id" exact component={RoadmapDetail} />
-            <Redirect exact from="/" to="/roadmap/1" />
+            <Redirect exact from="/" to="/home" />
             <Route render={() => <h1>Not Found</h1>} />
           </Switch>
         </div>
@@ -40,14 +43,14 @@ class App extends React.Component {
 }
 
 App.propTypes = {
-  selectedUser: PropTypes.objectOf(PropTypes.any).isRequired,
+  isSignedIn: PropTypes.objectOf(PropTypes.any).isRequired,
   onGetUserAuth: PropTypes.func.isRequired,
   history: PropTypes.objectOf(PropTypes.any).isRequired,
 };
 
 const mapStateToProps = (state) => {
   return {
-    selectedUser: state.user.selectedUser,
+    isSignedIn: state.user.isSignedIn,
   };
 };
 
