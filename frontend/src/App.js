@@ -7,31 +7,32 @@ import PropTypes from "prop-types";
 import CreateRoadmap from "./containers/CreateRoadmap/CreateRoadmap";
 import EditRoadmap from "./containers/EditRoadmap/EditRoadmap";
 import * as actionCreators from "./store/actions/index";
+import SignUp from "./containers/SignUp/SignUp";
+import SignIn from "./containers/SignIn/SignIn";
+import Home from "./containers/Home/Home";
 
 import "./App.css";
 
 class App extends React.Component {
   componentDidMount() {
-    const { onGetUserAuth } = this.props;
-    onGetUserAuth();
+    const { isSignedIn, onGetUserAuth } = this.props;
+    if (isSignedIn === undefined) {
+      onGetUserAuth();
+    }
   }
 
   render() {
-    const { isSignedIn, selectedUser, history } = this.props;
-
+    const { isSignedIn, history, selectedUser } = this.props;
     if (isSignedIn === undefined) {
-      return (
-        <div className="App">
-          <div className="loading" />
-        </div>
-      );
+      return <div className="loading" />;
     }
     return (
       <ConnectedRouter history={history}>
         <div className="App">
           <Switch>
-            <Route path="/home" exact render={() => <h1>Home</h1>} />
-            <Route path="/signin" exact render={() => <h1>Sign In</h1>} />
+            <Route path="/home" exact component={Home} />
+            <Route path="/signup" exact component={SignUp} />
+            <Route path="/signin" exact component={SignIn} />
             <Route
               path="/roadmap/create"
               exact
