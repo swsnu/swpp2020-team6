@@ -22,16 +22,19 @@ const CreateSection = (props) => {
     changeTaskDescriptionHandler,
   } = props;
 
+  // eslint-disable-next-line no-debugger
+  debugger;
+
   const CreateTasks = tasks.map((task, index) => {
     return (
       <CreateTask
         tmpSectionId={tmpSectionId}
         tmpTaskId={index}
         taskLastId={tasks.length - 1}
-        title={task.title}
-        type={task.type}
-        url={task.url}
-        description={task.description}
+        title={task.task_title}
+        type={task.task_type}
+        url={task.task_url}
+        description={task.task_description}
         clickDeleteTaskHandler={clickDeleteTaskHandler}
         clickUpTaskHandler={clickUpTaskHandler}
         clickDownTaskHandler={clickDownTaskHandler}

@@ -73,12 +73,12 @@ export const editRoadmapFail_ = () => {
   return { type: actionTypes.CREATE_ROADMAP_FAILURE };
 };
 
-export const editRoadmap = (roadmapData) => {
+export const editRoadmap = (roadmapId, roadmapData) => {
   return (dispatch) => {
     return axios
-      .post(`/api/roadmap/${roadmapData.id}/`)
-      .then((response) => {
-        dispatch(push(`/roadmap/${response.data.id}`));
+      .put(`/api/roadmap/${roadmapId}/`, roadmapData)
+      .then(() => {
+        dispatch(push(`/roadmap/${roadmapId}`));
       })
       .catch((error) => {
         editRoadmapFail_();

@@ -4,7 +4,11 @@ import { push } from "connected-react-router";
 import * as actionTypes from "./actionTypes";
 
 export const getUserAuthSuccess_ = (data) => {
-  return { type: actionTypes.GET_USER_AUTH, isSignedIn: data.is_signed_in, selectedUser: data };
+  return {
+    type: actionTypes.GET_USER_AUTH,
+    isSignedIn: data.is_signed_in,
+    selectedUser: data.user_data,
+  };
 };
 
 export const getUserAuth = () => {

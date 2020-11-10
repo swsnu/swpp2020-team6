@@ -2,9 +2,7 @@ import * as actionTypes from "../actions/actionTypes";
 
 const initialState = {
   isSignedIn: undefined,
-
-  selectedUser: null,
-  allUsers: null,
+  selectedUser: undefined,
 };
 
 const reducer = (state = initialState, action) => {
