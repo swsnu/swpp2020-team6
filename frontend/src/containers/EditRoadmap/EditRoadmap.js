@@ -281,7 +281,6 @@ class EditRoadmap extends Component {
       );
     }
     if (errorStatus === true) {
-      alert("No such Roadmap!");
       return (
         <div className="EditRoadmap">
           <div className="error">
@@ -297,10 +296,7 @@ class EditRoadmap extends Component {
         </div>
       );
     }
-
     const { sections, level, title } = this.state;
-    // eslint-disable-next-line no-debugger
-    debugger;
     if (title === null) {
       this.setState({
         title: selectedRoadmap.title,
@@ -308,10 +304,7 @@ class EditRoadmap extends Component {
         sections: selectedRoadmap.sections,
       });
     }
-
     const EditSections = sections.map((section, index) => {
-      // eslint-disable-next-line no-debugger
-      debugger;
       return (
         <EditSection
           tmpSectionId={index}

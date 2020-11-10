@@ -24,6 +24,8 @@ class App extends React.Component {
   render() {
     const { isSignedIn, history, selectedUser } = this.props;
     if (isSignedIn === undefined) {
+      // eslint-disable-next-line no-debugger
+      debugger;
       return <div className="loading" />;
     }
     return (

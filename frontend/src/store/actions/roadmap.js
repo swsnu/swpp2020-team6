@@ -21,11 +21,14 @@ export const getRoadmap = (roadmapId) => {
       .catch((error) => {
         dispatch(getRoadmapFail_());
         switch (error.response.status) {
+          case 401:
+            alert("Please sign in!");
+            break;
           case 404:
-            dispatch(alert("No such Roadmap!"));
+            alert("No such Roadmap!");
             break;
           case 400:
-            dispatch(alert("Parsing error!"));
+            alert("Parsing error!");
             break;
           default:
             break;
@@ -47,16 +50,17 @@ export const createRoadmap = (roadmapData) => {
     return axios
       .post("/api/roadmap/", roadmapData)
       .then((response) => {
+        dispatch(createRoadmapSuccess_());
         dispatch(push(`/roadmap/${response.data.id}`));
       })
       .catch((error) => {
         dispatch(createRoadmapFail_());
         switch (error.response.status) {
           case 401:
-            alert("Please Sign In!");
+            alert("Please sign in!");
             break;
           case 400:
-            alert("Parsing Error!");
+            alert("Parsing error!");
             break;
           default:
             break;
@@ -78,6 +82,7 @@ export const editRoadmap = (roadmapId, roadmapData) => {
     return axios
       .put(`/api/roadmap/${roadmapId}/`, roadmapData)
       .then(() => {
+        dispatch(editRoadmapSuccess_());
         dispatch(push(`/roadmap/${roadmapId}`));
       })
       .catch((error) => {
