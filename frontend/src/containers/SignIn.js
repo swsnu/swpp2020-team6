@@ -12,8 +12,16 @@ class SignIn extends Component {
     password: "",
   };
 
+  componentDidMount() {
+    const { isSignedIn, history } = this.props;
+    if (isSignedIn === true) {
+      alert("You are already signed in. Please sign out first.");
+      history.push("/home");
+    }
+  }
+
   onClickSignIn = (userCredentials) => {
-    const { onSignIn } = this.props; // TODO
+    const { onSignIn } = this.props;
     onSignIn(userCredentials);
   };
 
@@ -23,39 +31,39 @@ class SignIn extends Component {
   };
 
   onClickForgotPassword = () => {
-    alert("Contact us: rotus@gmail.com");
+    alert("Contact us: swpprotus@gmail.com");
   };
 
   onClickSignOut = () => {
-    const Props = this.props;
-    Props.onSignOut();
+    const { onSignOut } = this.props;
+    onSignOut();
   };
 
   render() {
-    const State = this.state; // TODO : camelCase
-    // const {username, password} = this.state;
+    const { username, password } = this.state;
 
     return (
       <div className="SignIn">
+        <h1>Sign In</h1>
         <label>Username</label>
         <input
           id="username-input"
           type="username"
-          value={State.username}
+          value={username}
           onChange={(event) => this.setState({ username: event.target.value })}
         />
         <label>Password</label>
         <input
           id="password-input"
           type="password"
-          value={State.password}
+          value={password}
           onChange={(event) => this.setState({ password: event.target.value })}
         />
         <button
           id="signin-button"
-          onClick={() => this.onClickSignIn(State)}
+          onClick={() => this.onClickSignIn({ username, password })}
           type="button"
-          disabled={!(State.username && State.password)}
+          disabled={!(username && password)}
         >
           Sign In
         </button>
@@ -80,12 +88,13 @@ class SignIn extends Component {
 SignIn.propTypes = {
   onSignIn: PropTypes.func.isRequired,
   onSignOut: PropTypes.func.isRequired,
+  isSignedIn: PropTypes.objectOf(PropTypes.any).isRequired,
   history: PropTypes.objectOf(PropTypes.any).isRequired,
 };
 
 const mapStateToProps = (state) => {
   return {
-    is_signed_in: state.user.is_signed_in, // TODO: camelcase
+    isSignedIn: state.user.isSignedIn,
   };
 };
 

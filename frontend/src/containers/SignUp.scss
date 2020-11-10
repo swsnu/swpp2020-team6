@@ -1,4 +1,4 @@
-.SignIn {
+.SignUp {
   width: 40%;
   max-width: 400px;
   margin: 100px auto;
@@ -10,9 +10,10 @@
     padding: 0;
     font-size: 12px;
   }
+  input[type="email"],
   input[type="username"],
   input[type="password"] {
-    width: 98%;
+    width: 100%;
     padding: 25px 10px 5px 10px;
     font-size: 15px;
     font-weight: 700;
@@ -35,7 +36,7 @@
     margin-right: 40px;
     margin-bottom: 20px;
     cursor: pointer;
-    &#signin-button {
+    &#signup-button {
       color: white;
       background-color: black;
       &:disabled {
@@ -43,6 +44,10 @@
         cursor: not-allowed;
       }
     }
+  }
+  h1 {
+    // text-decoration: underline;
+    // font-family: sans-serif;
   }
   //   @media (max-width: 768px) {
   //     width: 70%;

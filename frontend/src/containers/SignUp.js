@@ -4,6 +4,8 @@ import PropTypes from "prop-types";
 
 import * as actionCreators from "../store/actions/index";
 
+import "./SignUp.scss";
+
 class SignUp extends Component {
   state = {
     email: "",
@@ -12,14 +14,22 @@ class SignUp extends Component {
     passwordConfirm: "",
   };
 
+  componentDidMount() {
+    const { isSignedIn, history } = this.props;
+    if (isSignedIn === true) {
+      alert("You are already signed in. Please sign out first.");
+      history.push("/home");
+    }
+  }
+
   onClickSignIn = () => {
     const { history } = this.props;
     history.push("/signin");
   };
 
   onClickSignUp = (userCredentials) => {
-    const Props = this.props;
-    Props.onSignUp(userCredentials);
+    const { onSignUp } = this.props;
+    onSignUp(userCredentials);
   };
 
   render() {
@@ -28,10 +38,13 @@ class SignUp extends Component {
     const emailRegexOne = /^[a-zA-Z0-9.!#$%&'*+/=?^_`{|}~-]+@[a-zA-Z0-9!#$%&'*+/=?^_`{|}~-]+.[a-zA-z]{2,3}$/;
     const emailRegexTwo = /^[a-zA-Z0-9.!#$%&'*+/=?^_`{|}~-]+@[a-zA-Z0-9!#$%&'*+/=?^_`{|}~-]+.[a-zA-z]+.[a-zA-z]{2,3}$/;
     const validEmail = emailRegexOne.test(email) || emailRegexTwo.test(email);
+    const usernameFilled = username !== "";
+    const passwordFilled = password !== "";
     const passwordMatch = password === passwordConfirm;
 
     return (
       <div className="SignUp">
+        <h1>Sign Up</h1>
         <label>Email</label>
         <input
           id="email-input"
@@ -60,16 +73,16 @@ class SignUp extends Component {
           value={passwordConfirm}
           onChange={(event) => this.setState({ passwordConfirm: event.target.value })}
         />
-        <button id="signin-button" onClick={() => this.onClickSignIn()} type="button">
-          Sign In
-        </button>
         <button
           id="signup-button"
           onClick={() => this.onClickSignUp({ email, username, password })}
           type="button"
-          disabled={!(validEmail && passwordMatch)}
+          disabled={!(validEmail && usernameFilled && passwordFilled && passwordMatch)}
         >
           Sign Up
+        </button>
+        <button id="signin-button" onClick={() => this.onClickSignIn()} type="button">
+          Sign In
         </button>
       </div>
     );
@@ -78,12 +91,13 @@ class SignUp extends Component {
 
 SignUp.propTypes = {
   onSignUp: PropTypes.func.isRequired,
+  isSignedIn: PropTypes.objectOf(PropTypes.any).isRequired,
   history: PropTypes.objectOf(PropTypes.any).isRequired,
 };
 
 const mapStateToProps = (state) => {
   return {
-    is_signed_in: state.user.is_signed_in,
+    isSignedIn: state.user.isSignedIn,
   };
 };
 

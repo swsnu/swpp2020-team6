@@ -4,9 +4,9 @@ import PropTypes from "prop-types";
 
 import * as actionCreators from "../store/actions/index";
 
-class Home extends Component {
-  state = {};
+import "./Home.scss";
 
+class Home extends Component {
   onClickSignIn = () => {
     const { history } = this.props;
     history.push("/signin");
@@ -23,11 +23,10 @@ class Home extends Component {
   };
 
   render() {
-    const State = this.state;
-
     return (
-      <div className="SignInPage">
-        <button id="signin-button" onClick={() => this.onClickSignIn(State)} type="button">
+      <div className="Home">
+        <h1>Home</h1>
+        <button id="signin-button" onClick={() => this.onClickSignIn()} type="button">
           Sign In
         </button>
         <button id="signup-button" onClick={() => this.onClickSignUp()} type="button">
@@ -48,7 +47,8 @@ Home.propTypes = {
 
 const mapStateToProps = (state) => {
   return {
-    is_signed_in: state.user.is_signed_in,
+    isSignedIn: state.user.isSignedIn,
+    // TODO: bring roadmaps to show in my_roadmap tab
   };
 };
 

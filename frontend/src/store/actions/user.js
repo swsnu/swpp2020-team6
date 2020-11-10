@@ -4,7 +4,7 @@ import { push } from "connected-react-router";
 import * as actionTypes from "./actionTypes";
 
 export const getUserAuthSuccess_ = (data) => {
-  return { type: actionTypes.GET_USER_AUTH, is_signed_in: data.is_signed_in };
+  return { type: actionTypes.GET_USER_AUTH, isSignedIn: data.is_signed_in, selectedUser: data };
 };
 
 export const getUserAuth = () => {
@@ -19,8 +19,8 @@ export const signInSuccess_ = () => {
   return { type: actionTypes.SIGN_IN_SUCCESS };
 };
 
-export const signInFail_ = (err) => {
-  return { type: actionTypes.SIGN_IN_FAILURE, errStatus: err };
+export const signInFail_ = () => {
+  return { type: actionTypes.SIGN_IN_FAILURE };
 };
 
 export const signIn = (userCredentials) => {
@@ -35,7 +35,7 @@ export const signIn = (userCredentials) => {
         switch (error.response.status) {
           case 401:
             alert("Email or Password is incorrect!");
-            dispatch(signInFail_(401));
+            dispatch(signInFail_());
             break;
           default:
             break;
@@ -48,8 +48,8 @@ export const signOutSuccess_ = () => {
   return { type: actionTypes.SIGN_OUT_SUCCESS };
 };
 
-export const signOutFail_ = (err) => {
-  return { type: actionTypes.SIGN_OUT_FAILURE, errStatus: err };
+export const signOutFail_ = () => {
+  return { type: actionTypes.SIGN_OUT_FAILURE };
 };
 
 export const signOut = () => {
@@ -57,6 +57,7 @@ export const signOut = () => {
     return axios
       .get("/api/user/signout/")
       .then(() => {
+        alert("Successfully signed out!");
         dispatch(signOutSuccess_());
         dispatch(push("/home"));
       })
@@ -64,7 +65,7 @@ export const signOut = () => {
         switch (error.response.status) {
           case 401:
             alert("You are not signed in!");
-            dispatch(signOutFail_(401));
+            dispatch(signOutFail_());
             break;
           default:
             break;
@@ -77,8 +78,8 @@ export const signUpSuccess_ = () => {
   return { type: actionTypes.SIGN_UP_SUCCESS };
 };
 
-export const signUpFail_ = (err) => {
-  return { type: actionTypes.SIGN_UP_FAILURE, errStatus: err };
+export const signUpFail_ = () => {
+  return { type: actionTypes.SIGN_UP_FAILURE };
 };
 
 export const signUp = (userCredentials) => {
@@ -86,6 +87,7 @@ export const signUp = (userCredentials) => {
     return axios
       .post("/api/user/", userCredentials)
       .then(() => {
+        alert("Successfully signed up!");
         dispatch(signUpSuccess_());
         dispatch(push("/home"));
       })
@@ -93,7 +95,7 @@ export const signUp = (userCredentials) => {
         switch (error.response.status) {
           case 400:
             alert("Something wrong with the request! Try again.");
-            dispatch(signUpFail_(400));
+            dispatch(signUpFail_());
             break;
           default:
             break;

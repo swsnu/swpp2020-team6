@@ -13,15 +13,15 @@ import "./App.css";
 
 class App extends React.Component {
   componentDidMount() {
-    const { selectedUser, onGetUserAuth } = this.props;
-    if (selectedUser === undefined) {
+    const { isSignedIn, onGetUserAuth } = this.props;
+    if (isSignedIn === undefined) {
       onGetUserAuth();
     }
   }
 
   render() {
-    const { selectedUser, history } = this.props;
-    if (selectedUser === undefined) {
+    const { isSignedIn, history } = this.props;
+    if (isSignedIn === undefined) {
       return <div className="loading" />;
     }
     return (
@@ -41,14 +41,14 @@ class App extends React.Component {
 }
 
 App.propTypes = {
-  selectedUser: PropTypes.objectOf(PropTypes.any).isRequired,
+  isSignedIn: PropTypes.objectOf(PropTypes.any).isRequired,
   onGetUserAuth: PropTypes.func.isRequired,
   history: PropTypes.objectOf(PropTypes.any).isRequired,
 };
 
 const mapStateToProps = (state) => {
   return {
-    selectedUser: state.user.selectedUser,
+    isSignedIn: state.user.isSignedIn,
   };
 };
 
