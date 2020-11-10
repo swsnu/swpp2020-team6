@@ -15,11 +15,7 @@ class Error extends Component {
     return (
       <div className="Error">
         <div className="buttons">
-          <button
-            id="home-button"
-            type="button"
-            onClick={() => this.onClickHome()}
-          >
+          <button id="home-button" type="button" onClick={() => this.onClickHome()}>
             Home
           </button>
         </div>
@@ -38,8 +34,7 @@ Error.propTypes = {
 
 const mapDispatchToProps = (dispatch) => {
   return {
-    onResetRoadmapErrorStatus: () =>
-      dispatch(actionCreators.resetRoadmapErrorStatus_()),
+    onResetRoadmapErrorStatus: () => dispatch(actionCreators.resetRoadmapErrorStatus_()),
   };
 };
 

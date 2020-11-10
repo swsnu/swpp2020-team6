@@ -10,15 +10,14 @@ import * as actionCreators from "./store/actions/index";
 import SignUp from "./containers/SignUp/SignUp";
 import SignIn from "./containers/SignIn/SignIn";
 import Home from "./containers/Home/Home";
+import RoadmapDetail from "./containers/RoadmapDetail/RoadmapDetail";
 
 import "./App.css";
 
 class App extends React.Component {
   componentDidMount() {
-    const { isSignedIn, onGetUserAuth } = this.props;
-    if (isSignedIn === undefined) {
-      onGetUserAuth();
-    }
+    const { onGetUserAuth } = this.props;
+    onGetUserAuth();
   }
 
   render() {
@@ -57,6 +56,7 @@ class App extends React.Component {
                 );
               }}
             />
+            <Route path="/roadmap/:id" exact component={RoadmapDetail} />
             <Redirect exact from="/" to="/home" />
             <Route render={() => <h1>Not Found</h1>} />
           </Switch>

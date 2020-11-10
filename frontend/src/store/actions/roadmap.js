@@ -19,13 +19,12 @@ export const getRoadmap = (roadmapId) => {
         dispatch(getRoadmapSuccess_(response.data));
       })
       .catch((error) => {
-        dispatch(getRoadmapFail_());
         switch (error.response.status) {
-          case 401:
-            alert("Please sign in!");
-            break;
           case 404:
             alert("No such Roadmap!");
+            break;
+          case 401:
+            alert("Please sign in!");
             break;
           case 400:
             alert("Parsing error!");
@@ -33,10 +32,10 @@ export const getRoadmap = (roadmapId) => {
           default:
             break;
         }
+        dispatch(getRoadmapFail_());
       });
   };
 };
-
 export const createRoadmapSuccess_ = () => {
   return { type: actionTypes.CREATE_ROADMAP_SUCCESS };
 };
@@ -109,4 +108,48 @@ export const editRoadmap = (roadmapId, roadmapData) => {
 
 export const resetRoadmapErrorStatus_ = () => {
   return { type: actionTypes.RESET_ROADMAP_ERRORSTATUS };
+};
+
+export const resetRoadmap_ = () => {
+  return {
+    type: actionTypes.RESET_ROADMAP,
+  };
+};
+
+export const deleteRoadmapSuccess_ = () => {
+  return { type: actionTypes.DELETE_ROADMAP_SUCCESS };
+};
+
+export const deleteRoadmapFail_ = () => {
+  return { type: actionTypes.DELETE_ROADMAP_FAILURE };
+};
+
+export const deleteRoadmap = (roadmapId) => {
+  return (dispatch) => {
+    return axios
+      .delete(`/api/roadmap/${roadmapId}/`)
+      .then(() => {
+        dispatch(deleteRoadmapSuccess_());
+        dispatch(push(`/home`)); // <---where?!
+      })
+      .catch((error) => {
+        deleteRoadmapFail_(error.response.status);
+        switch (error.response.status) {
+          case 401:
+            alert("Please sign in!");
+            break;
+          case 404:
+            alert("No such Roadmap!");
+            break;
+          case 403:
+            alert("Only the author can delete the Roadmap!");
+            break;
+          case 400:
+            alert("Parsing error!");
+            break;
+          default:
+            break;
+        }
+      });
+  };
 };
