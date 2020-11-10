@@ -11,3 +11,6 @@ class Comment(models.Model):
         User, on_delete=models.CASCADE, related_name="author_comment", blank=True
     )
     content = models.TextField(default="")
+
+    def __str__(self):
+        return "{}-{}-{}".format(self.roadmap_id, self.author.username, self.content)

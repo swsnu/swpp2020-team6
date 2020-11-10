@@ -37,9 +37,11 @@ def user(request):
             return HttpResponse(status=201)
         except IntegrityError:
             return HttpResponse(status=400)
+
     elif request.method == "GET":
         if request.user.is_authenticated:
             response_user = {"is_signed_in": True}
+            response_user.update({"user_data": request.user.to_dict()})
         else:
             response_user = {"is_signed_in": False}
         return JsonResponse(response_user, status=200)
