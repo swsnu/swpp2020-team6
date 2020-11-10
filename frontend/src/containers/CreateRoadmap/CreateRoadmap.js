@@ -7,6 +7,7 @@ import * as actionCreators from "../../store/actions/index";
 import CreateSection from "../../components/CreateSection/CreateSection";
 import Error from "../Error/Error";
 import { levelType } from "../../constants";
+import "./CreateRoadmap.scss";
 
 class CreateRoadmap extends Component {
   state = {
