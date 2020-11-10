@@ -21,9 +21,9 @@ const CreateTask = (props) => {
   } = props;
 
   return (
-    <div className="create-task">
+    <div className="CreateTask">
       <button
-        className="create-seaction-up"
+        className="create-task-up"
         type="button"
         disabled={tmpTaskId === 0}
         onClick={() => clickUpTaskHandler(tmpSectionId, tmpTaskId)}
@@ -31,13 +31,14 @@ const CreateTask = (props) => {
         Up
       </button>
       <button
-        className="create-seaction-down"
+        className="create-task-down"
         type="button"
         disabled={tmpTaskId === taskLastId}
         onClick={() => clickDownTaskHandler(tmpSectionId, tmpTaskId)}
       >
         Down
       </button>
+      <br />
       <label>Task Title</label>
       <input
         className="create-task-title"
@@ -47,6 +48,7 @@ const CreateTask = (props) => {
           changeTaskTitleHandler(tmpSectionId, tmpTaskId, event.target.value);
         }}
       />
+      <br />
       <label>Task Type</label>
       <select
         className="create-task-type"
@@ -61,6 +63,7 @@ const CreateTask = (props) => {
         <option value={taskType.PAPER}>Paper</option>
         <option value={taskType.OTHER}>Other</option>
       </select>
+      <br />
       <label>Task URL</label>
       <input
         className="create-task-url"
@@ -70,6 +73,7 @@ const CreateTask = (props) => {
           changeTaskUrlHandler(tmpSectionId, tmpTaskId, event.target.value);
         }}
       />
+      <br />
       <label>Task Description</label>
       <textarea
         className="create-task-description"
@@ -79,6 +83,7 @@ const CreateTask = (props) => {
           changeTaskDescriptionHandler(tmpSectionId, tmpTaskId, event.target.value);
         }}
       />
+      <br />
       <button
         className="delete-task-button"
         type="button"

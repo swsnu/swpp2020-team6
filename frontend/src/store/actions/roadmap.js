@@ -22,6 +22,7 @@ export const getRoadmap = (roadmapId) => {
         switch (error.response.status) {
           case 404:
             alert("No such Roadmap!");
+            dispatch(push.goBack());
             break;
           case 401:
             alert("Please sign in!");
@@ -129,8 +130,9 @@ export const deleteRoadmap = (roadmapId) => {
     return axios
       .delete(`/api/roadmap/${roadmapId}/`)
       .then(() => {
+        alert("Roadmap successfully deleted!");
         dispatch(deleteRoadmapSuccess_());
-        dispatch(push(`/home`)); // <---where?!
+        dispatch(push(`/home`));
       })
       .catch((error) => {
         deleteRoadmapFail_(error.response.status);
