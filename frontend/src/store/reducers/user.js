@@ -2,9 +2,7 @@ import * as actionTypes from "../actions/actionTypes";
 
 const initialState = {
   isSignedIn: undefined,
-
-  selectedUser: null,
-  allUsers: null,
+  selectedUser: undefined,
 };
 
 const reducer = (state = initialState, action) => {
@@ -12,11 +10,11 @@ const reducer = (state = initialState, action) => {
     case actionTypes.GET_USER_AUTH:
       return { ...state, isSignedIn: action.isSignedIn, selectedUser: action.selectedUser };
     case actionTypes.SIGN_IN_SUCCESS:
-      return { ...state, isSignedIn: true };
+      return { ...state, isSignedIn: true, selectedUser: action.selectedUser };
     case actionTypes.SIGN_IN_FAILURE:
       return { ...state };
     case actionTypes.SIGN_OUT_SUCCESS:
-      return { ...state, isSignedIn: false };
+      return { ...state, isSignedIn: false, selectedUser: undefined };
     case actionTypes.SIGN_OUT_FAILURE:
       return { ...state };
     case actionTypes.SIGN_UP_SUCCESS:

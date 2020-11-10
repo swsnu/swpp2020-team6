@@ -76,11 +76,7 @@ const CreateTask = (props) => {
         type="text"
         value={description}
         onChange={(event) => {
-          changeTaskDescriptionHandler(
-            tmpSectionId,
-            tmpTaskId,
-            event.target.value,
-          );
+          changeTaskDescriptionHandler(tmpSectionId, tmpTaskId, event.target.value);
         }}
       />
       <button

@@ -11,8 +11,9 @@ import { levelType } from "../../constants";
 class CreateRoadmap extends Component {
   state = {
     title: "",
-    level: levelType.BASIC,
+    level: 0,
     sections: [],
+    tags: [],
   };
 
   onChangeTitle = (title) => {
@@ -25,7 +26,7 @@ class CreateRoadmap extends Component {
 
   onClickCreateSection = () => {
     const { sections } = this.state;
-    this.setState({ sections: sections.concat({ title: "", tasks: [] }) });
+    this.setState({ sections: sections.concat({ section_title: "", tasks: [] }) });
   };
 
   onClickDeleteSection = (tmpSectionId) => {
@@ -72,7 +73,7 @@ class CreateRoadmap extends Component {
     this.setState({
       sections: sections.map((section, index) => {
         if (index === tmpSectionId) {
-          section.title = title;
+          section.section_title = title;
         }
         return section;
       }),
@@ -87,10 +88,10 @@ class CreateRoadmap extends Component {
           return {
             ...section,
             tasks: section.tasks.concat({
-              title: "",
-              type: 0,
-              url: "",
-              description: "",
+              task_title: "",
+              task_type: 0,
+              task_url: "",
+              task_description: "",
             }),
           };
         }
@@ -171,7 +172,7 @@ class CreateRoadmap extends Component {
             ...section,
             tasks: section.tasks.map((task, taskIndex) => {
               if (taskIndex === tmpTaskId) {
-                return { ...task, title };
+                return { ...task, task_title: title };
               }
               return task;
             }),
@@ -191,7 +192,7 @@ class CreateRoadmap extends Component {
             ...section,
             tasks: section.tasks.map((task, taskIndex) => {
               if (taskIndex === tmpTaskId) {
-                return { ...task, type };
+                return { ...task, task_type: type };
               }
               return task;
             }),
@@ -211,7 +212,7 @@ class CreateRoadmap extends Component {
             ...section,
             tasks: section.tasks.map((task, taskIndex) => {
               if (taskIndex === tmpTaskId) {
-                return { ...task, url };
+                return { ...task, task_url: url };
               }
               return task;
             }),
@@ -231,7 +232,7 @@ class CreateRoadmap extends Component {
             ...section,
             tasks: section.tasks.map((task, taskIndex) => {
               if (taskIndex === tmpTaskId) {
-                return { ...task, description };
+                return { ...task, task_description: description };
               }
               return task;
             }),
@@ -254,15 +255,15 @@ class CreateRoadmap extends Component {
   };
 
   onClickCreateConfirm = () => {
-    const { title, level, sections } = this.state;
-    const { selectedUser } = this.props;
+    const { title, level, sections, tags } = this.state;
+    const { onCreateRoadmap } = this.props;
     const roadmapData = {
-      authorId: selectedUser.id,
       title,
       level,
       sections,
+      tags,
     };
-    this.onCreateRoadmap(roadmapData);
+    onCreateRoadmap(roadmapData);
   };
 
   render() {
@@ -284,7 +285,7 @@ class CreateRoadmap extends Component {
         <CreateSection
           tmpSectionId={index}
           sectionLastId={sections.length - 1}
-          title={section.title}
+          title={section.section_title}
           tasks={section.tasks}
           clickDeleteSectionHandler={this.onClickDeleteSection}
           clickUpSectionHandler={this.onClickUpSection}
@@ -319,6 +320,9 @@ class CreateRoadmap extends Component {
             onChange={(event) => this.onChangeLevel(event.target.value)}
           >
             Level
+            <option selected value={0}>
+              Choose level
+            </option>
             <option value={levelType.BASIC}>Basic</option>
             <option value={levelType.INTERMEDIATE}>Intermediate</option>
             <option value={levelType.ADVANCED}>Advanced</option>
@@ -346,6 +350,7 @@ class CreateRoadmap extends Component {
             <button
               id="confirm-create-roadmap-button"
               type="button"
+              disabled={title === "" || level === 0 || sections.length === 0}
               onClick={() => this.onClickCreateConfirm()}
             >
               Confirm
@@ -360,12 +365,12 @@ class CreateRoadmap extends Component {
 CreateRoadmap.propTypes = {
   selectedUser: PropTypes.objectOf(PropTypes.any).isRequired,
   history: PropTypes.objectOf(PropTypes.any).isRequired,
+  onCreateRoadmap: PropTypes.func.isRequired,
 };
 
 const mapDispatchToProps = (dispatch) => {
   return {
-    onCreateRoadmap: (roadmapData) =>
-      dispatch(actionCreators.createRoadmap(roadmapData)),
+    onCreateRoadmap: (roadmapData) => dispatch(actionCreators.createRoadmap(roadmapData)),
   };
 };
 

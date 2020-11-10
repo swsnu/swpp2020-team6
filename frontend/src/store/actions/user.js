@@ -4,7 +4,11 @@ import { push } from "connected-react-router";
 import * as actionTypes from "./actionTypes";
 
 export const getUserAuthSuccess_ = (data) => {
-  return { type: actionTypes.GET_USER_AUTH, isSignedIn: data.is_signed_in, selectedUser: data };
+  return {
+    type: actionTypes.GET_USER_AUTH,
+    isSignedIn: data.is_signed_in,
+    selectedUser: data.user_data,
+  };
 };
 
 export const getUserAuth = () => {
@@ -15,8 +19,8 @@ export const getUserAuth = () => {
   };
 };
 
-export const signInSuccess_ = () => {
-  return { type: actionTypes.SIGN_IN_SUCCESS };
+export const signInSuccess_ = (userData) => {
+  return { type: actionTypes.SIGN_IN_SUCCESS, selectedUser: userData };
 };
 
 export const signInFail_ = () => {
@@ -27,8 +31,8 @@ export const signIn = (userCredentials) => {
   return (dispatch) => {
     return axios
       .post("/api/user/signin/", userCredentials)
-      .then(() => {
-        dispatch(signInSuccess_());
+      .then((response) => {
+        dispatch(signInSuccess_(response.data));
         dispatch(push("/home"));
       })
       .catch((error) => {

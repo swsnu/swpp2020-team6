@@ -10,9 +10,12 @@ import { levelType } from "../../constants";
 
 class EditRoadmap extends Component {
   state = {
-    title: "",
+    title: null,
     level: 0,
     sections: [],
+    tags: [],
+    addedTagList: [],
+    deletedTagList: [],
   };
 
   componentDidMount() {
@@ -26,7 +29,7 @@ class EditRoadmap extends Component {
 
   onClickCreateSection = () => {
     const { sections } = this.state;
-    this.setState({ sections: sections.concat({ title: "", tasks: [] }) });
+    this.setState({ sections: sections.concat({ section_title: "", tasks: [] }) });
   };
 
   onClickDeleteSection = (tmpSectionId) => {
@@ -73,7 +76,7 @@ class EditRoadmap extends Component {
     this.setState({
       sections: sections.map((section, index) => {
         if (index === tmpSectionId) {
-          section.title = title;
+          section.section_title = title;
         }
         return section;
       }),
@@ -85,12 +88,15 @@ class EditRoadmap extends Component {
     this.setState({
       sections: sections.map((section, index) => {
         if (index === tmpSectionId) {
-          return section.tasks.concat({
-            title: "",
-            type: 0,
-            url: "",
-            description: "",
-          });
+          return {
+            ...section,
+            tasks: section.tasks.concat({
+              task_title: "",
+              task_type: 0,
+              task_url: "",
+              task_description: "",
+            }),
+          };
         }
         return section;
       }),
@@ -169,7 +175,7 @@ class EditRoadmap extends Component {
             ...section,
             tasks: section.tasks.map((task, taskIndex) => {
               if (taskIndex === tmpTaskId) {
-                return { ...task, title };
+                return { ...task, task_title: title };
               }
               return task;
             }),
@@ -189,7 +195,7 @@ class EditRoadmap extends Component {
             ...section,
             tasks: section.tasks.map((task, taskIndex) => {
               if (taskIndex === tmpTaskId) {
-                return { ...task, type };
+                return { ...task, task_type: type };
               }
               return task;
             }),
@@ -209,7 +215,7 @@ class EditRoadmap extends Component {
             ...section,
             tasks: section.tasks.map((task, taskIndex) => {
               if (taskIndex === tmpTaskId) {
-                return { ...task, url };
+                return { ...task, task_url: url };
               }
               return task;
             }),
@@ -229,7 +235,7 @@ class EditRoadmap extends Component {
             ...section,
             tasks: section.tasks.map((task, taskIndex) => {
               if (taskIndex === tmpTaskId) {
-                return { ...task, description };
+                return { ...task, task_description: description };
               }
               return task;
             }),
@@ -249,20 +255,22 @@ class EditRoadmap extends Component {
   };
 
   onClickEditConfirm = () => {
-    const { title, level, sections } = this.state;
-    const { selectedUser } = this.props;
+    const { title, level, sections, tags, addedTagList, deletedTagList } = this.state;
+    const { match, onEditRoadmap } = this.props;
     const roadmapData = {
-      authorId: selectedUser.id,
       title,
       level,
       sections,
+      tags,
+      addedTagList,
+      deletedTagList,
     };
-    this.onEditRoadmap(roadmapData);
+    onEditRoadmap(match.params.id, roadmapData);
   };
 
   render() {
-    const { selectedUser, selectedRoadmap, errorStatus } = this.props;
-    if (selectedUser === undefined) {
+    const { isSignedIn, selectedRoadmap, errorStatus } = this.props;
+    if (isSignedIn === false) {
       alert("Please sign in!");
       return (
         <div className="EditRoadmap">
@@ -291,8 +299,9 @@ class EditRoadmap extends Component {
     }
 
     const { sections, level, title } = this.state;
-
-    if (level === 0) {
+    // eslint-disable-next-line no-debugger
+    debugger;
+    if (title === null) {
       this.setState({
         title: selectedRoadmap.title,
         level: selectedRoadmap.level,
@@ -301,11 +310,13 @@ class EditRoadmap extends Component {
     }
 
     const EditSections = sections.map((section, index) => {
+      // eslint-disable-next-line no-debugger
+      debugger;
       return (
         <EditSection
           tmpSectionId={index}
           sectionLastId={sections.length - 1}
-          title={section.title}
+          title={section.section_title}
           tasks={section.tasks}
           clickDeleteSectionHandler={this.onClickDeleteSection}
           clickUpSectionHandler={this.onClickUpSection}
@@ -339,6 +350,9 @@ class EditRoadmap extends Component {
             onChange={(event) => this.onClickLevel(event.target.value)}
           >
             Level
+            <option selected value={0}>
+              Choose level
+            </option>
             <option value={levelType.BASIC}>Basic</option>
             <option value={levelType.INTERMEDIATE}>Intermediate</option>
             <option value={levelType.ADVANCED}>Advanced</option>
@@ -364,6 +378,7 @@ class EditRoadmap extends Component {
             <button
               id="confirm-edit-roadmap-button"
               type="button"
+              disabled={title === "" || level === 0 || sections.length === 0}
               onClick={() => this.onClickEditConfirm()}
             >
               Confirm
@@ -376,10 +391,11 @@ class EditRoadmap extends Component {
 }
 
 EditRoadmap.propTypes = {
-  selectedUser: PropTypes.objectOf(PropTypes.any).isRequired,
+  isSignedIn: PropTypes.bool.isRequired,
   selectedRoadmap: PropTypes.objectOf(PropTypes.any).isRequired,
   errorStatus: PropTypes.bool.isRequired,
   onGetRoadmap: PropTypes.func.isRequired,
+  onEditRoadmap: PropTypes.func.isRequired,
   history: PropTypes.objectOf(PropTypes.any).isRequired,
   match: PropTypes.objectOf(PropTypes.any).isRequired,
 };
@@ -394,12 +410,9 @@ const mapStateToProps = (state) => {
 const mapDispatchToProps = (dispatch) => {
   return {
     onGetRoadmap: (roadmapId) => dispatch(actionCreators.getRoadmap(roadmapId)),
-    onEditRoadmap: (roadmapData) =>
-      dispatch(actionCreators.editRoadmap(roadmapData)),
+    onEditRoadmap: (roadmapId, roadmapData) =>
+      dispatch(actionCreators.editRoadmap(roadmapId, roadmapData)),
   };
 };
 
-export default connect(
-  mapStateToProps,
-  mapDispatchToProps,
-)(withRouter(EditRoadmap));
+export default connect(mapStateToProps, mapDispatchToProps)(withRouter(EditRoadmap));
