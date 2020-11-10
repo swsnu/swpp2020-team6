@@ -4,6 +4,8 @@ import { ConnectedRouter } from "connected-react-router";
 import { connect } from "react-redux";
 import PropTypes from "prop-types";
 
+import CreateRoadmap from "./containers/CreateRoadmap/CreateRoadmap";
+import EditRoadmap from "./containers/EditRoadmap/EditRoadmap";
 import * as actionCreators from "./store/actions/index";
 import SignUp from "./containers/SignUp/SignUp";
 import SignIn from "./containers/SignIn/SignIn";
@@ -19,7 +21,7 @@ class App extends React.Component {
   }
 
   render() {
-    const { isSignedIn, history } = this.props;
+    const { isSignedIn, history, selectedUser } = this.props;
     if (isSignedIn === undefined) {
       return <div className="loading" />;
     }
@@ -31,6 +33,28 @@ class App extends React.Component {
             <Route path="/signup" exact component={SignUp} />
             <Route path="/signin" exact component={SignIn} />
             <Route path="/roadmap/:id" exact component={RoadmapDetail} />
+            <Route
+              path="/roadmap/create"
+              exact
+              render={() => {
+                return (
+                  <div>
+                    <CreateRoadmap selectedUser={selectedUser} />
+                  </div>
+                );
+              }}
+            />
+            <Route
+              path="/roadmap/:id/edit"
+              exact
+              render={() => {
+                return (
+                  <div>
+                    <EditRoadmap selectedUser={selectedUser} />
+                  </div>
+                );
+              }}
+            />
             <Redirect exact from="/" to="/home" />
             <Route render={() => <h1>Not Found</h1>} />
           </Switch>
@@ -41,7 +65,8 @@ class App extends React.Component {
 }
 
 App.propTypes = {
-  isSignedIn: PropTypes.objectOf(PropTypes.any).isRequired,
+  isSignedIn: PropTypes.bool.isRequired,
+  selectedUser: PropTypes.objectOf(PropTypes.any).isRequired,
   onGetUserAuth: PropTypes.func.isRequired,
   history: PropTypes.objectOf(PropTypes.any).isRequired,
 };
@@ -49,6 +74,7 @@ App.propTypes = {
 const mapStateToProps = (state) => {
   return {
     isSignedIn: state.user.isSignedIn,
+    selectedUser: state.user.selectedUser,
   };
 };
 

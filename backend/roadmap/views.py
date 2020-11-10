@@ -51,16 +51,16 @@ def roadmap(request):
 
         # Add sections and tasks of this roadmap
         for section in section_list:
-            new_section = Section(title=section["title"], roadmap=new_roadmap)
+            new_section = Section(title=section["section_title"], roadmap=new_roadmap)
             new_section.save()
 
             task_list = section["tasks"]
             for task in task_list:
                 Task(
-                    title=task["title"],
-                    url=task["url"],
-                    type=task["type"],
-                    description=task["description"],
+                    title=task["task_title"],
+                    url=task["task_url"],
+                    type=task["task_type"],
+                    description=task["task_description"],
                     roadmap=new_roadmap,
                     section=new_section,
                 ).save()
@@ -113,16 +113,16 @@ def roadmap_id(request, roadmap_id):
         roadmap.title = new_title
         roadmap.level = new_level
         for section in section_list:
-            new_section = Section(title=section["title"], roadmap=roadmap)
+            new_section = Section(title=section["section_title"], roadmap=roadmap)
             new_section.save()
 
             task_list = section["tasks"]
             for task in task_list:
                 Task(
-                    title=task["title"],
-                    url=task["url"],
-                    type=task["type"],
-                    description=task["description"],
+                    title=task["task_title"],
+                    url=task["task_url"],
+                    type=task["task_type"],
+                    description=task["task_description"],
                     roadmap=roadmap,
                     section=new_section,
                 ).save()

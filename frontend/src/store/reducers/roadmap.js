@@ -14,7 +14,7 @@ const reducer = (state = initialState, action) => {
         errorStatus: false,
       };
     case actionTypes.GET_ROADMAP_FAILURE:
-      return { ...state, selectedRoadmap: null, errorStatus: true };
+      return { ...state, selectedRoadmap: undefined, errorStatus: true };
     case actionTypes.CREATE_ROADMAP_SUCCESS:
       return { ...state, selectedRoadmap: undefined, errorStatus: false };
     case actionTypes.CREATE_ROADMAP_FAILURE:

@@ -3,6 +3,7 @@ export const taskType = {
   WEBSITE: 2,
   VIDEO: 3,
   PAPER: 4,
+  OTHER: 5,
 };
 
 export const levelType = {
