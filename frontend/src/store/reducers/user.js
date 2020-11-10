@@ -14,7 +14,7 @@ const reducer = (state = initialState, action) => {
     case actionTypes.SIGN_IN_FAILURE:
       return { ...state };
     case actionTypes.SIGN_OUT_SUCCESS:
-      return { ...state, isSignedIn: false };
+      return { ...state, isSignedIn: false, selectedUser: undefined };
     case actionTypes.SIGN_OUT_FAILURE:
       return { ...state };
     case actionTypes.SIGN_UP_SUCCESS:
