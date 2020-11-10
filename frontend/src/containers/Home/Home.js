@@ -2,9 +2,7 @@ import React, { Component } from "react";
 import { connect } from "react-redux";
 import PropTypes from "prop-types";
 
-import * as actionCreators from "../store/actions/index";
-import RotusLogo from "../components/RotusLogo";
-import Upperbar from "../components/Upperbar";
+import * as actionCreators from "../../store/actions/index";
 
 import "./Home.scss";
 

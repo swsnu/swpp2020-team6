@@ -2,7 +2,7 @@ import React, { Component } from "react";
 import { connect } from "react-redux";
 import PropTypes from "prop-types";
 
-import * as actionCreators from "../store/actions/index";
+import * as actionCreators from "../../store/actions/index";
 
 import "./SignUp.scss";
 
