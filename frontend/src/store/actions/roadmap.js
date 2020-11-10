@@ -19,13 +19,12 @@ export const getRoadmap = (roadmapId) => {
         dispatch(getRoadmapSuccess_(response.data));
       })
       .catch((error) => {
-        // eslint-disable-next-line no-debugger
-        debugger;
         switch (error.response.status) {
           case 404:
-            // eslint-disable-next-line no-debugger
-            debugger;
             alert("No such Roadmap!");
+            break;
+          case 401:
+            alert("Please sign in!");
             break;
           case 400:
             alert("Parsing error!");
@@ -33,11 +32,7 @@ export const getRoadmap = (roadmapId) => {
           default:
             break;
         }
-        // eslint-disable-next-line no-debugger
-        debugger;
         dispatch(getRoadmapFail_());
-        // eslint-disable-next-line no-debugger
-        debugger;
       });
   };
 };
@@ -61,10 +56,10 @@ export const createRoadmap = (roadmapData) => {
         dispatch(createRoadmapFail_());
         switch (error.response.status) {
           case 401:
-            alert("Please Sign In!");
+            alert("Please sign in!");
             break;
           case 400:
-            alert("Parsing Error!");
+            alert("Parsing error!");
             break;
           default:
             break;
