@@ -32,7 +32,6 @@ class App extends React.Component {
             <Route path="/home" exact component={Home} />
             <Route path="/signup" exact component={SignUp} />
             <Route path="/signin" exact component={SignIn} />
-            <Route path="/roadmap/:id" exact component={RoadmapDetail} />
             <Route
               path="/roadmap/create"
               exact
@@ -55,6 +54,7 @@ class App extends React.Component {
                 );
               }}
             />
+            <Route path="/roadmap/:id" exact component={RoadmapDetail} />
             <Redirect exact from="/" to="/home" />
             <Route render={() => <h1>Not Found</h1>} />
           </Switch>

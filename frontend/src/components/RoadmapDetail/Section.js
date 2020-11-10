@@ -12,14 +12,14 @@ const Section = (props) => {
         title={task.task_title}
         type={task.task_type}
         url={task.task_url}
-        description={task.task_desription}
+        description={task.task_description}
         checked={task.task_checked}
       />
     );
   });
   return (
     <div className="Section">
-      <h3 className="section-title">{title}</h3>
+      <h3 className="section-title">{`section title: ${title}`}</h3>
       {taskList}
     </div>
   );

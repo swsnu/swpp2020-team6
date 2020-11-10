@@ -2,11 +2,7 @@ import React from "react";
 import PropTypes from "prop-types";
 
 const ProgressBar = (props) => {
-  const {
-    isAuthor,
-    currentProgressStatus,
-    onChangeRoadmapProgressStatus,
-  } = props;
+  const { isAuthor, currentProgressStatus, onChangeRoadmapProgressStatus } = props;
   let progressBar = null;
   let progressDisplay = null;
   let progressButton = null;

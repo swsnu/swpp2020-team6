@@ -19,17 +19,25 @@ export const getRoadmap = (roadmapId) => {
         dispatch(getRoadmapSuccess_(response.data));
       })
       .catch((error) => {
-        dispatch(getRoadmapFail_());
+        // eslint-disable-next-line no-debugger
+        debugger;
         switch (error.response.status) {
           case 404:
-            dispatch(alert("No such Roadmap!"));
+            // eslint-disable-next-line no-debugger
+            debugger;
+            alert("No such Roadmap!");
             break;
           case 400:
-            dispatch(alert("Parsing error!"));
+            alert("Parsing error!");
             break;
           default:
             break;
         }
+        // eslint-disable-next-line no-debugger
+        debugger;
+        dispatch(getRoadmapFail_());
+        // eslint-disable-next-line no-debugger
+        debugger;
       });
   };
 };
@@ -46,6 +54,7 @@ export const createRoadmap = (roadmapData) => {
     return axios
       .post("/api/roadmap/", roadmapData)
       .then((response) => {
+        dispatch(createRoadmapSuccess_());
         dispatch(push(`/roadmap/${response.data.id}`));
       })
       .catch((error) => {
@@ -77,6 +86,7 @@ export const editRoadmap = (roadmapId, roadmapData) => {
     return axios
       .put(`/api/roadmap/${roadmapId}/`, roadmapData)
       .then(() => {
+        dispatch(editRoadmapSuccess_());
         dispatch(push(`/roadmap/${roadmapId}`));
       })
       .catch((error) => {

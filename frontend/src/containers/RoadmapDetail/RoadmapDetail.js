@@ -15,12 +15,7 @@ class RoadmapDetail extends Component {
   };
 
   componentDidMount() {
-    const {
-      selectedUser,
-      roadmapErrorStatus,
-      onGetRoadmap,
-      match,
-    } = this.props;
+    const { selectedUser, roadmapErrorStatus, onGetRoadmap, match } = this.props;
     if (selectedUser !== null && !roadmapErrorStatus) {
       onGetRoadmap(parseInt(match.params.id, 10));
       console.log("hi");
@@ -35,7 +30,6 @@ class RoadmapDetail extends Component {
 
   /* ---------------- Roadmap Progress -------------------- */
   onChangeRoadmapProgressStatus = (type) => {
-    const { match, changeRoadmapProgress } = this.props;
     let newState;
     switch (type) {
       case "start":
@@ -48,12 +42,13 @@ class RoadmapDetail extends Component {
         newState = 3;
         break;
       case "clear":
+        // eslint-disable-next-line no-unused-vars
         newState = 1;
         break;
       default:
         break;
     }
-    changeRoadmapProgress(newState, parseInt(match.params.id, 10));
+    // changeRoadmapProgress(newState, parseInt(match.params.id, 10));
   };
 
   /* ---------------- comment handlers -------------------- */
@@ -64,13 +59,7 @@ class RoadmapDetail extends Component {
   onPostComment = () => {};
 
   render() {
-    const {
-      selectedUser,
-      isSignedIn,
-      match,
-      selectedRoadmap,
-      roadmapErrorStatus,
-    } = this.props;
+    const { selectedUser, isSignedIn, match, selectedRoadmap, roadmapErrorStatus } = this.props;
     const roadmapId = parseInt(match.params.id, 10);
 
     if (isSignedIn === null) {
@@ -128,7 +117,7 @@ class RoadmapDetail extends Component {
           key={section.section_id}
           isAuthor={selectedRoadmap.author_id === selectedUser.user_id}
           progressStatus={selectedRoadmap.progress}
-          title={section.title}
+          title={section.section_title}
           tasks={section.tasks}
         />
       );
@@ -162,11 +151,7 @@ class RoadmapDetail extends Component {
     const { comment } = this.state;
     if (comment !== "") {
       commentConfirmButton = (
-        <button
-          id="confirm-create-comment-button"
-          type="button"
-          onClick={this.onPostComment}
-        >
+        <button id="confirm-create-comment-button" type="button" onClick={this.onPostComment}>
           confirm
         </button>
       );
@@ -179,7 +164,7 @@ class RoadmapDetail extends Component {
           <div className="leftcolumn">
             <ProgressBar
               isAuthor={selectedUser.user_id === selectedRoadmap.author_id}
-              onChangeRoadmapProgressStatus={this.onchangeRoadmapProgress}
+              onChangeRoadmapProgressStatus={this.onChangeRoadmapProgressStatus}
               currentProgressStatus={selectedRoadmap.progress}
             />
             <h1 className="roadmap-title">{title}</h1>
@@ -246,7 +231,6 @@ RoadmapDetail.propTypes = {
 
   onGetRoadmap: PropTypes.func.isRequired,
   onResetRoadmap: PropTypes.func.isRequired,
-  changeRoadmapProgress: PropTypes.func.isRequired,
 };
 
 const mapDispatchToProps = (dispatch) => {

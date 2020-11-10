@@ -1,46 +1,36 @@
 import React from "react";
 import PropTypes from "prop-types";
 import { connect } from "react-redux";
+import { withRouter } from "react-router";
 import * as actionCreators from "../../store/actions/index";
 
 const RoadmapButtons = (props) => {
-  const Props = props;
-
   const onClickEditRoadmap = () => {
-    Props.history.push(`/roadmap/${Props.roadmapId}/edit`);
+    const { history, roadmapId } = props;
+    history.push(`/roadmap/${roadmapId}/edit`);
   };
 
   const onClickDuplicateRoadmap = () => {};
 
   const onClickDeleteRoadmap = () => {
-    Props.onDeleteRoadmap(Props.roadmapId);
+    const { onDeleteRoadmap, roadmapId } = props;
+    onDeleteRoadmap(roadmapId);
   };
 
   const onClickPinRoadmap = () => {};
 
   const onClickLikeRoadmap = () => {};
 
-  const roadmapButtons = Props.isAuthor ? (
+  const { isAuthor } = props;
+  const roadmapButtons = isAuthor ? (
     <div className="roadmap-buttons">
-      <button
-        type="button"
-        id="edit-roadmap-button"
-        onClick={() => onClickEditRoadmap()}
-      >
+      <button type="button" id="edit-roadmap-button" onClick={() => onClickEditRoadmap()}>
         Edit
       </button>
-      <button
-        type="button"
-        id="duplicate-button"
-        onClick={() => onClickDuplicateRoadmap()}
-      >
+      <button type="button" id="duplicate-button" onClick={() => onClickDuplicateRoadmap()}>
         Duplicate
       </button>
-      <button
-        type="button"
-        id="delete-roadmap-button"
-        onClick={() => onClickDeleteRoadmap()}
-      >
+      <button type="button" id="delete-roadmap-button" onClick={() => onClickDeleteRoadmap()}>
         Delete
       </button>
     </div>
@@ -49,18 +39,10 @@ const RoadmapButtons = (props) => {
       <button type="button" id="pin-button" onClick={() => onClickPinRoadmap()}>
         Pin
       </button>
-      <button
-        type="button"
-        id="like-button"
-        onClick={() => onClickLikeRoadmap()}
-      >
+      <button type="button" id="like-button" onClick={() => onClickLikeRoadmap()}>
         Like
       </button>
-      <button
-        type="button"
-        id="duplicate-button"
-        onClick={() => onClickDuplicateRoadmap()}
-      >
+      <button type="button" id="duplicate-button" onClick={() => onClickDuplicateRoadmap()}>
         Duplicate
       </button>
     </div>
@@ -91,4 +73,4 @@ const mapStateToProps = (state) => {
   };
 };
 
-export default connect(mapStateToProps, mapDispatchToProps)(RoadmapButtons);
+export default connect(mapStateToProps, mapDispatchToProps)(withRouter(RoadmapButtons));
