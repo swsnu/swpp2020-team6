@@ -17,7 +17,7 @@ matrix:
         - cd frontend
       install:
         - yarn install
-        - yarn add --dev coveralls
+        - yarn add coveralls
       script:
         - ./node_modules/.bin/eslint src/
         - yarn test --coverage --watchAll=false
@@ -41,7 +41,7 @@ matrix:
         - cd backend
       install:
         - pip install -r requirements.txt
-        - pip install coverage pyyaml coveralls
+        - pip install coveralls
       before_script:
         - python3 manage.py makemigrations user roadmap section task tag comment
         - python3 manage.py migrate
