@@ -8,7 +8,7 @@
 
 ```shell
 cd ./frontend
-yarn install & yarn start
+yarn install && yarn start
 ```
 
 ##### Testing (Not yet)
