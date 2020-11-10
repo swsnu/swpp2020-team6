@@ -269,7 +269,7 @@ class EditRoadmap extends Component {
   };
 
   render() {
-    const { isSignedIn, selectedRoadmap, errorStatus } = this.props;
+    const { isSignedIn, selectedRoadmap, errorStatus, selectedUser } = this.props;
     if (isSignedIn === false) {
       alert("Please sign in!");
       return (
@@ -294,6 +294,16 @@ class EditRoadmap extends Component {
       return (
         <div className="EditRoadmap">
           <div className="loading" />
+        </div>
+      );
+    }
+    if (selectedRoadmap.author_id !== selectedUser.user_id) {
+      alert("Only the author can edit the Roadmap!");
+      return (
+        <div className="EditRoadmap">
+          <div className="error">
+            <Error />
+          </div>
         </div>
       );
     }
@@ -390,6 +400,7 @@ EditRoadmap.propTypes = {
   isSignedIn: PropTypes.bool.isRequired,
   selectedRoadmap: PropTypes.objectOf(PropTypes.any).isRequired,
   errorStatus: PropTypes.bool.isRequired,
+  selectedUser: PropTypes.objectOf(PropTypes.any).isRequired,
   onGetRoadmap: PropTypes.func.isRequired,
   onEditRoadmap: PropTypes.func.isRequired,
   history: PropTypes.objectOf(PropTypes.any).isRequired,
@@ -400,6 +411,7 @@ const mapStateToProps = (state) => {
   return {
     selectedRoadmap: state.roadmap.selectedRoadmap,
     errorStatus: state.roadmap.errorStatus,
+    selectedUser: state.user.selectedUser,
   };
 };
 
