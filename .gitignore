@@ -98,3 +98,5 @@ local_settings.py
 
 backend/.python-version
 backend/htmlcov
+
+.coveralls.yml
