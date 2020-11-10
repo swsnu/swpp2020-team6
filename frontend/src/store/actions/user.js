@@ -19,8 +19,8 @@ export const getUserAuth = () => {
   };
 };
 
-export const signInSuccess_ = () => {
-  return { type: actionTypes.SIGN_IN_SUCCESS };
+export const signInSuccess_ = (data) => {
+  return { type: actionTypes.SIGN_IN_SUCCESS, selectedUser: data.user_data };
 };
 
 export const signInFail_ = () => {
@@ -31,8 +31,8 @@ export const signIn = (userCredentials) => {
   return (dispatch) => {
     return axios
       .post("/api/user/signin/", userCredentials)
-      .then(() => {
-        dispatch(signInSuccess_());
+      .then((res) => {
+        dispatch(signInSuccess_(res.data));
         dispatch(push("/home"));
       })
       .catch((error) => {
