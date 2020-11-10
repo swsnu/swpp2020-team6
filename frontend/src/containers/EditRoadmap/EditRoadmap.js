@@ -299,8 +299,6 @@ class EditRoadmap extends Component {
     }
 
     const { sections, level, title } = this.state;
-    // eslint-disable-next-line no-debugger
-    debugger;
     if (title === null) {
       this.setState({
         title: selectedRoadmap.title,
@@ -310,8 +308,6 @@ class EditRoadmap extends Component {
     }
 
     const EditSections = sections.map((section, index) => {
-      // eslint-disable-next-line no-debugger
-      debugger;
       return (
         <EditSection
           tmpSectionId={index}
