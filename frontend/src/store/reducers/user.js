@@ -10,7 +10,7 @@ const reducer = (state = initialState, action) => {
     case actionTypes.GET_USER_AUTH:
       return { ...state, isSignedIn: action.isSignedIn, selectedUser: action.selectedUser };
     case actionTypes.SIGN_IN_SUCCESS:
-      return { ...state, isSignedIn: true };
+      return { ...state, isSignedIn: true, selectedUser: action.selectedUser };
     case actionTypes.SIGN_IN_FAILURE:
       return { ...state };
     case actionTypes.SIGN_OUT_SUCCESS:

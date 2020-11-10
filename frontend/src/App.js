@@ -14,10 +14,8 @@ import "./App.css";
 
 class App extends React.Component {
   componentDidMount() {
-    const { isSignedIn, onGetUserAuth } = this.props;
-    if (isSignedIn === undefined) {
-      onGetUserAuth();
-    }
+    const { onGetUserAuth } = this.props;
+    onGetUserAuth();
   }
 
   render() {
