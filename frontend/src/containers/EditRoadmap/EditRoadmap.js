@@ -304,7 +304,6 @@ class EditRoadmap extends Component {
         sections: selectedRoadmap.sections,
       });
     }
-
     const EditSections = sections.map((section, index) => {
       return (
         <EditSection
@@ -354,33 +353,33 @@ class EditRoadmap extends Component {
             <option value={levelType.INTERMEDIATE}>Intermediate</option>
             <option value={levelType.ADVANCED}>Advanced</option>
           </select>
-          <div className="sections">
-            {EditSections}
-            <button
-              type="button"
-              id="create-section-button"
-              onClick={() => this.onClickCreateSection()}
-            >
-              Create Section
-            </button>
-          </div>
-          <div className="buttons">
-            <button
-              id="back-edit-roadmap-button"
-              type="button"
-              onClick={() => this.onClickEditBack()}
-            >
-              Back
-            </button>
-            <button
-              id="confirm-edit-roadmap-button"
-              type="button"
-              disabled={title === "" || level === 0 || sections.length === 0}
-              onClick={() => this.onClickEditConfirm()}
-            >
-              Confirm
-            </button>
-          </div>
+        </div>
+        <div className="sections">
+          {EditSections}
+          <button
+            type="button"
+            id="create-section-button"
+            onClick={() => this.onClickCreateSection()}
+          >
+            Create Section
+          </button>
+        </div>
+        <div className="buttons">
+          <button
+            id="back-edit-roadmap-button"
+            type="button"
+            onClick={() => this.onClickEditBack()}
+          >
+            Back
+          </button>
+          <button
+            id="confirm-edit-roadmap-button"
+            type="button"
+            disabled={title === "" || level === 0 || sections.length === 0}
+            onClick={() => this.onClickEditConfirm()}
+          >
+            Confirm
+          </button>
         </div>
       </div>
     );

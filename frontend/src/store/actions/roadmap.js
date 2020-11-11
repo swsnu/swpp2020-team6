@@ -22,6 +22,7 @@ export const getRoadmap = (roadmapId) => {
         switch (error.response.status) {
           case 404:
             alert("No such Roadmap!");
+            dispatch(push.goBack());
             break;
           case 401:
             alert("Please sign in!");
