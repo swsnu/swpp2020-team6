@@ -1,6 +1,8 @@
 import React from "react";
 import PropTypes from "prop-types";
 
+import "./Task.scss";
+
 const Task = (props) => {
   const { isAuthor, progressStatus, title, type, url, description, checked } = props;
   const checkbox =

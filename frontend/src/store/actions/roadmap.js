@@ -129,8 +129,9 @@ export const deleteRoadmap = (roadmapId) => {
     return axios
       .delete(`/api/roadmap/${roadmapId}/`)
       .then(() => {
+        alert("Roadmap successfully deleted!");
         dispatch(deleteRoadmapSuccess_());
-        dispatch(push(`/home`)); // <---where?!
+        dispatch(push(`/home`));
       })
       .catch((error) => {
         deleteRoadmapFail_(error.response.status);

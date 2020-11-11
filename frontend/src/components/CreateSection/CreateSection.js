@@ -22,9 +22,6 @@ const CreateSection = (props) => {
     changeTaskDescriptionHandler,
   } = props;
 
-  // eslint-disable-next-line no-debugger
-  debugger;
-
   const CreateTasks = tasks.map((task, index) => {
     return (
       <CreateTask
@@ -47,7 +44,7 @@ const CreateSection = (props) => {
   });
 
   return (
-    <div className="create-section">
+    <div className="CreateSection">
       <button
         className="create-section-up"
         type="button"
@@ -73,7 +70,9 @@ const CreateSection = (props) => {
           changeSectionTitleHandler(tmpSectionId, event.target.value);
         }}
       />
+      <br />
       {CreateTasks}
+      <br />
       <button
         className="create-task-button"
         type="button"
@@ -83,6 +82,7 @@ const CreateSection = (props) => {
       >
         Create Task
       </button>
+      <br />
       <button
         className="delete-section-button"
         type="button"

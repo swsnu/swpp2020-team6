@@ -7,6 +7,7 @@ import * as actionCreators from "../../store/actions/index";
 import EditSection from "../../components/CreateSection/CreateSection";
 import Error from "../Error/Error";
 import { levelType } from "../../constants";
+import "./EditRoadmap.scss";
 
 class EditRoadmap extends Component {
   state = {
@@ -247,10 +248,10 @@ class EditRoadmap extends Component {
   };
 
   onClickEditBack = () => {
-    const { selectedRoadmap, history } = this.props;
+    const { history } = this.props;
     const back = confirm("Leave the page? Changes you made will be deleted.");
     if (back) {
-      history.push(`/roadmap/${selectedRoadmap.roadmap_id}`);
+      history.goBack();
     }
   };
 
@@ -269,7 +270,7 @@ class EditRoadmap extends Component {
   };
 
   render() {
-    const { isSignedIn, selectedRoadmap, errorStatus } = this.props;
+    const { isSignedIn, selectedRoadmap, errorStatus, selectedUser } = this.props;
     if (isSignedIn === false) {
       alert("Please sign in!");
       return (
@@ -281,7 +282,6 @@ class EditRoadmap extends Component {
       );
     }
     if (errorStatus === true) {
-      alert("No such Roadmap!");
       return (
         <div className="EditRoadmap">
           <div className="error">
@@ -297,10 +297,18 @@ class EditRoadmap extends Component {
         </div>
       );
     }
+    if (selectedRoadmap.author_id !== selectedUser.user_id) {
+      alert("Only the author can edit the Roadmap!");
+      return (
+        <div className="EditRoadmap">
+          <div className="error">
+            <Error />
+          </div>
+        </div>
+      );
+    }
 
     const { sections, level, title } = this.state;
-    // eslint-disable-next-line no-debugger
-    debugger;
     if (title === null) {
       this.setState({
         title: selectedRoadmap.title,
@@ -310,8 +318,6 @@ class EditRoadmap extends Component {
     }
 
     const EditSections = sections.map((section, index) => {
-      // eslint-disable-next-line no-debugger
-      debugger;
       return (
         <EditSection
           tmpSectionId={index}
@@ -338,12 +344,15 @@ class EditRoadmap extends Component {
       <div className="EditRoadmap">
         <h1>Edit Roadmap</h1>
         <div className="roadmap">
+          <label>Roadmap Title</label>
           <input
             id="roadmap-title"
             type="text"
             value={title}
             onChange={(event) => this.setState({ title: event.target.value })}
           />
+          <br />
+          <label>Roadmap Level</label>
           <select
             id="roadmap-level"
             value={level}
@@ -394,6 +403,7 @@ EditRoadmap.propTypes = {
   isSignedIn: PropTypes.bool.isRequired,
   selectedRoadmap: PropTypes.objectOf(PropTypes.any).isRequired,
   errorStatus: PropTypes.bool.isRequired,
+  selectedUser: PropTypes.objectOf(PropTypes.any).isRequired,
   onGetRoadmap: PropTypes.func.isRequired,
   onEditRoadmap: PropTypes.func.isRequired,
   history: PropTypes.objectOf(PropTypes.any).isRequired,
@@ -404,6 +414,7 @@ const mapStateToProps = (state) => {
   return {
     selectedRoadmap: state.roadmap.selectedRoadmap,
     errorStatus: state.roadmap.errorStatus,
+    selectedUser: state.user.selectedUser,
   };
 };
 
