@@ -7,6 +7,7 @@ import * as actionCreators from "../../store/actions/index";
 import EditSection from "../../components/CreateSection/CreateSection";
 import Error from "../Error/Error";
 import { levelType } from "../../constants";
+import "./EditRoadmap.scss";
 
 class EditRoadmap extends Component {
   state = {
@@ -247,10 +248,10 @@ class EditRoadmap extends Component {
   };
 
   onClickEditBack = () => {
-    const { selectedRoadmap, history } = this.props;
+    const { history } = this.props;
     const back = confirm("Leave the page? Changes you made will be deleted.");
     if (back) {
-      history.push(`/roadmap/${selectedRoadmap.roadmap_id}`);
+      history.goBack();
     }
   };
 
@@ -281,7 +282,6 @@ class EditRoadmap extends Component {
       );
     }
     if (errorStatus === true) {
-      alert("No such Roadmap!");
       return (
         <div className="EditRoadmap">
           <div className="error">
@@ -344,12 +344,15 @@ class EditRoadmap extends Component {
       <div className="EditRoadmap">
         <h1>Edit Roadmap</h1>
         <div className="roadmap">
+          <label>Roadmap Title</label>
           <input
             id="roadmap-title"
             type="text"
             value={title}
             onChange={(event) => this.setState({ title: event.target.value })}
           />
+          <br />
+          <label>Roadmap Level</label>
           <select
             id="roadmap-level"
             value={level}
