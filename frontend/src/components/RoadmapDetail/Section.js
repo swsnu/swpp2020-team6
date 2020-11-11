@@ -2,6 +2,8 @@ import React from "react";
 import PropTypes from "prop-types";
 import Task from "./Task";
 
+import "./Section.scss";
+
 const Section = (props) => {
   const { title, tasks, isAuthor, progressStatus } = props;
   const taskList = tasks.map((task) => {
