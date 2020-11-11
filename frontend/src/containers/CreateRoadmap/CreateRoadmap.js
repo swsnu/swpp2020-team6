@@ -273,6 +273,7 @@ class CreateRoadmap extends Component {
       const { history } = this.props;
       alert("Please sign in!");
       history.goBack();
+      return <div />;
     }
 
     const { sections, level, title } = this.state;
