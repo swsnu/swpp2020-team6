@@ -66,11 +66,13 @@ class RoadmapDetail extends Component {
       // unsigned in user
       const { history } = this.props;
       history.goBack();
+      return <div />;
     }
     if (roadmapErrorStatus) {
       // error while getting the roadmap
       const { history } = this.props;
       history.goBack();
+      return <div />;
     }
     if (selectedRoadmap === undefined) {
       // waiting to get the roadmap data

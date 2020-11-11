@@ -275,10 +275,12 @@ class EditRoadmap extends Component {
       alert("Please sign in!");
       const { history } = this.props;
       history.goBack();
+      return <div />;
     }
     if (errorStatus === true) {
       const { history } = this.props;
       history.goBack();
+      return <div />;
     }
     if (selectedRoadmap === undefined) {
       return (
@@ -291,6 +293,7 @@ class EditRoadmap extends Component {
       alert("Only the author can edit the Roadmap!");
       const { history } = this.props;
       history.goBack();
+      return <div />;
     }
 
     const { sections, level, title } = this.state;
