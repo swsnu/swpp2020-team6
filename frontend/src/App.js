@@ -16,7 +16,6 @@ import "./App.css";
 
 class App extends React.Component {
   componentDidMount() {
-    console.log("test");
     const { onGetUserAuth } = this.props;
     onGetUserAuth();
   }
@@ -24,7 +23,11 @@ class App extends React.Component {
   render() {
     const { isSignedIn, history, selectedUser } = this.props;
     if (isSignedIn === undefined) {
-      return <div className="loading" />;
+      return (
+        <div className="App">
+          <div className="loading" />
+        </div>
+      );
     }
     return (
       <ConnectedRouter history={history}>
