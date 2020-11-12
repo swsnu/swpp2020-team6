@@ -222,7 +222,7 @@ export const deleteComment = (commentID) => {
       .delete(`/api/comment/${commentID}/`)
       .then(() => {
         alert("Comment successfully deleted!");
-        dispatch(deleteRoadmapSuccess_(commentID));
+        dispatch(deleteCommentSuccess_(commentID));
       })
       .catch((error) => {
         deleteCommentFail_(error.response.status);
