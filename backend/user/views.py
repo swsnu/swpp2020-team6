@@ -61,7 +61,7 @@ def signin(request):
         if signin_user is not None:
             login(request, signin_user)
             response_user = signin_user.to_dict()
-            return JsonResponse(response_user, status=200)
+            return JsonResponse(response_user, status=201)
 
         return HttpResponse(status=401)
 

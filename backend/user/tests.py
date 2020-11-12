@@ -32,7 +32,7 @@ class UserTestCase(TestCase):
             content_type=self.json_type,
             HTTP_X_CSRFTOKEN=csrftoken,
         )
-        self.assertEqual(response.status_code, 204)
+        self.assertEqual(response.status_code, 201)
 
     def test_csrf(self):
         # By default, csrf checks are disabled in test client
@@ -93,14 +93,14 @@ class UserTestCase(TestCase):
         csrftoken = self.get_csrf(client)
         path = self.user_path
 
-        # 201 test (get authentication before login)
+        # 200 test (get authentication before login)
         response = client.get(path, HTTP_X_CSRFTOKEN=csrftoken)
         self.assertEqual(response.status_code, 200)
         self.assertTrue("false" in response.content.decode())
 
         self.signup()
         self.signin(client)
-        # 201 test (get authentication before login)
+        # 200 test (get authentication before login)
         response = client.get(path, HTTP_X_CSRFTOKEN=csrftoken)
         self.assertEqual(response.status_code, 200)
         self.assertTrue("true" in response.content.decode())
@@ -140,7 +140,7 @@ class UserTestCase(TestCase):
             content_type=self.json_type,
             HTTP_X_CSRFTOKEN=csrftoken,
         )
-        self.assertEqual(response.status_code, 204)
+        self.assertEqual(response.status_code, 201)
 
     def test_signout(self):
         client = Client(enforce_csrf_checks=True)
