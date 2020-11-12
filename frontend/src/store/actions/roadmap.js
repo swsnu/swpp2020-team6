@@ -1,5 +1,5 @@
 import axios from "axios";
-import { push } from "connected-react-router";
+import { push, goBack } from "connected-react-router";
 
 import * as actionTypes from "./actionTypes";
 
@@ -21,7 +21,7 @@ export const getRoadmap = (roadmapId) => {
       .catch((error) => {
         switch (error.response.status) {
           case 404:
-            alert("No such Roadmap!");
+            alert("No such Roadmap!!!!");
             break;
           case 401:
             alert("Please sign in!");
@@ -32,16 +32,13 @@ export const getRoadmap = (roadmapId) => {
           default:
             break;
         }
+        dispatch(goBack());
         dispatch(getRoadmapFail_());
       });
   };
 };
-export const createRoadmapSuccess_ = () => {
-  return { type: actionTypes.CREATE_ROADMAP_SUCCESS };
-};
-
-export const createRoadmapFail_ = () => {
-  return { type: actionTypes.CREATE_ROADMAP_FAILURE };
+export const createRoadmap_ = () => {
+  return { type: actionTypes.CREATE_ROADMAP };
 };
 
 export const createRoadmap = (roadmapData) => {
@@ -49,11 +46,10 @@ export const createRoadmap = (roadmapData) => {
     return axios
       .post("/api/roadmap/", roadmapData)
       .then((response) => {
-        dispatch(createRoadmapSuccess_());
+        dispatch(createRoadmap_());
         dispatch(push(`/roadmap/${response.data.id}`));
       })
       .catch((error) => {
-        dispatch(createRoadmapFail_());
         switch (error.response.status) {
           case 401:
             alert("Please sign in!");
@@ -64,16 +60,13 @@ export const createRoadmap = (roadmapData) => {
           default:
             break;
         }
+        dispatch(goBack());
       });
   };
 };
 
-export const editRoadmapSuccess_ = () => {
-  return { type: actionTypes.CREATE_ROADMAP_SUCCESS };
-};
-
-export const editRoadmapFail_ = () => {
-  return { type: actionTypes.CREATE_ROADMAP_FAILURE };
+export const editRoadmap_ = () => {
+  return { type: actionTypes.EDIT_ROADMAP };
 };
 
 export const editRoadmap = (roadmapId, roadmapData) => {
@@ -81,11 +74,10 @@ export const editRoadmap = (roadmapId, roadmapData) => {
     return axios
       .put(`/api/roadmap/${roadmapId}/`, roadmapData)
       .then(() => {
-        dispatch(editRoadmapSuccess_());
+        dispatch(editRoadmap_());
         dispatch(push(`/roadmap/${roadmapId}`));
       })
       .catch((error) => {
-        editRoadmapFail_();
         switch (error.response.status) {
           case 401:
             alert("Please sign in!");
@@ -102,12 +94,9 @@ export const editRoadmap = (roadmapId, roadmapData) => {
           default:
             break;
         }
+        dispatch(goBack());
       });
   };
-};
-
-export const resetRoadmapErrorStatus_ = () => {
-  return { type: actionTypes.RESET_ROADMAP_ERRORSTATUS };
 };
 
 export const resetRoadmap_ = () => {
@@ -116,12 +105,8 @@ export const resetRoadmap_ = () => {
   };
 };
 
-export const deleteRoadmapSuccess_ = () => {
-  return { type: actionTypes.DELETE_ROADMAP_SUCCESS };
-};
-
-export const deleteRoadmapFail_ = () => {
-  return { type: actionTypes.DELETE_ROADMAP_FAILURE };
+export const deleteRoadmap_ = () => {
+  return { type: actionTypes.DELETE_ROADMAP };
 };
 
 export const deleteRoadmap = (roadmapId) => {
@@ -130,11 +115,10 @@ export const deleteRoadmap = (roadmapId) => {
       .delete(`/api/roadmap/${roadmapId}/`)
       .then(() => {
         alert("Roadmap successfully deleted!");
-        dispatch(deleteRoadmapSuccess_());
+        dispatch(deleteRoadmap_());
         dispatch(push(`/home`));
       })
       .catch((error) => {
-        deleteRoadmapFail_(error.response.status);
         switch (error.response.status) {
           case 401:
             alert("Please sign in!");
@@ -151,6 +135,7 @@ export const deleteRoadmap = (roadmapId) => {
           default:
             break;
         }
+        dispatch(goBack());
       });
   };
 };

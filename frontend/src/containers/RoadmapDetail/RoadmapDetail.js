@@ -5,7 +5,6 @@ import * as actionCreators from "../../store/actions/index";
 import "./RoadmapDetail.css";
 import Comment from "../../components/Comment";
 import ProgressBar from "../../components/RoadmapDetail/ProgressBar";
-// import Error from "../Error/Error";
 import RoadmapButtons from "./RoadmapButtons";
 import Section from "../../components/RoadmapDetail/Section";
 
@@ -15,11 +14,8 @@ class RoadmapDetail extends Component {
   };
 
   componentDidMount() {
-    const { selectedUser, roadmapErrorStatus, onGetRoadmap, match } = this.props;
-    if (selectedUser !== null && !roadmapErrorStatus) {
-      onGetRoadmap(parseInt(match.params.id, 10));
-      console.log("hi");
-    }
+    const { onGetRoadmap, match } = this.props;
+    onGetRoadmap(parseInt(match.params.id, 10));
   }
 
   backToList = () => {
@@ -59,17 +55,11 @@ class RoadmapDetail extends Component {
   onPostComment = () => {};
 
   render() {
-    const { selectedUser, isSignedIn, match, selectedRoadmap, roadmapErrorStatus } = this.props;
+    const { selectedUser, isSignedIn, match, selectedRoadmap } = this.props;
     const roadmapId = parseInt(match.params.id, 10);
 
-    if (isSignedIn === null) {
+    if (isSignedIn === false) {
       // unsigned in user
-      const { history } = this.props;
-      history.goBack();
-      return <div />;
-    }
-    if (roadmapErrorStatus) {
-      // error while getting the roadmap
       const { history } = this.props;
       history.goBack();
       return <div />;
@@ -221,7 +211,6 @@ RoadmapDetail.propTypes = {
   history: PropTypes.objectOf(PropTypes.any).isRequired,
 
   selectedRoadmap: PropTypes.objectOf(PropTypes.any).isRequired,
-  roadmapErrorStatus: PropTypes.bool.isRequired,
 
   onGetRoadmap: PropTypes.func.isRequired,
   onResetRoadmap: PropTypes.func.isRequired,
@@ -239,7 +228,6 @@ const mapStateToProps = (state) => {
     selectedUser: state.user.selectedUser,
     isSignedIn: state.user.isSignedIn,
     selectedRoadmap: state.roadmap.selectedRoadmap,
-    roadmapErrorStatus: state.roadmap.errorStatus,
   };
 };
 
