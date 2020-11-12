@@ -7,4 +7,7 @@ export {
   resetRoadmapErrorStatus_,
   resetRoadmap_,
   deleteRoadmap,
+  createComment,
+  editComment,
+  deleteComment,
 } from "./roadmap";

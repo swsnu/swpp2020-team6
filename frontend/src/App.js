@@ -16,7 +16,6 @@ import "./App.css";
 
 class App extends React.Component {
   componentDidMount() {
-    console.log("test");
     const { onGetUserAuth } = this.props;
     onGetUserAuth();
   }
