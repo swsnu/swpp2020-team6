@@ -5,7 +5,7 @@ import PropTypes from "prop-types";
 import * as actionCreators from "../../store/actions/index";
 
 import EditSection from "../../components/CreateSection/CreateSection";
-import Error from "../Error/Error";
+// import Error from "../Error/Error";
 import { levelType } from "../../constants";
 import "./EditRoadmap.scss";
 
@@ -273,22 +273,14 @@ class EditRoadmap extends Component {
     const { isSignedIn, selectedRoadmap, errorStatus, selectedUser } = this.props;
     if (isSignedIn === false) {
       alert("Please sign in!");
-      return (
-        <div className="EditRoadmap">
-          <div className="error">
-            <Error />
-          </div>
-        </div>
-      );
+      const { history } = this.props;
+      history.goBack();
+      return <div />;
     }
     if (errorStatus === true) {
-      return (
-        <div className="EditRoadmap">
-          <div className="error">
-            <Error />
-          </div>
-        </div>
-      );
+      const { history } = this.props;
+      history.goBack();
+      return <div />;
     }
     if (selectedRoadmap === undefined) {
       return (
@@ -299,13 +291,9 @@ class EditRoadmap extends Component {
     }
     if (selectedRoadmap.author_id !== selectedUser.user_id) {
       alert("Only the author can edit the Roadmap!");
-      return (
-        <div className="EditRoadmap">
-          <div className="error">
-            <Error />
-          </div>
-        </div>
-      );
+      const { history } = this.props;
+      history.goBack();
+      return <div />;
     }
 
     const { sections, level, title } = this.state;
@@ -316,7 +304,6 @@ class EditRoadmap extends Component {
         sections: selectedRoadmap.sections,
       });
     }
-
     const EditSections = sections.map((section, index) => {
       return (
         <EditSection
@@ -366,33 +353,33 @@ class EditRoadmap extends Component {
             <option value={levelType.INTERMEDIATE}>Intermediate</option>
             <option value={levelType.ADVANCED}>Advanced</option>
           </select>
-          <div className="sections">
-            {EditSections}
-            <button
-              type="button"
-              id="create-section-button"
-              onClick={() => this.onClickCreateSection()}
-            >
-              Create Section
-            </button>
-          </div>
-          <div className="buttons">
-            <button
-              id="back-edit-roadmap-button"
-              type="button"
-              onClick={() => this.onClickEditBack()}
-            >
-              Back
-            </button>
-            <button
-              id="confirm-edit-roadmap-button"
-              type="button"
-              disabled={title === "" || level === 0 || sections.length === 0}
-              onClick={() => this.onClickEditConfirm()}
-            >
-              Confirm
-            </button>
-          </div>
+        </div>
+        <div className="sections">
+          {EditSections}
+          <button
+            type="button"
+            id="create-section-button"
+            onClick={() => this.onClickCreateSection()}
+          >
+            Create Section
+          </button>
+        </div>
+        <div className="buttons">
+          <button
+            id="back-edit-roadmap-button"
+            type="button"
+            onClick={() => this.onClickEditBack()}
+          >
+            Back
+          </button>
+          <button
+            id="confirm-edit-roadmap-button"
+            type="button"
+            disabled={title === "" || level === 0 || sections.length === 0}
+            onClick={() => this.onClickEditConfirm()}
+          >
+            Confirm
+          </button>
         </div>
       </div>
     );

@@ -5,7 +5,7 @@ import * as actionCreators from "../../store/actions/index";
 import "./RoadmapDetail.css";
 import Comment from "../../components/Comment";
 import ProgressBar from "../../components/RoadmapDetail/ProgressBar";
-import Error from "../Error/Error";
+// import Error from "../Error/Error";
 import RoadmapButtons from "./RoadmapButtons";
 import Section from "../../components/RoadmapDetail/Section";
 
@@ -64,21 +64,15 @@ class RoadmapDetail extends Component {
 
     if (isSignedIn === null) {
       // unsigned in user
-      return (
-        <div className="roadmap-detail">
-          <div className="header" />
-          <Error />
-        </div>
-      );
+      const { history } = this.props;
+      history.goBack();
+      return <div />;
     }
     if (roadmapErrorStatus) {
       // error while getting the roadmap
-      return (
-        <div className="roadmap-detail">
-          <div className="header" />
-          <Error />
-        </div>
-      );
+      const { history } = this.props;
+      history.goBack();
+      return <div />;
     }
     if (selectedRoadmap === undefined) {
       // waiting to get the roadmap data

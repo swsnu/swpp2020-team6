@@ -5,7 +5,7 @@ import PropTypes from "prop-types";
 import * as actionCreators from "../../store/actions/index";
 
 import CreateSection from "../../components/CreateSection/CreateSection";
-import Error from "../Error/Error";
+// import Error from "../Error/Error";
 import { levelType } from "../../constants";
 import "./CreateRoadmap.scss";
 
@@ -270,14 +270,10 @@ class CreateRoadmap extends Component {
   render() {
     const { selectedUser } = this.props;
     if (selectedUser === undefined) {
+      const { history } = this.props;
       alert("Please sign in!");
-      return (
-        <div className="EditRoadmap">
-          <div className="error">
-            <Error />
-          </div>
-        </div>
-      );
+      history.goBack();
+      return <div />;
     }
 
     const { sections, level, title } = this.state;
