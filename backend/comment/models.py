@@ -24,7 +24,9 @@ class Comment(models.Model):
         options = self._meta
         data = {}
         for f in chain(options.concrete_fields):
-            if f.name == "content":
+            if f.name == "id":
+                data["comment_id"] = f.value_from_object(self)
+            elif f.name == "content":
                 data[f.name] = f.value_from_object(self)
             elif f.name == "author":
                 author = User.objects.get(id=f.value_from_object(self))
