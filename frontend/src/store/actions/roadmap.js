@@ -221,7 +221,7 @@ export const deleteComment = (commentID) => {
     return axios
       .delete(`/api/comment/${commentID}/`)
       .then(() => {
-        alert("Comment successfully deleted!");
+        alert("Successfully deleted comment!");
         dispatch(deleteCommentSuccess_(commentID));
       })
       .catch((error) => {
