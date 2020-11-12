@@ -4,8 +4,7 @@ import { withRouter } from "react-router";
 import PropTypes from "prop-types";
 import * as actionCreators from "../../store/actions/index";
 
-import EditSection from "../../components/CreateSection/CreateSection";
-// import Error from "../Error/Error";
+import CreateSection from "../../components/CreateSection/CreateSection";
 import { levelType } from "../../constants";
 import "./EditRoadmap.scss";
 
@@ -248,9 +247,10 @@ class EditRoadmap extends Component {
   };
 
   onClickEditBack = () => {
-    const { history } = this.props;
+    const { history, onResetRoadmap } = this.props;
     const back = confirm("Leave the page? Changes you made will be deleted.");
     if (back) {
+      onResetRoadmap();
       history.goBack();
     }
   };
@@ -270,15 +270,10 @@ class EditRoadmap extends Component {
   };
 
   render() {
-    const { isSignedIn, selectedRoadmap, errorStatus, selectedUser } = this.props;
+    const { isSignedIn, selectedRoadmap, selectedUser, history } = this.props;
+
     if (isSignedIn === false) {
       alert("Please sign in!");
-      const { history } = this.props;
-      history.goBack();
-      return <div />;
-    }
-    if (errorStatus === true) {
-      const { history } = this.props;
       history.goBack();
       return <div />;
     }
@@ -291,7 +286,6 @@ class EditRoadmap extends Component {
     }
     if (selectedRoadmap.author_id !== selectedUser.user_id) {
       alert("Only the author can edit the Roadmap!");
-      const { history } = this.props;
       history.goBack();
       return <div />;
     }
@@ -306,7 +300,7 @@ class EditRoadmap extends Component {
     }
     const EditSections = sections.map((section, index) => {
       return (
-        <EditSection
+        <CreateSection
           tmpSectionId={index}
           sectionLastId={sections.length - 1}
           title={section.section_title}
@@ -389,10 +383,10 @@ class EditRoadmap extends Component {
 EditRoadmap.propTypes = {
   isSignedIn: PropTypes.bool.isRequired,
   selectedRoadmap: PropTypes.objectOf(PropTypes.any).isRequired,
-  errorStatus: PropTypes.bool.isRequired,
   selectedUser: PropTypes.objectOf(PropTypes.any).isRequired,
   onGetRoadmap: PropTypes.func.isRequired,
   onEditRoadmap: PropTypes.func.isRequired,
+  onResetRoadmap: PropTypes.func.isRequired,
   history: PropTypes.objectOf(PropTypes.any).isRequired,
   match: PropTypes.objectOf(PropTypes.any).isRequired,
 };
@@ -400,7 +394,6 @@ EditRoadmap.propTypes = {
 const mapStateToProps = (state) => {
   return {
     selectedRoadmap: state.roadmap.selectedRoadmap,
-    errorStatus: state.roadmap.errorStatus,
     selectedUser: state.user.selectedUser,
   };
 };
@@ -410,6 +403,7 @@ const mapDispatchToProps = (dispatch) => {
     onGetRoadmap: (roadmapId) => dispatch(actionCreators.getRoadmap(roadmapId)),
     onEditRoadmap: (roadmapId, roadmapData) =>
       dispatch(actionCreators.editRoadmap(roadmapId, roadmapData)),
+    onResetRoadmap: () => dispatch(actionCreators.resetRoadmap_()),
   };
 };
 

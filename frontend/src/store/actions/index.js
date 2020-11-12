@@ -4,7 +4,6 @@ export {
   getRoadmap,
   createRoadmap,
   editRoadmap,
-  resetRoadmapErrorStatus_,
   resetRoadmap_,
   deleteRoadmap,
   createComment,

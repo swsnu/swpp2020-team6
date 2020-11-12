@@ -23,7 +23,11 @@ class App extends React.Component {
   render() {
     const { isSignedIn, history, selectedUser } = this.props;
     if (isSignedIn === undefined) {
-      return <div className="loading" />;
+      return (
+        <div className="App">
+          <div className="loading" />
+        </div>
+      );
     }
     return (
       <ConnectedRouter history={history}>
