@@ -1,3 +1,6 @@
+/* User reducer.
+ * Changes redux state according to actions done about user.
+ */
 import * as actionTypes from "../actions/actionTypes";
 
 const initialState = {
