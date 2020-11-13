@@ -39,6 +39,77 @@ const stubAuthorizedUserState = {
   }, // no null state
 };
 
+const stubAuthorizedUserLikePinState = {
+  isSignedIn: true, // undefined: not yet received, false, true
+  selectedUser: {
+    user_id: 1,
+    username: "user1",
+    email: "user1@gmail.com",
+    user_picture_url: profileURL,
+    pinned_roadmaps: [
+      {
+        id: 1,
+        title: "title1",
+        date: dateData,
+        level: 1,
+        like_count: 1,
+        comment_count: 0,
+        pin_count: 1,
+        progress: beforeStudying,
+        original_author: 1,
+        author_id: 2,
+        author_name: "user2",
+        author_user_picture_url: profileURL,
+        tags: [
+          {
+            tag_id: 1,
+            tag_name: "tag 1",
+          },
+          {
+            tag_id: 2,
+            tag_name: "tag 2",
+          },
+          {
+            tag_id: 3,
+            tag_name: "tag 3",
+          },
+        ],
+      },
+    ],
+    liked_roadmaps: [
+      {
+        id: 1,
+        title: "title1",
+        date: dateData,
+        level: 1,
+        like_count: 1,
+        comment_count: 0,
+        pin_count: 1,
+        progress: beforeStudying,
+        original_author: 1,
+        author_id: 2,
+        author_name: "user2",
+        author_user_picture_url: profileURL,
+        tags: [
+          {
+            tag_id: 1,
+            tag_name: "tag 1",
+          },
+          {
+            tag_id: 2,
+            tag_name: "tag 2",
+          },
+          {
+            tag_id: 3,
+            tag_name: "tag 3",
+          },
+        ],
+      },
+    ],
+    my_roadmaps: [],
+  }, // no null state
+};
+
 const stubInitialRoadmapState = {
   selectedRoadmap: undefined,
 };
@@ -422,14 +493,19 @@ const mockAuthorizedUserBuggyProgressStore = getMockStore(
   stubBuggyProgressState,
 );
 
-// eslint-disable-next-line no-unused-vars
 const mockAuthorizedUserOtherRoadmapStore = getMockStore(
   stubAuthorizedUserState,
   stubOtherRoadmapState,
 );
 
+const mockAuthorizedUserLikePinRoadmapStore = getMockStore(
+  stubAuthorizedUserLikePinState,
+  stubOtherRoadmapState,
+);
+
 describe("<RoadmapDetail />", () => {
-  let spyGetRoadmap, spyDeleteRoadmap;
+  let spyGetRoadmap;
+  let spyDeleteRoadmap;
   let spyPush;
 
   beforeEach(() => {
@@ -595,6 +671,29 @@ describe("<RoadmapDetail />", () => {
     expect(spyDeleteRoadmap).toHaveBeenCalledWith(1);
   });
 
+  /* --------------------- Duplicate Roadmap Button --------------------- */
+  it(`should duplicate my roadmap successfully.`, () => {
+    const component = mount(
+      <Provider store={mockAuthorizedUserMyRoadmapInProgressStore}>
+        <ConnectedRouter history={history}>
+          <Switch>
+            <Route
+              path="/"
+              exact
+              render={() => <RoadmapDetail history={history} match={{ params: { id: 1 } }} />}
+            />
+          </Switch>
+        </ConnectedRouter>
+      </Provider>,
+    );
+
+    const duplicateButton = component.find("#duplicate-button");
+    expect(duplicateButton.length).toBe(1);
+    duplicateButton.simulate("click");
+    // need to mock onChangeRoadmapProgressStatus
+    // expect(spyLike).toHaveBeenCalledTimes(1);
+  });
+
   /* ----------------------- progress tracking ----------------------- */
   it(`should show progress buttons properly and they should work well when 
     the user is the author and progress state is 'before studying.`, () => {
@@ -615,7 +714,7 @@ describe("<RoadmapDetail />", () => {
     expect(outerWrapper.length).toBe(1);
     const startButton = component.find("#start-progress-button");
     expect(startButton.at(0).text()).toBe("Start");
-    // startButton.simulate("click");
+    startButton.simulate("click");
     // need to mock onChangeRoadmapProgressStatus
     // expect(spyConfirm).toHaveBeenCalledTimes(1);
   });
@@ -642,7 +741,7 @@ describe("<RoadmapDetail />", () => {
 
     const quitButton = component.find("#quit-progress-button");
     expect(quitButton.at(0).text()).toBe("Quit");
-    // quitButton.simulate("click");
+    quitButton.simulate("click");
     // need to mock onChangeRoadmapProgressStatus
     // expect(spyConfirm).toHaveBeenCalledTimes(1);
 
@@ -675,7 +774,7 @@ describe("<RoadmapDetail />", () => {
     expect(outerWrapper.length).toBe(1);
     const clearButton = component.find("#clear-progress-button");
     expect(clearButton.at(0).text()).toBe("Clear");
-    // clearButton.simulate("click");
+    clearButton.simulate("click");
     // need to mock onChangeRoadmapProgressStatus
     // expect(spyConfirm).toHaveBeenCalledTimes(1);
   });
@@ -701,11 +800,144 @@ describe("<RoadmapDetail />", () => {
   });
 
   // Other's Roadmap Testing
-  /* ---------------------- Pin Roadmap Button ---------------------- */
+  /* ---------------------- No progressbar,edit,delete ---------------------- */
+  it(`should not show edit, delete, progressbar.`, () => {
+    const component = mount(
+      <Provider store={mockAuthorizedUserOtherRoadmapStore}>
+        <ConnectedRouter history={history}>
+          <Switch>
+            <Route
+              path="/"
+              exact
+              render={() => <RoadmapDetail history={history} match={{ params: { id: 1 } }} />}
+            />
+          </Switch>
+        </ConnectedRouter>
+      </Provider>,
+    );
+    const progress = component.find(".roadmap-progress");
+    expect(progress.length).toBe(0);
+
+    const editButton = component.find("#edit-roadmap-button");
+    expect(editButton.length).toBe(0);
+
+    const deleteButton = component.find("#delete-roadmap-button");
+    expect(deleteButton.length).toBe(0);
+
+    const originalAuthor = component.find("#roadmap-original-author-name");
+    expect(originalAuthor.at(0).text()).toBe("user1");
+  });
 
   /* --------------------- Like Roadmap Button --------------------- */
+  it(`should like the roadmap when like button is clicked.`, () => {
+    const component = mount(
+      <Provider store={mockAuthorizedUserOtherRoadmapStore}>
+        <ConnectedRouter history={history}>
+          <Switch>
+            <Route
+              path="/"
+              exact
+              render={() => <RoadmapDetail history={history} match={{ params: { id: 1 } }} />}
+            />
+          </Switch>
+        </ConnectedRouter>
+      </Provider>,
+    );
+    const likeButton = component.find("#like-button");
+    expect(likeButton.length).toBe(1);
+    expect(likeButton.at(0).text()).toBe("Like");
+    likeButton.simulate("click");
+    // need to mock onChangeRoadmapProgressStatus
+    // expect(spyLike).toHaveBeenCalledTimes(1);
+  });
+
+  it(`should unlike the roadmap when unlike button is clicked.`, () => {
+    const component = mount(
+      <Provider store={mockAuthorizedUserLikePinRoadmapStore}>
+        <ConnectedRouter history={history}>
+          <Switch>
+            <Route
+              path="/"
+              exact
+              render={() => <RoadmapDetail history={history} match={{ params: { id: 1 } }} />}
+            />
+          </Switch>
+        </ConnectedRouter>
+      </Provider>,
+    );
+    const likeButton = component.find("#like-button");
+    expect(likeButton.length).toBe(1);
+    expect(likeButton.at(0).text()).toBe("Unlike");
+    likeButton.simulate("click");
+    // need to mock onChangeRoadmapProgressStatus
+    // expect(spyLike).toHaveBeenCalledTimes(1);
+  });
+
+  /* --------------------- Pin Roadmap Button --------------------- */
+  it(`should pin the roadmap when pin button is clicked.`, () => {
+    const component = mount(
+      <Provider store={mockAuthorizedUserOtherRoadmapStore}>
+        <ConnectedRouter history={history}>
+          <Switch>
+            <Route
+              path="/"
+              exact
+              render={() => <RoadmapDetail history={history} match={{ params: { id: 1 } }} />}
+            />
+          </Switch>
+        </ConnectedRouter>
+      </Provider>,
+    );
+    const pinButton = component.find("#pin-button");
+    expect(pinButton.length).toBe(1);
+    expect(pinButton.at(0).text()).toBe("Pin");
+    pinButton.simulate("click");
+    // need to mock onChangeRoadmapProgressStatus
+    // expect(spyLike).toHaveBeenCalledTimes(1);
+  });
+
+  it(`should unpin the roadmap when unpin button is clicked.`, () => {
+    const component = mount(
+      <Provider store={mockAuthorizedUserLikePinRoadmapStore}>
+        <ConnectedRouter history={history}>
+          <Switch>
+            <Route
+              path="/"
+              exact
+              render={() => <RoadmapDetail history={history} match={{ params: { id: 1 } }} />}
+            />
+          </Switch>
+        </ConnectedRouter>
+      </Provider>,
+    );
+    const pinButton = component.find("#pin-button");
+    expect(pinButton.length).toBe(1);
+    expect(pinButton.at(0).text()).toBe("Unpin");
+    pinButton.simulate("click");
+    // need to mock onChangeRoadmapProgressStatus
+    // expect(spyLike).toHaveBeenCalledTimes(1);
+  });
 
   /* --------------------- Duplicate Roadmap Button --------------------- */
+  it(`should duplicate successfully.`, () => {
+    const component = mount(
+      <Provider store={mockAuthorizedUserOtherRoadmapStore}>
+        <ConnectedRouter history={history}>
+          <Switch>
+            <Route
+              path="/"
+              exact
+              render={() => <RoadmapDetail history={history} match={{ params: { id: 1 } }} />}
+            />
+          </Switch>
+        </ConnectedRouter>
+      </Provider>,
+    );
 
-  /* --------------------- Original Author Roadmap --------------------- */
+    const duplicateButton = component.find("#duplicate-button");
+    expect(duplicateButton.length).toBe(1);
+    duplicateButton.simulate("click");
+    // need to mock onChangeRoadmapProgressStatus
+    // expect(spyLike).toHaveBeenCalledTimes(1);
+  });
 });
