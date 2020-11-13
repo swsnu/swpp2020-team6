@@ -79,11 +79,11 @@ export const signOut = () => {
 };
 
 export const signUpSuccess_ = () => {
-  return { type: actionTypes.SIGN_UP_SUCCESS };
+  return { type: actionTypes.SIGN_UP };
 };
 
 export const signUpFail_ = () => {
-  return { type: actionTypes.SIGN_UP_FAILURE };
+  return { type: actionTypes.SIGN_UP };
 };
 
 export const signUp = (userCredentials) => {
