@@ -83,7 +83,7 @@ class RoadmapDetail extends Component {
       // eslint-disable-next-line camelcase
       original_author_id !== author_id ? (
         <div className="roadmap-original-author">
-          <p id="roadmap-original-author-name">{selectedRoadmap.author_name}</p>
+          <p id="roadmap-original-author-name">{selectedRoadmap.original_author_name}</p>
         </div>
       ) : null;
 
