@@ -4,6 +4,7 @@ matrix:
     - language: node_js
       node_js: 12
       python: 3.7
+      dist: bionic
       cache:
         - yarn: true
         - pip: true
