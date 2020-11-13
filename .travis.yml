@@ -2,54 +2,36 @@
 matrix:
   include:
     - language: node_js
-      node_js:
-        - '12'
+      node_js: 12
+      python: 3.7
       cache:
         - yarn: true
-      addons:
-        sonarcloud:
-          organization: "swsnu"
-          token:
-            secure: "eCdsrHEoqEHhVwBzMbB26eDA1x2ZLjBjLEir2HqiPT6S0aSBByHnt+GwW1fmWxTa2DaiCi29uhg8CRdKghQnHto6eAWZNapy+IL0Figj7AQ/GmfLmtmZC2BfaaDhs/EeBy87dqieiE7D6N7eZGxiNsBavEuwksck7vWb5JQdFyFc1twkrAdY4J1HTCaJdQ7GzbUtEkTLBYbHe1uy5zzINwqrurEkWxVinANg7/a4GJJPD7EBEVH8gQglB71qrkjb183B6Zy+RhJqeb6/JpQvhGLD3CXMF9tEi8ppCthij3rNyklreA6+/Ha4gEI/CxyIqDzLd8X7LHx9N60/iJwQEAS9q8D3n4Ay6ALC3+lW/cvJVOKY+70Ix3ySPYjp74cGpXTf1x6b7aBlxwNStmyENp524UAILLkK5Use7hFq5CSZQphp4fp3c6ayCGXum0G3/95IPIMqgWuf17R2LlqboJUoj0FJEg8zhdfjijccPpxPK3aoEMnBNAAWOPO4Fsl711KRhtthLF1Zt14Lu1vGxKgpLjR2tI5UIGOk3OzYA3SzbDYiQhxldzwC0KuSzgacY17xOauHNI1O2T0G1wNgnnfKK3ng+sryy75wRA+6pBs/bQ+2e1zRQsixuUDoId8+/VUo9fwrdvXCOisJywXX86FBB7olGXezuDclyA0DaS8="
-      env:
-        - COVERALLS_PARALLEL=true
-      before_install:
-        - cd frontend
-      install:
-        - yarn install
-        - yarn add coveralls
-      script:
-        - ./node_modules/.bin/eslint src/
-        - yarn test --coverage --watchAll=false
-      after_success:
-        - cat ./coverage/lcov.info | ./node_modules/coveralls/bin/coverall.js
-        - sonar-scanner
-
-    - language: python
-      python:
-        - "3.7"
-      env:
-        - COVERALLS_PARALLEL=true
-      cache:
         - pip: true
       addons:
         sonarcloud:
           organization: "swsnu"
           token:
             secure: "eCdsrHEoqEHhVwBzMbB26eDA1x2ZLjBjLEir2HqiPT6S0aSBByHnt+GwW1fmWxTa2DaiCi29uhg8CRdKghQnHto6eAWZNapy+IL0Figj7AQ/GmfLmtmZC2BfaaDhs/EeBy87dqieiE7D6N7eZGxiNsBavEuwksck7vWb5JQdFyFc1twkrAdY4J1HTCaJdQ7GzbUtEkTLBYbHe1uy5zzINwqrurEkWxVinANg7/a4GJJPD7EBEVH8gQglB71qrkjb183B6Zy+RhJqeb6/JpQvhGLD3CXMF9tEi8ppCthij3rNyklreA6+/Ha4gEI/CxyIqDzLd8X7LHx9N60/iJwQEAS9q8D3n4Ay6ALC3+lW/cvJVOKY+70Ix3ySPYjp74cGpXTf1x6b7aBlxwNStmyENp524UAILLkK5Use7hFq5CSZQphp4fp3c6ayCGXum0G3/95IPIMqgWuf17R2LlqboJUoj0FJEg8zhdfjijccPpxPK3aoEMnBNAAWOPO4Fsl711KRhtthLF1Zt14Lu1vGxKgpLjR2tI5UIGOk3OzYA3SzbDYiQhxldzwC0KuSzgacY17xOauHNI1O2T0G1wNgnnfKK3ng+sryy75wRA+6pBs/bQ+2e1zRQsixuUDoId8+/VUo9fwrdvXCOisJywXX86FBB7olGXezuDclyA0DaS8="
-      before_install:
-        - cd backend
       install:
+        - cd frontend
+        - yarn install
+        - cd ../backend
         - pip install -r requirements.txt
-        - pip install coverage pyyaml coveralls
-      before_script:
+        - gem install coveralls-lcov
+      script:
+        - cd ../frontend
+        - "./node_modules/.bin/eslint src/"
+        - yarn test --coverage --watchAll=false
+        - coveralls-lcov -v -n coverage/lcov.info > coverage/coverage.json
+        - cd ../backend
         - python3 manage.py makemigrations user roadmap section task tag comment
         - python3 manage.py migrate
-      script:              
         - pylint --rcfile=./.pylintrc ./backend --disable='fixme, duplicate-code'
         - coverage run --source="./user/","./roadmap/" --omit='manage.py','*/__init__.py','backend/*' manage.py test
         - coverage report
         - coverage xml
-      after_success:
-        - coveralls
+        - cd ..
         - sonar-scanner
+      after_success:
+        - cd backend
+        - coveralls --merge=../frontend/coverage/coverage.json
