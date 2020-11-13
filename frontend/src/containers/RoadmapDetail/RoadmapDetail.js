@@ -55,7 +55,17 @@ class RoadmapDetail extends Component {
 
   commentEditHandler = (commentID, comment) => {
     const { onEditComment, match } = this.props;
-    onEditComment(commentID, match.params.id, comment);
+    const editedComment = prompt("Edit your comment", comment.content);
+
+    if (editedComment !== null) {
+      // user clicked OK
+      if (editedComment === "") {
+        // do nothing on empty input
+      } else {
+        onEditComment(commentID, match.params.id, editedComment);
+      }
+    }
+    // skip else: do nothing when user cancelled pop-up.
   };
 
   commentDeleteHandler = (id) => {

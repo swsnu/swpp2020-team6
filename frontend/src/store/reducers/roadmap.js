@@ -29,7 +29,7 @@ const reducer = (state = initialState, action) => {
       const { newComment } = action;
       const modifiedComments = state.selectedRoadmap.comments.map((comment) => {
         if (comment.comment_id === newComment.comment_id) {
-          return { newComment };
+          return { ...newComment };
         }
         return { ...comment };
       });
