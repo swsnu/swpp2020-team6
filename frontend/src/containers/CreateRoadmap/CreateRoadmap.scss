@@ -66,8 +66,8 @@
     padding: 5px;
     margin: 5px 5px 5px 5px;
 
-    .create-section-up,
-    .create-section-down {
+    .up-section-button,
+    .down-section-button {
       position: relative;
       height: 30px;
       left: -3%;
@@ -87,7 +87,7 @@
       margin: 5px 5px 5px 5px;
     }
 
-    .create-section-title {
+    .section-title {
       position: relative;
       width: 60%;
       border: 1px solid rgb(87, 82, 82);
@@ -108,7 +108,7 @@
       padding: 5px;
       margin: 5px 5px 5px 5px;
 
-      .create-task-type {
+      .task-type {
         position: relative;
         margin-top: 5px;
         margin-bottom: 5px;
@@ -120,9 +120,9 @@
         color: rgb(0, 0, 225);
         font-size: 20px;
       }
-      .create-task-title,
-      .create-task-url,
-      .create-task-description {
+      .task-title,
+      .task-url,
+      .task-description {
         position: relative;
         width: 60%;
         margin-top: 5px;
@@ -142,8 +142,8 @@
         font-size: 15px;
       }
 
-      .create-task-up,
-      .create-task-down {
+      .up-task-button,
+      .down-task-button {
         position: relative;
         height: 30px;
         left: -40%;

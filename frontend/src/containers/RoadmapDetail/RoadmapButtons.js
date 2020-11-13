@@ -10,7 +10,10 @@ const RoadmapButtons = (props) => {
     history.push(`/roadmap/${roadmapId}/edit`);
   };
 
-  const onClickDuplicateRoadmap = () => {};
+  const onClickDuplicateRoadmap = () => {
+    const { onDuplicateRoadmap, match } = this.props;
+    onDuplicateRoadmap(match.params.id);
+  };
 
   const onClickDeleteRoadmap = () => {
     const { onDeleteRoadmap, roadmapId } = props;
