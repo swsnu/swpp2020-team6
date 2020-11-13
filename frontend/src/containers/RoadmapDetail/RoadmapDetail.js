@@ -21,7 +21,7 @@ class RoadmapDetail extends Component {
   backToList = () => {
     const { onResetRoadmap, history } = this.props;
     onResetRoadmap();
-    history.back();
+    history.goBack();
   };
 
   /* ---------------- Roadmap Progress -------------------- */
@@ -242,6 +242,9 @@ class RoadmapDetail extends Component {
               {commentConfirmButton}
             </div>
             <div className="roadmap-comments">{roadmapComments}</div>
+            <button id="back-button" type="button" onClick={() => this.backToList()}>
+              Back
+            </button>
           </div>
         </div>
       </div>
