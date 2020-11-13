@@ -190,7 +190,7 @@ const stubMyRoadmapInProgressState = {
     id: 1,
     title: "title1",
     date: dateData,
-    level: 1,
+    level: 2,
     like_count: 0,
     comment_count: 0,
     pin_count: 0,
@@ -261,7 +261,7 @@ const stubMyRoadmapFinishedState = {
     id: 1,
     title: "title1",
     date: dateData,
-    level: 1,
+    level: 3,
     like_count: 0,
     comment_count: 0,
     pin_count: 0,
@@ -327,12 +327,12 @@ const stubMyRoadmapFinishedState = {
   },
 };
 
-const stubBuggyProgressState = {
+const stubBuggyState = {
   selectedRoadmap: {
     id: 1,
     title: "title1",
     date: dateData,
-    level: 1,
+    level: 4,
     like_count: 0,
     comment_count: 0,
     pin_count: 0,
@@ -405,7 +405,7 @@ const stubOtherRoadmapState = {
     date: dateData,
     level: 1,
     like_count: 0,
-    comment_count: 0,
+    comment_count: 2,
     pin_count: 0,
     progress: beforeStudying,
     original_author_id: 1,
@@ -465,7 +465,24 @@ const stubOtherRoadmapState = {
         ],
       },
     ],
-    comments: [],
+    comments: [
+      {
+        comment_id: 1,
+        roadmap_id: 1,
+        content: "it is great!",
+        author_id: 5,
+        author_name: "user5",
+        author_picture_url: profileURL,
+      },
+      {
+        comment_id: 2,
+        roadmap_id: 1,
+        content: "it is great!",
+        author_id: 1,
+        author_name: "user1",
+        author_picture_url: profileURL,
+      },
+    ],
   },
 };
 
@@ -488,10 +505,7 @@ const mockAuthorizedUserMyRoadmapFinishedStore = getMockStore(
   stubMyRoadmapFinishedState,
 );
 
-const mockAuthorizedUserBuggyProgressStore = getMockStore(
-  stubAuthorizedUserState,
-  stubBuggyProgressState,
-);
+const mockAuthorizedUserBuggyStore = getMockStore(stubAuthorizedUserState, stubBuggyState);
 
 const mockAuthorizedUserOtherRoadmapStore = getMockStore(
   stubAuthorizedUserState,
@@ -506,14 +520,32 @@ const mockAuthorizedUserLikePinRoadmapStore = getMockStore(
 describe("<RoadmapDetail />", () => {
   let spyGetRoadmap;
   let spyDeleteRoadmap;
+  let spyPostComment;
   let spyPush;
+  let spyGoBack;
+  let spyEditComment;
+  let spyDeleteComment;
+  let spyResetRoadmap;
 
   beforeEach(() => {
     spyPush = jest.spyOn(history, "push").mockImplementation(() => {});
+    spyGoBack = jest.spyOn(history, "goBack").mockImplementation(() => {});
     spyGetRoadmap = jest.spyOn(actionCreators, "getRoadmap").mockImplementation(() => {
       return () => {};
     });
     spyDeleteRoadmap = jest.spyOn(actionCreators, "deleteRoadmap").mockImplementation(() => {
+      return () => {};
+    });
+    spyPostComment = jest.spyOn(actionCreators, "createComment").mockImplementation(() => {
+      return () => {};
+    });
+    spyEditComment = jest.spyOn(actionCreators, "editComment").mockImplementation(() => {
+      return () => {};
+    });
+    spyDeleteComment = jest.spyOn(actionCreators, "deleteComment").mockImplementation(() => {
+      return () => {};
+    });
+    spyResetRoadmap = jest.spyOn(actionCreators, "resetRoadmap_").mockImplementation(() => {
       return () => {};
     });
   });
@@ -564,6 +596,105 @@ describe("<RoadmapDetail />", () => {
     const innerWrapper = component.find(".Loading");
     expect(innerWrapper.length).toBe(1);
     expect(spyGetRoadmap).toHaveBeenCalledTimes(1);
+  });
+
+  /* ----------------- Roadmap Level ----------------- */
+  it(`should show appropriate roadmap level(basic).`, () => {
+    const component = mount(
+      <Provider store={mockAuthorizedUserMyRoadmapBeforeStudyingStore}>
+        <ConnectedRouter history={history}>
+          <Switch>
+            <Route
+              path="/"
+              exact
+              render={() => <RoadmapDetail history={history} match={{ params: { id: 1 } }} />}
+            />
+          </Switch>
+        </ConnectedRouter>
+      </Provider>,
+    );
+    const basicLevel = component.find("#basic-level");
+    expect(basicLevel.length).toBe(1);
+    const intermediateLevel = component.find("#intermediate-level");
+    expect(intermediateLevel.length).toBe(0);
+    const advancedLevel = component.find("#advanced-level");
+    expect(advancedLevel.length).toBe(0);
+    const nullLevel = component.find("#null-level");
+    expect(nullLevel.length).toBe(0);
+  });
+
+  it(`should show appropriate roadmap level(intermediate).`, () => {
+    const component = mount(
+      <Provider store={mockAuthorizedUserMyRoadmapInProgressStore}>
+        <ConnectedRouter history={history}>
+          <Switch>
+            <Route
+              path="/"
+              exact
+              render={() => <RoadmapDetail history={history} match={{ params: { id: 1 } }} />}
+            />
+          </Switch>
+        </ConnectedRouter>
+      </Provider>,
+    );
+
+    const basicLevel = component.find("#basic-level");
+    expect(basicLevel.length).toBe(0);
+    const intermediateLevel = component.find("#intermediate-level");
+    expect(intermediateLevel.length).toBe(1);
+    const advancedLevel = component.find("#advanced-level");
+    expect(advancedLevel.length).toBe(0);
+    const nullLevel = component.find("#null-level");
+    expect(nullLevel.length).toBe(0);
+  });
+
+  it(`should show appropriate roadmap level(advanced).`, () => {
+    const component = mount(
+      <Provider store={mockAuthorizedUserMyRoadmapFinishedStore}>
+        <ConnectedRouter history={history}>
+          <Switch>
+            <Route
+              path="/"
+              exact
+              render={() => <RoadmapDetail history={history} match={{ params: { id: 1 } }} />}
+            />
+          </Switch>
+        </ConnectedRouter>
+      </Provider>,
+    );
+
+    const basicLevel = component.find("#basic-level");
+    expect(basicLevel.length).toBe(0);
+    const intermediateLevel = component.find("#intermediate-level");
+    expect(intermediateLevel.length).toBe(0);
+    const advancedLevel = component.find("#advanced-level");
+    expect(advancedLevel.length).toBe(1);
+    const nullLevel = component.find("#null-level");
+    expect(nullLevel.length).toBe(0);
+  });
+
+  it(`should show appropriate roadmap level(null).`, () => {
+    const component = mount(
+      <Provider store={mockAuthorizedUserBuggyStore}>
+        <ConnectedRouter history={history}>
+          <Switch>
+            <Route
+              path="/"
+              exact
+              render={() => <RoadmapDetail history={history} match={{ params: { id: 1 } }} />}
+            />
+          </Switch>
+        </ConnectedRouter>
+      </Provider>,
+    );
+    const basicLevel = component.find("#basic-level");
+    expect(basicLevel.length).toBe(0);
+    const intermediateLevel = component.find("#intermediate-level");
+    expect(intermediateLevel.length).toBe(0);
+    const advancedLevel = component.find("#advanced-level");
+    expect(advancedLevel.length).toBe(0);
+    const nullLevel = component.find("#null-level");
+    expect(nullLevel.length).toBe(1);
   });
 
   // My Roadmap Testing
@@ -781,7 +912,7 @@ describe("<RoadmapDetail />", () => {
 
   it(`should show not show 'progress-change-buttons on buggy progress state.`, () => {
     const component = mount(
-      <Provider store={mockAuthorizedUserBuggyProgressStore}>
+      <Provider store={mockAuthorizedUserBuggyStore}>
         <ConnectedRouter history={history}>
           <Switch>
             <Route
@@ -939,5 +1070,167 @@ describe("<RoadmapDetail />", () => {
     duplicateButton.simulate("click");
     // need to mock onChangeRoadmapProgressStatus
     // expect(spyLike).toHaveBeenCalledTimes(1);
+  });
+
+  /* --------------------- Comment Functionality --------------------- */
+  it(`should not post empty comments.`, () => {
+    const component = mount(
+      <Provider store={mockAuthorizedUserOtherRoadmapStore}>
+        <ConnectedRouter history={history}>
+          <Switch>
+            <Route
+              path="/"
+              exact
+              render={() => <RoadmapDetail history={history} match={{ params: { id: 1 } }} />}
+            />
+          </Switch>
+        </ConnectedRouter>
+      </Provider>,
+    );
+
+    const commentInput = component.find("#new-comment-content-input");
+    commentInput.simulate("change", { target: { value: "c" } });
+    commentInput.simulate("change", { target: { value: "" } });
+    const confirmComment = component.find("#confirm-create-comment-button");
+    confirmComment.simulate("click");
+    expect(spyPostComment).toHaveBeenCalledTimes(0);
+  });
+
+  it(`should post non-empty comments.`, () => {
+    const component = mount(
+      <Provider store={mockAuthorizedUserOtherRoadmapStore}>
+        <ConnectedRouter history={history}>
+          <Switch>
+            <Route
+              path="/"
+              exact
+              render={() => <RoadmapDetail history={history} match={{ params: { id: 1 } }} />}
+            />
+          </Switch>
+        </ConnectedRouter>
+      </Provider>,
+    );
+
+    const commentInput = component.find("#new-comment-content-input");
+    commentInput.simulate("change", { target: { value: "comment" } });
+    const confirmComment = component.find("#confirm-create-comment-button");
+    confirmComment.simulate("click");
+    expect(spyPostComment).toHaveBeenCalledTimes(1);
+  });
+
+  it(`should only let the author edit the comment.`, () => {
+    const component = mount(
+      <Provider store={mockAuthorizedUserOtherRoadmapStore}>
+        <ConnectedRouter history={history}>
+          <Switch>
+            <Route
+              path="/"
+              exact
+              render={() => <RoadmapDetail history={history} match={{ params: { id: 1 } }} />}
+            />
+          </Switch>
+        </ConnectedRouter>
+      </Provider>,
+    );
+
+    const editButton = component.find("#edit-comment-button");
+    expect(editButton.length).toBe(1);
+
+    const spyPromptOK = jest.spyOn(window, "prompt").mockImplementation(() => "edited");
+    editButton.simulate("click");
+    expect(spyPromptOK).toHaveBeenCalledTimes(1);
+    expect(spyEditComment).toHaveBeenCalledTimes(1);
+  });
+
+  it(`should not edit when the new comment is empty.`, () => {
+    const component = mount(
+      <Provider store={mockAuthorizedUserOtherRoadmapStore}>
+        <ConnectedRouter history={history}>
+          <Switch>
+            <Route
+              path="/"
+              exact
+              render={() => <RoadmapDetail history={history} match={{ params: { id: 1 } }} />}
+            />
+          </Switch>
+        </ConnectedRouter>
+      </Provider>,
+    );
+
+    const editButton = component.find("#edit-comment-button");
+    expect(editButton.length).toBe(1);
+
+    const spyPromptEmpty = jest.spyOn(window, "prompt").mockImplementation(() => "");
+    editButton.simulate("click");
+    expect(spyPromptEmpty).toHaveBeenCalledTimes(1);
+    expect(spyEditComment).toHaveBeenCalledTimes(0);
+  });
+
+  it(`should not edit when the prompt is canceled.`, () => {
+    const component = mount(
+      <Provider store={mockAuthorizedUserOtherRoadmapStore}>
+        <ConnectedRouter history={history}>
+          <Switch>
+            <Route
+              path="/"
+              exact
+              render={() => <RoadmapDetail history={history} match={{ params: { id: 1 } }} />}
+            />
+          </Switch>
+        </ConnectedRouter>
+      </Provider>,
+    );
+
+    const editButton = component.find("#edit-comment-button");
+    expect(editButton.length).toBe(1);
+
+    const spyPromptCancel = jest.spyOn(window, "prompt").mockImplementation(() => null);
+    editButton.simulate("click");
+    expect(spyPromptCancel).toHaveBeenCalledTimes(1);
+    expect(spyEditComment).toHaveBeenCalledTimes(0);
+  });
+
+  it(`should only let the author delete the comment.`, () => {
+    const component = mount(
+      <Provider store={mockAuthorizedUserOtherRoadmapStore}>
+        <ConnectedRouter history={history}>
+          <Switch>
+            <Route
+              path="/"
+              exact
+              render={() => <RoadmapDetail history={history} match={{ params: { id: 1 } }} />}
+            />
+          </Switch>
+        </ConnectedRouter>
+      </Provider>,
+    );
+
+    const deleteButton = component.find("#delete-comment-button");
+    expect(deleteButton.length).toBe(1);
+    deleteButton.simulate("click");
+    expect(spyDeleteComment).toHaveBeenCalledTimes(1);
+  });
+
+  /* ------------------ back button ------------------ */
+  it(`should return to the previous page when 'back' button is clicked.`, () => {
+    const component = mount(
+      <Provider store={mockAuthorizedUserOtherRoadmapStore}>
+        <ConnectedRouter history={history}>
+          <Switch>
+            <Route
+              path="/"
+              exact
+              render={() => <RoadmapDetail history={history} match={{ params: { id: 1 } }} />}
+            />
+          </Switch>
+        </ConnectedRouter>
+      </Provider>,
+    );
+
+    const backButton = component.find("#back-button");
+    expect(backButton.length).toBe(1);
+    backButton.simulate("click");
+    expect(spyResetRoadmap).toHaveBeenCalledTimes(1);
+    expect(spyGoBack).toHaveBeenCalledTimes(1);
   });
 });
