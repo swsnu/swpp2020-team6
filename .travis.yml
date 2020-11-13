@@ -17,7 +17,8 @@ matrix:
         - cd frontend
         - yarn install
         - cd ../backend
-        - pip3 install -r requirements.txt
+        - source ~/virtualenv/python3.7/bin.activate
+        - pip install -r requirements.txt
         - gem install coveralls-lcov
       script:
         - cd ../frontend
@@ -25,8 +26,8 @@ matrix:
         - yarn test --coverage --watchAll=false
         - coveralls-lcov -v -n coverage/lcov.info > coverage/coverage.json
         - cd ../backend
-        - python3 manage.py makemigrations user roadmap section task tag comment
-        - python3 manage.py migrate
+        - python manage.py makemigrations user roadmap section task tag comment
+        - python manage.py migrate
         - pylint --rcfile=./.pylintrc ./backend --disable='fixme, duplicate-code'
         - coverage run --source="./user/","./roadmap/" --omit='manage.py','*/__init__.py','backend/*' manage.py test
         - coverage report
