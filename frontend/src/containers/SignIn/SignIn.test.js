@@ -1,4 +1,3 @@
-/* eslint-disable no-unused-vars */ // delete after finishing.
 import React from "react";
 import { mount } from "enzyme";
 import { Provider } from "react-redux";
@@ -29,15 +28,11 @@ const unauthorizedMockStore = getMockStore(stubUnauthorizedUserState, stubInitia
 
 describe("<SignIn />", () => {
   let spySignIn;
-  let spySignOut;
   let spyHistoryPush;
   let spyAlert;
 
   beforeEach(() => {
     spySignIn = jest.spyOn(actionCreatorsUser, "signIn").mockImplementation(() => {
-      return () => {};
-    });
-    spySignOut = jest.spyOn(actionCreatorsUser, "signOut").mockImplementation(() => {
       return () => {};
     });
     spyHistoryPush = jest.spyOn(history, "push").mockImplementation(() => {});
@@ -131,6 +126,7 @@ describe("<SignIn />", () => {
 
   /* ----------- Authorized User ----------------*/
   it(`should show alert when user is already signed in`, () => {
+    // eslint-disable-next-line no-unused-vars
     const component = mount(
       <Provider store={authorizedMockStore}>
         <ConnectedRouter history={history}>

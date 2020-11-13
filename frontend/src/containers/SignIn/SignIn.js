@@ -1,4 +1,8 @@
-import React, { Component } from "react"; // meaning of bracket
+/* Sign In page.
+ * When the user is already signed in, redirect to home page.
+ * On valid username and password input, the user is signed in to the service.
+ */
+import React, { Component } from "react";
 import { connect } from "react-redux";
 import PropTypes from "prop-types";
 import * as actionCreators from "../../store/actions/index";
@@ -40,7 +44,6 @@ class SignIn extends Component {
 
   render() {
     const { username, password } = this.state;
-
     return (
       <div className="SignIn">
         <h1>Sign In</h1>
