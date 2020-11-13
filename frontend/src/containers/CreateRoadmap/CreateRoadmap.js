@@ -14,6 +14,7 @@ class CreateRoadmap extends Component {
     level: 0,
     sections: [],
     tags: [],
+    newTag: "",
   };
 
   onChangeTitle = (title) => {
@@ -22,6 +23,21 @@ class CreateRoadmap extends Component {
 
   onChangeLevel = (level) => {
     this.setState({ level });
+  };
+
+  onChangeNewTag = (newTag) => {
+    this.setState({ newTag });
+  };
+
+  onClickAddTag = () => {
+    const { tags, newTag } = this.state;
+    this.setState({ tags: tags.concat(newTag) });
+    this.setState({ newTag: "" });
+  };
+
+  onClickDeleteTag = (id) => {
+    const { tags } = this.state;
+    this.setState({ tags: tags.filter((_, index) => index !== id) });
   };
 
   onClickCreateSection = () => {
@@ -274,7 +290,19 @@ class CreateRoadmap extends Component {
       return <div />;
     }
 
-    const { sections, level, title } = this.state;
+    const { sections, level, title, tags, newTag } = this.state;
+
+    const taglist = tags.map((tag, index) => {
+      return (
+        <div className="tags">
+          <p key={tag}>{tag}</p>
+          <button className="delete-tag" type="button" onClick={() => this.onClickDeleteTag(index)}>
+            delete
+          </button>
+        </div>
+      );
+    });
+
     const CreateSections = sections.map((section, index) => {
       return (
         <CreateSection
@@ -322,35 +350,46 @@ class CreateRoadmap extends Component {
             <option value={levelType.INTERMEDIATE}>Intermediate</option>
             <option value={levelType.ADVANCED}>Advanced</option>
           </select>
-          <div className="sections">
-            {CreateSections}
-            <button
-              type="button"
-              id="create-section-button"
-              onClick={() => {
-                this.onClickCreateSection();
-              }}
-            >
-              Create Section
-            </button>
-          </div>
-          <div className="buttons">
-            <button
-              id="back-create-roadmap-button"
-              type="button"
-              onClick={() => this.onClickCreateBack()}
-            >
-              Back
-            </button>
-            <button
-              id="confirm-create-roadmap-button"
-              type="button"
-              disabled={title === "" || level === 0 || sections.length === 0}
-              onClick={() => this.onClickCreateConfirm()}
-            >
-              Confirm
-            </button>
-          </div>
+          <br />
+          <label>Tags</label>
+          {taglist}
+          <input
+            id="new-tag"
+            value={newTag}
+            onChange={(event) => this.onChangeNewTag(event.target.value)}
+          />
+          <button id="add-tag-button" type="button" onClick={() => this.onClickAddTag()}>
+            add
+          </button>
+        </div>
+        <div className="sections">
+          {CreateSections}
+          <button
+            type="button"
+            id="create-section-button"
+            onClick={() => {
+              this.onClickCreateSection();
+            }}
+          >
+            Create Section
+          </button>
+        </div>
+        <div className="buttons">
+          <button
+            id="back-create-roadmap-button"
+            type="button"
+            onClick={() => this.onClickCreateBack()}
+          >
+            Back
+          </button>
+          <button
+            id="confirm-create-roadmap-button"
+            type="button"
+            disabled={title === "" || level === 0 || sections.length === 0}
+            onClick={() => this.onClickCreateConfirm()}
+          >
+            Confirm
+          </button>
         </div>
       </div>
     );

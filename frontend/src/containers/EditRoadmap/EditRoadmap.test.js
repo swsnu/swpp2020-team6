@@ -86,9 +86,10 @@ const initialRoadmapState = {
         ],
       },
     ],
-    tags: [],
-    addedTagList: [],
-    deletedTagList: [],
+    tags: [
+      { tag_id: 2, tag_name: "tag0" },
+      { tag_id: 4, tag_name: "tag1" },
+    ],
   },
 };
 
@@ -196,21 +197,44 @@ describe("<EditRoadmap />", () => {
     expect(instance.state).toEqual({
       ...initialRoadmapState.selectedRoadmap,
       author_id: undefined,
+      tags: ["tag0", "tag1"],
+      newTag: "",
+      addedTagList: [],
+      deletedTagList: [],
     });
   });
 
   it("should set state on input changes", () => {
     const title = "test-title";
     const level = 2;
+    const newTag = "test";
     const component = mount(editRoadmap);
     let wrapper = component.find("#roadmap-title");
     wrapper.simulate("change", { target: { value: title } });
-    let instance = component.find(EditRoadmap.WrappedComponent).instance();
-    expect(instance.state.title).toBe(title);
     wrapper = component.find("#roadmap-level");
     wrapper.simulate("change", { target: { value: level } });
-    instance = component.find(EditRoadmap.WrappedComponent).instance();
+    wrapper = component.find("#new-tag");
+    wrapper.simulate("change", { target: { value: newTag } });
+    const instance = component.find(EditRoadmap.WrappedComponent).instance();
+    expect(instance.state.title).toBe(title);
     expect(instance.state.level).toBe(level);
+    expect(instance.state.newTag).toBe(newTag);
+  });
+
+  it("should call 'onClickAddTag', 'onClickDeleteTag'", () => {
+    const component = mount(editRoadmap);
+    const newTag = "test";
+    let wrapper = component.find("#new-tag");
+    wrapper.simulate("change", { target: { value: newTag } });
+    wrapper = component.find("#add-tag-button");
+    wrapper.simulate("click");
+    const instance = component.find(EditRoadmap.WrappedComponent).instance();
+    expect(instance.state.tags).toEqual(["tag0", "tag1", newTag]);
+    expect(instance.state.addedTagList).toEqual([newTag]);
+    wrapper = component.find(".delete-tag");
+    wrapper.at(0).simulate("click");
+    expect(instance.state.tags).toEqual(["tag1", newTag]);
+    expect(instance.state.deletedTagList).toEqual(["tag0"]);
   });
 
   it("should call 'onClickCreateSection'", () => {
@@ -233,7 +257,7 @@ describe("<EditRoadmap />", () => {
 
   it("should call 'onClickUpSection'", () => {
     const component = mount(editRoadmap);
-    const wrapper = component.find(".create-section-up");
+    const wrapper = component.find(".up-section-button");
     wrapper.at(1).simulate("click");
     const instance = component.find(EditRoadmap.WrappedComponent).instance();
     expect(instance.state.sections[0].section_title).toBe("test-section1");
@@ -243,7 +267,7 @@ describe("<EditRoadmap />", () => {
 
   it("should call 'onClickDownSection'", () => {
     const component = mount(editRoadmap);
-    const wrapper = component.find(".create-section-down");
+    const wrapper = component.find(".down-section-button");
     wrapper.at(0).simulate("click");
     const instance = component.find(EditRoadmap.WrappedComponent).instance();
     expect(instance.state.sections[0].section_title).toBe("test-section1");
@@ -253,10 +277,10 @@ describe("<EditRoadmap />", () => {
 
   it("should call 'onChangeSectionTitle'", () => {
     const component = mount(editRoadmap);
-    const wrapper = component.find(".create-section-title");
-    wrapper.at(0).simulate("change", { target: { value: "0" } });
+    const wrapper = component.find(".section-title");
+    wrapper.at(0).simulate("change", { target: { value: "55" } });
     const instance = component.find(EditRoadmap.WrappedComponent).instance();
-    expect(instance.state.sections[0].section_title).toBe("0");
+    expect(instance.state.sections[0].section_title).toBe("55");
     expect(instance.state.sections[1].section_title).toBe("test-section1");
   });
 
@@ -288,7 +312,7 @@ describe("<EditRoadmap />", () => {
   it("should call 'onChangeTaskTitle'", () => {
     const component = mount(editRoadmap);
     const testTitle = "test";
-    const wrapper = component.find(".create-task-title");
+    const wrapper = component.find(".task-title");
     wrapper.at(0).simulate("change", { target: { value: testTitle } });
     const instance = component.find(EditRoadmap.WrappedComponent).instance();
     expect(instance.state.sections[0].tasks[0].task_title).toEqual(testTitle);
@@ -315,7 +339,7 @@ describe("<EditRoadmap />", () => {
   it("should call 'onChangeTaskType'", () => {
     const component = mount(editRoadmap);
     const testType = 2;
-    const wrapper = component.find(".create-task-type");
+    const wrapper = component.find(".task-type");
     wrapper.at(0).simulate("change", { target: { value: testType } });
     const instance = component.find(EditRoadmap.WrappedComponent).instance();
     expect(instance.state.sections[0].tasks[0].task_type).toEqual(testType);
@@ -342,7 +366,7 @@ describe("<EditRoadmap />", () => {
   it("should call 'onChangeTaskUrl'", () => {
     const component = mount(editRoadmap);
     const testUrl = "test";
-    const wrapper = component.find(".create-task-url");
+    const wrapper = component.find(".task-url");
     wrapper.at(0).simulate("change", { target: { value: testUrl } });
     const instance = component.find(EditRoadmap.WrappedComponent).instance();
     expect(instance.state.sections[0].tasks[0].task_url).toEqual(testUrl);
@@ -369,7 +393,7 @@ describe("<EditRoadmap />", () => {
   it("should call 'onChangeTaskDescription'", () => {
     const component = mount(editRoadmap);
     const testDescription = "test";
-    const wrapper = component.find(".create-task-description");
+    const wrapper = component.find(".task-description");
     wrapper.at(0).simulate("change", { target: { value: testDescription } });
     const instance = component.find(EditRoadmap.WrappedComponent).instance();
     expect(instance.state.sections[0].tasks[0].task_description).toEqual(testDescription);
@@ -396,7 +420,7 @@ describe("<EditRoadmap />", () => {
   it("should call 'onClickUpTask'", () => {
     const component = mount(editRoadmap);
     const instance = component.find(EditRoadmap.WrappedComponent).instance();
-    const wrapper = component.find(".create-task-up");
+    const wrapper = component.find(".up-task-button");
     wrapper.at(1).simulate("click");
     expect(instance.state.sections[0].tasks[0].task_title).toBe("task1-title");
     expect(instance.state.sections[0].tasks[1].task_title).toBe("task0-title");
@@ -423,7 +447,7 @@ describe("<EditRoadmap />", () => {
   it("should call 'onClickDownTask'", () => {
     const component = mount(editRoadmap);
     const instance = component.find(EditRoadmap.WrappedComponent).instance();
-    const wrapper = component.find(".create-task-down");
+    const wrapper = component.find(".down-task-button");
     wrapper.at(0).simulate("click");
     expect(instance.state.sections[0].tasks[0].task_title).toBe("task1-title");
     expect(instance.state.sections[0].tasks[1].task_title).toBe("task0-title");

@@ -16,6 +16,7 @@ class EditRoadmap extends Component {
     tags: [],
     addedTagList: [],
     deletedTagList: [],
+    newTag: "",
   };
 
   componentDidMount() {
@@ -25,6 +26,23 @@ class EditRoadmap extends Component {
 
   onClickLevel = (level) => {
     this.setState({ level });
+  };
+
+  onChangeNewTag = (newTag) => {
+    this.setState({ newTag });
+  };
+
+  onClickAddTag = () => {
+    const { tags, newTag, addedTagList } = this.state;
+    this.setState({ tags: tags.concat(newTag) });
+    this.setState({ addedTagList: addedTagList.concat(newTag) });
+    this.setState({ newTag: "" });
+  };
+
+  onClickDeleteTag = (tag, id) => {
+    const { tags, deletedTagList } = this.state;
+    this.setState({ tags: tags.filter((_, index) => index !== id) });
+    this.setState({ deletedTagList: deletedTagList.concat(tag) });
   };
 
   onClickCreateSection = () => {
@@ -288,14 +306,32 @@ class EditRoadmap extends Component {
       return <div />;
     }
 
-    const { sections, level, title } = this.state;
+    const { sections, level, title, tags, newTag } = this.state;
     if (title === null) {
       this.setState({
         title: selectedRoadmap.title,
         level: selectedRoadmap.level,
         sections: selectedRoadmap.sections,
+        tags: selectedRoadmap.tags.map((tag) => {
+          return tag.tag_name;
+        }),
       });
     }
+    const taglist = tags.map((tag, index) => {
+      return (
+        <div className="tags">
+          <p key={tag}>{tag}</p>
+          <button
+            className="delete-tag"
+            type="button"
+            onClick={() => this.onClickDeleteTag(tag, index)}
+          >
+            delete
+          </button>
+        </div>
+      );
+    });
+
     const EditSections = sections.map((section, index) => {
       return (
         <CreateSection
@@ -345,6 +381,17 @@ class EditRoadmap extends Component {
             <option value={levelType.INTERMEDIATE}>Intermediate</option>
             <option value={levelType.ADVANCED}>Advanced</option>
           </select>
+          <br />
+          <label>Tags</label>
+          {taglist}
+          <input
+            id="new-tag"
+            value={newTag}
+            onChange={(event) => this.onChangeNewTag(event.target.value)}
+          />
+          <button id="add-tag-button" type="button" onClick={() => this.onClickAddTag()}>
+            add
+          </button>
         </div>
         <div className="sections">
           {EditSections}

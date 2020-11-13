@@ -46,7 +46,7 @@ const CreateSection = (props) => {
   return (
     <div className="CreateSection">
       <button
-        className="create-section-up"
+        className="up-section-button"
         type="button"
         disabled={tmpSectionId === 0}
         onClick={() => clickUpSectionHandler(tmpSectionId)}
@@ -54,7 +54,7 @@ const CreateSection = (props) => {
         Up
       </button>
       <button
-        className="create-section-down"
+        className="down-section-button"
         type="button"
         disabled={tmpSectionId === sectionLastId}
         onClick={() => clickDownSectionHandler(tmpSectionId)}
@@ -63,7 +63,7 @@ const CreateSection = (props) => {
       </button>
       <label>Section Title</label>
       <input
-        className="create-section-title"
+        className="section-title"
         type="text"
         value={title}
         onChange={(event) => {

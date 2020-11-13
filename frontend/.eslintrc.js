@@ -24,5 +24,6 @@ module.exports = {
     "no-alert": 0,
     "no-restricted-globals": 0,
     "jsx-a11y/label-has-associated-control": 0,
+    "no-case-declarations": 0,
   },
 };

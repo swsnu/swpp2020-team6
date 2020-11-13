@@ -74,15 +74,32 @@ describe("<CreateRoadmap />", () => {
   it("should set state on input changes", () => {
     const title = "test-title";
     const level = 2;
+    const newTag = "test";
     const component = mount(createRoadmap);
     let wrapper = component.find("#roadmap-title");
     wrapper.simulate("change", { target: { value: title } });
-    let instance = component.find(CreateRoadmap.WrappedComponent).instance();
-    expect(instance.state.title).toBe(title);
     wrapper = component.find("#roadmap-level");
     wrapper.simulate("change", { target: { value: level } });
-    instance = component.find(CreateRoadmap.WrappedComponent).instance();
+    wrapper = component.find("#new-tag");
+    wrapper.simulate("change", { target: { value: newTag } });
+    const instance = component.find(CreateRoadmap.WrappedComponent).instance();
+    expect(instance.state.title).toBe(title);
     expect(instance.state.level).toBe(level);
+    expect(instance.state.newTag).toBe(newTag);
+  });
+
+  it("should call 'onClickAddTag', 'onClickDeleteTag'", () => {
+    const component = mount(createRoadmap);
+    const newTag = "test";
+    let wrapper = component.find("#new-tag");
+    wrapper.simulate("change", { target: { value: newTag } });
+    wrapper = component.find("#add-tag-button");
+    wrapper.simulate("click");
+    const instance = component.find(CreateRoadmap.WrappedComponent).instance();
+    expect(instance.state.tags).toEqual([newTag]);
+    wrapper = component.find(".delete-tag");
+    wrapper.at(0).simulate("click");
+    expect(instance.state.tags).toEqual([]);
   });
 
   it("should call 'onClickCreateSection'", () => {
@@ -112,7 +129,7 @@ describe("<CreateRoadmap />", () => {
     const component = mount(createRoadmap);
     let wrapper = component.find("#create-section-button");
     wrapper.simulate("click");
-    wrapper = component.find(".create-section-title");
+    wrapper = component.find(".section-title");
     wrapper.simulate("change", { target: { value: "1" } });
     const instance = component.find(CreateRoadmap.WrappedComponent).instance();
     expect(instance.state.sections[0].section_title).toBe("1");
@@ -124,11 +141,11 @@ describe("<CreateRoadmap />", () => {
     wrapper.simulate("click");
     wrapper.simulate("click");
     wrapper.simulate("click");
-    wrapper = component.find(".create-section-title");
+    wrapper = component.find(".section-title");
     wrapper.at(0).simulate("change", { target: { value: "0" } });
     wrapper.at(1).simulate("change", { target: { value: "1" } });
     wrapper.at(2).simulate("change", { target: { value: "2" } });
-    wrapper = component.find(".create-section-up");
+    wrapper = component.find(".up-section-button");
     wrapper.at(1).simulate("click");
     const instance = component.find(CreateRoadmap.WrappedComponent).instance();
     expect(instance.state.sections[0].section_title).toBe("1");
@@ -142,11 +159,11 @@ describe("<CreateRoadmap />", () => {
     wrapper.simulate("click");
     wrapper.simulate("click");
     wrapper.simulate("click");
-    wrapper = component.find(".create-section-title");
+    wrapper = component.find(".section-title");
     wrapper.at(0).simulate("change", { target: { value: "0" } });
     wrapper.at(1).simulate("change", { target: { value: "1" } });
     wrapper.at(2).simulate("change", { target: { value: "2" } });
-    wrapper = component.find(".create-section-down");
+    wrapper = component.find(".down-section-button");
     wrapper.at(0).simulate("click");
     const instance = component.find(CreateRoadmap.WrappedComponent).instance();
     expect(instance.state.sections[0].section_title).toBe("1");
@@ -197,7 +214,7 @@ describe("<CreateRoadmap />", () => {
     wrapper = component.find(".create-task-button");
     wrapper.at(0).simulate("click");
     wrapper.at(0).simulate("click");
-    wrapper = component.find(".create-task-title");
+    wrapper = component.find(".task-title");
     wrapper.at(0).simulate("change", { target: { value: testTitle } });
     const instance = component.find(CreateRoadmap.WrappedComponent).instance();
     expect(instance.state.sections[0].tasks[0].task_title).toEqual(testTitle);
@@ -214,7 +231,7 @@ describe("<CreateRoadmap />", () => {
     wrapper = component.find(".create-task-button");
     wrapper.at(0).simulate("click");
     wrapper.at(0).simulate("click");
-    wrapper = component.find(".create-task-type");
+    wrapper = component.find(".task-type");
     wrapper.at(0).simulate("change", { target: { value: testType } });
     const instance = component.find(CreateRoadmap.WrappedComponent).instance();
     expect(instance.state.sections[0].tasks[0].task_type).toEqual(testType);
@@ -231,7 +248,7 @@ describe("<CreateRoadmap />", () => {
     wrapper = component.find(".create-task-button");
     wrapper.at(0).simulate("click");
     wrapper.at(0).simulate("click");
-    wrapper = component.find(".create-task-url");
+    wrapper = component.find(".task-url");
     wrapper.at(0).simulate("change", { target: { value: testUrl } });
     const instance = component.find(CreateRoadmap.WrappedComponent).instance();
     expect(instance.state.sections[0].tasks[0].task_url).toEqual(testUrl);
@@ -248,7 +265,7 @@ describe("<CreateRoadmap />", () => {
     wrapper = component.find(".create-task-button");
     wrapper.at(0).simulate("click");
     wrapper.at(0).simulate("click");
-    wrapper = component.find(".create-task-description");
+    wrapper = component.find(".task-description");
     wrapper.at(0).simulate("change", { target: { value: testDescription } });
     const instance = component.find(CreateRoadmap.WrappedComponent).instance();
     expect(instance.state.sections[0].tasks[0].task_description).toEqual(testDescription);
@@ -266,11 +283,11 @@ describe("<CreateRoadmap />", () => {
     wrapper.at(0).simulate("click");
     wrapper.at(0).simulate("click");
     wrapper.at(0).simulate("click");
-    wrapper = component.find(".create-task-title");
+    wrapper = component.find(".task-title");
     wrapper.at(0).simulate("change", { target: { value: "0" } });
     wrapper.at(1).simulate("change", { target: { value: "1" } });
     wrapper.at(2).simulate("change", { target: { value: "2" } });
-    wrapper = component.find(".create-task-up");
+    wrapper = component.find(".up-task-button");
     wrapper.at(1).simulate("click");
     expect(instance.state.sections[0].tasks[0].task_title).toBe("1");
     expect(instance.state.sections[0].tasks[1].task_title).toBe("0");
@@ -288,11 +305,11 @@ describe("<CreateRoadmap />", () => {
     wrapper.at(0).simulate("click");
     wrapper.at(0).simulate("click");
     wrapper.at(0).simulate("click");
-    wrapper = component.find(".create-task-title");
+    wrapper = component.find(".task-title");
     wrapper.at(0).simulate("change", { target: { value: "0" } });
     wrapper.at(1).simulate("change", { target: { value: "1" } });
     wrapper.at(2).simulate("change", { target: { value: "2" } });
-    wrapper = component.find(".create-task-down");
+    wrapper = component.find(".down-task-button");
     wrapper.at(0).simulate("click");
     expect(instance.state.sections[0].tasks[0].task_title).toBe("1");
     expect(instance.state.sections[0].tasks[1].task_title).toBe("0");

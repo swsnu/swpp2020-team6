@@ -21,7 +21,7 @@ export const getRoadmap = (roadmapId) => {
       .catch((error) => {
         switch (error.response.status) {
           case 404:
-            alert("No such Roadmap!!!!");
+            alert("No such Roadmap!");
             break;
           case 401:
             alert("Please sign in!");
@@ -37,8 +37,8 @@ export const getRoadmap = (roadmapId) => {
       });
   };
 };
-export const createRoadmap_ = () => {
-  return { type: actionTypes.CREATE_ROADMAP };
+export const createRoadmap_ = (roadmapData) => {
+  return { type: actionTypes.CREATE_ROADMAP, roadmapData };
 };
 
 export const createRoadmap = (roadmapData) => {
@@ -46,7 +46,7 @@ export const createRoadmap = (roadmapData) => {
     return axios
       .post("/api/roadmap/", roadmapData)
       .then((response) => {
-        dispatch(createRoadmap_());
+        dispatch(createRoadmap_(response.data));
         dispatch(push(`/roadmap/${response.data.id}`));
       })
       .catch((error) => {
@@ -65,16 +65,16 @@ export const createRoadmap = (roadmapData) => {
   };
 };
 
-export const editRoadmap_ = () => {
-  return { type: actionTypes.EDIT_ROADMAP };
+export const editRoadmap_ = (roadmapData) => {
+  return { type: actionTypes.EDIT_ROADMAP, roadmapData };
 };
 
 export const editRoadmap = (roadmapId, roadmapData) => {
   return (dispatch) => {
     return axios
       .put(`/api/roadmap/${roadmapId}/`, roadmapData)
-      .then(() => {
-        dispatch(editRoadmap_());
+      .then((response) => {
+        dispatch(editRoadmap_(response.data));
         dispatch(push(`/roadmap/${roadmapId}`));
       })
       .catch((error) => {
@@ -105,8 +105,8 @@ export const resetRoadmap_ = () => {
   };
 };
 
-export const deleteRoadmap_ = () => {
-  return { type: actionTypes.DELETE_ROADMAP };
+export const deleteRoadmap_ = (roadmapId) => {
+  return { type: actionTypes.DELETE_ROADMAP, roadmapId };
 };
 
 export const deleteRoadmap = (roadmapId) => {
@@ -115,7 +115,7 @@ export const deleteRoadmap = (roadmapId) => {
       .delete(`/api/roadmap/${roadmapId}/`)
       .then(() => {
         alert("Roadmap successfully deleted!");
-        dispatch(deleteRoadmap_());
+        dispatch(deleteRoadmap_(roadmapId));
         dispatch(push(`/home`));
       })
       .catch((error) => {
@@ -128,6 +128,40 @@ export const deleteRoadmap = (roadmapId) => {
             break;
           case 403:
             alert("Only the author can delete the Roadmap!");
+            break;
+          case 400:
+            alert("Parsing error!");
+            break;
+          default:
+            break;
+        }
+        dispatch(goBack());
+      });
+  };
+};
+
+export const duplicateRoadmap_ = (roadmapData) => {
+  return { type: actionTypes.DUPLICATE_ROADMAP, roadmapData };
+};
+
+export const duplicateRoadmap = (roadmapId) => {
+  return (dispatch) => {
+    return axios
+      .post(`/api/roadmap/${roadmapId}`)
+      .then((response) => {
+        duplicateRoadmap_(response.data);
+        const edit = confirm("Successfully duplicated! Would you like to edit?");
+        if (edit) {
+          dispatch(push(`/roadmap/${response.data.id}`));
+        }
+      })
+      .catch((error) => {
+        switch (error.response.status) {
+          case 401:
+            alert("Please sign in!");
+            break;
+          case 404:
+            alert("No such Roadmap!");
             break;
           case 400:
             alert("Parsing error!");
