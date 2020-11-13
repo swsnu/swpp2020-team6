@@ -21,11 +21,12 @@ const RoadmapButtons = (props) => {
 
   const onClickLikeRoadmap = () => {};
 
+  // eslint-disable-next-line camelcase
   const { liked_roadmaps, pinned_roadmaps } = props.selectedUser;
   const { roadmapId } = props;
   const like = liked_roadmaps.find((roadmap) => roadmap.id === roadmapId);
   const likeButtonText = like !== undefined ? "Like" : "Unlike";
-  const pin = liked_roadmaps.find((roadmap) => roadmap.id === roadmapId);
+  const pin = pinned_roadmaps.find((roadmap) => roadmap.id === roadmapId);
   const pinButtonText = pin !== undefined ? "Pin" : "Unpin";
 
   const { isAuthor } = props;
