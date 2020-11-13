@@ -62,8 +62,6 @@ class RoadmapDetail extends Component {
 
     if (isSignedIn === false) {
       // unsigned in user
-      const { history } = this.props;
-      history.goBack();
       return <div />;
     }
     if (selectedRoadmap === undefined) {
@@ -76,7 +74,18 @@ class RoadmapDetail extends Component {
     }
 
     // safe zone (selectedUser !== null/undefined,  selectedRoadmap !== null/undefined)
-    const { title, sections, comments, level } = selectedRoadmap;
+    // eslint-disable-next-line camelcase
+    const { title, sections, comments, level, original_author_id, author_id } = selectedRoadmap;
+
+    /* ---------------- Original Author -------------------- */
+    const originalAuthor =
+      // (inevitable since we use the data from the backend directly)
+      // eslint-disable-next-line camelcase
+      original_author_id !== author_id ? (
+        <div className="roadmap-original-author">
+          <p id="roadmap-original-author-name">{selectedRoadmap.author_name}</p>
+        </div>
+      ) : null;
 
     /* ---------------- Roadmap level -------------------- */
     let roadmapLevel;
@@ -111,7 +120,11 @@ class RoadmapDetail extends Component {
 
     /* ---------------- Roadmap tags -------------------- */
     const roadmapTags = selectedRoadmap.tags.map((item) => {
-      return <p key={item.tag_id}>{item.tag_name}</p>;
+      return (
+        <p key={item.tag_id} className="roadmap-tag">
+          {item.tag_name}
+        </p>
+      );
     });
 
     /* ---------------- Roadmap comments -------------------- */
@@ -144,7 +157,7 @@ class RoadmapDetail extends Component {
     }
 
     return (
-      <div className="roadmap-detail">
+      <div className="RoadmapDetail">
         <div className="header" />
         <div className="row">
           <div className="leftcolumn">
@@ -155,10 +168,11 @@ class RoadmapDetail extends Component {
             />
             <h1 className="roadmap-title">{title}</h1>
             <div className="roadmap-author">
-              <p>{selectedRoadmap.author_picture_url}</p>
+              <p id="roadmap-author-picture-url">{selectedRoadmap.author_user_picture_url}</p>
               <p id="roadmap-author-name">{selectedRoadmap.author_name}</p>
               <p id="roadmap-written-date">{selectedRoadmap.date}</p>
             </div>
+            {originalAuthor}
             {roadmapLevel}
             <div className="roadmap-tags">{roadmapTags}</div>
             <div className="roadmap-sections">{roadmapSections}</div>
@@ -171,11 +185,11 @@ class RoadmapDetail extends Component {
                   {selectedRoadmap.like_count}
                 </p>
                 <p id="roadmap-pin-count">
-                  pinned
+                  Pinned
                   {selectedRoadmap.pin_count}
                 </p>
                 <p id="roadmap-comment-count">
-                  comments
+                  Comments
                   {selectedRoadmap.comment_count}
                 </p>
               </div>
