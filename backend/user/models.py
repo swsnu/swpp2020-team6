@@ -32,11 +32,7 @@ class User(AbstractUser):
                 data["user_picture_url"] = self.user_picture_url
 
         for f in chain(options.many_to_many):
-            if f.name == "pinned_roadmaps":
-                data[f.name] = list(
-                    roadmap.to_dict_simple() for roadmap in f.value_from_object(self)
-                )
-            elif f.name == "liked_roadmaps":
+            if f.name == "pinned_roadmaps" || f.name == "liked_roadmaps":
                 data[f.name] = list(
                     roadmap.to_dict_simple() for roadmap in f.value_from_object(self)
                 )
