@@ -72,10 +72,6 @@ def roadmap(request):
     return HttpResponseNotAllowed(["POST"])
 
 
-def duplicate(request):
-    return
-
-
 def roadmap_id(request, roadmap_id):
     if request.method == "GET":
         if not request.user.is_authenticated:
@@ -167,7 +163,3 @@ def roadmap_id(request, roadmap_id):
         return HttpResponse(status=204)
 
     return HttpResponseNotAllowed(["GET", "PUT", "DELETE"])
-
-
-def roadmap_id_progress(request):
-    return
