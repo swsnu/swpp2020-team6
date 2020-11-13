@@ -1,3 +1,6 @@
+/* User actions.
+ * Send request to the backend using the desired API, then receive response.
+ */
 import axios from "axios";
 import { push } from "connected-react-router";
 
