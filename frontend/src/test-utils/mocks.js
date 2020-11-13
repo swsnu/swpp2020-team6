@@ -20,7 +20,7 @@ const getMockRoadmapReducer = jest.fn((initialState) => (state = initialState, a
   return state;
 });
 
-const getMockStore = (initialUserState, initialRoadmapState) => {
+export const getMockStore = (initialUserState, initialRoadmapState) => {
   const mockUserReducer = getMockUserReducer(initialUserState);
   const mockRoadmapReducer = getMockRoadmapReducer(initialRoadmapState);
   const rootReducer = combineReducers({
