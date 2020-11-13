@@ -25,9 +25,9 @@ const RoadmapButtons = (props) => {
   const { liked_roadmaps, pinned_roadmaps } = props.selectedUser;
   const { roadmapId } = props;
   const like = liked_roadmaps.find((roadmap) => roadmap.id === roadmapId);
-  const likeButtonText = like !== undefined ? "Like" : "Unlike";
+  const likeButtonText = like !== undefined ? "Unlike" : "Like";
   const pin = pinned_roadmaps.find((roadmap) => roadmap.id === roadmapId);
-  const pinButtonText = pin !== undefined ? "Pin" : "Unpin";
+  const pinButtonText = pin !== undefined ? "Unpin" : "Pin";
 
   const { isAuthor } = props;
   const roadmapButtons = isAuthor ? (
