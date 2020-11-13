@@ -1,3 +1,7 @@
+/* Sign Up page.
+ * When the user is already signed in, redirect to home page.
+ * On valid email, username, password, password-confirm input, the user is signed up to the service.
+ */
 import React, { Component } from "react";
 import { connect } from "react-redux";
 import PropTypes from "prop-types";
