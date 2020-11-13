@@ -25,7 +25,9 @@ class RoadmapDetail extends Component {
   };
 
   /* ---------------- Roadmap Progress -------------------- */
-  onChangeRoadmapProgressStatus = (type) => {
+  onChangeRoadmapProgressStatus = () => {
+    // Progress tracking isn't implemented yet.
+    /*
     let newState;
     switch (type) {
       case "start":
@@ -38,13 +40,13 @@ class RoadmapDetail extends Component {
         newState = 3;
         break;
       case "clear":
-        // eslint-disable-next-line no-unused-vars
         newState = 1;
         break;
       default:
         break;
     }
-    // changeRoadmapProgress(newState, parseInt(match.params.id, 10));
+    changeRoadmapProgress(newState, parseInt(match.params.id, 10));
+    */
   };
 
   /* ---------------- comment handlers -------------------- */
@@ -113,16 +115,16 @@ class RoadmapDetail extends Component {
     });
 
     /* ---------------- Roadmap comments -------------------- */
-    const roadmapComments = comments.map((comment) => {
+    const roadmapComments = comments.map((commentItem) => {
       return (
         <Comment
-          key={comment.comment_id}
-          authorName={comment.author_name}
-          isAuthor={comment.author_id === selectedUser.user_id}
-          authorPictureUrl={comment.author_picture_url}
-          content={comment.content}
-          clickEdit={() => this.commentEditHandler(comment)}
-          clickDelete={() => this.commentDeleteHandler(comment.comment_id)}
+          key={commentItem.comment_id}
+          authorName={commentItem.author_name}
+          isAuthor={commentItem.author_id === selectedUser.user_id}
+          authorPictureUrl={commentItem.author_picture_url}
+          content={commentItem.content}
+          clickEdit={() => this.commentEditHandler(commentItem)}
+          clickDelete={() => this.commentDeleteHandler(commentItem.comment_id)}
         />
       );
     });
@@ -148,7 +150,7 @@ class RoadmapDetail extends Component {
           <div className="leftcolumn">
             <ProgressBar
               isAuthor={selectedUser.user_id === selectedRoadmap.author_id}
-              onChangeRoadmapProgressStatus={this.onChangeRoadmapProgressStatus}
+              onChangeRoadmapProgressStatus={() => this.onChangeRoadmapProgressStatus()}
               currentProgressStatus={selectedRoadmap.progress}
             />
             <h1 className="roadmap-title">{title}</h1>
