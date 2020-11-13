@@ -8,26 +8,24 @@ import getMockStore from "../../test-utils/mocks";
 import { history } from "../../store/store";
 import CreateRoadmap from "./CreateRoadmap";
 import CreateSection from "../../components/CreateSection/CreateSection";
+import * as actionCreators from "../../store/actions/roadmap";
 
-const userInitNull = {
-  selectedUser: null,
+const initialUserStateUndefined = {
+  selectedUser: undefined,
 };
-const userInit = {
-  selectedUser: { id: 1, username: "test" },
+const initialUserState = {
+  selectedUser: { user_id: 1, username: "test" },
 };
-const roadmapInit = {
+const initialRoadmapState = {
   selectedRoadmap: null,
-  selectedRoadmapErrorStatus: null,
-  createRoadmapErrorStatus: null,
-  editRoadmapErrorStatus: null,
 };
 
-const mockStore = getMockStore(userInit, roadmapInit);
-const mockStoreNull = getMockStore(userInitNull, roadmapInit);
+const mockStore = getMockStore(initialUserState, initialRoadmapState);
+const mockStoreUndefined = getMockStore(initialUserStateUndefined, initialRoadmapState);
 
 describe("<CreateRoadmap />", () => {
   let createRoadmap;
-  let spyHistoryPush;
+  let spyHistoryGoBack;
   beforeEach(() => {
     createRoadmap = (
       <Provider store={mockStore}>
@@ -37,7 +35,7 @@ describe("<CreateRoadmap />", () => {
               path="/"
               exact
               render={() => {
-                return <CreateRoadmap selectedUser={userInit.selectedUser} />;
+                return <CreateRoadmap selectedUser={initialUserState.selectedUser} />;
               }}
             />
           </Switch>
@@ -45,7 +43,7 @@ describe("<CreateRoadmap />", () => {
       </Provider>
     );
 
-    spyHistoryPush = jest.spyOn(history, "push").mockImplementation(() => {});
+    spyHistoryGoBack = jest.spyOn(history, "goBack").mockImplementation(() => {});
   });
 
   afterEach(() => jest.clearAllMocks());
@@ -54,27 +52,23 @@ describe("<CreateRoadmap />", () => {
 
   it("should redirect to sign in page if not signed in", () => {
     const tmpCreateRoadmap = (
-      <Provider store={mockStoreNull}>
+      <Provider store={mockStoreUndefined}>
         <ConnectedRouter history={history}>
           <Switch>
             <Route
               path="/"
               exact
               render={() => {
-                return (
-                  <CreateRoadmap selectedUser={userInitNull.selectedUser} />
-                );
+                return <CreateRoadmap selectedUser={initialUserStateUndefined.selectedUser} />;
               }}
             />
           </Switch>
         </ConnectedRouter>
       </Provider>
     );
-    const component = mount(tmpCreateRoadmap);
-    const instance = component.find(CreateRoadmap.WrappedComponent).instance();
-    expect(instance.props.selectedUser).toBe(null);
-    expect(spyHistoryPush).toHaveBeenCalledWith("/signin");
-    spyHistoryPush.mockRestore();
+    mount(tmpCreateRoadmap);
+    expect(spyHistoryGoBack).toHaveBeenCalledTimes(1);
+    spyHistoryGoBack.mockRestore();
   });
 
   it("should set state on input changes", () => {
@@ -96,10 +90,12 @@ describe("<CreateRoadmap />", () => {
     let wrapper = component.find("#create-section-button");
     wrapper.simulate("click");
     const instance = component.find(CreateRoadmap.WrappedComponent).instance();
-    expect(instance.state.sections[0]).toEqual({ title: "", tasks: [] });
+    expect(instance.state.sections[0]).toEqual({ section_title: "", tasks: [] });
     wrapper = component.find(CreateSection);
     expect(wrapper.length).toBe(1);
   });
+
+  // Integration Test
 
   it("should call 'onClickDeleteSection'", () => {
     const component = mount(createRoadmap);
@@ -119,77 +115,236 @@ describe("<CreateRoadmap />", () => {
     wrapper = component.find(".create-section-title");
     wrapper.simulate("change", { target: { value: "1" } });
     const instance = component.find(CreateRoadmap.WrappedComponent).instance();
-    expect(instance.state.sections[0].title).toBe("1");
+    expect(instance.state.sections[0].section_title).toBe("1");
   });
 
   it("should call 'onClickUpSection'", () => {
     const component = mount(createRoadmap);
     let wrapper = component.find("#create-section-button");
     wrapper.simulate("click");
-    wrapper = component.find("#create-section-button");
+    wrapper.simulate("click");
     wrapper.simulate("click");
     wrapper = component.find(".create-section-title");
-    wrapper.at(0).simulate("change", { target: { value: "1" } });
-    wrapper.at(1).simulate("change", { target: { value: "2" } });
+    wrapper.at(0).simulate("change", { target: { value: "0" } });
+    wrapper.at(1).simulate("change", { target: { value: "1" } });
+    wrapper.at(2).simulate("change", { target: { value: "2" } });
     wrapper = component.find(".create-section-up");
     wrapper.at(1).simulate("click");
     const instance = component.find(CreateRoadmap.WrappedComponent).instance();
-    expect(instance.state.sections[0].title).toBe("2");
-    expect(instance.state.sections[1].title).toBe("1");
+    expect(instance.state.sections[0].section_title).toBe("1");
+    expect(instance.state.sections[1].section_title).toBe("0");
+    expect(instance.state.sections[2].section_title).toBe("2");
   });
 
   it("should call 'onClickDownSection'", () => {
     const component = mount(createRoadmap);
     let wrapper = component.find("#create-section-button");
     wrapper.simulate("click");
-    wrapper = component.find("#create-section-button");
+    wrapper.simulate("click");
     wrapper.simulate("click");
     wrapper = component.find(".create-section-title");
-    wrapper.at(0).simulate("change", { target: { value: "1" } });
-    expect();
-    wrapper.at(1).simulate("change", { target: { value: "2" } });
+    wrapper.at(0).simulate("change", { target: { value: "0" } });
+    wrapper.at(1).simulate("change", { target: { value: "1" } });
+    wrapper.at(2).simulate("change", { target: { value: "2" } });
     wrapper = component.find(".create-section-down");
     wrapper.at(0).simulate("click");
     const instance = component.find(CreateRoadmap.WrappedComponent).instance();
-    expect(instance.state.sections[0].title).toBe("2");
-    expect(instance.state.sections[1].title).toBe("1");
+    expect(instance.state.sections[0].section_title).toBe("1");
+    expect(instance.state.sections[1].section_title).toBe("0");
+    expect(instance.state.sections[2].section_title).toBe("2");
   });
 
   it("should call 'onClickCreateTask'", () => {
     const component = mount(createRoadmap);
     let wrapper = component.find("#create-section-button");
     wrapper.simulate("click");
-    wrapper = component.find(".create-task-button");
     wrapper.simulate("click");
+    wrapper = component.find(".create-task-button");
+    wrapper.at(0).simulate("click");
     const instance = component.find(CreateRoadmap.WrappedComponent).instance();
     expect(instance.state.sections[0].tasks[0]).toEqual({
-      title: "",
-      type: 0,
-      url: "",
-      description: "",
+      task_title: "",
+      task_type: 0,
+      task_url: "",
+      task_description: "",
     });
+    expect(instance.state.sections[1].tasks.length).toBe(0);
   });
 
   it("should call 'onClickDeleteTask'", () => {
     const component = mount(createRoadmap);
     let wrapper = component.find("#create-section-button");
     wrapper.simulate("click");
+    wrapper.simulate("click");
     wrapper = component.find(".create-task-button");
-    wrapper.simulate("click");
+    wrapper.at(0).simulate("click");
+    wrapper.at(1).simulate("click");
     const instance = component.find(CreateRoadmap.WrappedComponent).instance();
-    const tasksNum = instance.state.sections[0].tasks.length;
+    const tasksNum0 = instance.state.sections[0].tasks.length;
+    const tasksNum1 = instance.state.sections[1].tasks.length;
     wrapper = component.find(".delete-task-button");
-    wrapper.simulate("click");
-    expect(instance.state.sections[0].tasks.length).toBe(tasksNum - 1);
+    wrapper.at(0).simulate("click");
+    expect(instance.state.sections[0].tasks.length).toBe(tasksNum0 - 1);
+    expect(instance.state.sections[1].tasks.length).toBe(tasksNum1);
   });
 
-  it("should call 'onChangeTaskTitle', 'onChangeTaskType', 'onChangeTaskUrl', and 'onChangeTaskDescription'", () => {
+  it("should call 'onChangeTaskTitle'", () => {
     const component = mount(createRoadmap);
+    const testTitle = "test";
     let wrapper = component.find("#create-section-button");
     wrapper.simulate("click");
-    wrapper = component.find(".create-section-title");
-    wrapper.simulate("change", { target: { value: "1" } });
+    wrapper.simulate("click");
+    wrapper = component.find(".create-task-button");
+    wrapper.at(0).simulate("click");
+    wrapper.at(0).simulate("click");
+    wrapper = component.find(".create-task-title");
+    wrapper.at(0).simulate("change", { target: { value: testTitle } });
     const instance = component.find(CreateRoadmap.WrappedComponent).instance();
-    expect(instance.state.sections[0].title).toBe("1");
+    expect(instance.state.sections[0].tasks[0].task_title).toEqual(testTitle);
+    expect(instance.state.sections[0].tasks[1].task_title).toEqual("");
+    expect(instance.state.sections[1]).toEqual({ section_title: "", tasks: [] });
+  });
+
+  it("should call 'onChangeTaskType'", () => {
+    const component = mount(createRoadmap);
+    const testType = 2;
+    let wrapper = component.find("#create-section-button");
+    wrapper.simulate("click");
+    wrapper.simulate("click");
+    wrapper = component.find(".create-task-button");
+    wrapper.at(0).simulate("click");
+    wrapper.at(0).simulate("click");
+    wrapper = component.find(".create-task-type");
+    wrapper.at(0).simulate("change", { target: { value: testType } });
+    const instance = component.find(CreateRoadmap.WrappedComponent).instance();
+    expect(instance.state.sections[0].tasks[0].task_type).toEqual(testType);
+    expect(instance.state.sections[0].tasks[1].task_type).toEqual(0);
+    expect(instance.state.sections[1]).toEqual({ section_title: "", tasks: [] });
+  });
+
+  it("should call 'onChangeTaskUrl'", () => {
+    const component = mount(createRoadmap);
+    const testUrl = "test";
+    let wrapper = component.find("#create-section-button");
+    wrapper.simulate("click");
+    wrapper.simulate("click");
+    wrapper = component.find(".create-task-button");
+    wrapper.at(0).simulate("click");
+    wrapper.at(0).simulate("click");
+    wrapper = component.find(".create-task-url");
+    wrapper.at(0).simulate("change", { target: { value: testUrl } });
+    const instance = component.find(CreateRoadmap.WrappedComponent).instance();
+    expect(instance.state.sections[0].tasks[0].task_url).toEqual(testUrl);
+    expect(instance.state.sections[0].tasks[1].task_url).toEqual("");
+    expect(instance.state.sections[1]).toEqual({ section_title: "", tasks: [] });
+  });
+
+  it("should call 'onChangeTaskDescription'", () => {
+    const component = mount(createRoadmap);
+    const testDescription = "test";
+    let wrapper = component.find("#create-section-button");
+    wrapper.simulate("click");
+    wrapper.simulate("click");
+    wrapper = component.find(".create-task-button");
+    wrapper.at(0).simulate("click");
+    wrapper.at(0).simulate("click");
+    wrapper = component.find(".create-task-description");
+    wrapper.at(0).simulate("change", { target: { value: testDescription } });
+    const instance = component.find(CreateRoadmap.WrappedComponent).instance();
+    expect(instance.state.sections[0].tasks[0].task_description).toEqual(testDescription);
+    expect(instance.state.sections[0].tasks[1].task_description).toEqual("");
+    expect(instance.state.sections[1]).toEqual({ section_title: "", tasks: [] });
+  });
+
+  it("should call 'onClickUpTask'", () => {
+    const component = mount(createRoadmap);
+    const instance = component.find(CreateRoadmap.WrappedComponent).instance();
+    let wrapper = component.find("#create-section-button");
+    wrapper.simulate("click");
+    wrapper.simulate("click");
+    wrapper = component.find(".create-task-button");
+    wrapper.at(0).simulate("click");
+    wrapper.at(0).simulate("click");
+    wrapper.at(0).simulate("click");
+    wrapper = component.find(".create-task-title");
+    wrapper.at(0).simulate("change", { target: { value: "0" } });
+    wrapper.at(1).simulate("change", { target: { value: "1" } });
+    wrapper.at(2).simulate("change", { target: { value: "2" } });
+    wrapper = component.find(".create-task-up");
+    wrapper.at(1).simulate("click");
+    expect(instance.state.sections[0].tasks[0].task_title).toBe("1");
+    expect(instance.state.sections[0].tasks[1].task_title).toBe("0");
+    expect(instance.state.sections[0].tasks[2].task_title).toBe("2");
+    expect(instance.state.sections[1]).toEqual({ section_title: "", tasks: [] });
+  });
+
+  it("should call 'onClickDownTask'", () => {
+    const component = mount(createRoadmap);
+    const instance = component.find(CreateRoadmap.WrappedComponent).instance();
+    let wrapper = component.find("#create-section-button");
+    wrapper.simulate("click");
+    wrapper.simulate("click");
+    wrapper = component.find(".create-task-button");
+    wrapper.at(0).simulate("click");
+    wrapper.at(0).simulate("click");
+    wrapper.at(0).simulate("click");
+    wrapper = component.find(".create-task-title");
+    wrapper.at(0).simulate("change", { target: { value: "0" } });
+    wrapper.at(1).simulate("change", { target: { value: "1" } });
+    wrapper.at(2).simulate("change", { target: { value: "2" } });
+    wrapper = component.find(".create-task-down");
+    wrapper.at(0).simulate("click");
+    expect(instance.state.sections[0].tasks[0].task_title).toBe("1");
+    expect(instance.state.sections[0].tasks[1].task_title).toBe("0");
+    expect(instance.state.sections[0].tasks[2].task_title).toBe("2");
+    expect(instance.state.sections[1]).toEqual({ section_title: "", tasks: [] });
+  });
+
+  it("should call 'onClickCreateBack' - no confirm", () => {
+    const component = mount(createRoadmap);
+    const wrapper = component.find("#back-create-roadmap-button");
+    wrapper.simulate("click");
+    expect(spyHistoryGoBack).toHaveBeenCalledTimes(1);
+    spyHistoryGoBack.mockRestore();
+  });
+
+  it("should call 'onClickCreateBack' - confirm=True", () => {
+    const spyBackConfirmTrue = jest.spyOn(window, "confirm").mockImplementation(() => true);
+    const component = mount(createRoadmap);
+    const wrapper = component.find("#back-create-roadmap-button");
+    const wrapper2 = component.find("#create-section-button");
+    wrapper2.simulate("click");
+    wrapper.simulate("click");
+    expect(spyBackConfirmTrue).toHaveBeenCalledTimes(1);
+    expect(spyHistoryGoBack).toHaveBeenCalledTimes(1);
+    spyHistoryGoBack.mockRestore();
+  });
+
+  it("should call 'onClickCreateBack' - confirm=False", () => {
+    const spyBackConfirmFalse = jest.spyOn(window, "confirm").mockImplementation(() => false);
+    const component = mount(createRoadmap);
+    const wrapper = component.find("#back-create-roadmap-button");
+    const wrapper2 = component.find("#create-section-button");
+    wrapper2.simulate("click");
+    wrapper.simulate("click");
+    expect(spyBackConfirmFalse).toHaveBeenCalledTimes(1);
+    expect(spyHistoryGoBack).toHaveBeenCalledTimes(0);
+    spyHistoryGoBack.mockRestore();
+  });
+
+  it("should call 'onClickCreateConfirm'", () => {
+    const spyCreateRoadmap = jest.spyOn(actionCreators, "createRoadmap");
+    const component = mount(createRoadmap);
+    const testTitle = "test";
+    const testLevel = 2;
+    let wrapper = component.find("#roadmap-title");
+    wrapper.simulate("change", { target: { value: testTitle } });
+    wrapper = component.find("#roadmap-level");
+    wrapper.simulate("change", { target: { value: testLevel } });
+    wrapper = component.find("#create-section-button");
+    wrapper.simulate("click");
+    wrapper = component.find("#confirm-create-roadmap-button");
+    wrapper.simulate("click");
+    expect(spyCreateRoadmap).toHaveBeenCalledTimes(1);
   });
 });

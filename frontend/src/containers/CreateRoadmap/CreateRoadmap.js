@@ -246,12 +246,12 @@ class CreateRoadmap extends Component {
   onClickCreateBack = () => {
     const { history } = this.props;
     const { title, level, sections } = this.state;
-    if (title !== "" || level !== levelType.BASIC || sections.length !== 0) {
+    if (title !== "" || level !== 0 || sections.length !== 0) {
       const back = confirm("Leave the page? Changes you made will be deleted.");
       if (back) {
         history.goBack();
       }
-    }
+    } else history.goBack();
   };
 
   onClickCreateConfirm = () => {
@@ -358,8 +358,8 @@ class CreateRoadmap extends Component {
 }
 
 CreateRoadmap.propTypes = {
-  selectedUser: PropTypes.objectOf(PropTypes.any).isRequired,
   history: PropTypes.objectOf(PropTypes.any).isRequired,
+  selectedUser: PropTypes.objectOf(PropTypes.any).isRequired,
   onCreateRoadmap: PropTypes.func.isRequired,
 };
 
