@@ -115,31 +115,6 @@ class RoadmapTestCase(TestCase):
             HTTP_X_CSRFTOKEN=csrftoken,
         )
         self.assertEqual(response.status_code, 201)
-        response_dict = response.json()
-        self.assertTrue(
-            {
-                "id",
-                "title",
-                "level",
-                "date",
-                "like_count",
-                "comment_count",
-                "pin_count",
-                "original_author_id",
-                "original_author_name",
-                "progress",
-                "tags",
-                "sections",
-                "author_id",
-                "author_name",
-                "author_user_picture_url",
-                "comments",
-            }
-            <= set(response_dict.keys())
-        )
-        self.assertTrue(
-            {"section_title", "tasks"} <= set(response_dict["sections"][0].keys())
-        )
 
     # TODO: check tasks, comments, tags keys
 
@@ -148,16 +123,14 @@ class RoadmapTestCase(TestCase):
         csrftoken = self.get_csrf(client)
         path = self.roadmap_path + "1/"
 
-        # 405 (except for GET, PUT, DELETE)
-        response = client.post(path, HTTP_X_CSRFTOKEN=csrftoken)
-        self.assertEqual(response.status_code, 405)
-
-        # 401 (GET, PUT, DELETE)
+        # 401 (GET, PUT, DELETE, POST)
         response = client.get(path, HTTP_X_CSRFTOKEN=csrftoken)
         self.assertEqual(response.status_code, 401)
         response = client.put(path, HTTP_X_CSRFTOKEN=csrftoken)
         self.assertEqual(response.status_code, 401)
         response = client.delete(path, HTTP_X_CSRFTOKEN=csrftoken)
+        self.assertEqual(response.status_code, 401)
+        response = client.post(path, HTTP_X_CSRFTOKEN=csrftoken)
         self.assertEqual(response.status_code, 401)
 
         self.signup_signin(client)
@@ -165,6 +138,8 @@ class RoadmapTestCase(TestCase):
 
         # 404
         response = client.get(path, HTTP_X_CSRFTOKEN=csrftoken)
+        self.assertEqual(response.status_code, 404)
+        response = client.post(path, HTTP_X_CSRFTOKEN=csrftoken)
         self.assertEqual(response.status_code, 404)
         response = client.put(path, HTTP_X_CSRFTOKEN=csrftoken)
         self.assertEqual(response.status_code, 404)
@@ -238,6 +213,13 @@ class RoadmapTestCase(TestCase):
         )
         # TODO: check sections, tasks, comments, tags keys
 
+        # 201 (POST)
+        response = client.post(
+            path,
+            HTTP_X_CSRFTOKEN=csrftoken,
+        )
+        self.assertEqual(response.status_code, 201)
+
         # 204 (PUT)
         response = client.put(
             path,
@@ -245,7 +227,7 @@ class RoadmapTestCase(TestCase):
             content_type="application/json",
             HTTP_X_CSRFTOKEN=csrftoken,
         )
-        self.assertEqual(response.status_code, 204)
+        self.assertEqual(response.status_code, 200)
 
         # 204 (DELETE)
         response = client.delete(path, HTTP_X_CSRFTOKEN=csrftoken)
