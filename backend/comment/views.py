@@ -21,7 +21,7 @@ def comment(request):
             req_data = json.loads(request.body.decode())
             roadmap_id = req_data["roadmap_id"]
             content = req_data["content"]
-            roadmap = Roadmap.objects.filter(id=roadmap_id).first()
+            roadmap = Roadmap.objects.get(id=roadmap_id)
         except (KeyError, JSONDecodeError, ObjectDoesNotExist):
             return HttpResponseBadRequest()
 
