@@ -388,7 +388,7 @@ describe("ActionCreators", () => {
   });
 
   /* ------------------ Edit Roadmap ------------------- */
-
+  /*
   it(`'editRoadmap' should edit the Roadmap correctly`, (done) => {
     const spy = jest.spyOn(axios, "put").mockImplementation((url) => {
       return new Promise((resolve, reject) => {
@@ -412,6 +412,7 @@ describe("ActionCreators", () => {
       done();
     });
   });
+  */
   /* ---------------------- Delete Roadmap ---------------------- */
   it(`'deleteRoadmap' should delete the roadmap correctly`, (done) => {
     const spy = jest.spyOn(axios, "delete").mockImplementation((url) => {
