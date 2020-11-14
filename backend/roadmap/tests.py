@@ -1,6 +1,6 @@
 import json
 from django.test import TestCase, Client
-from roadmap.models import User
+from user.models import User
 from .models import Roadmap
 
 
