@@ -50,6 +50,7 @@ class RoadmapDetail extends Component {
   };
 
   /* ---------------- comment handlers -------------------- */
+
   commentCreateHandler = (commentData) => {
     const { comment } = this.state;
     const { onCreateComment, match } = this.props;
@@ -161,6 +162,7 @@ class RoadmapDetail extends Component {
           content={commentItem.content}
           clickEdit={() => this.commentEditHandler(commentItem.comment_id, commentItem)}
           clickDelete={() => this.commentDeleteHandler(commentItem.comment_id)}
+
         />
       );
     });
