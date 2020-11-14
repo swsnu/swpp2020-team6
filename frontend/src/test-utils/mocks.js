@@ -15,7 +15,6 @@ const getMockReducer = jest.fn((initialState) => (state = initialState, action) 
 const getMockStore = (initialUserState, initialRoadmapState) => {
   const mockUserReducer = getMockReducer(initialUserState);
   const mockRoadmapReducer = getMockReducer(initialRoadmapState);
-
   const rootReducer = combineReducers({
     user: mockUserReducer,
     roadmap: mockRoadmapReducer,

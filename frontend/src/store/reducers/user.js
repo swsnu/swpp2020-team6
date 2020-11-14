@@ -9,6 +9,7 @@ const initialState = {
 };
 
 const reducer = (state = initialState, action) => {
+  const { selectedUser } = state;
   switch (action.type) {
     case actionTypes.GET_USER_AUTH:
       return { ...state, isSignedIn: action.isSignedIn, selectedUser: action.selectedUser };
@@ -22,6 +23,45 @@ const reducer = (state = initialState, action) => {
       return { ...state };
     case actionTypes.SIGN_UP:
       return { ...state };
+    case actionTypes.CREATE_ROADMAP:
+      return {
+        ...state,
+        selectedUser: {
+          ...selectedUser,
+          my_roadmaps: selectedUser.my_roadmaps.concat(action.roadmapData),
+        },
+      };
+    case actionTypes.EDIT_ROADMAP:
+      return {
+        ...state,
+        selectedUser: {
+          ...selectedUser,
+          my_roadmaps: selectedUser.my_roadmaps.map((roadmap) => {
+            if (roadmap.id === action.roadmapData.id) {
+              return action.roadmapData;
+            }
+            return roadmap;
+          }),
+        },
+      };
+    case actionTypes.DELETE_ROADMAP:
+      return {
+        ...state,
+        selectedUser: {
+          ...selectedUser,
+          my_roadmaps: selectedUser.my_roadmaps.filter(
+            (roadmap) => roadmap.id !== action.roadmapId,
+          ),
+        },
+      };
+    case actionTypes.DUPLICATE_ROADMAP:
+      return {
+        ...state,
+        selectedUser: {
+          ...selectedUser,
+          my_roadmaps: selectedUser.my_roadmaps.concat(action.roadmapData),
+        },
+      };
     default:
       break;
   }

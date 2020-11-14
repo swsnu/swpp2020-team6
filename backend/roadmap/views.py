@@ -67,8 +67,8 @@ def roadmap(request):
                 ).save()
 
         # Post response
-        roadmap_dict = new_roadmap.to_dict()
-        return JsonResponse(roadmap_dict, status=201)
+        roadmap_dict_simple = new_roadmap.to_dict_simple()
+        return JsonResponse(roadmap_dict_simple, status=201)
 
     return HttpResponseNotAllowed(["POST"])
 
@@ -147,7 +147,8 @@ def roadmap_id(request, roadmap_id):
                 roadmap.tags.add(new_tag)
 
         roadmap.save()
-        return HttpResponse(status=204)
+        roadmap_dict_simple = roadmap.to_dict_simple()
+        return JsonResponse(roadmap_dict_simple, status=200)
 
     elif request.method == "DELETE":
         if not request.user.is_authenticated:
