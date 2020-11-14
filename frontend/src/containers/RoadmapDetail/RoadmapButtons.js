@@ -21,6 +21,14 @@ const RoadmapButtons = (props) => {
 
   const onClickLikeRoadmap = () => {};
 
+  // eslint-disable-next-line camelcase
+  const { liked_roadmaps, pinned_roadmaps } = props.selectedUser;
+  const { roadmapId } = props;
+  const like = liked_roadmaps.find((roadmap) => roadmap.id === roadmapId);
+  const likeButtonText = like !== undefined ? "Unlike" : "Like";
+  const pin = pinned_roadmaps.find((roadmap) => roadmap.id === roadmapId);
+  const pinButtonText = pin !== undefined ? "Unpin" : "Pin";
+
   const { isAuthor } = props;
   const roadmapButtons = isAuthor ? (
     <div className="roadmap-buttons">
@@ -37,10 +45,10 @@ const RoadmapButtons = (props) => {
   ) : (
     <div className="roadmap-buttons">
       <button type="button" id="pin-button" onClick={() => onClickPinRoadmap()}>
-        Pin
+        {pinButtonText}
       </button>
       <button type="button" id="like-button" onClick={() => onClickLikeRoadmap()}>
-        Like
+        {likeButtonText}
       </button>
       <button type="button" id="duplicate-button" onClick={() => onClickDuplicateRoadmap()}>
         Duplicate
@@ -56,7 +64,7 @@ RoadmapButtons.propTypes = {
   history: PropTypes.objectOf(PropTypes.any).isRequired,
   onDeleteRoadmap: PropTypes.func.isRequired,
 
-  user: PropTypes.objectOf(PropTypes.any).isRequired,
+  selectedUser: PropTypes.objectOf(PropTypes.any).isRequired,
   getSelectedRoadmapErrStatus: PropTypes.number.isRequired,
 };
 
@@ -68,7 +76,7 @@ const mapDispatchToProps = (dispatch) => {
 
 const mapStateToProps = (state) => {
   return {
-    user: state.user.user,
+    selectedUser: state.user.selectedUser,
     getSelectedRoadmapErrStatus: state.roadmap.errStatus,
   };
 };

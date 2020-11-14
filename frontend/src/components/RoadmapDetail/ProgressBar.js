@@ -27,18 +27,18 @@ const ProgressBar = (props) => {
         progressButton = (
           <div className="progress-change-buttons">
             <button
-              id="quit-progress-btton"
+              id="quit-progress-button"
               type="button"
               onClick={() => onChangeRoadmapProgressStatus("quit")}
             >
               Quit
             </button>
             <button
-              id="finish-progress-btton"
+              id="finish-progress-button"
               type="button"
               onClick={() => onChangeRoadmapProgressStatus("finish")}
             >
-              Finsih
+              Finish
             </button>
           </div>
         );

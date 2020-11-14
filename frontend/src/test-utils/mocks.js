@@ -4,7 +4,7 @@ import { connectRouter } from "connected-react-router";
 import { history, middlewares } from "../store/store";
 // import * as actionTypes from "../store/actions/actionTypes";
 
-const getMockUserReducer = jest.fn((initialState) => (state = initialState, action) => {
+const getMockReducer = jest.fn((initialState) => (state = initialState, action) => {
   switch (action.type) {
     default:
       break;
@@ -12,17 +12,10 @@ const getMockUserReducer = jest.fn((initialState) => (state = initialState, acti
   return state;
 });
 
-const getMockRoadmapReducer = jest.fn((initialState) => (state = initialState, action) => {
-  switch (action.type) {
-    default:
-      break;
-  }
-  return state;
-});
+const getMockStore = (initialUserState, initialRoadmapState) => {
+  const mockUserReducer = getMockReducer(initialUserState);
+  const mockRoadmapReducer = getMockReducer(initialRoadmapState);
 
-export const getMockStore = (initialUserState, initialRoadmapState) => {
-  const mockUserReducer = getMockUserReducer(initialUserState);
-  const mockRoadmapReducer = getMockRoadmapReducer(initialRoadmapState);
   const rootReducer = combineReducers({
     user: mockUserReducer,
     roadmap: mockRoadmapReducer,
