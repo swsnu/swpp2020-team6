@@ -33,3 +33,41 @@ def comment(request):
         return JsonResponse(comment_dict, status=201)
 
     return HttpResponseNotAllowed(["POST"])
+
+
+def comment_id(request, comment_id):
+    if request.method == "PUT":
+        if not request.user.is_authenticated:
+            return HttpResponse(status=401)
+        try:
+            comment = Comment.objects.get(id=comment_id)
+        except ObjectDoesNotExist:
+            return HttpResponseNotFound()
+        if not comment.author_id == request.user.id:
+            return HttpResponseForbidden()
+        try:
+            req_data = json.loads(request.body.decode())
+            new_content = req_data["content"]
+        except (KeyError, JSONDecodeError):
+            return HttpResponseBadRequest()
+
+        comment.content = new_content
+        comment.save()
+
+        comment_dict = comment.to_dict()
+        return JsonResponse(comment_dict, status=200)
+
+    elif request.method == "DELETE":
+        if not request.user.is_authenticated:
+            return HttpResponse(status=401)
+        try:
+            comment = Comment.objects.get(id=comment_id)
+        except ObjectDoesNotExist:
+            return HttpResponseNotFound()
+        if not comment.author_id == request.user.id:
+            return HttpResponseForbidden()
+
+        comment.delete()
+        return HttpResponse(status=204)
+
+    return HttpResponseNotAllowed(["PUT", "DELETE"])
