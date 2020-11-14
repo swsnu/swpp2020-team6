@@ -526,6 +526,7 @@ describe("<RoadmapDetail />", () => {
   let spyEditComment;
   let spyDeleteComment;
   let spyResetRoadmap;
+  let spyToggleRoadmapLike;
 
   beforeEach(() => {
     spyPush = jest.spyOn(history, "push").mockImplementation(() => {});
@@ -548,6 +549,11 @@ describe("<RoadmapDetail />", () => {
     spyResetRoadmap = jest.spyOn(actionCreators, "resetRoadmap_").mockImplementation(() => {
       return () => {};
     });
+    spyToggleRoadmapLike = jest
+      .spyOn(actionCreators, "toggleRoadmapLike")
+      .mockImplementation(() => {
+        return () => {};
+      });
   });
 
   afterEach(() => {
@@ -978,8 +984,7 @@ describe("<RoadmapDetail />", () => {
     expect(likeButton.length).toBe(1);
     expect(likeButton.at(0).text()).toBe("Like");
     likeButton.simulate("click");
-    // need to mock onChangeRoadmapProgressStatus
-    // expect(spyLike).toHaveBeenCalledTimes(1);
+    expect(spyToggleRoadmapLike).toHaveBeenCalledTimes(1);
   });
 
   it(`should unlike the roadmap when unlike button is clicked.`, () => {
@@ -1000,8 +1005,7 @@ describe("<RoadmapDetail />", () => {
     expect(likeButton.length).toBe(1);
     expect(likeButton.at(0).text()).toBe("Unlike");
     likeButton.simulate("click");
-    // need to mock onChangeRoadmapProgressStatus
-    // expect(spyLike).toHaveBeenCalledTimes(1);
+    expect(spyToggleRoadmapLike).toHaveBeenCalledTimes(1);
   });
 
   /* --------------------- Pin Roadmap Button --------------------- */

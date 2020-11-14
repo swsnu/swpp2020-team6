@@ -20,7 +20,7 @@ const RoadmapButtons = (props) => {
   const onClickPinRoadmap = () => {};
 
   const onClickLikeRoadmap = () => {
-    const { match, toggleRoadmapLike } = history;
+    const { match, toggleRoadmapLike } = props;
     toggleRoadmapLike(match.params.id);
   };
 
@@ -65,6 +65,7 @@ RoadmapButtons.propTypes = {
   roadmapId: PropTypes.number.isRequired,
   isAuthor: PropTypes.bool.isRequired,
   history: PropTypes.objectOf(PropTypes.any).isRequired,
+  match: PropTypes.objectOf(PropTypes.any).isRequired,
   onDeleteRoadmap: PropTypes.func.isRequired,
   toggleRoadmapLike: PropTypes.func.isRequired,
 
