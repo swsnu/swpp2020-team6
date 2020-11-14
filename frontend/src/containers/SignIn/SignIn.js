@@ -1,7 +1,10 @@
-import React, { Component } from "react"; // meaning of bracket
+/* Sign In page.
+ * When the user is already signed in, redirect to home page.
+ * On valid username and password input, the user is signed in to the service.
+ */
+import React, { Component } from "react";
 import { connect } from "react-redux";
 import PropTypes from "prop-types";
-
 import * as actionCreators from "../../store/actions/index";
 
 import "./SignIn.scss";
@@ -34,14 +37,13 @@ class SignIn extends Component {
     alert("Contact us: swpprotus@gmail.com");
   };
 
-  onClickSignOut = () => {
-    const { onSignOut } = this.props;
-    onSignOut();
+  onClickHome = () => {
+    const { history } = this.props;
+    history.push("/home");
   };
 
   render() {
     const { username, password } = this.state;
-
     return (
       <div className="SignIn">
         <h1>Sign In</h1>
@@ -77,8 +79,8 @@ class SignIn extends Component {
         >
           Forgot Password
         </button>
-        <button id="signout-button" onClick={() => this.onClickSignOut()} type="button">
-          Sign Out
+        <button id="home-button" onClick={() => this.onClickHome()} type="button">
+          Home
         </button>
       </div>
     );
@@ -87,7 +89,6 @@ class SignIn extends Component {
 
 SignIn.propTypes = {
   onSignIn: PropTypes.func.isRequired,
-  onSignOut: PropTypes.func.isRequired,
   isSignedIn: PropTypes.objectOf(PropTypes.any).isRequired,
   history: PropTypes.objectOf(PropTypes.any).isRequired,
 };
@@ -101,7 +102,6 @@ const mapStateToProps = (state) => {
 const mapDispatchToProps = (dispatch) => {
   return {
     onSignIn: (userCredentials) => dispatch(actionCreators.signIn(userCredentials)),
-    onSignOut: () => dispatch(actionCreators.signOut()),
   };
 };
 

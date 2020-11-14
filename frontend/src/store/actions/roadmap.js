@@ -27,7 +27,7 @@ export const getRoadmap = (roadmapId) => {
             alert("Please sign in!");
             break;
           case 400:
-            alert("Parsing error!");
+            alert("Parsing error!@");
             break;
           default:
             break;
@@ -225,7 +225,7 @@ export const deleteComment = (commentID) => {
         dispatch(deleteCommentSuccess_(commentID));
       })
       .catch((error) => {
-        deleteCommentFail_(error.response.status);
+deleteCommentFail_();
         switch (error.response.status) {
           case 401:
             alert("Please sign in!");

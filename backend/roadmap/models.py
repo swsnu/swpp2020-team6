@@ -118,3 +118,21 @@ class Roadmap(models.Model):
     def delete_sections(self):
         for section in self.section_roadmap.all():
             section.delete()
+
+    def increment_comment_count(self):
+        self.comment_count += 1
+
+    def decrement_comment_count(self):
+        self.comment_count -= 1
+
+    def increment_like_count(self):
+        self.like_count += 1
+
+    def decrement_like_count(self):
+        self.like_count -= 1
+
+    def increment_pin_count(self):
+        self.pin_count += 1
+
+    def decrement_pin_count(self):
+        self.pin_count -= 1
