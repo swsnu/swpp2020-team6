@@ -266,7 +266,7 @@ class EditRoadmap extends Component {
 
   onClickEditBack = () => {
     const { history, onResetRoadmap } = this.props;
-    const back = confirm("Leave the page? Changes you made will be deleted.");
+    const back = window.confirm("Leave the page? Changes you made will be deleted.");
     if (back) {
       onResetRoadmap();
       history.goBack();

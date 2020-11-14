@@ -263,7 +263,7 @@ class CreateRoadmap extends Component {
     const { history } = this.props;
     const { title, level, sections } = this.state;
     if (title !== "" || level !== 0 || sections.length !== 0) {
-      const back = confirm("Leave the page? Changes you made will be deleted.");
+      const back = window.confirm("Leave the page? Changes you made will be deleted.");
       if (back) {
         history.goBack();
       }
