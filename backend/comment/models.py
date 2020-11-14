@@ -37,3 +37,16 @@ class Comment(models.Model):
                 data["roadmap_id"] = f.value_from_object(self)
 
         return data
+
+    def edit_save(self, *args, **kwargs):
+        super().save(*args, **kwargs)
+
+    def create_save(self, *args, **kwargs):
+        super().save(*args, **kwargs)
+        self.roadmap.increment_comment_count()
+        self.roadmap.save()
+
+    def delete(self, *args, **kwargs):
+        self.roadmap.decrement_comment_count()
+        self.roadmap.save()
+        super().delete(*args, **kwargs)

@@ -27,7 +27,7 @@ def comment(request):
 
         author = request.user
         new_comment = Comment(content=content, author=author, roadmap=roadmap)
-        new_comment.save()
+        new_comment.create_save()
 
         comment_dict = new_comment.to_dict()
         return JsonResponse(comment_dict, status=201)
@@ -52,7 +52,7 @@ def comment_id(request, comment_id):
             return HttpResponseBadRequest()
 
         comment.content = new_content
-        comment.save()
+        comment.edit_save()
 
         comment_dict = comment.to_dict()
         return JsonResponse(comment_dict, status=200)
