@@ -285,7 +285,7 @@ export const RoadmapLike_ = (responseData) => {
 };
 
 export const RoadmapUnLike_ = (responseData) => {
-  return { type: actionTypes.ROADMAP_UnLIKE, responseData };
+  return { type: actionTypes.ROADMAP_UNLIKE, responseData };
 };
 
 export const toggleRoadmapLike = (roadmapId) => {
