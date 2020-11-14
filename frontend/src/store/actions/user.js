@@ -1,3 +1,6 @@
+/* User actions.
+ * Send request to the backend using the desired API, then receive response.
+ */
 import axios from "axios";
 import { push } from "connected-react-router";
 
@@ -79,11 +82,11 @@ export const signOut = () => {
 };
 
 export const signUpSuccess_ = () => {
-  return { type: actionTypes.SIGN_UP_SUCCESS };
+  return { type: actionTypes.SIGN_UP };
 };
 
 export const signUpFail_ = () => {
-  return { type: actionTypes.SIGN_UP_FAILURE };
+  return { type: actionTypes.SIGN_UP };
 };
 
 export const signUp = (userCredentials) => {

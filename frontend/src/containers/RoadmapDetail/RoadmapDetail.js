@@ -48,11 +48,30 @@ class RoadmapDetail extends Component {
   };
 
   /* ---------------- comment handlers -------------------- */
-  commentEditHandler = () => {};
+  commentCreateHandler = (comment) => {
+    const { onCreateComment, match } = this.props;
+    onCreateComment(match.params.id, comment);
+  };
 
-  commentDeleteHandler = () => {};
+  commentEditHandler = (commentID, comment) => {
+    const { onEditComment, match } = this.props;
+    const editedComment = prompt("Edit your comment", comment.content);
 
-  onPostComment = () => {};
+    if (editedComment !== null) {
+      // user clicked OK
+      if (editedComment === "") {
+        // do nothing on empty input
+      } else {
+        onEditComment(commentID, match.params.id, editedComment);
+      }
+    }
+    // skip else: do nothing when user cancelled pop-up.
+  };
+
+  commentDeleteHandler = (id) => {
+    const { onDeleteComment } = this.props;
+    onDeleteComment(id);
+  };
 
   render() {
     const { selectedUser, isSignedIn, match, selectedRoadmap } = this.props;
@@ -121,7 +140,7 @@ class RoadmapDetail extends Component {
           isAuthor={comment.author_id === selectedUser.user_id}
           authorPictureUrl={comment.author_picture_url}
           content={comment.content}
-          clickEdit={() => this.commentEditHandler(comment)}
+          clickEdit={() => this.commentEditHandler(comment.comment_id, comment)}
           clickDelete={() => this.commentDeleteHandler(comment.comment_id)}
         />
       );
@@ -135,7 +154,11 @@ class RoadmapDetail extends Component {
     const { comment } = this.state;
     if (comment !== "") {
       commentConfirmButton = (
-        <button id="confirm-create-comment-button" type="button" onClick={this.onPostComment}>
+        <button
+          id="confirm-create-comment-button"
+          type="button"
+          onClick={() => this.commentCreateHandler(comment)}
+        >
           confirm
         </button>
       );
@@ -190,7 +213,9 @@ class RoadmapDetail extends Component {
                 type="text"
                 value={comment}
                 onChange={
-                  (event) => this.setState({ comment: event.target.value })
+                  (event) => {
+                    this.setState({ comment: event.target.value });
+                  }
                   // eslint-disable-next-line react/jsx-curly-newline
                 }
               />
@@ -214,12 +239,21 @@ RoadmapDetail.propTypes = {
 
   onGetRoadmap: PropTypes.func.isRequired,
   onResetRoadmap: PropTypes.func.isRequired,
+
+  onCreateComment: PropTypes.func.isRequired,
+  onEditComment: PropTypes.func.isRequired,
+  onDeleteComment: PropTypes.func.isRequired,
 };
 
 const mapDispatchToProps = (dispatch) => {
   return {
     onGetRoadmap: (id) => dispatch(actionCreators.getRoadmap(id)),
     onResetRoadmap: () => dispatch(actionCreators.resetRoadmap_()),
+    onCreateComment: (roadmapId, comment) =>
+      dispatch(actionCreators.createComment({ roadmap_id: roadmapId, content: comment })),
+    onEditComment: (commentID, roadmapID, comment) =>
+      dispatch(actionCreators.editComment(commentID, { roadmap_id: roadmapID, content: comment })),
+    onDeleteComment: (id) => dispatch(actionCreators.deleteComment(id)),
   };
 };
 

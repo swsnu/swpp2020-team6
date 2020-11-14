@@ -1,3 +1,6 @@
+/* User reducer.
+ * Changes redux state according to actions done about user.
+ */
 import * as actionTypes from "../actions/actionTypes";
 
 const initialState = {
@@ -17,9 +20,7 @@ const reducer = (state = initialState, action) => {
       return { ...state, isSignedIn: false, selectedUser: undefined };
     case actionTypes.SIGN_OUT_FAILURE:
       return { ...state };
-    case actionTypes.SIGN_UP_SUCCESS:
-      return { ...state };
-    case actionTypes.SIGN_UP_FAILURE:
+    case actionTypes.SIGN_UP:
       return { ...state };
     default:
       break;

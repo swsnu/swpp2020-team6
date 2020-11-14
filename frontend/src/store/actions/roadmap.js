@@ -27,7 +27,7 @@ export const getRoadmap = (roadmapId) => {
             alert("Please sign in!");
             break;
           case 400:
-            alert("Parsing error!");
+            alert("Parsing error!@");
             break;
           default:
             break;
@@ -136,6 +136,112 @@ export const deleteRoadmap = (roadmapId) => {
             break;
         }
         dispatch(goBack());
+      });
+  };
+};
+
+export const createCommentSuccess_ = (newComment) => {
+  return { type: actionTypes.CREATE_COMMENT_SUCCESS, newComment };
+};
+
+export const createCommentFail_ = () => {
+  return { type: actionTypes.CREATE_COMMENT_FAILURE };
+};
+
+export const createComment = (commentData) => {
+  return (dispatch) => {
+    return axios
+      .post("/api/comment/", commentData)
+      .then((response) => {
+        dispatch(createCommentSuccess_(response.data));
+      })
+      .catch((error) => {
+        dispatch(createCommentFail_());
+        switch (error.response.status) {
+          case 401:
+            alert("Please sign in!");
+            break;
+          case 400:
+            alert("Parsing error!");
+            break;
+          default:
+            break;
+        }
+      });
+  };
+};
+
+export const editCommentSuccess_ = (newComment) => {
+  return { type: actionTypes.EDIT_COMMENT_SUCCESS, newComment };
+};
+
+export const editCommentFail_ = () => {
+  return { type: actionTypes.EDIT_COMMENT_FAILURE };
+};
+
+export const editComment = (commentID, commentData) => {
+  return (dispatch) => {
+    return axios
+      .put(`/api/comment/${commentID}/`, commentData)
+      .then((response) => {
+        dispatch(editCommentSuccess_(response.data));
+      })
+      .catch((error) => {
+        editCommentFail_();
+        switch (error.response.status) {
+          case 401:
+            alert("Please sign in!");
+            break;
+          case 404:
+            alert("No such comment!");
+            break;
+          case 403:
+            alert("Only the author can edit the comment!");
+            break;
+          case 400:
+            alert("Parsing error!");
+            break;
+          default:
+            break;
+        }
+      });
+  };
+};
+
+export const deleteCommentSuccess_ = (commentID) => {
+  return { type: actionTypes.DELETE_COMMENT_SUCCESS, commentID };
+};
+
+export const deleteCommentFail_ = () => {
+  return { type: actionTypes.DELETE_COMMENT_FAILURE };
+};
+
+export const deleteComment = (commentID) => {
+  return (dispatch) => {
+    return axios
+      .delete(`/api/comment/${commentID}/`)
+      .then(() => {
+        alert("Successfully deleted comment!");
+        dispatch(deleteCommentSuccess_(commentID));
+      })
+      .catch((error) => {
+        deleteCommentFail_();
+        switch (error.response.status) {
+          case 401:
+            alert("Please sign in!");
+            break;
+          case 404:
+            alert("No such comment!");
+            break;
+          case 403:
+            alert("Only the author can delete the comment!");
+            break;
+          case 400:
+            alert("Parsing error!");
+            break;
+          default:
+            break;
+        }
       });
   };
 };
