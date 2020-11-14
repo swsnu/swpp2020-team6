@@ -5,7 +5,7 @@ import { ConnectedRouter } from "connected-react-router";
 import { Route, Switch } from "react-router-dom";
 import SignUp from "./SignUp";
 
-import { getMockStore } from "../../test-utils/mocks";
+import getMockStore from "../../test-utils/mocks";
 import { history } from "../../store/store";
 import * as actionCreatorsUser from "../../store/actions/user";
 
