@@ -250,3 +250,105 @@ class RoadmapTestCase(TestCase):
         # 204 (DELETE)
         response = client.delete(path, HTTP_X_CSRFTOKEN=csrftoken)
         self.assertEqual(response.status_code, 204)
+
+    def test_roadmap_id_like(self):
+        client = Client(enforce_csrf_checks=True)
+        csrftoken = self.get_csrf(client)
+        path = self.roadmap_path + "1/like/"
+
+        # 405 (except for PUT)
+        response = client.post(path, HTTP_X_CSRFTOKEN=csrftoken)
+        self.assertEqual(response.status_code, 405)
+        response = client.get(path, HTTP_X_CSRFTOKEN=csrftoken)
+        self.assertEqual(response.status_code, 405)
+        response = client.delete(path, HTTP_X_CSRFTOKEN=csrftoken)
+        self.assertEqual(response.status_code, 405)
+
+        # 401 (PUT)
+        response = client.put(path, HTTP_X_CSRFTOKEN=csrftoken)
+        self.assertEqual(response.status_code, 401)
+
+        self.signup_signin(client)
+        csrftoken = self.get_csrf(client)
+
+        # 404
+        response = client.put(path, HTTP_X_CSRFTOKEN=csrftoken)
+        self.assertEqual(response.status_code, 404)
+
+        # create another user, and her roadmap
+        another_user = User.objects.create_user(
+            username="johndoe", email="johndoe@domain.com", password="johndoe"
+        )
+        not_my_roadmap = Roadmap.objects.create(
+            title="roadmap title",
+            level=1,
+            original_author=another_user,
+            author=another_user,
+        )
+
+        # 200 (Like the roadmap)
+        response = client.put(
+            self.roadmap_path + "{}/like/".format(not_my_roadmap.id),
+            HTTP_X_CSRFTOKEN=csrftoken,
+        )
+        self.assertEqual(response.status_code, 200)
+        self.assertTrue(response.json()["liked"])
+
+        # 200 (Unlike the roadmap)
+        response = client.put(
+            self.roadmap_path + "{}/like/".format(not_my_roadmap.id),
+            HTTP_X_CSRFTOKEN=csrftoken,
+        )
+        self.assertEqual(response.status_code, 200)
+        self.assertFalse(response.json()["liked"])
+
+    def test_roadmap_id_pin(self):
+        client = Client(enforce_csrf_checks=True)
+        csrftoken = self.get_csrf(client)
+        path = self.roadmap_path + "1/pin/"
+
+        # 405 (except for PUT)
+        response = client.get(path, HTTP_X_CSRFTOKEN=csrftoken)
+        self.assertEqual(response.status_code, 405)
+        response = client.post(path, HTTP_X_CSRFTOKEN=csrftoken)
+        self.assertEqual(response.status_code, 405)
+        response = client.delete(path, HTTP_X_CSRFTOKEN=csrftoken)
+        self.assertEqual(response.status_code, 405)
+
+        # 401 (PUT)
+        response = client.put(path, HTTP_X_CSRFTOKEN=csrftoken)
+        self.assertEqual(response.status_code, 401)
+
+        self.signup_signin(client)
+        csrftoken = self.get_csrf(client)
+
+        # 404
+        response = client.put(path, HTTP_X_CSRFTOKEN=csrftoken)
+        self.assertEqual(response.status_code, 404)
+
+        # create another user, and her roadmap
+        another_user = User.objects.create_user(
+            username="johndoe", email="johndoe@domain.com", password="johndoe"
+        )
+        not_my_roadmap = Roadmap.objects.create(
+            title="roadmap title",
+            level=1,
+            original_author=another_user,
+            author=another_user,
+        )
+
+        # 200 (Pin the roadmap)
+        response = client.put(
+            self.roadmap_path + "{}/pin/".format(not_my_roadmap.id),
+            HTTP_X_CSRFTOKEN=csrftoken,
+        )
+        self.assertEqual(response.status_code, 200)
+        self.assertTrue(response.json()["pinned"])
+
+        # 200 (Unpin the roadmap)
+        response = client.put(
+            self.roadmap_path + "{}/pin/".format(not_my_roadmap.id),
+            HTTP_X_CSRFTOKEN=csrftoken,
+        )
+        self.assertEqual(response.status_code, 200)
+        self.assertFalse(response.json()["pinned"])
