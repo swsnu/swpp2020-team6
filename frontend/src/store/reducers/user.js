@@ -6,6 +6,7 @@ const initialState = {
 };
 
 const reducer = (state = initialState, action) => {
+  const { selectedUser } = state;
   switch (action.type) {
     case actionTypes.GET_USER_AUTH:
       return { ...state, isSignedIn: action.isSignedIn, selectedUser: action.selectedUser };
@@ -21,6 +22,24 @@ const reducer = (state = initialState, action) => {
       return { ...state };
     case actionTypes.SIGN_UP_FAILURE:
       return { ...state };
+    case actionTypes.ROADMAP_LIKE:
+      return {
+        ...state,
+        selectedUser: {
+          ...selectedUser,
+          liked_roadmaps: selectedUser.liked_roadmaps.concat(action.roadmapData),
+        },
+      };
+    case actionTypes.ROADMAP_UNLIKE:
+      return {
+        ...state,
+        selectedUser: {
+          ...selectedUser,
+          liked_roadmaps: selectedUser.liked_roadmaps.filter(
+            (roadmap) => roadmap.id !== action.roadmapId,
+          ),
+        },
+      };
     default:
       break;
   }

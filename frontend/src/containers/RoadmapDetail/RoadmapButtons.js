@@ -19,7 +19,10 @@ const RoadmapButtons = (props) => {
 
   const onClickPinRoadmap = () => {};
 
-  const onClickLikeRoadmap = () => {};
+  const onClickLikeRoadmap = () => {
+    const { match, toggleRoadmapLike } = history;
+    toggleRoadmapLike(match.params.id);
+  };
 
   // eslint-disable-next-line camelcase
   const { liked_roadmaps, pinned_roadmaps } = props.selectedUser;
@@ -63,21 +66,21 @@ RoadmapButtons.propTypes = {
   isAuthor: PropTypes.bool.isRequired,
   history: PropTypes.objectOf(PropTypes.any).isRequired,
   onDeleteRoadmap: PropTypes.func.isRequired,
+  toggleRoadmapLike: PropTypes.func.isRequired,
 
   selectedUser: PropTypes.objectOf(PropTypes.any).isRequired,
-  getSelectedRoadmapErrStatus: PropTypes.number.isRequired,
 };
 
 const mapDispatchToProps = (dispatch) => {
   return {
     onDeleteRoadmap: (id) => dispatch(actionCreators.deleteRoadmap(id)),
+    toggleRoadmapLike: (id) => dispatch(actionCreators.toggleRoadmapLike(id)),
   };
 };
 
 const mapStateToProps = (state) => {
   return {
     selectedUser: state.user.selectedUser,
-    getSelectedRoadmapErrStatus: state.roadmap.errStatus,
   };
 };
 
