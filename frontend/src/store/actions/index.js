@@ -7,4 +7,7 @@ export {
   resetRoadmap_,
   deleteRoadmap,
   duplicateRoadmap,
+  createComment,
+  editComment,
+  deleteComment,
 } from "./roadmap";

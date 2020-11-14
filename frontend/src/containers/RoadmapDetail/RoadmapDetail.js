@@ -21,11 +21,13 @@ class RoadmapDetail extends Component {
   backToList = () => {
     const { onResetRoadmap, history } = this.props;
     onResetRoadmap();
-    history.back();
+    history.goBack();
   };
 
   /* ---------------- Roadmap Progress -------------------- */
-  onChangeRoadmapProgressStatus = (type) => {
+  onChangeRoadmapProgressStatus = () => {
+    // Progress tracking isn't implemented yet.
+    /*
     let newState;
     switch (type) {
       case "start":
@@ -38,21 +40,44 @@ class RoadmapDetail extends Component {
         newState = 3;
         break;
       case "clear":
-        // eslint-disable-next-line no-unused-vars
         newState = 1;
         break;
       default:
         break;
     }
-    // changeRoadmapProgress(newState, parseInt(match.params.id, 10));
+    changeRoadmapProgress(newState, parseInt(match.params.id, 10));
+    */
   };
 
   /* ---------------- comment handlers -------------------- */
-  commentEditHandler = () => {};
+  commentCreateHandler = (commentData) => {
+    const { comment } = this.state;
+    const { onCreateComment, match } = this.props;
+    if (comment !== "") {
+      onCreateComment(match.params.id, commentData);
+      this.setState({ comment: "" });
+    }
+  };
 
-  commentDeleteHandler = () => {};
+  commentEditHandler = (commentID, comment) => {
+    const { onEditComment, match } = this.props;
+    const editedComment = prompt("Edit your comment", comment.content);
 
-  onPostComment = () => {};
+    if (editedComment !== null) {
+      // user clicked OK
+      if (editedComment === "") {
+        // do nothing on empty input
+      } else {
+        onEditComment(commentID, match.params.id, editedComment);
+      }
+    }
+    // skip else: do nothing when user cancelled pop-up.
+  };
+
+  commentDeleteHandler = (id) => {
+    const { onDeleteComment } = this.props;
+    onDeleteComment(id);
+  };
 
   render() {
     const { selectedUser, isSignedIn, match, selectedRoadmap } = this.props;
@@ -60,8 +85,6 @@ class RoadmapDetail extends Component {
 
     if (isSignedIn === false) {
       // unsigned in user
-      const { history } = this.props;
-      history.goBack();
       return <div />;
     }
     if (selectedRoadmap === undefined) {
@@ -74,7 +97,18 @@ class RoadmapDetail extends Component {
     }
 
     // safe zone (selectedUser !== null/undefined,  selectedRoadmap !== null/undefined)
-    const { title, sections, comments, level } = selectedRoadmap;
+    // eslint-disable-next-line camelcase
+    const { title, sections, comments, level, original_author_id, author_id } = selectedRoadmap;
+
+    /* ---------------- Original Author -------------------- */
+    const originalAuthor =
+      // (inevitable since we use the data from the backend directly)
+      // eslint-disable-next-line camelcase
+      original_author_id !== author_id ? (
+        <div className="roadmap-original-author">
+          <p id="roadmap-original-author-name">{selectedRoadmap.original_author_name}</p>
+        </div>
+      ) : null;
 
     /* ---------------- Roadmap level -------------------- */
     let roadmapLevel;
@@ -109,20 +143,24 @@ class RoadmapDetail extends Component {
 
     /* ---------------- Roadmap tags -------------------- */
     const roadmapTags = selectedRoadmap.tags.map((item) => {
-      return <p key={item.tag_id}>{item.tag_name}</p>;
+      return (
+        <p key={item.tag_id} className="roadmap-tag">
+          {item.tag_name}
+        </p>
+      );
     });
 
     /* ---------------- Roadmap comments -------------------- */
-    const roadmapComments = comments.map((comment) => {
+    const roadmapComments = comments.map((commentItem) => {
       return (
         <Comment
-          key={comment.comment_id}
-          authorName={comment.author_name}
-          isAuthor={comment.author_id === selectedUser.user_id}
-          authorPictureUrl={comment.author_picture_url}
-          content={comment.content}
-          clickEdit={() => this.commentEditHandler(comment)}
-          clickDelete={() => this.commentDeleteHandler(comment.comment_id)}
+          key={commentItem.comment_id}
+          authorName={commentItem.author_name}
+          isAuthor={commentItem.author_id === selectedUser.user_id}
+          authorPictureUrl={commentItem.author_picture_url}
+          content={commentItem.content}
+          clickEdit={() => this.commentEditHandler(commentItem.comment_id, commentItem)}
+          clickDelete={() => this.commentDeleteHandler(commentItem.comment_id)}
         />
       );
     });
@@ -135,28 +173,33 @@ class RoadmapDetail extends Component {
     const { comment } = this.state;
     if (comment !== "") {
       commentConfirmButton = (
-        <button id="confirm-create-comment-button" type="button" onClick={this.onPostComment}>
+        <button
+          id="confirm-create-comment-button"
+          type="button"
+          onClick={() => this.commentCreateHandler(comment)}
+        >
           confirm
         </button>
       );
     }
 
     return (
-      <div className="roadmap-detail">
+      <div className="RoadmapDetail">
         <div className="header" />
         <div className="row">
           <div className="leftcolumn">
             <ProgressBar
               isAuthor={selectedUser.user_id === selectedRoadmap.author_id}
-              onChangeRoadmapProgressStatus={this.onChangeRoadmapProgressStatus}
+              onChangeRoadmapProgressStatus={() => this.onChangeRoadmapProgressStatus()}
               currentProgressStatus={selectedRoadmap.progress}
             />
             <h1 className="roadmap-title">{title}</h1>
             <div className="roadmap-author">
-              <p>{selectedRoadmap.author_picture_url}</p>
+              <p id="roadmap-author-picture-url">{selectedRoadmap.author_user_picture_url}</p>
               <p id="roadmap-author-name">{selectedRoadmap.author_name}</p>
               <p id="roadmap-written-date">{selectedRoadmap.date}</p>
             </div>
+            {originalAuthor}
             {roadmapLevel}
             <div className="roadmap-tags">{roadmapTags}</div>
             <div className="roadmap-sections">{roadmapSections}</div>
@@ -169,11 +212,11 @@ class RoadmapDetail extends Component {
                   {selectedRoadmap.like_count}
                 </p>
                 <p id="roadmap-pin-count">
-                  pinned
+                  Pinned
                   {selectedRoadmap.pin_count}
                 </p>
                 <p id="roadmap-comment-count">
-                  comments
+                  Comments
                   {selectedRoadmap.comment_count}
                 </p>
               </div>
@@ -190,13 +233,18 @@ class RoadmapDetail extends Component {
                 type="text"
                 value={comment}
                 onChange={
-                  (event) => this.setState({ comment: event.target.value })
+                  (event) => {
+                    this.setState({ comment: event.target.value });
+                  }
                   // eslint-disable-next-line react/jsx-curly-newline
                 }
               />
               {commentConfirmButton}
             </div>
             <div className="roadmap-comments">{roadmapComments}</div>
+            <button id="back-button" type="button" onClick={() => this.backToList()}>
+              Back
+            </button>
           </div>
         </div>
       </div>
@@ -214,12 +262,21 @@ RoadmapDetail.propTypes = {
 
   onGetRoadmap: PropTypes.func.isRequired,
   onResetRoadmap: PropTypes.func.isRequired,
+
+  onCreateComment: PropTypes.func.isRequired,
+  onEditComment: PropTypes.func.isRequired,
+  onDeleteComment: PropTypes.func.isRequired,
 };
 
 const mapDispatchToProps = (dispatch) => {
   return {
     onGetRoadmap: (id) => dispatch(actionCreators.getRoadmap(id)),
     onResetRoadmap: () => dispatch(actionCreators.resetRoadmap_()),
+    onCreateComment: (roadmapId, comment) =>
+      dispatch(actionCreators.createComment({ roadmap_id: roadmapId, content: comment })),
+    onEditComment: (commentID, roadmapID, comment) =>
+      dispatch(actionCreators.editComment(commentID, { roadmap_id: roadmapID, content: comment })),
+    onDeleteComment: (id) => dispatch(actionCreators.deleteComment(id)),
   };
 };
 
