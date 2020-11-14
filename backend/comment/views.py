@@ -52,6 +52,7 @@ def comment_id(request, comment_id):
             return HttpResponseBadRequest()
 
         comment.content = new_content
+
         comment.edit_save()
 
         comment_dict = comment.to_dict()

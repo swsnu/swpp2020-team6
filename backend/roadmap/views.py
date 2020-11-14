@@ -14,6 +14,7 @@ from datetime import datetime
 from section.models import Section
 from task.models import Task
 from tag.models import Tag
+from user.models import User
 
 
 def roadmap(request):
@@ -163,3 +164,67 @@ def roadmap_id(request, roadmap_id):
         return HttpResponse(status=204)
 
     return HttpResponseNotAllowed(["GET", "PUT", "DELETE"])
+
+
+def roadmap_id_like(request, roadmap_id):
+    if request.method == "PUT":
+        if not request.user.is_authenticated:
+            return HttpResponse(status=401)
+        try:
+            roadmap = Roadmap.objects.get(id=roadmap_id)
+            like_user = User.objects.get(id=request.user.id)
+        except ObjectDoesNotExist:
+            return HttpResponseNotFound()
+
+        response_dict = {}
+        roadmap_query = like_user.liked_roadmaps.filter(id=roadmap_id)
+        if not roadmap_query.exists():
+            # like
+            like_user.liked_roadmaps.add(roadmap)
+            roadmap.increment_like_count()
+            response_dict["liked"] = True
+            response_dict["roadmap_data"] = roadmap.to_dict_simple()
+        else:
+            # unlike
+            like_user.liked_roadmaps.remove(roadmap)
+            roadmap.decrement_like_count()
+            response_dict["liked"] = False
+            response_dict["like_count"] = roadmap.like_count
+
+        roadmap.save()
+        like_user.save()
+        return JsonResponse(response_dict)
+
+    return HttpResponseNotAllowed(["PUT"])
+
+
+def roadmap_id_pin(request, roadmap_id):
+    if request.method == "PUT":
+        if not request.user.is_authenticated:
+            return HttpResponse(status=401)
+        try:
+            roadmap = Roadmap.objects.get(id=roadmap_id)
+            pin_user = User.objects.get(id=request.user.id)
+        except ObjectDoesNotExist:
+            return HttpResponseNotFound()
+
+        response_dict = {}
+        roadmap_query = pin_user.pinned_roadmaps.filter(id=roadmap_id)
+        if not roadmap_query.exists():
+            # pin
+            pin_user.pinned_roadmaps.add(roadmap)
+            roadmap.increment_pin_count()
+            response_dict["pinned"] = True
+            response_dict["roadmap_data"] = roadmap.to_dict_simple()
+        else:
+            # unpin
+            pin_user.pinned_roadmaps.remove(roadmap)
+            roadmap.decrement_pin_count()
+            response_dict["pinned"] = False
+            response_dict["pin_count"] = roadmap.pin_count
+
+        roadmap.save()
+        pin_user.save()
+        return JsonResponse(response_dict)
+
+    return HttpResponseNotAllowed(["PUT"])
