@@ -69,6 +69,7 @@ class CommentTestCase(TestCase):
         # 201 (create roadmap and its comment)
         roadmap = Roadmap(title="roadmap title", original_author=user, author=user)
         roadmap.save()
+        before_comment_count = roadmap.comment_count
         self.dump_comment_create["roadmap_id"] = roadmap.id
         response = client.post(
             path,
@@ -76,6 +77,8 @@ class CommentTestCase(TestCase):
             content_type=self.json_type,
             HTTP_X_CSRFTOKEN=csrftoken,
         )
+        after_comment_count = Roadmap.objects.get(id=roadmap.id).comment_count
+        self.assertEqual(after_comment_count - before_comment_count, 1)
         self.assertEqual(response.status_code, 201)
         self.assertTrue(
             {
@@ -170,7 +173,10 @@ class CommentTestCase(TestCase):
         self.assertEqual(response.status_code, 200)
 
         # 204 (DELETE)
+        before_delete_comment_count = Roadmap.objects.get(id=roadmap.id).comment_count
         response = client.delete(
             self.comment_path + "{}/".format(comment.id), HTTP_X_CSRFTOKEN=csrftoken
         )
+        after_delete_comment_count = Roadmap.objects.get(id=roadmap.id).comment_count
+        self.assertEqual(after_delete_comment_count - before_delete_comment_count, -1)
         self.assertEqual(response.status_code, 204)
