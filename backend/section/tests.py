@@ -17,4 +17,4 @@ class SectionTestCase(TestCase):
         roadmap = Roadmap(title="roadmap title", original_author=user, author=user)
         roadmap.save()
         section = Section.objects.create(title="section title", roadmap=roadmap)
-        self.assertEqual(section.__str__(), section.title)
+        self.assertEqual(section.__str__(), "section title")

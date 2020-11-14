@@ -1,4 +1,3 @@
-import json
 from django.test import TestCase
 from .models import Task
 from section.models import Section
@@ -19,4 +18,4 @@ class TasktestCase(TestCase):
         roadmap.save()
         section = Section.objects.create(title="section title", roadmap=roadmap)
         task = Task.objects.create(title="task title", roadmap=roadmap, section=section)
-        self.assertEqual(task.__str__(), task.title)
+        self.assertEqual(task.__str__(), "task title")
