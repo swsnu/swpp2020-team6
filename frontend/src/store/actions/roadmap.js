@@ -225,7 +225,7 @@ export const deleteComment = (commentID) => {
         dispatch(deleteCommentSuccess_(commentID));
       })
       .catch((error) => {
-        deleteCommentFail_(error.response.status);
+        deleteCommentFail_();
         switch (error.response.status) {
           case 401:
             alert("Please sign in!");
