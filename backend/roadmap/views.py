@@ -163,7 +163,45 @@ def roadmap_id(request, roadmap_id):
         roadmap.delete()
         return HttpResponse(status=204)
 
-    return HttpResponseNotAllowed(["GET", "PUT", "DELETE"])
+    elif request.method == "POST":
+        if not request.user.is_authenticated:
+            return HttpResponse(status=401)
+        try:
+            roadmap = Roadmap.objects.get(id=roadmap_id)
+        except ObjectDoesNotExist:
+            return HttpResponseNotFound()
+
+        new_roadmap = Roadmap(
+            title=roadmap.title,
+            level=roadmap.level,
+            original_author=roadmap.author,
+            author=request.user,
+        )
+        new_roadmap.save()
+
+        # Add copied tags m2m fields
+        for tag in roadmap.tags.all():
+            new_roadmap.tags.add(tag)
+        new_roadmap.save()
+
+        # Add copied sections and tasks
+        for section in roadmap.section_roadmap.all():
+            new_section = Section(title=section.title, roadmap=new_roadmap)
+            new_section.save()
+
+            for task in section.task_section.all():
+                Task(
+                    title=task.title,
+                    url=task.url,
+                    type=task.type,
+                    description=task.description,
+                    roadmap=new_roadmap,
+                    section=new_section,
+                ).save()
+
+        # Post response
+        roadmap_dict_simple = new_roadmap.to_dict_simple()
+        return JsonResponse(roadmap_dict_simple, status=201)
 
 
 def roadmap_id_like(request, roadmap_id):
