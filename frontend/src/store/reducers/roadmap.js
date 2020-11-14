@@ -21,7 +21,12 @@ const reducer = (state = initialState, action) => {
       return { ...state, selectedRoadmap: undefined };
     case actionTypes.CREATE_COMMENT_SUCCESS:
       const addedComments = state.selectedRoadmap.comments.concat(action.newComment);
-      const commentAddedRoadmap = { ...state.selectedRoadmap, comments: addedComments };
+      const commentCountBeforeCreate = state.selectedRoadmap.comment_count;
+      const commentAddedRoadmap = {
+        ...state.selectedRoadmap,
+        comment_count: commentCountBeforeCreate + 1,
+        comments: addedComments,
+      };
       return { ...state, selectedRoadmap: commentAddedRoadmap };
     case actionTypes.CREATE_COMMENT_FAILURE:
       return { ...state, selectedRoadmap: undefined };
@@ -42,10 +47,33 @@ const reducer = (state = initialState, action) => {
       const deletedComments = state.selectedRoadmap.comments.filter((comment) => {
         return comment.comment_id !== commentID;
       });
-      const commentDeletedRoadmap = { ...state.selectedRoadmap, comments: deletedComments };
+      const commentCountBeforeDelete = state.selectedRoadmap.comment_count;
+      const commentDeletedRoadmap = {
+        ...state.selectedRoadmap,
+        comment_count: commentCountBeforeDelete - 1,
+        comments: deletedComments,
+      };
       return { ...state, selectedRoadmap: commentDeletedRoadmap };
     case actionTypes.DELETE_COMMENT_FAILURE:
       return { ...state, selectedRoadmap: undefined };
+    case actionTypes.ROADMAP_LIKE:
+      const likeCountBeforeLike = state.selectedRoadmap.like_count;
+      return {
+        ...state,
+        selectedRoadmap: {
+          ...state.selectedRoadmap,
+          like_count: likeCountBeforeLike + 1,
+        },
+      };
+    case actionTypes.ROADMAP_UNLIKE:
+      const likeCountBeforeUnLike = state.selectedRoadmap.like_count;
+      return {
+        ...state,
+        selectedRoadmap: {
+          ...state.selectedRoadmap,
+          like_count: likeCountBeforeUnLike - 1,
+        },
+      };
     default:
       break;
   }

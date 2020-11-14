@@ -10,4 +10,5 @@ export {
   createComment,
   editComment,
   deleteComment,
+  toggleRoadmapLike,
 } from "./roadmap";

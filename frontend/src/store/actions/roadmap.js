@@ -279,3 +279,48 @@ deleteCommentFail_();
       });
   };
 };
+
+export const RoadmapLike_ = (responseData) => {
+  return { type: actionTypes.ROADMAP_LIKE, responseData };
+};
+
+export const RoadmapUnLike_ = (responseData) => {
+  return { type: actionTypes.ROADMAP_UNLIKE, responseData };
+};
+
+export const toggleRoadmapLike = (roadmapId) => {
+  return (dispatch) => {
+    return axios
+      .put(`/api/roadmap/${roadmapId}/like/`)
+      .then((response) => {
+        if (response.data.liked) {
+          RoadmapLike_({
+            roadmapId,
+            liked: response.data.liked,
+            roadmapData: response.data.roadmap_data,
+          });
+        } else {
+          RoadmapUnLike_({
+            roadmapId,
+            likeCount: response.data.like_count,
+          });
+        }
+      })
+      .catch((error) => {
+        switch (error.response.status) {
+          case 401:
+            alert("Please sign in!");
+            break;
+          case 404:
+            alert("No such Roadmap!");
+            break;
+          case 400:
+            alert("Parsing error!");
+            break;
+          default:
+            break;
+        }
+        dispatch(goBack());
+      });
+  };
+};

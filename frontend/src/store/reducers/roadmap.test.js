@@ -1,0 +1,283 @@
+import reducer from "./roadmap";
+import * as actionTypes from "../actions/actionTypes";
+
+const initialState = {
+  selectedRoadmap: undefined,
+};
+
+const stubSelectedRoadmap = {
+  id: 11,
+  title: "new-rm-title",
+  date: "2020-11-14 05:46:47",
+  level: 1,
+  like_count: 0,
+  comment_count: 1,
+  pin_count: 0,
+  progress: 1,
+  original_author_id: 5,
+  original_author_name: "swpp",
+  author_id: 5,
+  author_name: "swpp",
+  author_user_picture_url: "",
+  tags: [
+    {
+      tag_id: 1,
+      tag_name: "python",
+    },
+    {
+      tag_id: 2,
+      tag_name: "CV",
+    },
+    {
+      tag_id: 3,
+      tag_name: "swpp2020",
+    },
+    {
+      tag_id: 5,
+      tag_name: "js",
+    },
+    {
+      tag_id: 6,
+      tag_name: "django",
+    },
+    {
+      tag_id: 7,
+      tag_name: "agile",
+    },
+    {
+      tag_id: 8,
+      tag_name: "redux",
+    },
+    {
+      tag_id: 9,
+      tag_name: "git",
+    },
+  ],
+  sections: [
+    {
+      section_id: 35,
+      section_title: "new-sc1-title",
+      tasks: [
+        {
+          task_id: 43,
+          task_title: "new-task1-title",
+          task_type: 3,
+          task_url: "www.naver.com",
+          task_description: "Naver is better than google",
+          task_checked: false,
+        },
+      ],
+    },
+  ],
+  comments: [
+    {
+      comment_id: 5,
+      roadmap_id: 11,
+      content: "it is great!",
+      author_id: 5,
+      author_name: "swpp",
+      author_picture_url: "",
+    },
+  ],
+};
+
+/*
+const stubSimpleRoadmap = {
+  id: 11,
+  title: "new-rm-title",
+  date: "2020-11-14 05:46:47",
+  level: 1,
+  like_count: 1,
+  comment_count: 0,
+  pin_count: 0,
+  progress: 1,
+  original_author: 5,
+  author_id: 5,
+  author_name: "swpp",
+  author_user_picture_url: "",
+  tags: [
+    {
+      tag_id: 1,
+      tag_name: "python",
+    },
+    {
+      tag_id: 2,
+      tag_name: "CV",
+    },
+    {
+      tag_id: 3,
+      tag_name: "swpp2020",
+    },
+    {
+      tag_id: 5,
+      tag_name: "js",
+    },
+    {
+      tag_id: 6,
+      tag_name: "django",
+    },
+    {
+      tag_id: 7,
+      tag_name: "agile",
+    },
+    {
+      tag_id: 8,
+      tag_name: "redux",
+    },
+    {
+      tag_id: 9,
+      tag_name: "git",
+    },
+  ],
+};
+*/
+
+const stubComment = {
+  comment_id: 3,
+  roadmap_id: 10,
+  author_id: 5,
+  author_name: "swpp",
+  author_user_picture_url: "",
+  content: "it is great!",
+};
+
+describe("User Reducer", () => {
+  it("should return default state", () => {
+    const newState = reducer(undefined, {}); // initialize
+    expect(newState).toEqual(initialState);
+  });
+
+  it("should set selectedroadmap as undefined ", () => {
+    const newState = reducer(undefined, {
+      type: actionTypes.GET_ROADMAP_FAILURE,
+    });
+    expect(newState).toEqual(initialState);
+  });
+
+  it("should set selectedroadmap as the given data ", () => {
+    const newState = reducer(undefined, {
+      type: actionTypes.GET_ROADMAP_SUCCESS,
+      roadmapData: stubSelectedRoadmap,
+    });
+    expect(newState).toEqual({ selectedRoadmap: stubSelectedRoadmap });
+  });
+
+  it("should set selectedroadmap as undefined ", () => {
+    const newState = reducer(undefined, {
+      type: actionTypes.CREATE_ROADMAP,
+    });
+    expect(newState).toEqual(initialState);
+  });
+
+  it("should set selectedroadmap as undefined", () => {
+    const newState = reducer(undefined, {
+      type: actionTypes.EDIT_ROADMAP,
+    });
+    expect(newState).toEqual(initialState);
+  });
+
+  it("should reset selectedroadmap as undefined", () => {
+    const newState = reducer(undefined, {
+      type: actionTypes.RESET_ROADMAP,
+    });
+    expect(newState).toEqual(initialState);
+  });
+
+  it("should delete roadmap properly ", () => {
+    const newState = reducer(undefined, {
+      type: actionTypes.DELETE_ROADMAP,
+    });
+    expect(newState).toEqual(initialState);
+  });
+
+  it("should create comment properly ", () => {
+    const newState = reducer(
+      { selectedRoadmap: stubSelectedRoadmap },
+      {
+        type: actionTypes.CREATE_COMMENT_SUCCESS,
+        newComment: stubComment,
+      },
+    );
+    const addedComments = stubSelectedRoadmap.comments.concat(stubComment);
+    const commentCountBeforeCreate = stubSelectedRoadmap.comment_count;
+    const commentAddedRoadmap = {
+      ...stubSelectedRoadmap,
+      comment_count: commentCountBeforeCreate + 1,
+      comments: addedComments,
+    };
+    expect(newState).toEqual({ selectedRoadmap: commentAddedRoadmap });
+  });
+
+  it("should set selectdRoadmap as undefined on create comment fail ", () => {
+    const newState = reducer(undefined, {
+      type: actionTypes.CREATE_COMMENT_FAILURE,
+    });
+    expect(newState).toEqual(initialState);
+  });
+
+  it("should create comment properly ", () => {
+    const newState = reducer(
+      { selectedRoadmap: stubSelectedRoadmap },
+      {
+        type: actionTypes.EDIT_COMMENT_SUCCESS,
+        newComment: stubComment,
+      },
+    );
+    const modifiedComments = stubSelectedRoadmap.comments.map((comment) => {
+      if (comment.comment_id === stubComment.comment_id) {
+        return stubComment;
+      }
+      return comment;
+    });
+    const commentModifiedRoadmap = { ...stubSelectedRoadmap, comments: modifiedComments };
+    expect(newState).toEqual({ selectedRoadmap: commentModifiedRoadmap });
+  });
+
+  it("should set selectdRoadmap as undefined on edit comment fail ", () => {
+    const newState = reducer(undefined, {
+      type: actionTypes.EDIT_COMMENT_FAILURE,
+    });
+    expect(newState).toEqual(initialState);
+  });
+
+  it("should change comment list and comment_count on delete comment fail ", () => {
+    const newState = reducer(
+      { selectedRoadmap: stubSelectedRoadmap },
+      {
+        type: actionTypes.DELETE_COMMENT_SUCCESS,
+        commentID: 5,
+      },
+    );
+
+    const deletedComments = stubSelectedRoadmap.comments.filter((comment) => {
+      return comment.comment_id !== 5;
+    });
+    const commentCountBeforeDelete = stubSelectedRoadmap.comment_count;
+    const commentDeletedRoadmap = {
+      ...stubSelectedRoadmap,
+      comment_count: commentCountBeforeDelete - 1,
+      comments: deletedComments,
+    };
+    expect(newState).toEqual({ selectedRoadmap: commentDeletedRoadmap });
+  });
+
+  it("should set selectdRoadmap as undefined on delete comment fail ", () => {
+    const newState = reducer(undefined, {
+      type: actionTypes.DELETE_COMMENT_FAILURE,
+    });
+    expect(newState).toEqual(initialState);
+  });
+  /*
+  it("should change like_count on roadmap like ", () => {
+    const newState = reducer(
+      { selectedRoadmap: stubSelectedRoadmap },
+      {
+        type: actionTypes.ROADMAP_LIKE,
+        roadmapId: 11,
+        liked: false,
+        roadmapData: stubSimpleRoadmap,
+      },
+    );
+  });
+  */
+});
