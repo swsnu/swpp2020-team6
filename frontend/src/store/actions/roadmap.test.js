@@ -54,6 +54,10 @@ const stubRoadmapState = {
   },
 };
 
+const stubRoadmapStateUndefined = {
+  selectedRoadamp: undefined,
+};
+
 const stubCreateRoadmapData = {
   title: "swpp",
   level: 1,
@@ -94,6 +98,50 @@ const stubCreateRoadmapData = {
     },
   ],
   tags: ["python", "CV", "swpp2020", "CV", "Python", "react", "js", "django", "agile"],
+};
+
+const stubRoadmapSimpleData = {
+  id: 2,
+  title: "title",
+  level: "level",
+  date: "2020-11-14 05:18:20",
+  like_count: 0,
+  comment_count: 0,
+  pin_count: 0,
+  progress: 1,
+  author_id: 5,
+  author_name: "swpp",
+  author_user_picture_url: "",
+  tags: [
+    {
+      tag_id: 1,
+      tag_name: "python",
+    },
+    {
+      tag_id: 2,
+      tag_name: "CV",
+    },
+    {
+      tag_id: 3,
+      tag_name: "swpp2020",
+    },
+    {
+      tag_id: 4,
+      tag_name: "react",
+    },
+    {
+      tag_id: 5,
+      tag_name: "js",
+    },
+    {
+      tag_id: 6,
+      tag_name: "django",
+    },
+    {
+      tag_id: 7,
+      tag_name: "agile",
+    },
+  ],
 };
 
 const stubCreateCommentData = {
@@ -230,14 +278,14 @@ describe("ActionCreators", () => {
     const spy = jest.spyOn(axios, "post").mockImplementation((url, roadmapData) => {
       return new Promise((resolve, reject) => {
         const result = {
-          status: 200,
-          data: stubRoadmapState,
+          status: 201,
+          data: stubRoadmapSimpleData,
         };
         resolve(result);
       });
     });
 
-    store.dispatch(actionCreators.createRoadmap(stubCreateRoadmapData)).then(() => {
+    store.dispatch(actionCreators.createRoadmap(stubRoadmapSimpleData)).then(() => {
       const newState = store.getState();
       expect(newState.roadmap.selectedRoadmap).toBe(undefined);
       expect(spy).toHaveBeenCalledTimes(1);

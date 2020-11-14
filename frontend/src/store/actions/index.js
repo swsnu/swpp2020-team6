@@ -6,6 +6,7 @@ export {
   editRoadmap,
   resetRoadmap_,
   deleteRoadmap,
+  duplicateRoadmap,
   createComment,
   editComment,
   deleteComment,

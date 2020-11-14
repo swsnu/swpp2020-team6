@@ -1,3 +1,6 @@
+/* User reducer.
+ * Changes redux state according to actions done about user.
+ */
 import * as actionTypes from "../actions/actionTypes";
 
 const initialState = {
@@ -18,10 +21,47 @@ const reducer = (state = initialState, action) => {
       return { ...state, isSignedIn: false, selectedUser: undefined };
     case actionTypes.SIGN_OUT_FAILURE:
       return { ...state };
-    case actionTypes.SIGN_UP_SUCCESS:
+    case actionTypes.SIGN_UP:
       return { ...state };
-    case actionTypes.SIGN_UP_FAILURE:
-      return { ...state };
+    case actionTypes.CREATE_ROADMAP:
+      return {
+        ...state,
+        selectedUser: {
+          ...selectedUser,
+          my_roadmaps: selectedUser.my_roadmaps.concat(action.roadmapData),
+        },
+      };
+    case actionTypes.EDIT_ROADMAP:
+      return {
+        ...state,
+        selectedUser: {
+          ...selectedUser,
+          my_roadmaps: selectedUser.my_roadmaps.map((roadmap) => {
+            if (roadmap.id === action.roadmapData.id) {
+              return action.roadmapData;
+            }
+            return roadmap;
+          }),
+        },
+      };
+    case actionTypes.DELETE_ROADMAP:
+      return {
+        ...state,
+        selectedUser: {
+          ...selectedUser,
+          my_roadmaps: selectedUser.my_roadmaps.filter(
+            (roadmap) => roadmap.id !== action.roadmapId,
+          ),
+        },
+      };
+    case actionTypes.DUPLICATE_ROADMAP:
+      return {
+        ...state,
+        selectedUser: {
+          ...selectedUser,
+          my_roadmaps: selectedUser.my_roadmaps.concat(action.roadmapData),
+        },
+      };
     case actionTypes.ROADMAP_LIKE:
       return {
         ...state,

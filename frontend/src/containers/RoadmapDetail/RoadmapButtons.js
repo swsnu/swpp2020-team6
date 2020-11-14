@@ -10,7 +10,10 @@ const RoadmapButtons = (props) => {
     history.push(`/roadmap/${roadmapId}/edit`);
   };
 
-  const onClickDuplicateRoadmap = () => {};
+  const onClickDuplicateRoadmap = () => {
+    const { onDuplicateRoadmap, match } = props;
+    onDuplicateRoadmap(match.params.id);
+  };
 
   const onClickDeleteRoadmap = () => {
     const { onDeleteRoadmap, roadmapId } = props;
@@ -68,6 +71,7 @@ RoadmapButtons.propTypes = {
   match: PropTypes.objectOf(PropTypes.any).isRequired,
   onDeleteRoadmap: PropTypes.func.isRequired,
   toggleRoadmapLike: PropTypes.func.isRequired,
+  onDuplicateRoadmap: PropTypes.func.isRequired,
 
   selectedUser: PropTypes.objectOf(PropTypes.any).isRequired,
 };
@@ -76,6 +80,7 @@ const mapDispatchToProps = (dispatch) => {
   return {
     onDeleteRoadmap: (id) => dispatch(actionCreators.deleteRoadmap(id)),
     toggleRoadmapLike: (id) => dispatch(actionCreators.toggleRoadmapLike(id)),
+    onDuplicateRoadmap: (id) => dispatch(actionCreators.duplicateRoadmap(id)),
   };
 };
 
