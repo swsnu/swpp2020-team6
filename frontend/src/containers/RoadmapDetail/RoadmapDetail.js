@@ -92,7 +92,7 @@ class RoadmapDetail extends Component {
       // waiting to get the roadmap data
       return (
         <div className="RoadmapDetail">
-          <div className="Loading" />
+          <div className="Loading">Loading...</div>
         </div>
       );
     }
@@ -162,7 +162,6 @@ class RoadmapDetail extends Component {
           content={commentItem.content}
           clickEdit={() => this.commentEditHandler(commentItem.comment_id, commentItem)}
           clickDelete={() => this.commentDeleteHandler(commentItem.comment_id)}
-
         />
       );
     });

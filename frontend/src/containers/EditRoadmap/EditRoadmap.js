@@ -302,7 +302,9 @@ class EditRoadmap extends Component {
       );
     }
     if (selectedRoadmap.author_id !== selectedUser.user_id) {
+      const { history } = this.props;
       alert("Only the author can edit the Roadmap!");
+      history.goBack();
       return <div />;
     }
 
