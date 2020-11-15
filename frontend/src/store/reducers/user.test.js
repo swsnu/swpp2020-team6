@@ -11,6 +11,31 @@ const stubSelectedUser = {
   my_roadmaps: [],
 };
 
+const stubSimpleRoadmap = {
+  id: 11,
+  title: "new-rm-title",
+  date: "2020-11-14 05:46:47",
+  level: 1,
+  like_count: 1,
+  comment_count: 0,
+  pin_count: 0,
+  progress: 1,
+  original_author: 5,
+  author_id: 5,
+  author_name: "swpp",
+  author_user_picture_url: "",
+  tags: [
+    {
+      tag_id: 1,
+      tag_name: "python",
+    },
+    {
+      tag_id: 2,
+      tag_name: "CV",
+    },
+  ],
+};
+
 describe("User Reducer", () => {
   it("should return default state", () => {
     const newState = reducer(undefined, {}); // initialize
@@ -78,5 +103,45 @@ describe("User Reducer", () => {
       isSignedIn: undefined,
       selectedUser: undefined,
     });
+  });
+
+  it("should change like_count on roadmap like ", () => {
+    const newState = reducer(
+      { isSignedIn: true, selectedUser: stubSelectedUser },
+      {
+        type: actionTypes.ROADMAP_LIKE,
+        responseData: {
+          roadmapId: stubSimpleRoadmap.id,
+          roadmapData: stubSimpleRoadmap,
+        },
+      },
+    );
+
+    const previousLikeRoadmapsCount = stubSelectedUser.liked_roadmaps.length;
+    expect(newState.selectedUser.liked_roadmaps.length).toEqual(previousLikeRoadmapsCount + 1);
+    expect(newState.selectedUser).toEqual({
+      ...stubSelectedUser,
+      liked_roadmaps: stubSelectedUser.liked_roadmaps.concat(stubSimpleRoadmap),
+    });
+  });
+
+  it("should change like_count on roadmap unlike ", () => {
+    const newState = reducer(
+      {
+        isSignedIn: true,
+        selectedUser: {
+          ...stubSelectedUser,
+          liked_roadmaps: stubSelectedUser.liked_roadmaps.concat(stubSimpleRoadmap),
+        },
+      },
+      {
+        type: actionTypes.ROADMAP_UNLIKE,
+        responseData: {
+          roadmapId: stubSimpleRoadmap.id,
+          likeCount: stubSimpleRoadmap.like_count - 1,
+        },
+      },
+    );
+    expect(newState.selectedUser).toEqual(stubSelectedUser);
   });
 });
