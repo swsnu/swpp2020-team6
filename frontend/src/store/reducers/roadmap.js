@@ -57,21 +57,19 @@ const reducer = (state = initialState, action) => {
     case actionTypes.DELETE_COMMENT_FAILURE:
       return { ...state, selectedRoadmap: undefined };
     case actionTypes.ROADMAP_LIKE:
-      const likeCountBeforeLike = state.selectedRoadmap.like_count;
       return {
         ...state,
         selectedRoadmap: {
           ...state.selectedRoadmap,
-          like_count: likeCountBeforeLike + 1,
+          like_count: action.responseData.roadmapData.like_count,
         },
       };
     case actionTypes.ROADMAP_UNLIKE:
-      const likeCountBeforeUnLike = state.selectedRoadmap.like_count;
       return {
         ...state,
         selectedRoadmap: {
           ...state.selectedRoadmap,
-          like_count: likeCountBeforeUnLike - 1,
+          like_count: action.responseData.likeCount,
         },
       };
     default:

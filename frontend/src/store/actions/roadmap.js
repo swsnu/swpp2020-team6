@@ -294,16 +294,19 @@ export const toggleRoadmapLike = (roadmapId) => {
       .put(`/api/roadmap/${roadmapId}/like/`)
       .then((response) => {
         if (response.data.liked) {
-          RoadmapLike_({
-            roadmapId,
-            liked: response.data.liked,
-            roadmapData: response.data.roadmap_data,
-          });
+          dispatch(
+            RoadmapLike_({
+              roadmapId,
+              roadmapData: response.data.roadmap_data,
+            }),
+          );
         } else {
-          RoadmapUnLike_({
-            roadmapId,
-            likeCount: response.data.like_count,
-          });
+          dispatch(
+            RoadmapUnLike_({
+              roadmapId,
+              likeCount: response.data.like_count,
+            }),
+          );
         }
       })
       .catch((error) => {

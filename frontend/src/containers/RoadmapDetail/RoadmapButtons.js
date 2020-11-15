@@ -24,7 +24,7 @@ const RoadmapButtons = (props) => {
 
   const onClickLikeRoadmap = () => {
     const { match, toggleRoadmapLike } = props;
-    toggleRoadmapLike(match.params.id);
+    toggleRoadmapLike(parseInt(match.params.id, 10));
   };
 
   // eslint-disable-next-line camelcase
