@@ -1,9 +1,8 @@
 /* eslint-disable no-unused-vars */
 import axios from "axios";
-import * as actionCreators from "./roadmap";
+import * as roadmapActionCreators from "./roadmap";
 import * as userActionCreators from "./user";
 import store, { history } from "../store";
-import * as actionTypes from "./actionTypes";
 
 const stubRoadmapData = {
   selectedRoadmap: {
@@ -233,7 +232,7 @@ describe("ActionCreators", () => {
       });
     });
 
-    store.dispatch(actionCreators.getRoadmap(1)).then(() => {
+    store.dispatch(roadmapActionCreators.getRoadmap(1)).then(() => {
       const newState = store.getState();
       expect(newState.roadmap.selectedRoadmap).toBe(stubRoadmapData);
       expect(spy).toHaveBeenCalledTimes(1);
@@ -251,7 +250,7 @@ describe("ActionCreators", () => {
       });
     });
 
-    store.dispatch(actionCreators.getRoadmap(1)).then(() => {
+    store.dispatch(roadmapActionCreators.getRoadmap(1)).then(() => {
       const newState = store.getState();
       expect(newState.roadmap.selectedRoadmap).toBe(undefined);
       expect(spy).toHaveBeenCalledTimes(1);
@@ -271,7 +270,7 @@ describe("ActionCreators", () => {
       });
     });
 
-    store.dispatch(actionCreators.getRoadmap(1)).then(() => {
+    store.dispatch(roadmapActionCreators.getRoadmap(1)).then(() => {
       const newState = store.getState();
       expect(newState.roadmap.selectedRoadmap).toBe(undefined);
       expect(spy).toHaveBeenCalledTimes(1);
@@ -291,7 +290,7 @@ describe("ActionCreators", () => {
       });
     });
 
-    store.dispatch(actionCreators.getRoadmap(1)).then(() => {
+    store.dispatch(roadmapActionCreators.getRoadmap(1)).then(() => {
       const newState = store.getState();
       expect(newState.roadmap.selectedRoadmap).toBe(undefined);
       expect(spy).toHaveBeenCalledTimes(1);
@@ -313,7 +312,7 @@ describe("ActionCreators", () => {
       });
     });
 
-    store.dispatch(actionCreators.createRoadmap(stubRoadmapSimpleData2)).then(() => {
+    store.dispatch(roadmapActionCreators.createRoadmap(stubRoadmapSimpleData2)).then(() => {
       const newState = store.getState();
       expect(newState.roadmap.selectedRoadmap).toBe(undefined);
       expect(newState.user.selectedUser.my_roadmaps).toEqual([
@@ -337,7 +336,7 @@ describe("ActionCreators", () => {
       });
     });
 
-    store.dispatch(actionCreators.createRoadmap(stubRoadmapSimpleData2)).then(() => {
+    store.dispatch(roadmapActionCreators.createRoadmap(stubRoadmapSimpleData2)).then(() => {
       const newState = store.getState();
       expect(newState.roadmap.selectedRoadmap).toBe(undefined);
       expect(spy).toHaveBeenCalledTimes(1);
@@ -357,7 +356,7 @@ describe("ActionCreators", () => {
       });
     });
 
-    store.dispatch(actionCreators.createRoadmap(stubRoadmapSimpleData2)).then(() => {
+    store.dispatch(roadmapActionCreators.createRoadmap(stubRoadmapSimpleData2)).then(() => {
       const newState = store.getState();
       expect(newState.roadmap.selectedRoadmap).toBe(undefined);
       expect(spy).toHaveBeenCalledTimes(1);
@@ -377,7 +376,7 @@ describe("ActionCreators", () => {
       });
     });
 
-    store.dispatch(actionCreators.createRoadmap(stubRoadmapSimpleData2)).then(() => {
+    store.dispatch(roadmapActionCreators.createRoadmap(stubRoadmapSimpleData2)).then(() => {
       const newState = store.getState();
       expect(newState.roadmap.selectedRoadmap).toBe(undefined);
       expect(spy).toHaveBeenCalledTimes(1);
@@ -400,7 +399,7 @@ describe("ActionCreators", () => {
       });
     });
 
-    store.dispatch(actionCreators.editRoadmap(2, stubRoadmapSimpleData)).then(() => {
+    store.dispatch(roadmapActionCreators.editRoadmap(2, stubRoadmapSimpleData)).then(() => {
       const newState = store.getState();
       expect(newState.roadmap.selectedRoadmap).toBe(undefined);
       expect(newState.user.selectedUser.my_roadmaps).toEqual([
@@ -424,7 +423,7 @@ describe("ActionCreators", () => {
       });
     });
 
-    store.dispatch(actionCreators.deleteRoadmap(2)).then(() => {
+    store.dispatch(roadmapActionCreators.deleteRoadmap(2)).then(() => {
       const newState = store.getState();
       expect(newState.roadmap.selectedRoadmap).toBe(undefined);
       expect(newState.user.selectedUser.my_roadmaps.length).toBe(1);
@@ -444,7 +443,7 @@ describe("ActionCreators", () => {
       });
     });
 
-    store.dispatch(actionCreators.deleteRoadmap(1)).then(() => {
+    store.dispatch(roadmapActionCreators.deleteRoadmap(1)).then(() => {
       const newState = store.getState();
       expect(newState.roadmap.selectedRoadmap).toBe(undefined);
       expect(newState.user.selectedUser.my_roadmaps.length).toBe(1);
@@ -465,7 +464,7 @@ describe("ActionCreators", () => {
       });
     });
 
-    store.dispatch(actionCreators.deleteRoadmap(2)).then(() => {
+    store.dispatch(roadmapActionCreators.deleteRoadmap(2)).then(() => {
       const newState = store.getState();
       expect(newState.roadmap.selectedRoadmap).toBe(undefined);
       expect(newState.user.selectedUser.my_roadmaps.length).toBe(1);
@@ -486,7 +485,7 @@ describe("ActionCreators", () => {
       });
     });
 
-    store.dispatch(actionCreators.deleteRoadmap(1)).then(() => {
+    store.dispatch(roadmapActionCreators.deleteRoadmap(1)).then(() => {
       const newState = store.getState();
       expect(newState.roadmap.selectedRoadmap).toBe(undefined);
       expect(spy).toHaveBeenCalledTimes(1);
@@ -506,7 +505,7 @@ describe("ActionCreators", () => {
       });
     });
 
-    store.dispatch(actionCreators.deleteRoadmap(1)).then(() => {
+    store.dispatch(roadmapActionCreators.deleteRoadmap(1)).then(() => {
       const newState = store.getState();
       expect(newState.roadmap.selectedRoadmap).toBe(undefined);
       expect(spy).toHaveBeenCalledTimes(1);
@@ -526,7 +525,7 @@ describe("ActionCreators", () => {
       });
     });
 
-    store.dispatch(actionCreators.deleteRoadmap(1)).then(() => {
+    store.dispatch(roadmapActionCreators.deleteRoadmap(1)).then(() => {
       const newState = store.getState();
       expect(newState.roadmap.selectedRoadmap).toBe(undefined);
       expect(spy).toHaveBeenCalledTimes(1);
@@ -536,5 +535,102 @@ describe("ActionCreators", () => {
     });
   });
 
-  /* ------------------ Create Comment ------------------ */
+  /* ------------------ Like Roadmap ------------------ */
+  it(`should properly 'like' roadmap`, (done) => {
+    const roadmapLikeData = {
+      id: 1,
+      title: "new-rm-title",
+      date: "2020-11-14 05:46:47",
+      level: 1,
+      like_count: 1,
+      comment_count: 0,
+      pin_count: 0,
+      progress: 1,
+      original_author: 5,
+      author_id: 5,
+      author_name: "swpp",
+      author_user_picture_url: "profile.jpg",
+      tags: [
+        {
+          tag_id: 1,
+          tag_name: "python",
+        },
+        {
+          tag_id: 2,
+          tag_name: "CV",
+        },
+      ],
+    };
+    const spy = jest.spyOn(axios, "put").mockImplementation((url) => {
+      return new Promise((resolve, reject) => {
+        const result = {
+          status: 200,
+          data: {
+            liked: true,
+            roadmap_data: {
+              id: 1,
+              title: "new-rm-title",
+              date: "2020-11-14 05:46:47",
+              level: 1,
+              like_count: 1,
+              comment_count: 0,
+              pin_count: 0,
+              progress: 1,
+              original_author: 5,
+              author_id: 5,
+              author_name: "swpp",
+              author_user_picture_url: "profile.jpg",
+              tags: [
+                {
+                  tag_id: 1,
+                  tag_name: "python",
+                },
+                {
+                  tag_id: 2,
+                  tag_name: "CV",
+                },
+              ],
+            },
+          },
+        };
+        resolve(result);
+      });
+    });
+
+    /*
+    const spyRoadmapLike_ = jest
+      .spyOn(roadmapActionCreators, "RoadmapLike_")
+      .mockImplementation((obj) => {
+        return () => {};
+      });
+    */
+
+    return store.dispatch(roadmapActionCreators.toggleRoadmapLike(1)).then(() => {
+      expect(spy).toHaveBeenCalledTimes(1);
+      // expect(spyRoadmapLike_).toHaveBeenCalledTimes(1);
+      done();
+    });
+  });
+
+  /* ------------------ Like Roadmap ------------------ */
+  it(`should properly 'like' roadmap`, (done) => {
+    const spy = jest.spyOn(axios, "put").mockImplementation((url) => {
+      return new Promise((resolve, reject) => {
+        const result = {
+          status: 200,
+          data: {
+            liked: false,
+            like_ount: 1,
+          },
+        };
+        resolve(result);
+      });
+    });
+
+    return store.dispatch(roadmapActionCreators.toggleRoadmapLike(1)).then(() => {
+      expect(spy).toHaveBeenCalledTimes(1);
+      // expect(spyRoadmapLike_).toHaveBeenCalledTimes(1);
+      done();
+    });
+  });
 });

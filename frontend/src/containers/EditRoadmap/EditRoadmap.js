@@ -266,7 +266,7 @@ class EditRoadmap extends Component {
 
   onClickEditBack = () => {
     const { history, onResetRoadmap } = this.props;
-    const back = confirm("Leave the page? Changes you made will be deleted.");
+    const back = window.confirm("Leave the page? Changes you made will be deleted.");
     if (back) {
       onResetRoadmap();
       history.goBack();
@@ -302,7 +302,9 @@ class EditRoadmap extends Component {
       );
     }
     if (selectedRoadmap.author_id !== selectedUser.user_id) {
+      const { history } = this.props;
       alert("Only the author can edit the Roadmap!");
+      history.goBack();
       return <div />;
     }
 

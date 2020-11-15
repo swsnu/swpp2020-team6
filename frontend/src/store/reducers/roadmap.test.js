@@ -81,7 +81,6 @@ const stubSelectedRoadmap = {
   ],
 };
 
-/*
 const stubSimpleRoadmap = {
   id: 11,
   title: "new-rm-title",
@@ -130,7 +129,6 @@ const stubSimpleRoadmap = {
     },
   ],
 };
-*/
 
 const stubComment = {
   comment_id: 3,
@@ -267,17 +265,37 @@ describe("User Reducer", () => {
     });
     expect(newState).toEqual(initialState);
   });
-  /*
+
   it("should change like_count on roadmap like ", () => {
     const newState = reducer(
       { selectedRoadmap: stubSelectedRoadmap },
       {
         type: actionTypes.ROADMAP_LIKE,
-        roadmapId: 11,
-        liked: false,
-        roadmapData: stubSimpleRoadmap,
+        responseData: {
+          liked: true,
+          roadmapData: stubSimpleRoadmap,
+        },
       },
     );
+    expect(newState).toEqual({
+      selectedRoadmap: { ...stubSelectedRoadmap, like_count: stubSimpleRoadmap.like_count },
+    });
   });
-  */
+
+  it("should change like_count on roadmap unlike ", () => {
+    const newLikeCount = 1;
+    const newState = reducer(
+      { selectedRoadmap: stubSelectedRoadmap },
+      {
+        type: actionTypes.ROADMAP_UNLIKE,
+        responseData: {
+          liked: false,
+          likeCount: newLikeCount,
+        },
+      },
+    );
+    expect(newState).toEqual({
+      selectedRoadmap: { ...stubSelectedRoadmap, like_count: newLikeCount },
+    });
+  });
 });

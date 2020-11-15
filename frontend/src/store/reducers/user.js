@@ -67,7 +67,7 @@ const reducer = (state = initialState, action) => {
         ...state,
         selectedUser: {
           ...selectedUser,
-          liked_roadmaps: selectedUser.liked_roadmaps.concat(action.roadmapData),
+          liked_roadmaps: selectedUser.liked_roadmaps.concat(action.responseData.roadmapData),
         },
       };
     case actionTypes.ROADMAP_UNLIKE:
@@ -76,7 +76,7 @@ const reducer = (state = initialState, action) => {
         selectedUser: {
           ...selectedUser,
           liked_roadmaps: selectedUser.liked_roadmaps.filter(
-            (roadmap) => roadmap.id !== action.roadmapId,
+            (roadmap) => roadmap.id !== action.responseData.roadmapId,
           ),
         },
       };

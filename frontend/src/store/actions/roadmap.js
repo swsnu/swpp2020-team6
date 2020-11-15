@@ -150,7 +150,7 @@ export const duplicateRoadmap = (roadmapId) => {
       .post(`/api/roadmap/${roadmapId}`)
       .then((response) => {
         duplicateRoadmap_(response.data);
-        const edit = confirm("Successfully duplicated! Would you like to edit?");
+        const edit = window.confirm("Successfully duplicated! Would you like to edit?");
         if (edit) {
           dispatch(push(`/roadmap/${response.data.id}`));
         }
@@ -259,7 +259,7 @@ export const deleteComment = (commentID) => {
         dispatch(deleteCommentSuccess_(commentID));
       })
       .catch((error) => {
-deleteCommentFail_();
+        deleteCommentFail_();
         switch (error.response.status) {
           case 401:
             alert("Please sign in!");
@@ -294,16 +294,19 @@ export const toggleRoadmapLike = (roadmapId) => {
       .put(`/api/roadmap/${roadmapId}/like/`)
       .then((response) => {
         if (response.data.liked) {
-          RoadmapLike_({
-            roadmapId,
-            liked: response.data.liked,
-            roadmapData: response.data.roadmap_data,
-          });
+          dispatch(
+            RoadmapLike_({
+              roadmapId,
+              roadmapData: response.data.roadmap_data,
+            }),
+          );
         } else {
-          RoadmapUnLike_({
-            roadmapId,
-            likeCount: response.data.like_count,
-          });
+          dispatch(
+            RoadmapUnLike_({
+              roadmapId,
+              likeCount: response.data.like_count,
+            }),
+          );
         }
       })
       .catch((error) => {
