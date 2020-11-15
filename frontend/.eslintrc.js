@@ -1,7 +1,6 @@
 module.exports = {
   env: {
     browser: true,
-    es2021: true,
     node: true,
     jest: true,
   },
@@ -25,6 +24,5 @@ module.exports = {
     "no-restricted-globals": 0,
     "jsx-a11y/label-has-associated-control": 0,
     "no-case-declarations": 0,
-    "react/require-default-props": 0,
   },
 };

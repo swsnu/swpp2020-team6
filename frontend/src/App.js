@@ -69,8 +69,8 @@ class App extends React.Component {
 }
 
 App.propTypes = {
-  isSignedIn: PropTypes.bool,
-  selectedUser: PropTypes.objectOf(PropTypes.any),
+  isSignedIn: PropTypes.bool.isRequired,
+  selectedUser: PropTypes.objectOf(PropTypes.any).isRequired,
   onGetUserAuth: PropTypes.func.isRequired,
   history: PropTypes.objectOf(PropTypes.any).isRequired,
 };
