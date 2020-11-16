@@ -327,3 +327,51 @@ export const toggleRoadmapLike = (roadmapId) => {
       });
   };
 };
+
+export const RoadmapPin_ = (responseData) => {
+  return { type: actionTypes.ROADMAP_PIN, responseData };
+};
+
+export const RoadmapUnPin_ = (responseData) => {
+  return { type: actionTypes.ROADMAP_UNPIN, responseData };
+};
+
+export const toggleRoadmapPin = (roadmapId) => {
+  return (dispatch) => {
+    return axios
+      .put(`/api/roadmap/${roadmapId}/pin/`)
+      .then((response) => {
+        if (response.data.pinned) {
+          dispatch(
+            RoadmapPin_({
+              roadmapId,
+              roadmapData: response.data.roadmap_data,
+            }),
+          );
+        } else {
+          dispatch(
+            RoadmapUnPin_({
+              roadmapId,
+              pinCount: response.data.pin_count,
+            }),
+          );
+        }
+      })
+      .catch((error) => {
+        switch (error.response.status) {
+          case 401:
+            alert("Please sign in!");
+            break;
+          case 404:
+            alert("No such Roadmap!");
+            break;
+          case 400:
+            alert("Parsing error!");
+            break;
+          default:
+            break;
+        }
+        dispatch(goBack());
+      });
+  };
+};

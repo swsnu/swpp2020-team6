@@ -11,4 +11,5 @@ export {
   editComment,
   deleteComment,
   toggleRoadmapLike,
+  toggleRoadmapPin,
 } from "./roadmap";

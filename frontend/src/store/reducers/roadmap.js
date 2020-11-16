@@ -72,6 +72,22 @@ const reducer = (state = initialState, action) => {
           like_count: action.responseData.likeCount,
         },
       };
+    case actionTypes.ROADMAP_PIN:
+      return {
+        ...state,
+        selectedRoadmap: {
+          ...state.selectedRoadmap,
+          pin_count: action.responseData.roadmapData.pin_count,
+        },
+      };
+    case actionTypes.ROADMAP_UNPIN:
+      return {
+        ...state,
+        selectedRoadmap: {
+          ...state.selectedRoadmap,
+          pin_count: action.responseData.pinCount,
+        },
+      };
     default:
       break;
   }

@@ -20,7 +20,10 @@ const RoadmapButtons = (props) => {
     onDeleteRoadmap(roadmapId);
   };
 
-  const onClickPinRoadmap = () => {};
+  const onClickPinRoadmap = () => {
+    const { match, toggleRoadmapPin } = props;
+    toggleRoadmapPin(parseInt(match.params.id, 10));
+  };
 
   const onClickLikeRoadmap = () => {
     const { match, toggleRoadmapLike } = props;
@@ -71,6 +74,7 @@ RoadmapButtons.propTypes = {
   match: PropTypes.objectOf(PropTypes.any).isRequired,
   onDeleteRoadmap: PropTypes.func.isRequired,
   toggleRoadmapLike: PropTypes.func.isRequired,
+  toggleRoadmapPin: PropTypes.func.isRequired,
   onDuplicateRoadmap: PropTypes.func.isRequired,
 
   selectedUser: PropTypes.objectOf(PropTypes.any).isRequired,
@@ -80,6 +84,7 @@ const mapDispatchToProps = (dispatch) => {
   return {
     onDeleteRoadmap: (id) => dispatch(actionCreators.deleteRoadmap(id)),
     toggleRoadmapLike: (id) => dispatch(actionCreators.toggleRoadmapLike(id)),
+    toggleRoadmapPin: (id) => dispatch(actionCreators.toggleRoadmapPin(id)),
     onDuplicateRoadmap: (id) => dispatch(actionCreators.duplicateRoadmap(id)),
   };
 };
