@@ -535,7 +535,7 @@ describe("ActionCreators", () => {
     });
   });
 
-  /* ------------------ Like Roadmap ------------------ */
+  /* ------------------ Like/Unlike Roadmap ------------------ */
   it(`should properly 'like' roadmap`, (done) => {
     const roadmapLikeData = {
       id: 1,
@@ -567,30 +567,7 @@ describe("ActionCreators", () => {
           status: 200,
           data: {
             liked: true,
-            roadmap_data: {
-              id: 1,
-              title: "new-rm-title",
-              date: "2020-11-14 05:46:47",
-              level: 1,
-              like_count: 1,
-              comment_count: 0,
-              pin_count: 0,
-              progress: 1,
-              original_author: 5,
-              author_id: 5,
-              author_name: "swpp",
-              author_user_picture_url: "profile.jpg",
-              tags: [
-                {
-                  tag_id: 1,
-                  tag_name: "python",
-                },
-                {
-                  tag_id: 2,
-                  tag_name: "CV",
-                },
-              ],
-            },
+            roadmap_data: roadmapLikeData,
           },
         };
         resolve(result);
@@ -612,15 +589,14 @@ describe("ActionCreators", () => {
     });
   });
 
-  /* ------------------ Like Roadmap ------------------ */
-  it(`should properly 'like' roadmap`, (done) => {
+  it(`should properly 'unlike' roadmap`, (done) => {
     const spy = jest.spyOn(axios, "put").mockImplementation((url) => {
       return new Promise((resolve, reject) => {
         const result = {
           status: 200,
           data: {
             liked: false,
-            like_ount: 1,
+            like_count: 1,
           },
         };
         resolve(result);
@@ -630,6 +606,71 @@ describe("ActionCreators", () => {
     return store.dispatch(roadmapActionCreators.toggleRoadmapLike(1)).then(() => {
       expect(spy).toHaveBeenCalledTimes(1);
       // expect(spyRoadmapLike_).toHaveBeenCalledTimes(1);
+      done();
+    });
+  });
+
+  /* ------------------ Pin/Unpin Roadmap ------------------ */
+  it(`should properly 'pin' roadmap`, (done) => {
+    const roadmapPinData = {
+      id: 1,
+      title: "new-rm-title",
+      date: "2020-11-14 05:46:47",
+      level: 1,
+      like_count: 0,
+      comment_count: 0,
+      pin_count: 1,
+      progress: 1,
+      original_author: 5,
+      author_id: 5,
+      author_name: "swpp",
+      author_user_picture_url: "profile.jpg",
+      tags: [
+        {
+          tag_id: 1,
+          tag_name: "python",
+        },
+        {
+          tag_id: 2,
+          tag_name: "CV",
+        },
+      ],
+    };
+    const spy = jest.spyOn(axios, "put").mockImplementation((url) => {
+      return new Promise((resolve, reject) => {
+        const result = {
+          status: 200,
+          data: {
+            liked: true,
+            roadmap_data: roadmapPinData,
+          },
+        };
+        resolve(result);
+      });
+    });
+
+    return store.dispatch(roadmapActionCreators.toggleRoadmapPin(1)).then(() => {
+      expect(spy).toHaveBeenCalledTimes(1);
+      done();
+    });
+  });
+
+  it(`should properly 'unlike' roadmap`, (done) => {
+    const spy = jest.spyOn(axios, "put").mockImplementation((url) => {
+      return new Promise((resolve, reject) => {
+        const result = {
+          status: 200,
+          data: {
+            pinned: false,
+            pin_count: 1,
+          },
+        };
+        resolve(result);
+      });
+    });
+
+    return store.dispatch(roadmapActionCreators.toggleRoadmapPin(1)).then(() => {
+      expect(spy).toHaveBeenCalledTimes(1);
       done();
     });
   });

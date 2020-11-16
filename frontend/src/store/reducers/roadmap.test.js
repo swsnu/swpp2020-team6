@@ -266,6 +266,7 @@ describe("User Reducer", () => {
     expect(newState).toEqual(initialState);
   });
 
+  // like/unlike roadmap
   it("should change like_count on roadmap like ", () => {
     const newState = reducer(
       { selectedRoadmap: stubSelectedRoadmap },
@@ -296,6 +297,40 @@ describe("User Reducer", () => {
     );
     expect(newState).toEqual({
       selectedRoadmap: { ...stubSelectedRoadmap, like_count: newLikeCount },
+    });
+  });
+
+  // pin/unpin roadmap
+  it("should change pin_count on roadmap pin ", () => {
+    const newState = reducer(
+      { selectedRoadmap: stubSelectedRoadmap },
+      {
+        type: actionTypes.ROADMAP_PIN,
+        responseData: {
+          pinned: true,
+          roadmapData: stubSimpleRoadmap,
+        },
+      },
+    );
+    expect(newState).toEqual({
+      selectedRoadmap: { ...stubSelectedRoadmap, pin_count: stubSimpleRoadmap.pin_count },
+    });
+  });
+
+  it("should change pin_count on roadmap unpin ", () => {
+    const newPinCount = 1;
+    const newState = reducer(
+      { selectedRoadmap: stubSelectedRoadmap },
+      {
+        type: actionTypes.ROADMAP_UNPIN,
+        responseData: {
+          pinned: false,
+          pinCount: newPinCount,
+        },
+      },
+    );
+    expect(newState).toEqual({
+      selectedRoadmap: { ...stubSelectedRoadmap, pin_count: newPinCount },
     });
   });
 });
