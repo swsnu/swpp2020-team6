@@ -82,7 +82,6 @@ class RoadmapDetail extends Component {
 
   render() {
     const { selectedUser, isSignedIn, match, selectedRoadmap } = this.props;
-    const roadmapId = parseInt(match.params.id, 10);
 
     if (isSignedIn === false) {
       // unsigned in user
@@ -222,7 +221,7 @@ class RoadmapDetail extends Component {
                 </p>
               </div>
               <RoadmapButtons // change to comopnent and send funcs
-                roadmapId={roadmapId}
+                buttonsRoadmapId={parseInt(match.params.id, 10)}
                 isAuthor={selectedRoadmap.author_id === selectedUser.user_id}
               />
             </div>
