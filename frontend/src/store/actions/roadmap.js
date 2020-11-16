@@ -312,7 +312,7 @@ export const toggleRoadmapLike = (roadmapId) => {
       .catch((error) => {
         switch (error.response.status) {
           case 401:
-            alert("Please sign in!");
+            alert("Only signed in users can like/unlike Roadmaps! Please sign in!");
             break;
           case 404:
             alert("No such Roadmap!");
@@ -360,7 +360,7 @@ export const toggleRoadmapPin = (roadmapId) => {
       .catch((error) => {
         switch (error.response.status) {
           case 401:
-            alert("Please sign in!");
+            alert("Only signed in users can pin/unpin Roadmaps! Please sign in!");
             break;
           case 404:
             alert("No such Roadmap!");
