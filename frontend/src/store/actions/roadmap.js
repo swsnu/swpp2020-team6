@@ -177,11 +177,6 @@ export const duplicateRoadmap = (roadmapId) => {
 export const createCommentSuccess_ = (newComment) => {
   return { type: actionTypes.CREATE_COMMENT_SUCCESS, newComment };
 };
-
-export const createCommentFail_ = () => {
-  return { type: actionTypes.CREATE_COMMENT_FAILURE };
-};
-
 export const createComment = (commentData) => {
   return (dispatch) => {
     return axios
@@ -190,7 +185,6 @@ export const createComment = (commentData) => {
         dispatch(createCommentSuccess_(response.data));
       })
       .catch((error) => {
-        dispatch(createCommentFail_());
         switch (error.response.status) {
           case 401:
             alert("Please sign in!");
@@ -209,10 +203,6 @@ export const editCommentSuccess_ = (newComment) => {
   return { type: actionTypes.EDIT_COMMENT_SUCCESS, newComment };
 };
 
-export const editCommentFail_ = () => {
-  return { type: actionTypes.EDIT_COMMENT_FAILURE };
-};
-
 export const editComment = (commentID, commentData) => {
   return (dispatch) => {
     return axios
@@ -221,7 +211,6 @@ export const editComment = (commentID, commentData) => {
         dispatch(editCommentSuccess_(response.data));
       })
       .catch((error) => {
-        editCommentFail_();
         switch (error.response.status) {
           case 401:
             alert("Please sign in!");
@@ -246,10 +235,6 @@ export const deleteCommentSuccess_ = (commentID) => {
   return { type: actionTypes.DELETE_COMMENT_SUCCESS, commentID };
 };
 
-export const deleteCommentFail_ = () => {
-  return { type: actionTypes.DELETE_COMMENT_FAILURE };
-};
-
 export const deleteComment = (commentID) => {
   return (dispatch) => {
     return axios
@@ -259,7 +244,6 @@ export const deleteComment = (commentID) => {
         dispatch(deleteCommentSuccess_(commentID));
       })
       .catch((error) => {
-        deleteCommentFail_();
         switch (error.response.status) {
           case 401:
             alert("Please sign in!");

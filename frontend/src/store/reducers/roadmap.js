@@ -28,8 +28,6 @@ const reducer = (state = initialState, action) => {
         comments: addedComments,
       };
       return { ...state, selectedRoadmap: commentAddedRoadmap };
-    case actionTypes.CREATE_COMMENT_FAILURE:
-      return { ...state, selectedRoadmap: undefined };
     case actionTypes.EDIT_COMMENT_SUCCESS:
       const { newComment } = action;
       const modifiedComments = state.selectedRoadmap.comments.map((comment) => {
@@ -40,8 +38,6 @@ const reducer = (state = initialState, action) => {
       });
       const commentModifiedRoadmap = { ...state.selectedRoadmap, comments: modifiedComments };
       return { ...state, selectedRoadmap: commentModifiedRoadmap };
-    case actionTypes.EDIT_COMMENT_FAILURE:
-      return { ...state, selectedRoadmap: undefined };
     case actionTypes.DELETE_COMMENT_SUCCESS:
       const { commentID } = action;
       const deletedComments = state.selectedRoadmap.comments.filter((comment) => {
@@ -54,8 +50,6 @@ const reducer = (state = initialState, action) => {
         comments: deletedComments,
       };
       return { ...state, selectedRoadmap: commentDeletedRoadmap };
-    case actionTypes.DELETE_COMMENT_FAILURE:
-      return { ...state, selectedRoadmap: undefined };
     case actionTypes.ROADMAP_LIKE:
       return {
         ...state,

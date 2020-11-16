@@ -206,13 +206,6 @@ describe("User Reducer", () => {
     expect(newState).toEqual({ selectedRoadmap: commentAddedRoadmap });
   });
 
-  it("should set selectdRoadmap as undefined on create comment fail ", () => {
-    const newState = reducer(undefined, {
-      type: actionTypes.CREATE_COMMENT_FAILURE,
-    });
-    expect(newState).toEqual(initialState);
-  });
-
   it("should create comment properly ", () => {
     const newState = reducer(
       { selectedRoadmap: stubSelectedRoadmap },
@@ -229,13 +222,6 @@ describe("User Reducer", () => {
     });
     const commentModifiedRoadmap = { ...stubSelectedRoadmap, comments: modifiedComments };
     expect(newState).toEqual({ selectedRoadmap: commentModifiedRoadmap });
-  });
-
-  it("should set selectdRoadmap as undefined on edit comment fail ", () => {
-    const newState = reducer(undefined, {
-      type: actionTypes.EDIT_COMMENT_FAILURE,
-    });
-    expect(newState).toEqual(initialState);
   });
 
   it("should change comment list and comment_count on delete comment fail ", () => {
@@ -257,13 +243,6 @@ describe("User Reducer", () => {
       comments: deletedComments,
     };
     expect(newState).toEqual({ selectedRoadmap: commentDeletedRoadmap });
-  });
-
-  it("should set selectdRoadmap as undefined on delete comment fail ", () => {
-    const newState = reducer(undefined, {
-      type: actionTypes.DELETE_COMMENT_FAILURE,
-    });
-    expect(newState).toEqual(initialState);
   });
 
   // like/unlike roadmap
