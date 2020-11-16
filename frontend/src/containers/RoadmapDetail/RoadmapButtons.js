@@ -6,8 +6,8 @@ import * as actionCreators from "../../store/actions/index";
 
 const RoadmapButtons = (props) => {
   const onClickEditRoadmap = () => {
-    const { history, buttonsRoadmapId } = props;
-    history.push(`/roadmap/${buttonsRoadmapId}/edit`);
+    const { history, match } = props;
+    history.push(`/roadmap/${match.params.id}/edit`);
   };
 
   const onClickDuplicateRoadmap = () => {
@@ -16,8 +16,8 @@ const RoadmapButtons = (props) => {
   };
 
   const onClickDeleteRoadmap = () => {
-    const { onDeleteRoadmap, buttonsRoadmapId } = props;
-    onDeleteRoadmap(buttonsRoadmapId);
+    const { onDeleteRoadmap, match } = props;
+    onDeleteRoadmap(match.params.id);
   };
 
   const onClickPinRoadmap = () => {
@@ -32,10 +32,10 @@ const RoadmapButtons = (props) => {
 
   // eslint-disable-next-line camelcase
   const { liked_roadmaps, pinned_roadmaps } = props.selectedUser;
-  const { buttonsRoadmapId } = props;
-  const like = liked_roadmaps.find((roadmap) => roadmap.id === buttonsRoadmapId);
+  const { match } = props;
+  const like = liked_roadmaps.find((roadmap) => roadmap.id === parseInt(match.params.id, 10));
   const likeButtonText = like !== undefined ? "Unlike" : "Like";
-  const pin = pinned_roadmaps.find((roadmap) => roadmap.id === buttonsRoadmapId);
+  const pin = pinned_roadmaps.find((roadmap) => roadmap.id === parseInt(match.params.id, 10));
   const pinButtonText = pin !== undefined ? "Unpin" : "Pin";
 
   const { isAuthor } = props;
@@ -68,7 +68,6 @@ const RoadmapButtons = (props) => {
 };
 
 RoadmapButtons.propTypes = {
-  buttonsRoadmapId: PropTypes.number.isRequired,
   isAuthor: PropTypes.bool.isRequired,
   history: PropTypes.objectOf(PropTypes.any).isRequired,
   match: PropTypes.objectOf(PropTypes.any).isRequired,
