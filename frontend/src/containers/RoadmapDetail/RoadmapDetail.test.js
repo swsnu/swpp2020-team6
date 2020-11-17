@@ -527,6 +527,7 @@ describe("<RoadmapDetail />", () => {
   let spyDeleteComment;
   let spyResetRoadmap;
   let spyToggleRoadmapLike;
+  let spyToggleRoadmapPin;
 
   beforeEach(() => {
     spyPush = jest.spyOn(history, "push").mockImplementation(() => {});
@@ -554,6 +555,9 @@ describe("<RoadmapDetail />", () => {
       .mockImplementation(() => {
         return () => {};
       });
+    spyToggleRoadmapPin = jest.spyOn(actionCreators, "toggleRoadmapPin").mockImplementation(() => {
+      return () => {};
+    });
   });
 
   afterEach(() => {
@@ -1027,8 +1031,7 @@ describe("<RoadmapDetail />", () => {
     expect(pinButton.length).toBe(1);
     expect(pinButton.at(0).text()).toBe("Pin");
     pinButton.simulate("click");
-    // need to mock onChangeRoadmapProgressStatus
-    // expect(spyLike).toHaveBeenCalledTimes(1);
+    expect(spyToggleRoadmapPin).toHaveBeenCalledTimes(1);
   });
 
   it(`should unpin the roadmap when unpin button is clicked.`, () => {
@@ -1049,8 +1052,7 @@ describe("<RoadmapDetail />", () => {
     expect(pinButton.length).toBe(1);
     expect(pinButton.at(0).text()).toBe("Unpin");
     pinButton.simulate("click");
-    // need to mock onChangeRoadmapProgressStatus
-    // expect(spyLike).toHaveBeenCalledTimes(1);
+    expect(spyToggleRoadmapPin).toHaveBeenCalledTimes(1);
   });
 
   /* --------------------- Duplicate Roadmap Button --------------------- */

@@ -80,6 +80,24 @@ const reducer = (state = initialState, action) => {
           ),
         },
       };
+    case actionTypes.ROADMAP_PIN:
+      return {
+        ...state,
+        selectedUser: {
+          ...selectedUser,
+          pinned_roadmaps: selectedUser.pinned_roadmaps.concat(action.responseData.roadmapData),
+        },
+      };
+    case actionTypes.ROADMAP_UNPIN:
+      return {
+        ...state,
+        selectedUser: {
+          ...selectedUser,
+          pinned_roadmaps: selectedUser.pinned_roadmaps.filter(
+            (roadmap) => roadmap.id !== action.responseData.roadmapId,
+          ),
+        },
+      };
     default:
       break;
   }

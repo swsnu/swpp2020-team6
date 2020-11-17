@@ -6,8 +6,8 @@ import * as actionCreators from "../../store/actions/index";
 
 const RoadmapButtons = (props) => {
   const onClickEditRoadmap = () => {
-    const { history, roadmapId } = props;
-    history.push(`/roadmap/${roadmapId}/edit`);
+    const { history, buttonsRoadmapId } = props;
+    history.push(`/roadmap/${buttonsRoadmapId}/edit`);
   };
 
   const onClickDuplicateRoadmap = () => {
@@ -16,11 +16,14 @@ const RoadmapButtons = (props) => {
   };
 
   const onClickDeleteRoadmap = () => {
-    const { onDeleteRoadmap, roadmapId } = props;
-    onDeleteRoadmap(roadmapId);
+    const { onDeleteRoadmap, buttonsRoadmapId } = props;
+    onDeleteRoadmap(buttonsRoadmapId);
   };
 
-  const onClickPinRoadmap = () => {};
+  const onClickPinRoadmap = () => {
+    const { match, toggleRoadmapPin } = props;
+    toggleRoadmapPin(parseInt(match.params.id, 10));
+  };
 
   const onClickLikeRoadmap = () => {
     const { match, toggleRoadmapLike } = props;
@@ -29,10 +32,10 @@ const RoadmapButtons = (props) => {
 
   // eslint-disable-next-line camelcase
   const { liked_roadmaps, pinned_roadmaps } = props.selectedUser;
-  const { roadmapId } = props;
-  const like = liked_roadmaps.find((roadmap) => roadmap.id === roadmapId);
+  const { buttonsRoadmapId } = props;
+  const like = liked_roadmaps.find((roadmap) => roadmap.id === buttonsRoadmapId);
   const likeButtonText = like !== undefined ? "Unlike" : "Like";
-  const pin = pinned_roadmaps.find((roadmap) => roadmap.id === roadmapId);
+  const pin = pinned_roadmaps.find((roadmap) => roadmap.id === buttonsRoadmapId);
   const pinButtonText = pin !== undefined ? "Unpin" : "Pin";
 
   const { isAuthor } = props;
@@ -65,12 +68,13 @@ const RoadmapButtons = (props) => {
 };
 
 RoadmapButtons.propTypes = {
-  roadmapId: PropTypes.number.isRequired,
+  buttonsRoadmapId: PropTypes.number.isRequired,
   isAuthor: PropTypes.bool.isRequired,
   history: PropTypes.objectOf(PropTypes.any).isRequired,
   match: PropTypes.objectOf(PropTypes.any).isRequired,
   onDeleteRoadmap: PropTypes.func.isRequired,
   toggleRoadmapLike: PropTypes.func.isRequired,
+  toggleRoadmapPin: PropTypes.func.isRequired,
   onDuplicateRoadmap: PropTypes.func.isRequired,
 
   selectedUser: PropTypes.objectOf(PropTypes.any).isRequired,
@@ -80,6 +84,7 @@ const mapDispatchToProps = (dispatch) => {
   return {
     onDeleteRoadmap: (id) => dispatch(actionCreators.deleteRoadmap(id)),
     toggleRoadmapLike: (id) => dispatch(actionCreators.toggleRoadmapLike(id)),
+    toggleRoadmapPin: (id) => dispatch(actionCreators.toggleRoadmapPin(id)),
     onDuplicateRoadmap: (id) => dispatch(actionCreators.duplicateRoadmap(id)),
   };
 };

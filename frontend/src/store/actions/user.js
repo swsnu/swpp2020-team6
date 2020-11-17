@@ -39,14 +39,12 @@ export const signIn = (userCredentials) => {
         dispatch(push("/home"));
       })
       .catch((error) => {
-        switch (error.response.status) {
-          case 401:
-            alert("Email or Password is incorrect!");
-            dispatch(signInFail_());
-            break;
-          default:
-            break;
+        if (error.response.status === 401) {
+          alert("Can't find user data! Try again or sign up!");
+        } else {
+          alert("Sorry! Something went wrong!");
         }
+        dispatch(signInFail_());
       });
   };
 };
@@ -69,14 +67,12 @@ export const signOut = () => {
         dispatch(push("/home"));
       })
       .catch((error) => {
-        switch (error.response.status) {
-          case 401:
-            alert("You are not signed in!");
-            dispatch(signOutFail_());
-            break;
-          default:
-            break;
+        if (error.response.status === 401) {
+          alert("You are not signed in!");
+        } else {
+          alert("Sorry! Something went wrong!");
         }
+        dispatch(signOutFail_());
       });
   };
 };
@@ -98,15 +94,9 @@ export const signUp = (userCredentials) => {
         dispatch(signUpSuccess_());
         dispatch(push("/home"));
       })
-      .catch((error) => {
-        switch (error.response.status) {
-          case 400:
-            alert("Something wrong with the request! Try again.");
-            dispatch(signUpFail_());
-            break;
-          default:
-            break;
-        }
+      .catch(() => {
+        alert("Something wrong with the request! Try again.");
+        dispatch(signUpFail_());
       });
   };
 };
