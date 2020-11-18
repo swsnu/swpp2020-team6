@@ -467,7 +467,7 @@ class EditRoadmap extends Component {
           <button
             id="confirm-edit-roadmap-button"
             type="button"
-            disabled={title === "" || level === "0" || sections.length === 0}
+            disabled={title === "" || level === 0 || sections.length === 0}
             onClick={() => this.onClickEditConfirm()}
           >
             Confirm
