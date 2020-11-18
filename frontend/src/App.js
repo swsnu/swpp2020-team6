@@ -69,10 +69,10 @@ class App extends React.Component {
 }
 
 App.propTypes = {
-  isSignedIn: PropTypes.bool.isRequired,
-  selectedUser: PropTypes.objectOf(PropTypes.any).isRequired,
+  isSignedIn: PropTypes.bool,
+  selectedUser: PropTypes.objectOf(PropTypes.any),
   onGetUserAuth: PropTypes.func.isRequired,
-  history: PropTypes.objectOf(PropTypes.any).isRequired,
+  history: PropTypes.objectOf(PropTypes.any),
 };
 
 const mapStateToProps = (state) => {

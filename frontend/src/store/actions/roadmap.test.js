@@ -5,6 +5,7 @@ import * as userActionCreators from "./user";
 import store, { history } from "../store";
 
 import getMockStore from "../../test-utils/mocks";
+import * as actionTypes from "./actionTypes";
 
 const stubRoadmapData = {
   selectedRoadmap: {
@@ -190,8 +191,8 @@ const stubSelectedUser = {
 };
 
 const stubInitialUserState = {
-  isSignedIn: undefined, // undefined: not yet received, false, true
-  selectedUser: undefined, // no null state
+  isSignedIn: true, // undefined: not yet received, false, true
+  selectedUser: stubSelectedUser, // no null state
 };
 
 const stubInitialRoadmapState = {
@@ -215,24 +216,6 @@ describe("ActionCreators", () => {
     jest.clearAllMocks();
   });
 
-  it(`should properly 'signIn'`, () => {
-    const spy = jest.spyOn(axios, "post").mockImplementation(() => {
-      return new Promise((resolve) => {
-        const result = {
-          status: 200,
-          data: { ...stubSelectedUser },
-        };
-        resolve(result);
-      });
-    });
-
-    return store.dispatch(userActionCreators.signIn()).then(() => {
-      const newState = store.getState();
-      expect(newState.user).toStrictEqual({ isSignedIn: true, selectedUser: stubSelectedUser });
-      expect(spy).toHaveBeenCalledTimes(1);
-    });
-  });
-
   /* ---------------------- Get Roadmap ---------------------- */
   it(`'getRoadmap' should fetch the roadmap correctly`, (done) => {
     const spy = jest.spyOn(axios, "get").mockImplementation((url) => {
@@ -245,15 +228,13 @@ describe("ActionCreators", () => {
       });
     });
 
-    store.dispatch(roadmapActionCreators.getRoadmap(1)).then(() => {
-      const newState = store.getState();
-      expect(newState.roadmap.selectedRoadmap).toBe(stubRoadmapData);
+    mockedStore.dispatch(roadmapActionCreators.getRoadmap(1)).then(() => {
       expect(spy).toHaveBeenCalledTimes(1);
       done();
     });
   });
 
-  it(`error from 'getRoadmap' during axios.get should be catched`, (done) => {
+  it(`404 error from 'getRoadmap' during axios.get should be catched`, (done) => {
     const spy = jest.spyOn(axios, "get").mockImplementation((url, roadmapData) => {
       return new Promise((resolve, reject) => {
         const result = {
@@ -263,9 +244,7 @@ describe("ActionCreators", () => {
       });
     });
 
-    store.dispatch(roadmapActionCreators.getRoadmap(1)).then(() => {
-      const newState = store.getState();
-      expect(newState.roadmap.selectedRoadmap).toBe(undefined);
+    mockedStore.dispatch(roadmapActionCreators.getRoadmap(1)).then(() => {
       expect(spy).toHaveBeenCalledTimes(1);
       expect(spyGoBack).toHaveBeenCalledTimes(1);
       expect(spyAlert).toHaveBeenCalledTimes(1);
@@ -273,7 +252,7 @@ describe("ActionCreators", () => {
     });
   });
 
-  it(`error from 'getRoadmap' during axios.get should be catched`, (done) => {
+  it(`401 error from 'getRoadmap' during axios.get should be catched`, (done) => {
     const spy = jest.spyOn(axios, "get").mockImplementation((url, roadmapData) => {
       return new Promise((resolve, reject) => {
         const result = {
@@ -283,9 +262,7 @@ describe("ActionCreators", () => {
       });
     });
 
-    store.dispatch(roadmapActionCreators.getRoadmap(1)).then(() => {
-      const newState = store.getState();
-      expect(newState.roadmap.selectedRoadmap).toBe(undefined);
+    mockedStore.dispatch(roadmapActionCreators.getRoadmap(1)).then(() => {
       expect(spy).toHaveBeenCalledTimes(1);
       expect(spyGoBack).toHaveBeenCalledTimes(1);
       expect(spyAlert).toHaveBeenCalledTimes(1);
@@ -293,7 +270,7 @@ describe("ActionCreators", () => {
     });
   });
 
-  it(`error from 'getRoadmap' during axios.get should be catched`, (done) => {
+  it(`400 error from 'getRoadmap' during axios.get should be catched`, (done) => {
     const spy = jest.spyOn(axios, "get").mockImplementation((url, roadmapData) => {
       return new Promise((resolve, reject) => {
         const result = {
@@ -303,12 +280,27 @@ describe("ActionCreators", () => {
       });
     });
 
-    store.dispatch(roadmapActionCreators.getRoadmap(1)).then(() => {
-      const newState = store.getState();
-      expect(newState.roadmap.selectedRoadmap).toBe(undefined);
+    mockedStore.dispatch(roadmapActionCreators.getRoadmap(1)).then(() => {
       expect(spy).toHaveBeenCalledTimes(1);
       expect(spyGoBack).toHaveBeenCalledTimes(1);
       expect(spyAlert).toHaveBeenCalledTimes(1);
+      done();
+    });
+  });
+
+  it(`random error from 'getRoadmap' during axios.get should be catched`, (done) => {
+    const spy = jest.spyOn(axios, "get").mockImplementation((url, roadmapData) => {
+      return new Promise((resolve, reject) => {
+        const result = {
+          response: { status: 302 },
+        };
+        reject(result);
+      });
+    });
+
+    mockedStore.dispatch(roadmapActionCreators.getRoadmap(1)).then(() => {
+      expect(spy).toHaveBeenCalledTimes(1);
+      expect(spyGoBack).toHaveBeenCalledTimes(1);
       done();
     });
   });
@@ -325,13 +317,7 @@ describe("ActionCreators", () => {
       });
     });
 
-    store.dispatch(roadmapActionCreators.createRoadmap(stubRoadmapSimpleData2)).then(() => {
-      const newState = store.getState();
-      expect(newState.roadmap.selectedRoadmap).toBe(undefined);
-      expect(newState.user.selectedUser.my_roadmaps).toEqual([
-        stubRoadmapSimpleData,
-        stubRoadmapSimpleData2,
-      ]);
+    mockedStore.dispatch(roadmapActionCreators.createRoadmap(stubRoadmapSimpleData2)).then(() => {
       expect(spy).toHaveBeenCalledTimes(1);
       expect(spyPush).toHaveBeenCalledTimes(1);
       done();
@@ -349,9 +335,7 @@ describe("ActionCreators", () => {
       });
     });
 
-    store.dispatch(roadmapActionCreators.createRoadmap(stubRoadmapSimpleData2)).then(() => {
-      const newState = store.getState();
-      expect(newState.roadmap.selectedRoadmap).toBe(undefined);
+    mockedStore.dispatch(roadmapActionCreators.createRoadmap(stubRoadmapSimpleData2)).then(() => {
       expect(spy).toHaveBeenCalledTimes(1);
       expect(spyGoBack).toHaveBeenCalledTimes(1);
       expect(spyAlert).toHaveBeenCalledTimes(1);
@@ -369,9 +353,7 @@ describe("ActionCreators", () => {
       });
     });
 
-    store.dispatch(roadmapActionCreators.createRoadmap(stubRoadmapSimpleData2)).then(() => {
-      const newState = store.getState();
-      expect(newState.roadmap.selectedRoadmap).toBe(undefined);
+    mockedStore.dispatch(roadmapActionCreators.createRoadmap(stubRoadmapSimpleData2)).then(() => {
       expect(spy).toHaveBeenCalledTimes(1);
       expect(spyGoBack).toHaveBeenCalledTimes(1);
       expect(spyAlert).toHaveBeenCalledTimes(1);
@@ -389,9 +371,7 @@ describe("ActionCreators", () => {
       });
     });
 
-    store.dispatch(roadmapActionCreators.createRoadmap(stubRoadmapSimpleData2)).then(() => {
-      const newState = store.getState();
-      expect(newState.roadmap.selectedRoadmap).toBe(undefined);
+    mockedStore.dispatch(roadmapActionCreators.createRoadmap(stubRoadmapSimpleData2)).then(() => {
       expect(spy).toHaveBeenCalledTimes(1);
       expect(spyGoBack).toHaveBeenCalledTimes(1);
       expect(spyAlert).toHaveBeenCalledTimes(0);
@@ -411,7 +391,7 @@ describe("ActionCreators", () => {
       });
     });
 
-    mockedStore.dispatch(roadmapActionCreators.editRoadmap(2, stubRoadmapSimpleData)).then(() => {
+    mockedStore.dispatch(roadmapActionCreators.editRoadmap(2, stubRoadmapSimpleData2)).then(() => {
       expect(spy).toHaveBeenCalledTimes(1);
       expect(spyPush).toHaveBeenCalledTimes(1);
       done();
@@ -519,10 +499,7 @@ describe("ActionCreators", () => {
       });
     });
 
-    store.dispatch(roadmapActionCreators.deleteRoadmap(2)).then(() => {
-      const newState = store.getState();
-      expect(newState.roadmap.selectedRoadmap).toBe(undefined);
-      expect(newState.user.selectedUser.my_roadmaps.length).toBe(1);
+    mockedStore.dispatch(roadmapActionCreators.deleteRoadmap(2)).then(() => {
       expect(spy).toHaveBeenCalledTimes(1);
       expect(spyPush).toHaveBeenCalledTimes(1);
       done();
@@ -539,10 +516,7 @@ describe("ActionCreators", () => {
       });
     });
 
-    store.dispatch(roadmapActionCreators.deleteRoadmap(1)).then(() => {
-      const newState = store.getState();
-      expect(newState.roadmap.selectedRoadmap).toBe(undefined);
-      expect(newState.user.selectedUser.my_roadmaps.length).toBe(1);
+    mockedStore.dispatch(roadmapActionCreators.deleteRoadmap(2)).then(() => {
       expect(spy).toHaveBeenCalledTimes(1);
       expect(spyGoBack).toHaveBeenCalledTimes(1);
       expect(spyAlert).toHaveBeenCalledTimes(1);
@@ -560,10 +534,7 @@ describe("ActionCreators", () => {
       });
     });
 
-    store.dispatch(roadmapActionCreators.deleteRoadmap(2)).then(() => {
-      const newState = store.getState();
-      expect(newState.roadmap.selectedRoadmap).toBe(undefined);
-      expect(newState.user.selectedUser.my_roadmaps.length).toBe(1);
+    mockedStore.dispatch(roadmapActionCreators.deleteRoadmap(2)).then(() => {
       expect(spy).toHaveBeenCalledTimes(1);
       expect(spyGoBack).toHaveBeenCalledTimes(1);
       expect(spyAlert).toHaveBeenCalledTimes(1);
@@ -581,9 +552,7 @@ describe("ActionCreators", () => {
       });
     });
 
-    store.dispatch(roadmapActionCreators.deleteRoadmap(1)).then(() => {
-      const newState = store.getState();
-      expect(newState.roadmap.selectedRoadmap).toBe(undefined);
+    mockedStore.dispatch(roadmapActionCreators.deleteRoadmap(2)).then(() => {
       expect(spy).toHaveBeenCalledTimes(1);
       expect(spyGoBack).toHaveBeenCalledTimes(1);
       expect(spyAlert).toHaveBeenCalledTimes(1);
@@ -601,9 +570,7 @@ describe("ActionCreators", () => {
       });
     });
 
-    store.dispatch(roadmapActionCreators.deleteRoadmap(1)).then(() => {
-      const newState = store.getState();
-      expect(newState.roadmap.selectedRoadmap).toBe(undefined);
+    mockedStore.dispatch(roadmapActionCreators.deleteRoadmap(2)).then(() => {
       expect(spy).toHaveBeenCalledTimes(1);
       expect(spyGoBack).toHaveBeenCalledTimes(1);
       expect(spyAlert).toHaveBeenCalledTimes(1);
@@ -621,16 +588,142 @@ describe("ActionCreators", () => {
       });
     });
 
-    store.dispatch(roadmapActionCreators.deleteRoadmap(1)).then(() => {
-      const newState = store.getState();
-      expect(newState.roadmap.selectedRoadmap).toBe(undefined);
+    mockedStore.dispatch(roadmapActionCreators.deleteRoadmap(2)).then(() => {
       expect(spy).toHaveBeenCalledTimes(1);
       expect(spyGoBack).toHaveBeenCalledTimes(1);
-      expect(spyAlert).toHaveBeenCalledTimes(0);
       done();
     });
   });
 
+  // ---------------------- Duplicate Roadmap ---------------------- //
+
+  it(`'duplicateRoadmap' should duplicate the Roadmap correctly (confirm=true)`, (done) => {
+    const spyConfirm = jest.spyOn(window, "confirm").mockImplementation(() => {
+      return true;
+    });
+    const spy = jest.spyOn(axios, "post").mockImplementation((url, roadmapData) => {
+      return new Promise((resolve, reject) => {
+        const result = {
+          status: 200,
+          data: stubRoadmapSimpleData2,
+        };
+        resolve(result);
+      });
+    });
+
+    mockedStore
+      .dispatch(roadmapActionCreators.duplicateRoadmap(2, stubRoadmapSimpleData2))
+      .then(() => {
+        expect(spy).toHaveBeenCalledTimes(1);
+        expect(spyConfirm).toHaveBeenCalledTimes(1);
+        expect(spyPush).toHaveBeenCalledTimes(1);
+        done();
+      });
+  });
+
+  it(`'duplicateRoadmap' should duplicate the Roadmap correctly (confirm=false)`, (done) => {
+    const spyConfirm = jest.spyOn(window, "confirm").mockImplementation(() => {
+      return false;
+    });
+    const spy = jest.spyOn(axios, "post").mockImplementation((url, roadmapData) => {
+      return new Promise((resolve, reject) => {
+        const result = {
+          status: 200,
+          data: stubRoadmapSimpleData2,
+        };
+        resolve(result);
+      });
+    });
+
+    mockedStore
+      .dispatch(roadmapActionCreators.duplicateRoadmap(2, stubRoadmapSimpleData2))
+      .then(() => {
+        expect(spy).toHaveBeenCalledTimes(1);
+        expect(spyConfirm).toHaveBeenCalledTimes(1);
+        expect(spyPush).toHaveBeenCalledTimes(0);
+        done();
+      });
+  });
+
+  it(`'duplicateRoadmap' should handle error correctly(401)`, (done) => {
+    const spy = jest.spyOn(axios, "post").mockImplementation((url, roadmapData) => {
+      return new Promise((resolve, reject) => {
+        const result = {
+          response: { status: 401 },
+        };
+        reject(result);
+      });
+    });
+
+    mockedStore
+      .dispatch(roadmapActionCreators.duplicateRoadmap(2, stubRoadmapSimpleData))
+      .then(() => {
+        expect(spy).toHaveBeenCalledTimes(1);
+        expect(spyAlert).toHaveBeenCalledTimes(1);
+        expect(spyGoBack).toHaveBeenCalledTimes(1);
+        done();
+      });
+  });
+
+  it(`'duplicateRoadmap' should handle error correctly(404)`, (done) => {
+    const spy = jest.spyOn(axios, "post").mockImplementation((url, roadmapData) => {
+      return new Promise((resolve, reject) => {
+        const result = {
+          response: { status: 404 },
+        };
+        reject(result);
+      });
+    });
+
+    mockedStore
+      .dispatch(roadmapActionCreators.duplicateRoadmap(2, stubRoadmapSimpleData))
+      .then(() => {
+        expect(spy).toHaveBeenCalledTimes(1);
+        expect(spyAlert).toHaveBeenCalledTimes(1);
+        expect(spyGoBack).toHaveBeenCalledTimes(1);
+        done();
+      });
+  });
+
+  it(`'duplicateRoadmap' should handle error correctly(400)`, (done) => {
+    const spy = jest.spyOn(axios, "post").mockImplementation((url, roadmapData) => {
+      return new Promise((resolve, reject) => {
+        const result = {
+          response: { status: 400 },
+        };
+        reject(result);
+      });
+    });
+
+    mockedStore
+      .dispatch(roadmapActionCreators.duplicateRoadmap(2, stubRoadmapSimpleData))
+      .then(() => {
+        expect(spy).toHaveBeenCalledTimes(1);
+        expect(spyAlert).toHaveBeenCalledTimes(1);
+        expect(spyGoBack).toHaveBeenCalledTimes(1);
+        done();
+      });
+  });
+
+  it(`'duplicateRoadmap' should handle error correctly(default)`, (done) => {
+    const spy = jest.spyOn(axios, "post").mockImplementation((url, roadmapData) => {
+      return new Promise((resolve, reject) => {
+        const result = {
+          response: { status: 302 },
+        };
+        reject(result);
+      });
+    });
+
+    mockedStore
+      .dispatch(roadmapActionCreators.duplicateRoadmap(2, stubRoadmapSimpleData))
+      .then(() => {
+        expect(spy).toHaveBeenCalledTimes(1);
+        expect(spyAlert).toHaveBeenCalledTimes(0);
+        expect(spyGoBack).toHaveBeenCalledTimes(1);
+        done();
+      });
+  });
   // ---------------------- Create Comment ----------------------
   it(`'createComment' should post the Comment correctly`, (done) => {
     const spy = jest.spyOn(axios, "post").mockImplementation((url, commentData) => {

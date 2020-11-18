@@ -95,8 +95,8 @@ class SignUp extends Component {
 
 SignUp.propTypes = {
   onSignUp: PropTypes.func.isRequired,
-  isSignedIn: PropTypes.objectOf(PropTypes.any).isRequired,
-  history: PropTypes.objectOf(PropTypes.any).isRequired,
+  isSignedIn: PropTypes.bool,
+  history: PropTypes.objectOf(PropTypes.any),
 };
 
 const mapStateToProps = (state) => {
