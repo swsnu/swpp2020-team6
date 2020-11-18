@@ -25,8 +25,10 @@ const initialRoadmapStateUndefined = {
 const initialRoadmapState = {
   selectedRoadmap: {
     author_id: 1,
+    private: true,
     title: "test",
     level: 2,
+    description: "test-description",
     sections: [
       {
         section_title: "test-section0",
@@ -202,6 +204,9 @@ describe("<EditRoadmap />", () => {
     const instance = component.find(EditRoadmap.WrappedComponent).instance();
     expect(instance.state).toEqual({
       ...initialRoadmapState.selectedRoadmap,
+      received: true,
+      private: undefined,
+      isPrivate: initialRoadmapState.selectedRoadmap.private,
       author_id: undefined,
       tags: ["tag0", "tag1"],
       newTag: "",
@@ -214,6 +219,7 @@ describe("<EditRoadmap />", () => {
     const title = "test-title";
     const level = 2;
     const newTag = "test";
+    const description = "test";
     const component = mount(editRoadmap);
     let wrapper = component.find("#roadmap-title");
     wrapper.simulate("change", { target: { value: title } });
@@ -221,10 +227,16 @@ describe("<EditRoadmap />", () => {
     wrapper.simulate("change", { target: { value: level } });
     wrapper = component.find("#new-tag");
     wrapper.simulate("change", { target: { value: newTag } });
+    wrapper = component.find("#roadmap-private");
+    wrapper.at(2).simulate("click");
+    wrapper = component.find("#roadmap-description");
+    wrapper.simulate("change", { target: { value: description } });
     const instance = component.find(EditRoadmap.WrappedComponent).instance();
     expect(instance.state.title).toBe(title);
     expect(instance.state.level).toBe(level);
     expect(instance.state.newTag).toBe(newTag);
+    expect(instance.state.isPrivate).toBe(!initialRoadmapState.selectedRoadmap.private);
+    expect(instance.state.description).toBe(description);
   });
 
   it("should call 'onClickAddTag', 'onClickDeleteTag'", () => {

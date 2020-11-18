@@ -1,4 +1,7 @@
 import React, { Component } from "react";
+// import FormGroup from "@material-ui/core/FormGroup";
+// import FormControlLabel from "@material-ui/core/FormControlLabel";
+import Switch from "@material-ui/core/Switch";
 import { connect } from "react-redux";
 import { withRouter } from "react-router";
 import PropTypes from "prop-types";
@@ -11,8 +14,10 @@ import "./EditRoadmap.scss";
 class EditRoadmap extends Component {
   state = {
     received: false,
+    isPrivate: false,
     title: "",
     level: 0,
+    description: "",
     sections: [],
     tags: [],
     addedTagList: [],
@@ -29,13 +34,20 @@ class EditRoadmap extends Component {
     const { selectedRoadmap } = this.props;
     this.setState({
       received: true,
+      isPrivate: selectedRoadmap.private,
       title: selectedRoadmap.title,
       level: parseInt(selectedRoadmap.level, 10),
+      description: selectedRoadmap.description,
       sections: selectedRoadmap.sections,
       tags: selectedRoadmap.tags.map((tag) => {
         return tag.tag_name;
       }),
     });
+  };
+
+  onClickPrivate = () => {
+    const { isPrivate } = this.state;
+    this.setState({ isPrivate: !isPrivate });
   };
 
   onChangeTitle = (title) => {
@@ -44,6 +56,10 @@ class EditRoadmap extends Component {
 
   onChangeLevel = (level) => {
     this.setState({ level });
+  };
+
+  onChangeDescription = (description) => {
+    this.setState({ description });
   };
 
   onChangeNewTag = (newTag) => {
@@ -292,11 +308,22 @@ class EditRoadmap extends Component {
   };
 
   onClickEditConfirm = () => {
-    const { title, level, sections, tags, addedTagList, deletedTagList } = this.state;
-    const { match, onEditRoadmap } = this.props;
-    const roadmapData = {
+    const {
+      isPrivate,
       title,
       level,
+      description,
+      sections,
+      tags,
+      addedTagList,
+      deletedTagList,
+    } = this.state;
+    const { match, onEditRoadmap } = this.props;
+    const roadmapData = {
+      private: isPrivate,
+      title,
+      level,
+      description,
       sections,
       tags,
       addedTagList,
@@ -326,7 +353,7 @@ class EditRoadmap extends Component {
       return <div />;
     }
 
-    const { received, sections, level, title, tags, newTag } = this.state;
+    const { received, isPrivate, title, sections, level, description, tags, newTag } = this.state;
 
     if (received === false) {
       this.setInitialState();
@@ -373,6 +400,14 @@ class EditRoadmap extends Component {
       <div className="EditRoadmap">
         <h1>Edit Roadmap</h1>
         <div className="roadmap">
+          <label>
+            Private
+            <Switch
+              id="roadmap-private"
+              checked={isPrivate}
+              onClick={() => this.onClickPrivate()}
+            />
+          </label>
           <label>Roadmap Title</label>
           <input
             id="roadmap-title"
@@ -403,6 +438,13 @@ class EditRoadmap extends Component {
           <button id="add-tag-button" type="button" onClick={() => this.onClickAddTag()}>
             add
           </button>
+          <br />
+          <label>Description</label>
+          <input
+            id="roadmap-description"
+            value={description}
+            onChange={(event) => this.onChangeDescription(event.target.value)}
+          />
         </div>
         <div className="sections">
           {EditSections}

@@ -80,6 +80,8 @@ describe("<CreateRoadmap />", () => {
     const title = "test-title";
     const level = 2;
     const newTag = "test";
+    const isPrivate = true;
+    const description = "test";
     const component = mount(createRoadmap);
     let wrapper = component.find("#roadmap-title");
     wrapper.simulate("change", { target: { value: title } });
@@ -87,10 +89,16 @@ describe("<CreateRoadmap />", () => {
     wrapper.simulate("change", { target: { value: level } });
     wrapper = component.find("#new-tag");
     wrapper.simulate("change", { target: { value: newTag } });
+    wrapper = component.find("#roadmap-private");
+    wrapper.at(2).simulate("click");
+    wrapper = component.find("#roadmap-description");
+    wrapper.simulate("change", { target: { value: description } });
     const instance = component.find(CreateRoadmap.WrappedComponent).instance();
     expect(instance.state.title).toBe(title);
     expect(instance.state.level).toBe(level);
     expect(instance.state.newTag).toBe(newTag);
+    expect(instance.state.isPrivate).toBe(isPrivate);
+    expect(instance.state.description).toBe(description);
   });
 
   it("should call 'onClickAddTag', 'onClickDeleteTag'", () => {

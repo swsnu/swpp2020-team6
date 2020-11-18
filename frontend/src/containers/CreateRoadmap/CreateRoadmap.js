@@ -1,4 +1,7 @@
 import React, { Component } from "react";
+// import FormGroup from "@material-ui/core/FormGroup";
+// import FormControlLabel from "@material-ui/core/FormControlLabel";
+import Switch from "@material-ui/core/Switch";
 import { connect } from "react-redux";
 import { withRouter } from "react-router";
 import PropTypes from "prop-types";
@@ -10,11 +13,18 @@ import "./CreateRoadmap.scss";
 
 class CreateRoadmap extends Component {
   state = {
+    isPrivate: false,
     title: "",
     level: 0,
+    description: "",
     sections: [],
     tags: [],
     newTag: "",
+  };
+
+  onClickPrivate = () => {
+    const { isPrivate } = this.state;
+    this.setState({ isPrivate: !isPrivate });
   };
 
   onChangeTitle = (title) => {
@@ -23,6 +33,10 @@ class CreateRoadmap extends Component {
 
   onChangeLevel = (level) => {
     this.setState({ level });
+  };
+
+  onChangeDescription = (description) => {
+    this.setState({ description });
   };
 
   onChangeNewTag = (newTag) => {
@@ -261,8 +275,8 @@ class CreateRoadmap extends Component {
 
   onClickCreateBack = () => {
     const { history } = this.props;
-    const { title, level, sections } = this.state;
-    if (title !== "" || level !== 0 || sections.length !== 0) {
+    const { title, level, description, sections } = this.state;
+    if (title !== "" || level !== 0 || sections.length !== 0 || description !== "") {
       const back = window.confirm("Leave the page? Changes you made will be deleted.");
       if (back) {
         history.goBack();
@@ -271,11 +285,13 @@ class CreateRoadmap extends Component {
   };
 
   onClickCreateConfirm = () => {
-    const { title, level, sections, tags } = this.state;
+    const { isPrivate, title, level, description, sections, tags } = this.state;
     const { onCreateRoadmap } = this.props;
     const roadmapData = {
+      private: isPrivate,
       title,
       level,
+      description,
       sections,
       tags,
     };
@@ -290,7 +306,7 @@ class CreateRoadmap extends Component {
       return <div />;
     }
 
-    const { sections, level, title, tags, newTag } = this.state;
+    const { isPrivate, sections, level, title, description, tags, newTag } = this.state;
 
     const taglist = tags.map((tag, index) => {
       return (
@@ -330,6 +346,14 @@ class CreateRoadmap extends Component {
       <div className="CreateRoadmap">
         <h1 className="header">Create Roadmap</h1>
         <div className="roadmap">
+          <label>
+            Private
+            <Switch
+              id="roadmap-private"
+              checked={isPrivate}
+              onClick={() => this.onClickPrivate()}
+            />
+          </label>
           <label>Title</label>
           <input
             id="roadmap-title"
@@ -359,6 +383,13 @@ class CreateRoadmap extends Component {
           <button id="add-tag-button" type="button" onClick={() => this.onClickAddTag()}>
             add
           </button>
+          <br />
+          <label>Description</label>
+          <input
+            id="roadmap-description"
+            value={description}
+            onChange={(event) => this.onChangeDescription(event.target.value)}
+          />
         </div>
         <div className="sections">
           {CreateSections}
