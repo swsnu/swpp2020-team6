@@ -10,10 +10,7 @@ import "./EditRoadmap.scss";
 
 class EditRoadmap extends Component {
   state = {
-<<<<<<< HEAD
     received: false,
-=======
->>>>>>> f52b598ad51929624954b0ecf3da2030c856ef7a
     title: "",
     level: 0,
     sections: [],
@@ -31,14 +28,9 @@ class EditRoadmap extends Component {
   setInitialState = () => {
     const { selectedRoadmap } = this.props;
     this.setState({
-<<<<<<< HEAD
       received: true,
       title: selectedRoadmap.title,
       level: parseInt(selectedRoadmap.level, 10),
-=======
-      title: selectedRoadmap.title,
-      level: selectedRoadmap.level,
->>>>>>> f52b598ad51929624954b0ecf3da2030c856ef7a
       sections: selectedRoadmap.sections,
       tags: selectedRoadmap.tags.map((tag) => {
         return tag.tag_name;
@@ -50,13 +42,8 @@ class EditRoadmap extends Component {
     this.setState({ title });
   };
 
-<<<<<<< HEAD
   onChangeLevel = (level) => {
-=======
-  onClickLevel = (level) => {
->>>>>>> f52b598ad51929624954b0ecf3da2030c856ef7a
     this.setState({ level });
-    debugger;
   };
 
   onChangeNewTag = (newTag) => {
@@ -339,14 +326,9 @@ class EditRoadmap extends Component {
       return <div />;
     }
 
-<<<<<<< HEAD
     const { received, sections, level, title, tags, newTag } = this.state;
 
     if (received === false) {
-=======
-    const { sections, level, title, tags, newTag } = this.state;
-    if (title === "") {
->>>>>>> f52b598ad51929624954b0ecf3da2030c856ef7a
       this.setInitialState();
     }
     const taglist = tags.map((tag, index) => {
@@ -367,7 +349,6 @@ class EditRoadmap extends Component {
     const EditSections = sections.map((section, index) => {
       return (
         <CreateSection
-          key={`section${index}`}
           tmpSectionId={index}
           sectionLastId={sections.length - 1}
           title={section.section_title}
@@ -387,8 +368,6 @@ class EditRoadmap extends Component {
         />
       );
     });
-
-    debugger;
 
     return (
       <div className="EditRoadmap">

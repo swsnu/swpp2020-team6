@@ -306,7 +306,6 @@ class CreateRoadmap extends Component {
     const CreateSections = sections.map((section, index) => {
       return (
         <CreateSection
-          key={`section${index}`}
           tmpSectionId={index}
           sectionLastId={sections.length - 1}
           title={section.section_title}
@@ -326,8 +325,6 @@ class CreateRoadmap extends Component {
         />
       );
     });
-
-    debugger;
 
     return (
       <div className="CreateRoadmap">
