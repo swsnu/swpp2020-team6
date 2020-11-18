@@ -253,12 +253,12 @@ class RoadmapDetail extends Component {
 }
 
 RoadmapDetail.propTypes = {
-  selectedUser: PropTypes.objectOf(PropTypes.any).isRequired,
-  isSignedIn: PropTypes.bool.isRequired,
-  match: PropTypes.objectOf(PropTypes.any).isRequired,
-  history: PropTypes.objectOf(PropTypes.any).isRequired,
+  selectedUser: PropTypes.objectOf(PropTypes.any),
+  isSignedIn: PropTypes.bool,
+  match: PropTypes.objectOf(PropTypes.any),
+  history: PropTypes.objectOf(PropTypes.any),
 
-  selectedRoadmap: PropTypes.objectOf(PropTypes.any).isRequired,
+  selectedRoadmap: PropTypes.objectOf(PropTypes.any),
 
   onGetRoadmap: PropTypes.func.isRequired,
   onResetRoadmap: PropTypes.func.isRequired,

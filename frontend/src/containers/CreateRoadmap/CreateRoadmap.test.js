@@ -26,6 +26,8 @@ const mockStoreUndefined = getMockStore(initialUserStateUndefined, initialRoadma
 describe("<CreateRoadmap />", () => {
   let createRoadmap;
   let spyHistoryGoBack;
+  let spyAlert;
+
   beforeEach(() => {
     createRoadmap = (
       <Provider store={mockStore}>
@@ -44,6 +46,7 @@ describe("<CreateRoadmap />", () => {
     );
 
     spyHistoryGoBack = jest.spyOn(history, "goBack").mockImplementation(() => {});
+    spyAlert = jest.spyOn(window, "alert").mockImplementation(() => {});
   });
 
   afterEach(() => jest.clearAllMocks());
@@ -68,7 +71,9 @@ describe("<CreateRoadmap />", () => {
     );
     mount(tmpCreateRoadmap);
     expect(spyHistoryGoBack).toHaveBeenCalledTimes(1);
+    expect(spyAlert).toHaveBeenCalledTimes(1);
     spyHistoryGoBack.mockRestore();
+    spyAlert.mockRestore();
   });
 
   it("should set state on input changes", () => {
