@@ -25,7 +25,6 @@ const CreateSection = (props) => {
   const CreateTasks = tasks.map((task, index) => {
     return (
       <CreateTask
-        key={`section${tmpSectionId}task${index}`}
         tmpSectionId={tmpSectionId}
         tmpTaskId={index}
         taskLastId={tasks.length - 1}

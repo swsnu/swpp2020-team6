@@ -202,6 +202,7 @@ describe("<EditRoadmap />", () => {
     const instance = component.find(EditRoadmap.WrappedComponent).instance();
     expect(instance.state).toEqual({
       ...initialRoadmapState.selectedRoadmap,
+      received: true,
       author_id: undefined,
       tags: ["tag0", "tag1"],
       newTag: "",
