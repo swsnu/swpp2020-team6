@@ -153,7 +153,6 @@ describe("<EditRoadmap />", () => {
     const wrapper = component.find(".EditRoadmap");
     expect(wrapper.length).toBe(0);
     expect(spyAlert).toHaveBeenCalledTimes(1);
-    spyAlert.mockRestore();
   });
 
   it("should wait if 'selectedRoadmap' has not been received", () => {
@@ -197,7 +196,6 @@ describe("<EditRoadmap />", () => {
     const wrapper = component.find(".CreateRoadmap");
     expect(wrapper.length).toBe(0);
     expect(spyAlert).toHaveBeenCalledTimes(1);
-    spyAlert.mockRestore();
   });
 
   it("should set state if selectedRoadmap has been received", () => {
@@ -229,7 +227,7 @@ describe("<EditRoadmap />", () => {
     wrapper = component.find("#new-tag");
     wrapper.simulate("change", { target: { value: newTag } });
     wrapper = component.find("#roadmap-private");
-    wrapper.at(2).simulate("click");
+    wrapper.at(0).props().onClick();
     wrapper = component.find("#roadmap-description");
     wrapper.simulate("change", { target: { value: description } });
     const instance = component.find(Roadmap).instance();
