@@ -1,6 +1,7 @@
 import React from "react";
 import PropTypes from "prop-types";
 import { taskType } from "../../constants";
+import "./CreateTask.scss";
 
 const CreateTask = (props) => {
   const {
