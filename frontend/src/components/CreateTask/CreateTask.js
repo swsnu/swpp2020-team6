@@ -1,7 +1,6 @@
 import React from "react";
 import PropTypes from "prop-types";
 import { taskType } from "../../constants";
-import "./CreateTask.scss";
 
 const CreateTask = (props) => {
   const {
@@ -55,7 +54,7 @@ const CreateTask = (props) => {
         className="task-type"
         value={type}
         onChange={(event) => {
-          return changeTaskTypeHandler(tmpSectionId, tmpTaskId, event.target.value);
+          changeTaskTypeHandler(tmpSectionId, tmpTaskId, event.target.value);
         }}
       >
         <option value={taskType.BOOK}>Book</option>

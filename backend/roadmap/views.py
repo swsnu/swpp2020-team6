@@ -23,20 +23,16 @@ def roadmap(request):
             return HttpResponse(status=401)
         try:
             req_data = json.loads(request.body.decode())
-            new_private = req_data["private"]
             new_title = req_data["title"]
             new_level = req_data["level"]
-            new_description = req_data["description"]
             section_list = req_data["sections"]
             tag_list = req_data["tags"]
         except (KeyError, JSONDecodeError):
             return HttpResponseBadRequest()
 
         new_roadmap = Roadmap(
-            private=new_private,
             title=new_title,
             level=new_level,
-            description=new_description,
             original_author=request.user,
             author=request.user,
         )
@@ -100,10 +96,8 @@ def roadmap_id(request, roadmap_id):
             return HttpResponseForbidden()
         try:
             req_data = json.loads(request.body.decode())
-            new_private = req_data["private"]
             new_title = req_data["title"]
             new_level = req_data["level"]
-            new_description = req_data["description"]
             section_list = req_data["sections"]
             added_tag_list = req_data["addedTagList"]
             deleted_tag_list = req_data["deletedTagList"]
@@ -113,10 +107,8 @@ def roadmap_id(request, roadmap_id):
 
         # Edit
         roadmap.delete_sections()
-        roadmap.private = new_private
         roadmap.title = new_title
         roadmap.level = new_level
-        roadmap.description = new_description
         for section in section_list:
             new_section = Section(title=section["section_title"], roadmap=roadmap)
             new_section.save()
@@ -180,10 +172,8 @@ def roadmap_id(request, roadmap_id):
             return HttpResponseNotFound()
 
         new_roadmap = Roadmap(
-            private=roadmap.private,
             title=roadmap.title,
             level=roadmap.level,
-            description=roadmap.description,
             original_author=roadmap.author,
             author=request.user,
         )

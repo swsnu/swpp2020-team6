@@ -73,6 +73,7 @@ describe("ActionCreatorsUser", () => {
     store.dispatch(actionCreators.signIn()).then(() => {
       expect(spy).toHaveBeenCalledTimes(1);
       expect(spyAlert).toHaveBeenCalledTimes(1);
+      spyAlert.mockRestore();
       done();
     });
   });
@@ -91,6 +92,7 @@ describe("ActionCreatorsUser", () => {
     store.dispatch(actionCreators.signIn()).then(() => {
       expect(spy).toHaveBeenCalledTimes(1);
       expect(spyAlert).toHaveBeenCalledTimes(1);
+      spyAlert.mockRestore();
       done();
     });
   });
@@ -124,6 +126,7 @@ describe("ActionCreatorsUser", () => {
     store.dispatch(actionCreators.signOut()).then(() => {
       expect(spy).toHaveBeenCalledTimes(1);
       expect(spyAlert).toHaveBeenCalledTimes(1);
+      spyAlert.mockRestore();
       done();
     });
   });
@@ -142,6 +145,7 @@ describe("ActionCreatorsUser", () => {
     store.dispatch(actionCreators.signOut()).then(() => {
       expect(spy).toHaveBeenCalledTimes(1);
       expect(spyAlert).toHaveBeenCalledTimes(1);
+      spyAlert.mockRestore();
       done();
     });
   });
@@ -175,6 +179,7 @@ describe("ActionCreatorsUser", () => {
     store.dispatch(actionCreators.signUp()).then(() => {
       expect(spy).toHaveBeenCalledTimes(1);
       expect(spyAlert).toHaveBeenCalledTimes(1);
+      spyAlert.mockRestore();
       done();
     });
   });
@@ -193,6 +198,7 @@ describe("ActionCreatorsUser", () => {
     store.dispatch(actionCreators.signUp()).then(() => {
       expect(spy).toHaveBeenCalledTimes(1);
       expect(spyAlert).toHaveBeenCalledTimes(1);
+      spyAlert.mockRestore();
       done();
     });
   });

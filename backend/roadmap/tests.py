@@ -12,10 +12,8 @@ class RoadmapTestCase(TestCase):
     csrf_token_path = user_path + "token/"
     roadmap_path = "/api/roadmap/"
     dump_roadmap_input = {
-        "private": False,
         "title": "swpp",
         "level": 1,
-        "description": "test-description",
         "sections": [
             {
                 "section_title": "design pattern",
@@ -32,10 +30,8 @@ class RoadmapTestCase(TestCase):
         "tags": ["python", "CV"],
     }
     dump_roadmap_edit = {
-        "private": True,
         "title": "swpp2",
         "level": 2,
-        "description": "test-edit-description",
         "sections": [
             {
                 "section_title": "design pattern2",
@@ -197,10 +193,8 @@ class RoadmapTestCase(TestCase):
         self.assertTrue(
             {
                 "id",
-                "private",
                 "title",
                 "level",
-                "description",
                 "date",
                 "like_count",
                 "comment_count",
