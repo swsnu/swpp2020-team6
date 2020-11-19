@@ -108,7 +108,7 @@ export const getMyPageUser_ = (userData) => {
 export const getMyPageUser = (userId) => {
   return (dispatch) => {
     return axios
-      .get(`/api/user/${userId}`)
+      .get(`/api/user/${userId}/`)
       .then((response) => {
         dispatch(getMyPageUser_(response.data));
       })

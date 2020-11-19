@@ -147,12 +147,12 @@ export const duplicateRoadmap_ = (roadmapData) => {
 export const duplicateRoadmap = (roadmapId) => {
   return (dispatch) => {
     return axios
-      .post(`/api/roadmap/${roadmapId}`)
+      .post(`/api/roadmap/${roadmapId}/`)
       .then((response) => {
         duplicateRoadmap_(response.data);
         const edit = window.confirm("Successfully duplicated! Would you like to edit?");
         if (edit) {
-          dispatch(push(`/roadmap/${response.data.id}`));
+          dispatch(push(`/roadmap/${response.data.id}/edit`));
         }
       })
       .catch((error) => {

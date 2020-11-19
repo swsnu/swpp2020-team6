@@ -11,6 +11,7 @@ import SignUp from "./containers/SignUp/SignUp";
 import SignIn from "./containers/SignIn/SignIn";
 import Home from "./containers/Home/Home";
 import RoadmapDetail from "./containers/RoadmapDetail/RoadmapDetail";
+import MyPage from "./containers/MyPage/MyPage";
 
 import "./App.css";
 
@@ -39,6 +40,7 @@ class App extends React.Component {
             <Route path="/roadmap/create" exact component={CreateRoadmap} />
             <Route path="/roadmap/:id/edit" exact component={EditRoadmap} />
             <Route path="/roadmap/:id" exact component={RoadmapDetail} />
+            <Route path="/mypage/:id" exact component={MyPage} />
             <Redirect exact from="/" to="/home" />
             <Route render={() => <h1>Not Found</h1>} />
           </Switch>
