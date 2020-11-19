@@ -2,7 +2,7 @@
  * Send request to the backend using the desired API, then receive response.
  */
 import axios from "axios";
-import { push } from "connected-react-router";
+import { push, goBack } from "connected-react-router";
 
 import * as actionTypes from "./actionTypes";
 
@@ -97,6 +97,33 @@ export const signUp = (userCredentials) => {
       .catch(() => {
         alert("Something wrong with the request! Try again.");
         dispatch(signUpFail_());
+      });
+  };
+};
+
+export const getMyPageUser_ = (userData) => {
+  return { type: actionTypes.GET_MYPAGE_USER, userData };
+};
+
+export const getMyPageUser = (userId) => {
+  return (dispatch) => {
+    return axios
+      .get(`/api/user/${userId}`)
+      .then((response) => {
+        dispatch(getMyPageUser_(response.data));
+      })
+      .catch((error) => {
+        switch (error.response.status) {
+          case 401:
+            window.alert("Please sign in!");
+            break;
+          case 404:
+            window.alert("No such user!");
+            break;
+          default:
+            break;
+        }
+        dispatch(goBack());
       });
   };
 };

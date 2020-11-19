@@ -6,6 +6,7 @@ import * as actionTypes from "../actions/actionTypes";
 const initialState = {
   isSignedIn: undefined, // undefined: not yet received, false, true
   selectedUser: undefined, // no null state
+  myPageUser: undefined,
 };
 
 const reducer = (state = initialState, action) => {
@@ -97,6 +98,11 @@ const reducer = (state = initialState, action) => {
             (roadmap) => roadmap.id !== action.responseData.roadmapId,
           ),
         },
+      };
+    case actionTypes.GET_MYPAGE_USER:
+      return {
+        ...state,
+        myPageUser: action.userData,
       };
     default:
       break;
