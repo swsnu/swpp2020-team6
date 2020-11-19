@@ -1,10 +1,12 @@
 import json
 from django.test import TestCase, Client
 from .models import User
+from roadmap.models import Roadmap
 
 
 class UserTestCase(TestCase):
-    dump_user = {"username": "chris", "email": "chris@gmail.com", "password": "chris"}
+    dump_user = {"username": "chris",
+                 "email": "chris@gmail.com", "password": "chris"}
     dump_user_json = json.dumps(dump_user)
     json_type = "application/json"
     user_path = "/api/user/"
@@ -180,3 +182,63 @@ class UserTestCase(TestCase):
 
         response = client.get(path, HTTP_X_CSRFTOKEN=csrftoken)
         self.assertEqual(response.status_code, 200)  # Pass csrf protection
+
+    def test_get_user_id(self):
+        client = Client(enforce_csrf_checks=True)
+        csrftoken = self.get_csrf(client)
+        path = self.user_path + "2/"
+
+        # 405 test (PUT, DELETE, POST)
+        response = client.post(path, data=None, HTTP_X_CSRFTOKEN=csrftoken)
+        self.assertEqual(response.status_code, 405)
+        response = client.put(path, data=None, HTTP_X_CSRFTOKEN=csrftoken)
+        self.assertEqual(response.status_code, 405)
+        response = client.delete(path, data=None, HTTP_X_CSRFTOKEN=csrftoken)
+        self.assertEqual(response.status_code, 405)
+
+        # 401
+        response = client.get(path, HTTP_X_CSRFTOKEN=csrftoken)
+        self.assertEqual(response.status_code, 401)
+
+        self.signup()
+        self.signin(client)
+        csrftoken = self.get_csrf(client)
+
+        # 404
+        response = client.get(path, HTTP_X_CSRFTOKEN=csrftoken)
+        self.assertEqual(response.status_code, 404)
+
+        # create another user, and her roadmaps
+        another_user = User.objects.create_user(
+            username="johndoe", email="johndoe@domain.com", password="johndoe"
+        )
+        not_my_roadmap = Roadmap.objects.create(
+            private=True,
+            title="roadmap_title1",
+            level=1,
+            original_author=another_user,
+            author=another_user,
+        )
+        not_my_roadmap2 = Roadmap.objects.create(
+            private=False,
+            title="roadmap_title2",
+            level=1,
+            original_author=another_user,
+            author=another_user,
+        )
+
+        # 200 (GET)
+        response = client.get(path, HTTP_X_CSRFTOKEN=csrftoken)
+        self.assertEqual(response.status_code, 200)
+        self.assertTrue(
+            {
+                "user_id",
+                "username",
+                "email",
+                "user_picture_url",
+                "my_roadmaps",
+            }
+            <= set(response.json().keys())
+        )
+        self.assertNotIn("roadmap_title1", response.content.decode())
+        self.assertIn("roadmap_title2", response.content.decode())
