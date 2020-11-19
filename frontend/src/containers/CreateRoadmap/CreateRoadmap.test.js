@@ -73,8 +73,6 @@ describe("<CreateRoadmap />", () => {
     mount(tmpCreateRoadmap);
     expect(spyHistoryGoBack).toHaveBeenCalledTimes(1);
     expect(spyAlert).toHaveBeenCalledTimes(1);
-    spyHistoryGoBack.mockRestore();
-    spyAlert.mockRestore();
   });
 
   it("should set state on input changes", () => {
@@ -91,7 +89,7 @@ describe("<CreateRoadmap />", () => {
     wrapper = component.find("#new-tag");
     wrapper.simulate("change", { target: { value: newTag } });
     wrapper = component.find("#roadmap-private");
-    wrapper.at(2).simulate("click");
+    wrapper.at(0).props().onClick();
     wrapper = component.find("#roadmap-description");
     wrapper.simulate("change", { target: { value: description } });
     const instance = component.find(Roadmap).instance();
@@ -336,7 +334,6 @@ describe("<CreateRoadmap />", () => {
     const wrapper = component.find("#back-roadmap-button");
     wrapper.simulate("click");
     expect(spyHistoryGoBack).toHaveBeenCalledTimes(1);
-    spyHistoryGoBack.mockRestore();
   });
 
   it("should call 'onClickCreateBack' - confirm=True", () => {
@@ -348,7 +345,6 @@ describe("<CreateRoadmap />", () => {
     wrapper.simulate("click");
     expect(spyBackConfirmTrue).toHaveBeenCalledTimes(1);
     expect(spyHistoryGoBack).toHaveBeenCalledTimes(1);
-    spyHistoryGoBack.mockRestore();
   });
 
   it("should call 'onClickCreateBack' - confirm=False", () => {
@@ -360,7 +356,6 @@ describe("<CreateRoadmap />", () => {
     wrapper.simulate("click");
     expect(spyBackConfirmFalse).toHaveBeenCalledTimes(1);
     expect(spyHistoryGoBack).toHaveBeenCalledTimes(0);
-    spyHistoryGoBack.mockRestore();
   });
 
   it("should call 'onClickCreateConfirm'", () => {
