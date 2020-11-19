@@ -1,6 +1,7 @@
 import React from "react";
 import PropTypes from "prop-types";
 import { taskType } from "../../constants";
+import "./CreateTask.scss";
 
 const CreateTask = (props) => {
   const {
@@ -54,8 +55,6 @@ const CreateTask = (props) => {
         className="task-type"
         value={type}
         onChange={(event) => {
-          // eslint-disable-next-line no-debugger
-          debugger;
           return changeTaskTypeHandler(tmpSectionId, tmpTaskId, event.target.value);
         }}
       >
