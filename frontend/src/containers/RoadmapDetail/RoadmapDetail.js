@@ -132,10 +132,8 @@ class RoadmapDetail extends Component {
             <DialogTitle id="alert-dialog-slide-title">Private page!</DialogTitle>
             <DialogContent>
               <DialogContentText id="alert-dialog-slide-description">
-                Only the author can access this Roadmap.
-              </DialogContentText>
-              <DialogContentText id="alert-dialog-slide-description">
-                If you press the OK button, you will be redirected to your previous page.
+                Only the author can access this Roadmap. If you press the OK button, you will be
+                redirected to your previous page.
               </DialogContentText>
             </DialogContent>
             <DialogActions>
