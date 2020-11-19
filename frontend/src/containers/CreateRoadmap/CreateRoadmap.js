@@ -285,7 +285,7 @@ class CreateRoadmap extends Component {
   render() {
     const { selectedUser, history } = this.props;
     if (selectedUser === undefined) {
-      alert("Please sign in!");
+      window.alert("Please sign in!");
       history.goBack();
       return <div />;
     }
@@ -343,9 +343,7 @@ class CreateRoadmap extends Component {
             onChange={(event) => this.onChangeLevel(event.target.value)}
           >
             Level
-            <option selected value={0}>
-              Choose level
-            </option>
+            <option value={0}>Choose level</option>
             <option value={levelType.BASIC}>Basic</option>
             <option value={levelType.INTERMEDIATE}>Intermediate</option>
             <option value={levelType.ADVANCED}>Advanced</option>
@@ -397,8 +395,8 @@ class CreateRoadmap extends Component {
 }
 
 CreateRoadmap.propTypes = {
-  history: PropTypes.objectOf(PropTypes.any).isRequired,
-  selectedUser: PropTypes.objectOf(PropTypes.any).isRequired,
+  history: PropTypes.objectOf(PropTypes.any),
+  selectedUser: PropTypes.objectOf(PropTypes.any),
   onCreateRoadmap: PropTypes.func.isRequired,
 };
 

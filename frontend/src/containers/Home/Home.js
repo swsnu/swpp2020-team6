@@ -42,7 +42,7 @@ class Home extends Component {
 
 Home.propTypes = {
   onSignOut: PropTypes.func.isRequired,
-  history: PropTypes.objectOf(PropTypes.any).isRequired,
+  history: PropTypes.objectOf(PropTypes.any),
 };
 
 const mapStateToProps = (state) => {

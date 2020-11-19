@@ -10,7 +10,8 @@ import "./EditRoadmap.scss";
 
 class EditRoadmap extends Component {
   state = {
-    title: null,
+    received: false,
+    title: "",
     level: 0,
     sections: [],
     tags: [],
@@ -24,7 +25,24 @@ class EditRoadmap extends Component {
     onGetRoadmap(match.params.id);
   }
 
-  onClickLevel = (level) => {
+  setInitialState = () => {
+    const { selectedRoadmap } = this.props;
+    this.setState({
+      received: true,
+      title: selectedRoadmap.title,
+      level: parseInt(selectedRoadmap.level, 10),
+      sections: selectedRoadmap.sections,
+      tags: selectedRoadmap.tags.map((tag) => {
+        return tag.tag_name;
+      }),
+    });
+  };
+
+  onChangeTitle = (title) => {
+    this.setState({ title });
+  };
+
+  onChangeLevel = (level) => {
     this.setState({ level });
   };
 
@@ -291,7 +309,7 @@ class EditRoadmap extends Component {
     const { selectedRoadmap, selectedUser } = this.props;
 
     if (selectedUser === undefined) {
-      alert("Please sign in!");
+      window.alert("Please sign in!");
       return <div />;
     }
     if (selectedRoadmap === undefined) {
@@ -303,21 +321,15 @@ class EditRoadmap extends Component {
     }
     if (selectedRoadmap.author_id !== selectedUser.user_id) {
       const { history } = this.props;
-      alert("Only the author can edit the Roadmap!");
+      window.alert("Only the author can edit the Roadmap!");
       history.goBack();
       return <div />;
     }
 
-    const { sections, level, title, tags, newTag } = this.state;
-    if (title === null) {
-      this.setState({
-        title: selectedRoadmap.title,
-        level: selectedRoadmap.level,
-        sections: selectedRoadmap.sections,
-        tags: selectedRoadmap.tags.map((tag) => {
-          return tag.tag_name;
-        }),
-      });
+    const { received, sections, level, title, tags, newTag } = this.state;
+
+    if (received === false) {
+      this.setInitialState();
     }
     const taglist = tags.map((tag, index) => {
       return (
@@ -366,19 +378,16 @@ class EditRoadmap extends Component {
             id="roadmap-title"
             type="text"
             value={title}
-            onChange={(event) => this.setState({ title: event.target.value })}
+            onChange={(event) => this.onChangeTitle(event.target.value)}
           />
           <br />
-          <label>Roadmap Level</label>
           <select
             id="roadmap-level"
             value={level}
-            onChange={(event) => this.onClickLevel(event.target.value)}
+            onChange={(event) => this.onChangeLevel(event.target.value)}
           >
             Level
-            <option selected value={0}>
-              Choose level
-            </option>
+            <option value={0}>Choose level</option>
             <option value={levelType.BASIC}>Basic</option>
             <option value={levelType.INTERMEDIATE}>Intermediate</option>
             <option value={levelType.ADVANCED}>Advanced</option>
@@ -428,13 +437,13 @@ class EditRoadmap extends Component {
 }
 
 EditRoadmap.propTypes = {
-  selectedRoadmap: PropTypes.objectOf(PropTypes.any).isRequired,
-  selectedUser: PropTypes.objectOf(PropTypes.any).isRequired,
+  selectedRoadmap: PropTypes.objectOf(PropTypes.any),
+  selectedUser: PropTypes.objectOf(PropTypes.any),
   onGetRoadmap: PropTypes.func.isRequired,
   onEditRoadmap: PropTypes.func.isRequired,
   onResetRoadmap: PropTypes.func.isRequired,
-  history: PropTypes.objectOf(PropTypes.any).isRequired,
-  match: PropTypes.objectOf(PropTypes.any).isRequired,
+  history: PropTypes.objectOf(PropTypes.any),
+  match: PropTypes.objectOf(PropTypes.any),
 };
 
 const mapStateToProps = (state) => {

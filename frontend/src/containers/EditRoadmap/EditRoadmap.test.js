@@ -101,6 +101,7 @@ const mockStoreRoadmapUndefined = getMockStore(initialUserState, initialRoadmapS
 describe("<EditRoadmap />", () => {
   let editRoadmap;
   let spyHistoryGoBack;
+  let spyAlert;
 
   beforeEach(() => {
     editRoadmap = (
@@ -120,6 +121,7 @@ describe("<EditRoadmap />", () => {
     );
 
     spyHistoryGoBack = jest.spyOn(history, "goBack").mockImplementation(() => {});
+    spyAlert = jest.spyOn(window, "alert").mockImplementation(() => {});
     jest.spyOn(history, "push").mockImplementation(() => {});
     jest.spyOn(actionCreators, "getRoadmap").mockImplementation(() => {
       return () => {};
@@ -147,6 +149,8 @@ describe("<EditRoadmap />", () => {
     const component = mount(tmpEditRoadmap);
     const wrapper = component.find(".CreateRoadmap");
     expect(wrapper.length).toBe(0);
+    expect(spyAlert).toHaveBeenCalledTimes(1);
+    spyAlert.mockRestore();
   });
 
   it("should wait if 'selectedRoadmap' has not been received", () => {
@@ -189,6 +193,8 @@ describe("<EditRoadmap />", () => {
     const component = mount(tmpEditRoadmap);
     const wrapper = component.find(".CreateRoadmap");
     expect(wrapper.length).toBe(0);
+    expect(spyAlert).toHaveBeenCalledTimes(1);
+    spyAlert.mockRestore();
   });
 
   it("should set state if selectedRoadmap has been received", () => {
@@ -196,6 +202,7 @@ describe("<EditRoadmap />", () => {
     const instance = component.find(EditRoadmap.WrappedComponent).instance();
     expect(instance.state).toEqual({
       ...initialRoadmapState.selectedRoadmap,
+      received: true,
       author_id: undefined,
       tags: ["tag0", "tag1"],
       newTag: "",
