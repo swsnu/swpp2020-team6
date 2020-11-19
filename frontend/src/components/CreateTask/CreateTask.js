@@ -54,7 +54,9 @@ const CreateTask = (props) => {
         className="task-type"
         value={type}
         onChange={(event) => {
-          changeTaskTypeHandler(tmpSectionId, tmpTaskId, event.target.value);
+          // eslint-disable-next-line no-debugger
+          debugger;
+          return changeTaskTypeHandler(tmpSectionId, tmpTaskId, event.target.value);
         }}
       >
         <option value={taskType.BOOK}>Book</option>

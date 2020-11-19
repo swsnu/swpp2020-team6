@@ -32,7 +32,7 @@ class CreateRoadmap extends Component {
   };
 
   onChangeLevel = (level) => {
-    this.setState({ level });
+    this.setState({ level: parseInt(level, 10) });
   };
 
   onChangeDescription = (description) => {
@@ -222,7 +222,7 @@ class CreateRoadmap extends Component {
             ...section,
             tasks: section.tasks.map((task, taskIndex) => {
               if (taskIndex === tmpTaskId) {
-                return { ...task, task_type: type };
+                return { ...task, task_type: parseInt(type, 10) };
               }
               return task;
             }),
@@ -364,7 +364,9 @@ class CreateRoadmap extends Component {
           <select
             id="roadmap-level"
             value={level}
-            onChange={(event) => this.onChangeLevel(event.target.value)}
+            onChange={(event) => {
+              return this.onChangeLevel(event.target.value);
+            }}
           >
             Level
             <option value={0}>Choose level</option>
