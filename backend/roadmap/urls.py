@@ -14,6 +14,6 @@ urlpatterns = [
     # ),
     # path("best/", views.best, name="roadmap_best"),
     # path("new/", views.new, name="roadmap_new"),
-    # path("simple_search/", views.simple_search, name="roadmap_simple_search"),
-    # path("advanced_search/", views.advanced_search, name="roadmap_advanced_search"),
+    path("simple_search/", views.simple_search, name="roadmap_simple_search"),
+    path("advanced_search/", views.advanced_search, name="roadmap_advanced_search"),
 ]

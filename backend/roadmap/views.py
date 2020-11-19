@@ -266,3 +266,37 @@ def roadmap_id_pin(request, roadmap_id):
         return JsonResponse(response_dict)
 
     return HttpResponseNotAllowed(["PUT"])
+
+
+def simple_search(request):
+    if request.method == "GET":
+        if not request.user.is_authenticated:
+            return HttpResponse(status=401)
+        try:
+            req_data = json.loads(request.body.decode())
+        # TODO: parse input - title
+        except (KeyError, JSONDecodeError):
+            return HttpResponseBadRequest()
+
+        # TODO: search with input
+
+        # TODO: response simple roadmap result
+        return
+    return HttpResponseNotAllowed(["GET"])
+
+
+def advanced_search(request):
+    if request.method == "GET":
+        if not request.user.is_authenticated:
+            return HttpResponse(status=401)
+        try:
+            req_data = json.loads(request.body.decode())
+        # TODO: parse input - title, tags, level, sort
+        except (KeyError, JSONDecodeError):
+            return HttpResponseBadRequest()
+
+        # TODO: search with input
+
+        # TODO: response simple roadmap result
+        return
+    return HttpResponseNotAllowed(["GET"])
