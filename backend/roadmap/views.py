@@ -293,7 +293,6 @@ def simple_search(request):
             return HttpResponse(status=401)
         try:
             target_keywords = request.GET.get("title").split()
-            print(target_keywords)
         except (KeyError, JSONDecodeError, AttributeError):
             return HttpResponseBadRequest()
 

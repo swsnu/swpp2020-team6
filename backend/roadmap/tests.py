@@ -300,3 +300,40 @@ class RoadmapTestCase(TestCase):
         )
         self.assertEqual(response.status_code, 200)
         self.assertFalse(response.json()["pinned"])
+
+    def test_simple_search(self):
+        client = Client(enforce_csrf_checks=True)
+        csrftoken = get_csrf(client)
+        path = self.roadmap_path + "simple_search/"
+
+        # 405 (except for GET)
+        response = client.put(path, HTTP_X_CSRFTOKEN=csrftoken)
+        self.assertEqual(response.status_code, 405)
+        response = client.post(path, HTTP_X_CSRFTOKEN=csrftoken)
+        self.assertEqual(response.status_code, 405)
+        response = client.delete(path, HTTP_X_CSRFTOKEN=csrftoken)
+        self.assertEqual(response.status_code, 405)
+
+        # 401 (GET)
+        response = client.get(path, HTTP_X_CSRFTOKEN=csrftoken)
+        self.assertEqual(response.status_code, 401)
+
+        user = signup_signin(client)
+        csrftoken = get_csrf(client)
+        # 400
+        response = client.get(path, {}, HTTP_X_CSRFTOKEN=csrftoken)
+        self.assertEqual(response.status_code, 400)
+
+        # Add roadmaps
+        roadmap1 = create_roadmap(title="roadmap with title", user=user)
+        roadmap2 = create_roadmap(title="title roadmap", user=user)
+
+        # 200 (GET)
+        print(path)
+        response = client.get(
+            path,
+            {"title": "roadmap title"},
+            HTTP_X_CSRFTOKEN=csrftoken,
+        )
+        self.assertEqual(response.status_code, 200)
+        self.assertEqual(len(response.json()["roadmaps"]), 2)
