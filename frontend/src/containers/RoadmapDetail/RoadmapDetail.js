@@ -258,7 +258,6 @@ RoadmapDetail.propTypes = {
   selectedRoadmap: PropTypes.objectOf(PropTypes.any),
 
   onGetRoadmap: PropTypes.func.isRequired,
-  onResetRoadmap: PropTypes.func.isRequired,
 
   onCreateComment: PropTypes.func.isRequired,
   onEditComment: PropTypes.func.isRequired,

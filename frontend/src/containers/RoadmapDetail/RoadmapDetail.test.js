@@ -525,7 +525,6 @@ describe("<RoadmapDetail />", () => {
   let spyGoBack;
   let spyEditComment;
   let spyDeleteComment;
-  let spyResetRoadmap;
   let spyToggleRoadmapLike;
   let spyToggleRoadmapPin;
   let spyChangeProgress;
@@ -547,9 +546,6 @@ describe("<RoadmapDetail />", () => {
       return () => {};
     });
     spyDeleteComment = jest.spyOn(actionCreators, "deleteComment").mockImplementation(() => {
-      return () => {};
-    });
-    spyResetRoadmap = jest.spyOn(actionCreators, "resetRoadmap_").mockImplementation(() => {
       return () => {};
     });
     spyToggleRoadmapLike = jest
@@ -1264,7 +1260,6 @@ describe("<RoadmapDetail />", () => {
     const backButton = component.find("#back-button");
     expect(backButton.length).toBe(1);
     backButton.simulate("click");
-    expect(spyResetRoadmap).toHaveBeenCalledTimes(1);
     expect(spyGoBack).toHaveBeenCalledTimes(1);
   });
 });
