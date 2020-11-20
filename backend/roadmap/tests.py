@@ -398,17 +398,31 @@ class RoadmapTestCase(TestCase):
         self.assertEqual(response.status_code, 403)
 
         # create my roadmap (progress 1)
-        my_roadmap_level1 = Roadmap.objects.create(
-            title="roadmap title",
-            level=1,
-            original_author=author_user,
-            author=author_user,
+        response = client.post(
+            self.roadmap_path,
+            self.dump_roadmap_input,
+            content_type=self.json_type,
+            HTTP_X_CSRFTOKEN=csrftoken,
         )
+
+        # change roadmap progress into 2 (in progress)
+        # this has to be done manually after the creation process
+        # since roadmaps are always created with progress 1 (before studying)
+        roadmap_progress1_roadmap_id = response.json()["id"]
+        roadmap_progress1_roadmap = Roadmap.objects.get(id=roadmap_progress1_roadmap_id)
+
+        # change the 'checked' task manually
+        # since task's 'checked' attribute is always set to False on creation
+        # Doing this to check if all tasks are cleared on progress state transition
+        roadmap_progress1_task = roadmap_progress1_roadmap.task_roadmap.all()[0]
+        roadmap_progress1_task.toggle_progress()
+        roadmap_progress1_task.save()
+        self.assertTrue(roadmap_progress1_task.checked)
 
         # 400
         # invalid state trainsition (1->1), (1->3)
         response = client.put(
-            self.roadmap_path + "{}/progress/".format(my_roadmap_level1.id),
+            self.roadmap_path + "{}/progress/".format(roadmap_progress1_roadmap_id),
             {"progress_state": 1},
             content_type=self.json_type,
             HTTP_X_CSRFTOKEN=csrftoken,
@@ -416,7 +430,7 @@ class RoadmapTestCase(TestCase):
         self.assertEqual(response.status_code, 400)
 
         response = client.put(
-            self.roadmap_path + "{}/progress/".format(my_roadmap_level1.id),
+            self.roadmap_path + "{}/progress/".format(roadmap_progress1_roadmap_id),
             {"progress_state": 3},
             content_type=self.json_type,
             HTTP_X_CSRFTOKEN=csrftoken,
@@ -426,13 +440,18 @@ class RoadmapTestCase(TestCase):
         # 200
         # state trainsition: start (1->2)
         response = client.put(
-            self.roadmap_path + "{}/progress/".format(my_roadmap_level1.id),
+            self.roadmap_path + "{}/progress/".format(roadmap_progress1_roadmap_id),
             {"progress_state": 2},
             content_type=self.json_type,
             HTTP_X_CSRFTOKEN=csrftoken,
         )
         self.assertEqual(response.status_code, 200)
         self.assertEqual(response.json()["progress_state"], 2)
+
+        # every task's 'checked state should be cleared
+        roadmap_progress1_roadmap = Roadmap.objects.get(id=roadmap_progress1_roadmap_id)
+        for task in roadmap_progress1_roadmap.task_roadmap.all():
+            self.assertFalse(task.checked)
 
         # create my roadmap (progress 2)
         dump_roadmap_progress2 = {
@@ -470,14 +489,6 @@ class RoadmapTestCase(TestCase):
         roadmap_progress2_roadmap.progress = 2
         roadmap_progress2_roadmap.save()
 
-        # change the 'checked' task manually
-        # since task's 'checked' attribute is always set to False on creation
-        # Doing this to check if all tasks are cleared on progress state transition
-        roadmap_progress2_task = roadmap_progress2_roadmap.task_roadmap.all()[0]
-        roadmap_progress2_task.toggle_progress()
-        roadmap_progress2_task.save()
-        self.assertTrue(roadmap_progress2_task.checked)
-
         # 400
         # invalid state transition (2 -> 2)
         response = client.put(
@@ -500,11 +511,6 @@ class RoadmapTestCase(TestCase):
         )
         self.assertEqual(response.status_code, 200)
         self.assertEqual(response.json()["progress_state"], 3)
-
-        # every task's 'checked state should be cleared
-        roadmap_progress2_roadmap = Roadmap.objects.get(id=roadmap_progress2_roadmap_id)
-        for task in roadmap_progress2_roadmap.task_roadmap.all():
-            self.assertFalse(task.checked)
 
         # create my roadmap (progress 3)
         dump_roadmap_progress3 = {

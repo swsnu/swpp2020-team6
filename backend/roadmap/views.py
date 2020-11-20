@@ -307,16 +307,23 @@ def roadmap_id_progress(request, roadmap_id):
                 target_roadmap.save()
                 response_dict = {
                     "progress_state": 1,
-                    "tasks": list(
+                    "sections": list(
                         {
-                            "task_id": task.id,
-                            "task_title": task.title,
-                            "task_type": task.type,
-                            "task_url": task.url,
-                            "task_description": task.description,
-                            "task_checked": task.checked,
+                            "section_id": section.id,
+                            "section_title": section.title,
+                            "tasks": list(
+                                {
+                                    "task_id": task.id,
+                                    "task_title": task.title,
+                                    "task_type": task.type,
+                                    "task_url": task.url,
+                                    "task_description": task.description,
+                                    "task_checked": task.checked,
+                                }
+                                for task in section.task_section.all()
+                            ),
                         }
-                        for task in target_roadmap.task_roadmap.all()
+                        for section in target_roadmap.section_roadmap.all()
                     ),
                 }
                 return JsonResponse(response_dict)
@@ -325,21 +332,27 @@ def roadmap_id_progress(request, roadmap_id):
         elif new_progress_state == 3:
             if target_roadmap.progress == 2:  # progress finish
                 target_roadmap.progress = 3
-                target_roadmap.clear_section_progress()
                 target_roadmap.save()
 
                 response_dict = {
                     "progress_state": 3,
-                    "tasks": list(
+                    "sections": list(
                         {
-                            "task_id": task.id,
-                            "task_title": task.title,
-                            "task_type": task.type,
-                            "task_url": task.url,
-                            "task_description": task.description,
-                            "task_checked": task.checked,
+                            "section_id": section.id,
+                            "section_title": section.title,
+                            "tasks": list(
+                                {
+                                    "task_id": task.id,
+                                    "task_title": task.title,
+                                    "task_type": task.type,
+                                    "task_url": task.url,
+                                    "task_description": task.description,
+                                    "task_checked": task.checked,
+                                }
+                                for task in section.task_section.all()
+                            ),
                         }
-                        for task in target_roadmap.task_roadmap.all()
+                        for section in target_roadmap.section_roadmap.all()
                     ),
                 }
                 return JsonResponse(response_dict)
@@ -348,20 +361,28 @@ def roadmap_id_progress(request, roadmap_id):
         elif new_progress_state == 2:
             if target_roadmap.progress == 1:  # progress start
                 target_roadmap.progress = 2
+                target_roadmap.clear_section_progress()
                 target_roadmap.save()
 
                 response_dict = {
                     "progress_state": 2,
-                    "tasks": list(
+                    "sections": list(
                         {
-                            "task_id": task.id,
-                            "task_title": task.title,
-                            "task_type": task.type,
-                            "task_url": task.url,
-                            "task_description": task.description,
-                            "task_checked": task.checked,
+                            "section_id": section.id,
+                            "section_title": section.title,
+                            "tasks": list(
+                                {
+                                    "task_id": task.id,
+                                    "task_title": task.title,
+                                    "task_type": task.type,
+                                    "task_url": task.url,
+                                    "task_description": task.description,
+                                    "task_checked": task.checked,
+                                }
+                                for task in section.task_section.all()
+                            ),
                         }
-                        for task in target_roadmap.task_roadmap.all()
+                        for section in target_roadmap.section_roadmap.all()
                     ),
                 }
                 return JsonResponse(response_dict)
