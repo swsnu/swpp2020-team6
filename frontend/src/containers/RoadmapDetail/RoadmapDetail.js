@@ -79,6 +79,7 @@ class RoadmapDetail extends Component {
   };
 
   render() {
+    console.log("caleed");
     const { selectedUser, isSignedIn, match, selectedRoadmap } = this.props;
 
     if (isSignedIn === false) {

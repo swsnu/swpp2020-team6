@@ -88,7 +88,25 @@ const reducer = (state = initialState, action) => {
         selectedRoadmap: {
           ...state.selectedRoadmap,
           progress: action.progress,
-          tasks: action.tasks,
+          sections: action.sections,
+        },
+      };
+    case actionTypes.CHANGE_CHECKBOX:
+      const updatedSections = state.selectedRoadmap.sections.map((section) => {
+        const updatedTasks = section.tasks.map((task) => {
+          if (task.task_id === action.taskId) {
+            return { ...task, task_checked: action.checked };
+          }
+          return task;
+        });
+        return { ...section, tasks: updatedTasks };
+      });
+
+      return {
+        ...state,
+        selectedRoadmap: {
+          ...state.selectedRoadmap,
+          sections: updatedSections,
         },
       };
     default:

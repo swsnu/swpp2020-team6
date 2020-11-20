@@ -13,4 +13,5 @@ export {
   toggleRoadmapLike,
   toggleRoadmapPin,
   changeProgress,
+  changeCheckbox,
 } from "./roadmap";

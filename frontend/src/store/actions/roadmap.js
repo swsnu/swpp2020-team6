@@ -360,12 +360,11 @@ export const toggleRoadmapPin = (roadmapId) => {
   };
 };
 
-export const changeProgress_ = (responseData, roadmapId) => {
+export const changeProgress_ = (responseData) => {
   return {
     type: actionTypes.PROGRESS_CHANGE,
     progress: responseData.progress_state,
-    tasks: responseData.tasks,
-    roadmapId,
+    sections: responseData.sections,
   };
 };
 
@@ -374,18 +373,22 @@ export const changeProgress = (newState, roadmapId) => {
     return axios
       .put(`/api/roadmap/${roadmapId}/progress/`, newState)
       .then((response) => {
-        dispatch(changeProgress_(response.data, roadmapId));
+        dispatch(changeProgress_(response.data));
       })
       .catch((error) => {
         switch (error.response.status) {
           case 401:
-            window.alert("Only signed in users can pin/unpin Roadmaps! Please sign in!");
+            window.alert(
+              "Only signed in users can change the progress state of their Roadmaps! Please sign in!",
+            );
+            dispatch(goBack());
             break;
           case 404:
             window.alert("No such Roadmap!");
+            dispatch(goBack());
             break;
           case 403:
-            window.alert("only the author can change progress!");
+            window.alert("only the author can change the progress!");
             break;
           case 400:
             window.alert("Parsing error!");
@@ -393,7 +396,44 @@ export const changeProgress = (newState, roadmapId) => {
           default:
             break;
         }
-        dispatch(goBack());
+      });
+  };
+};
+
+export const changeCheckbox_ = (checked, taskId) => {
+  return {
+    type: actionTypes.CHANGE_CHECKBOX,
+    checked,
+    taskId,
+  };
+};
+
+export const changeCheckbox = (taskId) => {
+  return (dispatch) => {
+    return axios
+      .put(`/api/task/${taskId}/`)
+      .then((response) => {
+        dispatch(changeCheckbox_(response.data.checked, taskId));
+      })
+      .catch((error) => {
+        switch (error.response.status) {
+          case 401:
+            window.alert("Only signed in users can check/uncheck Tasks! Please sign in!");
+            dispatch(goBack());
+            break;
+          case 404:
+            window.alert("No such Roadmap!");
+            dispatch(goBack());
+            break;
+          case 403:
+            window.alert("only the author can change the Task's checked state!");
+            break;
+          case 400:
+            window.alert("Parsing error!");
+            break;
+          default:
+            break;
+        }
       });
   };
 };
