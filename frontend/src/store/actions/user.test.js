@@ -13,6 +13,12 @@ const stubSelectedUser = {
 };
 
 describe("ActionCreatorsUser", () => {
+  let spyAlert;
+
+  beforeEach(() => {
+    spyAlert = jest.spyOn(window, "alert").mockImplementation(() => {});
+  });
+
   afterEach(() => {
     jest.clearAllMocks();
   });
@@ -66,6 +72,7 @@ describe("ActionCreatorsUser", () => {
     });
     store.dispatch(actionCreators.signIn()).then(() => {
       expect(spy).toHaveBeenCalledTimes(1);
+      expect(spyAlert).toHaveBeenCalledTimes(1);
       done();
     });
   });
@@ -83,6 +90,7 @@ describe("ActionCreatorsUser", () => {
     });
     store.dispatch(actionCreators.signIn()).then(() => {
       expect(spy).toHaveBeenCalledTimes(1);
+      expect(spyAlert).toHaveBeenCalledTimes(1);
       done();
     });
   });
@@ -115,6 +123,7 @@ describe("ActionCreatorsUser", () => {
     });
     store.dispatch(actionCreators.signOut()).then(() => {
       expect(spy).toHaveBeenCalledTimes(1);
+      expect(spyAlert).toHaveBeenCalledTimes(1);
       done();
     });
   });
@@ -132,6 +141,7 @@ describe("ActionCreatorsUser", () => {
     });
     store.dispatch(actionCreators.signOut()).then(() => {
       expect(spy).toHaveBeenCalledTimes(1);
+      expect(spyAlert).toHaveBeenCalledTimes(1);
       done();
     });
   });
@@ -164,6 +174,7 @@ describe("ActionCreatorsUser", () => {
     });
     store.dispatch(actionCreators.signUp()).then(() => {
       expect(spy).toHaveBeenCalledTimes(1);
+      expect(spyAlert).toHaveBeenCalledTimes(1);
       done();
     });
   });
@@ -181,6 +192,7 @@ describe("ActionCreatorsUser", () => {
     });
     store.dispatch(actionCreators.signUp()).then(() => {
       expect(spy).toHaveBeenCalledTimes(1);
+      expect(spyAlert).toHaveBeenCalledTimes(1);
       done();
     });
   });

@@ -1,0 +1,59 @@
+.Roadmap {
+  max-width: 1200px;
+  min-width: 800px;
+  margin: auto;
+  .roadmap {
+    position: relative;
+    left: 15%;
+    width: 77%;
+    border: 1px solid rgb(82, 82, 87);
+    box-sizing: border-box;
+    padding: 5px;
+    margin: 5px 5px 5px 5px;
+
+    #roadmap-title {
+      position: relative;
+      width: 60%;
+      margin: 5px 5px 5px 5px;
+      border: 1px solid rgb(87, 82, 82);
+      box-sizing: border-box;
+      padding: 5px;
+      font-weight: 700;
+      color: rgb(0, 0, 225);
+      font-size: 20px;
+    }
+    #roadmap-level {
+      position: relative;
+      width: 20%;
+      border: 1px solid rgb(87, 82, 82);
+      box-sizing: border-box;
+      padding: 5px;
+      margin: 5px 5px 5px 5px;
+      font-weight: 700;
+      color: rgb(0, 0, 225);
+      font-size: 20px;
+    }
+
+    label {
+      position: relative;
+      color: black;
+      margin: 10px;
+      font-size: 15px;
+    }
+  }
+
+  #create-section-button {
+    position: relative;
+    height: 30px;
+    margin: 15px 15px 70px 15px;
+  }
+  #back-roadmap-button,
+  #confirm-roadmap-button {
+    float: right;
+    position: relative;
+    height: 50px;
+    padding: 10px;
+    font-size: 20px;
+    margin: 15px 15px 70px 15px;
+  }
+}

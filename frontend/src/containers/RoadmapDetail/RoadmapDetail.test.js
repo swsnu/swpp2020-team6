@@ -4,6 +4,8 @@ import { Provider } from "react-redux";
 import { ConnectedRouter } from "connected-react-router";
 import { Route, Switch } from "react-router-dom";
 
+import Button from "@material-ui/core/Button";
+import Dialog from "@material-ui/core/Dialog";
 import RoadmapDetail from "./RoadmapDetail";
 import getMockStore from "../../test-utils/mocks";
 import { history } from "../../store/store";
@@ -52,6 +54,8 @@ const stubAuthorizedUserLikePinState = {
         title: "title1",
         date: dateData,
         level: 1,
+        description: "description",
+        private: false,
         like_count: 1,
         comment_count: 0,
         pin_count: 1,
@@ -82,6 +86,8 @@ const stubAuthorizedUserLikePinState = {
         title: "title1",
         date: dateData,
         level: 1,
+        description: "description",
+        private: false,
         like_count: 1,
         comment_count: 0,
         pin_count: 1,
@@ -120,6 +126,8 @@ const stubMyRoadmapBeforeStudyingState = {
     title: "title1",
     date: dateData,
     level: 1,
+    description: "description",
+    private: true,
     like_count: 0,
     comment_count: 0,
     pin_count: 0,
@@ -191,6 +199,8 @@ const stubMyRoadmapInProgressState = {
     title: "title1",
     date: dateData,
     level: 2,
+    description: "description",
+    private: false,
     like_count: 0,
     comment_count: 0,
     pin_count: 0,
@@ -262,6 +272,8 @@ const stubMyRoadmapFinishedState = {
     title: "title1",
     date: dateData,
     level: 3,
+    description: "description",
+    private: false,
     like_count: 0,
     comment_count: 0,
     pin_count: 0,
@@ -333,6 +345,8 @@ const stubBuggyState = {
     title: "title1",
     date: dateData,
     level: 4,
+    description: "description",
+    private: false,
     like_count: 0,
     comment_count: 0,
     pin_count: 0,
@@ -404,6 +418,98 @@ const stubOtherRoadmapState = {
     title: "title1",
     date: dateData,
     level: 1,
+    description: "description",
+    private: false,
+    like_count: 0,
+    comment_count: 2,
+    pin_count: 0,
+    progress: beforeStudying,
+    original_author_id: 1,
+    original_author_name: "user1",
+    author_id: 2,
+    author_name: "user2",
+    author_user_picture_url: profileURL,
+    tags: [
+      {
+        tag_id: 1,
+        tag_name: "tag 1",
+      },
+      {
+        tag_id: 2,
+        tag_name: "tag 2",
+      },
+      {
+        tag_id: 3,
+        tag_name: "tag 3",
+      },
+    ],
+    sections: [
+      {
+        section_id: 1,
+        section_title: "section title 1",
+        tasks: [
+          {
+            task_id: 1,
+            task_title: "task title 1-1",
+            task_type: 3,
+            task_url: "task url 1-1",
+            task_description: "task description 1-1",
+            task_checked: false,
+          },
+          {
+            task_id: 2,
+            task_title: "task title 1-2",
+            task_type: 1,
+            task_url: "task url 1-2",
+            task_description: "task description 1-2",
+            task_checked: false,
+          },
+        ],
+      },
+      {
+        section_id: 2,
+        section_title: "section title 2",
+        tasks: [
+          {
+            task_id: 3,
+            task_title: "task title 2-1",
+            task_type: 3,
+            task_url: "task url 2-1",
+            task_description: "task description 2-1",
+            task_checked: false,
+          },
+        ],
+      },
+    ],
+    comments: [
+      {
+        comment_id: 1,
+        roadmap_id: 1,
+        content: "it is great!",
+        author_id: 5,
+        author_name: "user5",
+        author_picture_url: profileURL,
+      },
+      {
+        comment_id: 2,
+        roadmap_id: 1,
+        content: "it is great!",
+        author_id: 1,
+        author_name: "user1",
+        author_picture_url: profileURL,
+      },
+    ],
+  },
+};
+
+const stubOtherPrivateRoadmapState = {
+  selectedRoadmap: {
+    id: 1,
+    title: "title1",
+    date: dateData,
+    level: 1,
+    description: "description",
+    private: true,
     like_count: 0,
     comment_count: 2,
     pin_count: 0,
@@ -510,6 +616,11 @@ const mockAuthorizedUserBuggyStore = getMockStore(stubAuthorizedUserState, stubB
 const mockAuthorizedUserOtherRoadmapStore = getMockStore(
   stubAuthorizedUserState,
   stubOtherRoadmapState,
+);
+
+const mockAuthorizedUserOtherPrivateRoadmapStore = getMockStore(
+  stubAuthorizedUserState,
+  stubOtherPrivateRoadmapState,
 );
 
 const mockAuthorizedUserLikePinRoadmapStore = getMockStore(
@@ -708,7 +819,7 @@ describe("<RoadmapDetail />", () => {
   });
 
   // My Roadmap Testing
-  /* ----------------- Sections & Tasks & statistics ----------------- */
+  /* -------------- Description & Sections & Tasks & statistics -------------- */
   it(`should render sections, taks, progress state, 
     statistics(like, pin, comment) when the author comes in.`, () => {
     const component = mount(
@@ -751,6 +862,9 @@ describe("<RoadmapDetail />", () => {
 
     const commentCount = component.find("#roadmap-comment-count");
     expect(commentCount.at(0).text()).toBe(`Comments0`);
+
+    const description = component.find(".roadmap-description");
+    expect(description.at(0).text()).toBe(`description`);
 
     const sections = component.find(".Section");
     expect(sections.length).toBe(2);
@@ -940,8 +1054,8 @@ describe("<RoadmapDetail />", () => {
     expect(wrapper.length).toBe(0);
   });
 
-  // Other's Roadmap Testing
-  /* ---------------------- No progressbar,edit,delete ---------------------- */
+  /* ---------------------- Other's Roadmap (public) ---------------------- */
+  // No progressbar,edit,delete
   it(`should not show edit, delete, progressbar.`, () => {
     const component = mount(
       <Provider store={mockAuthorizedUserOtherRoadmapStore}>
@@ -967,6 +1081,39 @@ describe("<RoadmapDetail />", () => {
 
     const originalAuthor = component.find("#roadmap-original-author-name");
     expect(originalAuthor.at(0).text()).toBe("user1");
+  });
+
+  /* ---------------------- Other's Roadmap (private) ---------------------- */
+  it(`should not show edit, delete, progressbar.`, () => {
+    const component = mount(
+      <Provider store={mockAuthorizedUserOtherPrivateRoadmapStore}>
+        <ConnectedRouter history={history}>
+          <Switch>
+            <Route
+              path="/"
+              exact
+              render={() => <RoadmapDetail history={history} match={{ params: { id: 1 } }} />}
+            />
+          </Switch>
+        </ConnectedRouter>
+      </Provider>,
+    );
+    const outerWrapper = component.find(".RoadmapDetail");
+    expect(outerWrapper.length).toBe(1);
+
+    const dialog = component.find(Dialog);
+    expect(dialog.length).toBe(1);
+
+    const content = component.find("#alert-dialog-slide-description");
+    expect(content.at(0).text()).toBe(
+      `Only the author can access this Roadmap. If you press the OK button, you will be redirected to your previous page.`,
+    );
+
+    const buttonOK = component.find(Button);
+    expect(buttonOK.at(0).text()).toBe("OK");
+    buttonOK.simulate("click");
+    expect(spyResetRoadmap).toHaveBeenCalledTimes(1);
+    expect(spyGoBack).toHaveBeenCalledTimes(1);
   });
 
   /* --------------------- Like Roadmap Button --------------------- */

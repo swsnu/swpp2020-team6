@@ -24,5 +24,7 @@ module.exports = {
     "no-restricted-globals": 0,
     "jsx-a11y/label-has-associated-control": 0,
     "no-case-declarations": 0,
+    "react/require-default-props": 0,
+    "react/jsx-wrap-multilines": 0,
   },
 };

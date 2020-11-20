@@ -11,11 +11,67 @@ const stubSelectedUser = {
   my_roadmaps: [],
 };
 
+const stubSimpleRoadmapData = {
+  id: 1,
+  title: "new-rm-title",
+  date: "2020-11-14 05:46:47",
+  level: 1,
+  description: "description",
+  private: false,
+  like_count: 1,
+  comment_count: 0,
+  pin_count: 0,
+  progress: 1,
+  original_author: 1,
+  author_id: 1,
+  author_name: "user1",
+  author_user_picture_url: "",
+  tags: [
+    {
+      tag_id: 1,
+      tag_name: "python",
+    },
+    {
+      tag_id: 2,
+      tag_name: "CV",
+    },
+  ],
+};
+
+const stubSimpleRoadmapData2 = {
+  id: 2,
+  title: "new-rm-title2",
+  date: "2020-11-14 05:46:47",
+  level: 1,
+  description: "description",
+  private: false,
+  like_count: 1,
+  comment_count: 0,
+  pin_count: 0,
+  progress: 1,
+  original_author: 1,
+  author_id: 1,
+  author_name: "user1",
+  author_user_picture_url: "",
+  tags: [
+    {
+      tag_id: 1,
+      tag_name: "python",
+    },
+    {
+      tag_id: 2,
+      tag_name: "CV",
+    },
+  ],
+};
+
 const stubSimpleRoadmapOnLike = {
   id: 11,
   title: "new-rm-title",
   date: "2020-11-14 05:46:47",
   level: 1,
+  description: "description",
+  private: false,
   like_count: 1,
   comment_count: 0,
   pin_count: 0,
@@ -41,6 +97,8 @@ const stubSimpleRoadmapOnPin = {
   title: "new-rm-title",
   date: "2020-11-14 05:46:47",
   level: 1,
+  description: "description",
+  private: false,
   like_count: 0,
   comment_count: 0,
   pin_count: 1,
@@ -128,6 +186,69 @@ describe("User Reducer", () => {
       isSignedIn: undefined,
       selectedUser: undefined,
     });
+  });
+
+  it("should change my_roadmaps on CREATE_ROADMAP", () => {
+    const newState = reducer(
+      { isSignedIn: true, selectedUser: stubSelectedUser },
+      {
+        type: actionTypes.CREATE_ROADMAP,
+        roadmapData: stubSimpleRoadmapData,
+      },
+    );
+
+    expect(newState.selectedUser.my_roadmaps.length).toBe(1);
+  });
+
+  it("should change my_roadmaps on EDIT_ROADMAP", () => {
+    const newState = reducer(
+      {
+        isSignedIn: true,
+        selectedUser: {
+          ...stubSelectedUser,
+          my_roadmaps: [stubSimpleRoadmapData, stubSimpleRoadmapData2],
+        },
+      },
+      {
+        type: actionTypes.EDIT_ROADMAP,
+        roadmapData: { ...stubSimpleRoadmapData2, title: "test" },
+      },
+    );
+
+    expect(newState.selectedUser.my_roadmaps).toEqual([
+      stubSimpleRoadmapData,
+      { ...stubSimpleRoadmapData2, title: "test" },
+    ]);
+  });
+
+  it("should change my_roadmaps on DELETE_ROADMAP", () => {
+    const newState = reducer(
+      {
+        isSignedIn: true,
+        selectedUser: {
+          ...stubSelectedUser,
+          my_roadmaps: [stubSimpleRoadmapData, stubSimpleRoadmapData2],
+        },
+      },
+      {
+        type: actionTypes.DELETE_ROADMAP,
+        roadmapId: 2,
+      },
+    );
+
+    expect(newState.selectedUser.my_roadmaps).toEqual([stubSimpleRoadmapData]);
+  });
+
+  it("should change my_roadmaps on DUPLICATE_ROADMAP", () => {
+    const newState = reducer(
+      { isSignedIn: true, selectedUser: stubSelectedUser },
+      {
+        type: actionTypes.DUPLICATE_ROADMAP,
+        roadmapData: stubSimpleRoadmapData,
+      },
+    );
+
+    expect(newState.selectedUser.my_roadmaps.length).toBe(1);
   });
 
   it("should change liked_roadmaps on roadmap like ", () => {

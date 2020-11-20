@@ -68,16 +68,16 @@ const RoadmapButtons = (props) => {
 };
 
 RoadmapButtons.propTypes = {
-  buttonsRoadmapId: PropTypes.number.isRequired,
-  isAuthor: PropTypes.bool.isRequired,
-  history: PropTypes.objectOf(PropTypes.any).isRequired,
-  match: PropTypes.objectOf(PropTypes.any).isRequired,
+  buttonsRoadmapId: PropTypes.number,
+  isAuthor: PropTypes.bool,
+  history: PropTypes.objectOf(PropTypes.any),
+  match: PropTypes.objectOf(PropTypes.any),
   onDeleteRoadmap: PropTypes.func.isRequired,
   toggleRoadmapLike: PropTypes.func.isRequired,
   toggleRoadmapPin: PropTypes.func.isRequired,
   onDuplicateRoadmap: PropTypes.func.isRequired,
 
-  selectedUser: PropTypes.objectOf(PropTypes.any).isRequired,
+  selectedUser: PropTypes.objectOf(PropTypes.any),
 };
 
 const mapDispatchToProps = (dispatch) => {

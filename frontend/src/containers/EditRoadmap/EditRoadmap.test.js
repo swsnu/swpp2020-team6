@@ -6,6 +6,7 @@ import { Route, Switch } from "react-router-dom";
 import { ConnectedRouter } from "connected-react-router";
 import getMockStore from "../../test-utils/mocks";
 import { history } from "../../store/store";
+import Roadmap from "../Roadmap/Roadmap";
 import EditRoadmap from "./EditRoadmap";
 import * as actionCreators from "../../store/actions/roadmap";
 
@@ -25,8 +26,10 @@ const initialRoadmapStateUndefined = {
 const initialRoadmapState = {
   selectedRoadmap: {
     author_id: 1,
+    private: true,
     title: "test",
     level: 2,
+    description: "test-description",
     sections: [
       {
         section_title: "test-section0",
@@ -101,6 +104,7 @@ const mockStoreRoadmapUndefined = getMockStore(initialUserState, initialRoadmapS
 describe("<EditRoadmap />", () => {
   let editRoadmap;
   let spyHistoryGoBack;
+  let spyAlert;
 
   beforeEach(() => {
     editRoadmap = (
@@ -120,6 +124,7 @@ describe("<EditRoadmap />", () => {
     );
 
     spyHistoryGoBack = jest.spyOn(history, "goBack").mockImplementation(() => {});
+    spyAlert = jest.spyOn(window, "alert").mockImplementation(() => {});
     jest.spyOn(history, "push").mockImplementation(() => {});
     jest.spyOn(actionCreators, "getRoadmap").mockImplementation(() => {
       return () => {};
@@ -145,8 +150,9 @@ describe("<EditRoadmap />", () => {
       </Provider>
     );
     const component = mount(tmpEditRoadmap);
-    const wrapper = component.find(".CreateRoadmap");
+    const wrapper = component.find(".EditRoadmap");
     expect(wrapper.length).toBe(0);
+    expect(spyAlert).toHaveBeenCalledTimes(1);
   });
 
   it("should wait if 'selectedRoadmap' has not been received", () => {
@@ -189,13 +195,17 @@ describe("<EditRoadmap />", () => {
     const component = mount(tmpEditRoadmap);
     const wrapper = component.find(".CreateRoadmap");
     expect(wrapper.length).toBe(0);
+    expect(spyAlert).toHaveBeenCalledTimes(1);
   });
 
   it("should set state if selectedRoadmap has been received", () => {
     const component = mount(editRoadmap);
-    const instance = component.find(EditRoadmap.WrappedComponent).instance();
+    const instance = component.find(Roadmap).instance();
     expect(instance.state).toEqual({
       ...initialRoadmapState.selectedRoadmap,
+      received: true,
+      private: undefined,
+      isPrivate: initialRoadmapState.selectedRoadmap.private,
       author_id: undefined,
       tags: ["tag0", "tag1"],
       newTag: "",
@@ -208,6 +218,7 @@ describe("<EditRoadmap />", () => {
     const title = "test-title";
     const level = 2;
     const newTag = "test";
+    const description = "test";
     const component = mount(editRoadmap);
     let wrapper = component.find("#roadmap-title");
     wrapper.simulate("change", { target: { value: title } });
@@ -215,10 +226,16 @@ describe("<EditRoadmap />", () => {
     wrapper.simulate("change", { target: { value: level } });
     wrapper = component.find("#new-tag");
     wrapper.simulate("change", { target: { value: newTag } });
-    const instance = component.find(EditRoadmap.WrappedComponent).instance();
+    wrapper = component.find("#roadmap-private");
+    wrapper.at(0).props().onClick();
+    wrapper = component.find("#roadmap-description");
+    wrapper.simulate("change", { target: { value: description } });
+    const instance = component.find(Roadmap).instance();
     expect(instance.state.title).toBe(title);
     expect(instance.state.level).toBe(level);
     expect(instance.state.newTag).toBe(newTag);
+    expect(instance.state.isPrivate).toBe(!initialRoadmapState.selectedRoadmap.private);
+    expect(instance.state.description).toBe(description);
   });
 
   it("should call 'onClickAddTag', 'onClickDeleteTag'", () => {
@@ -228,7 +245,7 @@ describe("<EditRoadmap />", () => {
     wrapper.simulate("change", { target: { value: newTag } });
     wrapper = component.find("#add-tag-button");
     wrapper.simulate("click");
-    const instance = component.find(EditRoadmap.WrappedComponent).instance();
+    const instance = component.find(Roadmap).instance();
     expect(instance.state.tags).toEqual(["tag0", "tag1", newTag]);
     expect(instance.state.addedTagList).toEqual([newTag]);
     wrapper = component.find(".delete-tag");
@@ -239,7 +256,7 @@ describe("<EditRoadmap />", () => {
 
   it("should call 'onClickCreateSection'", () => {
     const component = mount(editRoadmap);
-    const instance = component.find(EditRoadmap.WrappedComponent).instance();
+    const instance = component.find(Roadmap).instance();
     const sectionsNum = instance.state.sections.length;
     const wrapper2 = component.find("#create-section-button");
     wrapper2.simulate("click");
@@ -248,7 +265,7 @@ describe("<EditRoadmap />", () => {
 
   it("should call 'onClickDeleteSection'", () => {
     const component = mount(editRoadmap);
-    const instance = component.find(EditRoadmap.WrappedComponent).instance();
+    const instance = component.find(Roadmap).instance();
     const sectionsNum = instance.state.sections.length;
     const wrapper = component.find(".delete-section-button");
     wrapper.at(0).simulate("click");
@@ -259,7 +276,7 @@ describe("<EditRoadmap />", () => {
     const component = mount(editRoadmap);
     const wrapper = component.find(".up-section-button");
     wrapper.at(1).simulate("click");
-    const instance = component.find(EditRoadmap.WrappedComponent).instance();
+    const instance = component.find(Roadmap).instance();
     expect(instance.state.sections[0].section_title).toBe("test-section1");
     expect(instance.state.sections[1].section_title).toBe("test-section0");
     expect(instance.state.sections[2].section_title).toBe("test-section2");
@@ -269,7 +286,7 @@ describe("<EditRoadmap />", () => {
     const component = mount(editRoadmap);
     const wrapper = component.find(".down-section-button");
     wrapper.at(0).simulate("click");
-    const instance = component.find(EditRoadmap.WrappedComponent).instance();
+    const instance = component.find(Roadmap).instance();
     expect(instance.state.sections[0].section_title).toBe("test-section1");
     expect(instance.state.sections[1].section_title).toBe("test-section0");
     expect(instance.state.sections[2].section_title).toBe("test-section2");
@@ -279,7 +296,7 @@ describe("<EditRoadmap />", () => {
     const component = mount(editRoadmap);
     const wrapper = component.find(".section-title");
     wrapper.at(0).simulate("change", { target: { value: "55" } });
-    const instance = component.find(EditRoadmap.WrappedComponent).instance();
+    const instance = component.find(Roadmap).instance();
     expect(instance.state.sections[0].section_title).toBe("55");
     expect(instance.state.sections[1].section_title).toBe("test-section1");
   });
@@ -288,7 +305,7 @@ describe("<EditRoadmap />", () => {
     const component = mount(editRoadmap);
     const wrapper = component.find(".create-task-button");
     wrapper.at(0).simulate("click");
-    const instance = component.find(EditRoadmap.WrappedComponent).instance();
+    const instance = component.find(Roadmap).instance();
     expect(instance.state.sections[0].tasks[3]).toEqual({
       task_title: "",
       task_type: 0,
@@ -300,7 +317,7 @@ describe("<EditRoadmap />", () => {
 
   it("should call 'onClickDeleteTask'", () => {
     const component = mount(editRoadmap);
-    const instance = component.find(EditRoadmap.WrappedComponent).instance();
+    const instance = component.find(Roadmap).instance();
     const tasksNum0 = instance.state.sections[0].tasks.length;
     const tasksNum1 = instance.state.sections[1].tasks.length;
     const wrapper = component.find(".delete-task-button");
@@ -314,7 +331,7 @@ describe("<EditRoadmap />", () => {
     const testTitle = "test";
     const wrapper = component.find(".task-title");
     wrapper.at(0).simulate("change", { target: { value: testTitle } });
-    const instance = component.find(EditRoadmap.WrappedComponent).instance();
+    const instance = component.find(Roadmap).instance();
     expect(instance.state.sections[0].tasks[0].task_title).toEqual(testTitle);
     expect(instance.state.sections[0].tasks[1].task_title).toEqual("task1-title");
     expect(instance.state.sections[1]).toEqual({
@@ -341,7 +358,7 @@ describe("<EditRoadmap />", () => {
     const testType = 2;
     const wrapper = component.find(".task-type");
     wrapper.at(0).simulate("change", { target: { value: testType } });
-    const instance = component.find(EditRoadmap.WrappedComponent).instance();
+    const instance = component.find(Roadmap).instance();
     expect(instance.state.sections[0].tasks[0].task_type).toEqual(testType);
     expect(instance.state.sections[0].tasks[1].task_type).toEqual(2);
     expect(instance.state.sections[1]).toEqual({
@@ -368,7 +385,7 @@ describe("<EditRoadmap />", () => {
     const testUrl = "test";
     const wrapper = component.find(".task-url");
     wrapper.at(0).simulate("change", { target: { value: testUrl } });
-    const instance = component.find(EditRoadmap.WrappedComponent).instance();
+    const instance = component.find(Roadmap).instance();
     expect(instance.state.sections[0].tasks[0].task_url).toEqual(testUrl);
     expect(instance.state.sections[0].tasks[1].task_url).toEqual("task1-url");
     expect(instance.state.sections[1]).toEqual({
@@ -395,7 +412,7 @@ describe("<EditRoadmap />", () => {
     const testDescription = "test";
     const wrapper = component.find(".task-description");
     wrapper.at(0).simulate("change", { target: { value: testDescription } });
-    const instance = component.find(EditRoadmap.WrappedComponent).instance();
+    const instance = component.find(Roadmap).instance();
     expect(instance.state.sections[0].tasks[0].task_description).toEqual(testDescription);
     expect(instance.state.sections[0].tasks[1].task_description).toEqual("task1-des");
     expect(instance.state.sections[1]).toEqual({
@@ -419,7 +436,7 @@ describe("<EditRoadmap />", () => {
 
   it("should call 'onClickUpTask'", () => {
     const component = mount(editRoadmap);
-    const instance = component.find(EditRoadmap.WrappedComponent).instance();
+    const instance = component.find(Roadmap).instance();
     const wrapper = component.find(".up-task-button");
     wrapper.at(1).simulate("click");
     expect(instance.state.sections[0].tasks[0].task_title).toBe("task1-title");
@@ -446,7 +463,7 @@ describe("<EditRoadmap />", () => {
 
   it("should call 'onClickDownTask'", () => {
     const component = mount(editRoadmap);
-    const instance = component.find(EditRoadmap.WrappedComponent).instance();
+    const instance = component.find(Roadmap).instance();
     const wrapper = component.find(".down-task-button");
     wrapper.at(0).simulate("click");
     expect(instance.state.sections[0].tasks[0].task_title).toBe("task1-title");
@@ -474,7 +491,7 @@ describe("<EditRoadmap />", () => {
   it("should call 'onClickCreateBack' - confirm=True", () => {
     const spyBackConfirmTrue = jest.spyOn(window, "confirm").mockImplementation(() => true);
     const component = mount(editRoadmap);
-    const wrapper = component.find("#back-edit-roadmap-button");
+    const wrapper = component.find("#back-roadmap-button");
     wrapper.simulate("click");
     expect(spyBackConfirmTrue).toHaveBeenCalledTimes(1);
     expect(spyHistoryGoBack).toHaveBeenCalledTimes(1);
@@ -484,7 +501,7 @@ describe("<EditRoadmap />", () => {
   it("should call 'onClickEditBack' - confirm=False", () => {
     const spyBackConfirmFalse = jest.spyOn(window, "confirm").mockImplementation(() => false);
     const component = mount(editRoadmap);
-    const wrapper = component.find("#back-edit-roadmap-button");
+    const wrapper = component.find("#back-roadmap-button");
     wrapper.simulate("click");
     expect(spyBackConfirmFalse).toHaveBeenCalledTimes(1);
     expect(spyHistoryGoBack).toHaveBeenCalledTimes(0);
@@ -494,7 +511,7 @@ describe("<EditRoadmap />", () => {
   it("should call 'onClickEditConfirm'", () => {
     const spyEditRoadmap = jest.spyOn(actionCreators, "editRoadmap");
     const component = mount(editRoadmap);
-    const wrapper = component.find("#confirm-edit-roadmap-button");
+    const wrapper = component.find("#confirm-roadmap-button");
     wrapper.simulate("click");
     expect(spyEditRoadmap).toHaveBeenCalledTimes(1);
   });

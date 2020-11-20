@@ -21,13 +21,13 @@ export const getRoadmap = (roadmapId) => {
       .catch((error) => {
         switch (error.response.status) {
           case 404:
-            alert("No such Roadmap!");
+            window.alert("No such Roadmap!");
             break;
           case 401:
-            alert("Please sign in!");
+            window.alert("Please sign in!");
             break;
           case 400:
-            alert("Parsing error!@");
+            window.alert("Parsing error!@");
             break;
           default:
             break;
@@ -52,10 +52,10 @@ export const createRoadmap = (roadmapData) => {
       .catch((error) => {
         switch (error.response.status) {
           case 401:
-            alert("Please sign in!");
+            window.alert("Please sign in!");
             break;
           case 400:
-            alert("Parsing error!");
+            window.alert("Parsing error!");
             break;
           default:
             break;
@@ -80,16 +80,16 @@ export const editRoadmap = (roadmapId, roadmapData) => {
       .catch((error) => {
         switch (error.response.status) {
           case 401:
-            alert("Please sign in!");
+            window.alert("Please sign in!");
             break;
           case 404:
-            alert("No such Roadmap!");
+            window.alert("No such Roadmap!");
             break;
           case 403:
-            alert("Only the author can edit the Roadmap!");
+            window.alert("Only the author can edit the Roadmap!");
             break;
           case 400:
-            alert("Parsing error!");
+            window.alert("Parsing error!");
             break;
           default:
             break;
@@ -114,23 +114,23 @@ export const deleteRoadmap = (roadmapId) => {
     return axios
       .delete(`/api/roadmap/${roadmapId}/`)
       .then(() => {
-        alert("Roadmap successfully deleted!");
+        window.alert("Roadmap successfully deleted!");
         dispatch(deleteRoadmap_(roadmapId));
         dispatch(push(`/home`));
       })
       .catch((error) => {
         switch (error.response.status) {
           case 401:
-            alert("Please sign in!");
+            window.alert("Please sign in!");
             break;
           case 404:
-            alert("No such Roadmap!");
+            window.alert("No such Roadmap!");
             break;
           case 403:
-            alert("Only the author can delete the Roadmap!");
+            window.alert("Only the author can delete the Roadmap!");
             break;
           case 400:
-            alert("Parsing error!");
+            window.alert("Parsing error!");
             break;
           default:
             break;
@@ -147,24 +147,24 @@ export const duplicateRoadmap_ = (roadmapData) => {
 export const duplicateRoadmap = (roadmapId) => {
   return (dispatch) => {
     return axios
-      .post(`/api/roadmap/${roadmapId}`)
+      .post(`/api/roadmap/${roadmapId}/`)
       .then((response) => {
         duplicateRoadmap_(response.data);
         const edit = window.confirm("Successfully duplicated! Would you like to edit?");
         if (edit) {
-          dispatch(push(`/roadmap/${response.data.id}`));
+          dispatch(push(`/roadmap/${response.data.id}/edit`));
         }
       })
       .catch((error) => {
         switch (error.response.status) {
           case 401:
-            alert("Please sign in!");
+            window.alert("Please sign in!");
             break;
           case 404:
-            alert("No such Roadmap!");
+            window.alert("No such Roadmap!");
             break;
           case 400:
-            alert("Parsing error!");
+            window.alert("Parsing error!");
             break;
           default:
             break;
@@ -187,10 +187,10 @@ export const createComment = (commentData) => {
       .catch((error) => {
         switch (error.response.status) {
           case 401:
-            alert("Please sign in!");
+            window.alert("Please sign in!");
             break;
           case 400:
-            alert("Parsing error!");
+            window.alert("Parsing error!");
             break;
           default:
             break;
@@ -213,16 +213,16 @@ export const editComment = (commentID, commentData) => {
       .catch((error) => {
         switch (error.response.status) {
           case 401:
-            alert("Please sign in!");
+            window.alert("Please sign in!");
             break;
           case 404:
-            alert("No such comment!");
+            window.alert("No such comment!");
             break;
           case 403:
-            alert("Only the author can edit the comment!");
+            window.alert("Only the author can edit the comment!");
             break;
           case 400:
-            alert("Parsing error!");
+            window.alert("Parsing error!");
             break;
           default:
             break;
@@ -240,22 +240,22 @@ export const deleteComment = (commentID) => {
     return axios
       .delete(`/api/comment/${commentID}/`)
       .then(() => {
-        alert("Successfully deleted comment!");
+        window.alert("Successfully deleted comment!");
         dispatch(deleteCommentSuccess_(commentID));
       })
       .catch((error) => {
         switch (error.response.status) {
           case 401:
-            alert("Please sign in!");
+            window.alert("Please sign in!");
             break;
           case 404:
-            alert("No such comment!");
+            window.alert("No such comment!");
             break;
           case 403:
-            alert("Only the author can delete the comment!");
+            window.alert("Only the author can delete the comment!");
             break;
           case 400:
-            alert("Parsing error!");
+            window.alert("Parsing error!");
             break;
           default:
             break;
@@ -296,13 +296,13 @@ export const toggleRoadmapLike = (roadmapId) => {
       .catch((error) => {
         switch (error.response.status) {
           case 401:
-            alert("Only signed in users can like/unlike Roadmaps! Please sign in!");
+            window.alert("Only signed in users can like/unlike Roadmaps! Please sign in!");
             break;
           case 404:
-            alert("No such Roadmap!");
+            window.alert("No such Roadmap!");
             break;
           case 400:
-            alert("Parsing error!");
+            window.alert("Parsing error!");
             break;
           default:
             break;
@@ -344,13 +344,13 @@ export const toggleRoadmapPin = (roadmapId) => {
       .catch((error) => {
         switch (error.response.status) {
           case 401:
-            alert("Only signed in users can pin/unpin Roadmaps! Please sign in!");
+            window.alert("Only signed in users can pin/unpin Roadmaps! Please sign in!");
             break;
           case 404:
-            alert("No such Roadmap!");
+            window.alert("No such Roadmap!");
             break;
           case 400:
-            alert("Parsing error!");
+            window.alert("Parsing error!");
             break;
           default:
             break;
