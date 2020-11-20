@@ -144,8 +144,9 @@ def roadmap_id(request, roadmap_id):
         for tag in deleted_tag_list:
             tag_query = roadmap.tags.filter(tag_name__iexact=tag)
             if tag_query.exists():
-                roadmap.tags.remove(tag_query.first())
-                tag_query.first().decrement_count_roadmap()
+                target_tag = tag_query.first()
+                target_tag.decrement_count_roadmap()
+                roadmap.tags.remove(target_tag)
 
         # Add new tags m2m field in roadmap
         for tag in added_tag_list:

@@ -6,7 +6,7 @@ class Tag(models.Model):
     count_roadmap = models.IntegerField(default=0)
 
     def __str__(self):
-        return self.tag_name
+        return "{}-{}".format(self.tag_name, self.count_roadmap)
 
     def increment_count_roadmap(self):
         self.count_roadmap += 1

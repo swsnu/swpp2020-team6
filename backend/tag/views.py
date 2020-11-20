@@ -17,7 +17,6 @@ def tags(request, number):
             return HttpResponse(status=401)
 
         top_tags = Tag.objects.order_by("-count_roadmap")[:number]
-        print(top_tags)
         tags_dict = {"tags": list(tag.tag_name for tag in top_tags)}
         return JsonResponse(tags_dict)
     return HttpResponseNotAllowed(["GET"])
