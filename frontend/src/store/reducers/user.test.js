@@ -111,6 +111,62 @@ const stubSimpleRoadmapOnPin = {
   ],
 };
 
+const stubMyPageUserData = {
+  user_id: 1,
+  username: "test",
+  email: "user@user.com",
+  user_picture_url: "",
+  my_roadmaps: [
+    {
+      id: 1,
+      private: false,
+      title: "test",
+      date: "2020-11-20 02:45:00",
+      level: 2,
+      description: "test",
+      like_count: 0,
+      comment_count: 1,
+      pin_count: 1,
+      progress: 1,
+      original_author: 1,
+      author_id: 1,
+      author_name: "test",
+      author_user_picture_url: "",
+      tags: [
+        {
+          tag_id: 4,
+          tag_name: "test",
+        },
+        {
+          tag_id: 5,
+          tag_name: "test",
+        },
+        {
+          tag_id: 6,
+          tag_name: "test",
+        },
+      ],
+    },
+    {
+      id: 2,
+      private: false,
+      title: "test2",
+      date: "2020-11-20 02:54:29",
+      level: 2,
+      description: "",
+      like_count: 0,
+      comment_count: 0,
+      pin_count: 0,
+      progress: 1,
+      original_author: 1,
+      author_id: 1,
+      author_name: "test",
+      author_user_picture_url: "",
+      tags: [],
+    },
+  ],
+};
+
 describe("User Reducer", () => {
   it("should return default state", () => {
     const newState = reducer(undefined, {}); // initialize
@@ -321,5 +377,42 @@ describe("User Reducer", () => {
       },
     );
     expect(newState.selectedUser).toEqual(stubSelectedUser);
+  });
+
+  it("should get myPageUser on 'GET_MYPAGE_USER'", () => {
+    const newState = reducer(
+      {
+        isSignedIn: true,
+        selectedUser: stubSelectedUser,
+        myPageUser: undefined,
+      },
+      {
+        type: actionTypes.GET_MYPAGE_USER,
+        userData: stubMyPageUserData,
+      },
+    );
+    expect(newState).toEqual({
+      isSignedIn: true,
+      selectedUser: stubSelectedUser,
+      myPageUser: stubMyPageUserData,
+    });
+  });
+
+  it("should clear myPageUser on 'RESET_MYPAGE_USER'", () => {
+    const newState = reducer(
+      {
+        isSignedIn: true,
+        selectedUser: stubSelectedUser,
+        myPageUser: stubMyPageUserData,
+      },
+      {
+        type: actionTypes.RESET_MYPAGE_USER,
+      },
+    );
+    expect(newState).toEqual({
+      isSignedIn: true,
+      selectedUser: stubSelectedUser,
+      myPageUser: undefined,
+    });
   });
 });

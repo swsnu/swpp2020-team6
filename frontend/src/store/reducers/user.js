@@ -104,6 +104,11 @@ const reducer = (state = initialState, action) => {
         ...state,
         myPageUser: action.userData,
       };
+    case actionTypes.RESET_MYPAGE_USER:
+      return {
+        ...state,
+        myPageUser: undefined,
+      };
     default:
       break;
   }
