@@ -405,6 +405,16 @@ class RoadmapTestCase(TestCase):
             author=author_user,
         )
 
+        # 400
+        # invalid state trainsition (1->1), (1->3)
+        response = client.put(
+            self.roadmap_path + "{}/progress/".format(my_roadmap_level1.id),
+            {"progress_state": 1},
+            content_type=self.json_type,
+            HTTP_X_CSRFTOKEN=csrftoken,
+        )
+        self.assertEqual(response.status_code, 400)
+
         response = client.put(
             self.roadmap_path + "{}/progress/".format(my_roadmap_level1.id),
             {"progress_state": 3},
@@ -413,6 +423,8 @@ class RoadmapTestCase(TestCase):
         )
         self.assertEqual(response.status_code, 400)
 
+        # 200
+        # state trainsition: start (1->2)
         response = client.put(
             self.roadmap_path + "{}/progress/".format(my_roadmap_level1.id),
             {"progress_state": 2},
@@ -467,11 +479,11 @@ class RoadmapTestCase(TestCase):
         self.assertTrue(roadmap_progress2_task.checked)
 
         # 400
-        # invalid state transition (2 -> 1)
+        # invalid state transition (2 -> 2)
         response = client.put(
             self.roadmap_path
             + "{}/progress/".format(str(roadmap_progress2_roadmap_id)),
-            {"progress_state": 1},
+            {"progress_state": 2},
             content_type=self.json_type,
             HTTP_X_CSRFTOKEN=csrftoken,
         )

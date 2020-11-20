@@ -301,7 +301,8 @@ def roadmap_id_progress(request, roadmap_id):
 
         # check if the transition is valid & change progress state
         if new_progress_state == 1:
-            if target_roadmap.progress == 3:
+            if target_roadmap.progress == 3 or target_roadmap.progress == 2:
+                # progress clear(3->1) or quit(2->1)
                 target_roadmap.progress = 1
                 target_roadmap.save()
                 response_dict = {"progress_state": 1}
@@ -309,7 +310,7 @@ def roadmap_id_progress(request, roadmap_id):
             else:
                 return HttpResponseBadRequest()
         elif new_progress_state == 3:
-            if target_roadmap.progress == 2:
+            if target_roadmap.progress == 2:  # progress finish
                 target_roadmap.progress = 3
                 target_roadmap.clear_section_progress()
                 target_roadmap.save()
@@ -319,7 +320,7 @@ def roadmap_id_progress(request, roadmap_id):
             else:
                 return HttpResponseBadRequest()
         elif new_progress_state == 2:
-            if target_roadmap.progress == 1:
+            if target_roadmap.progress == 1:  # progress start
                 target_roadmap.progress = 2
                 target_roadmap.save()
 
