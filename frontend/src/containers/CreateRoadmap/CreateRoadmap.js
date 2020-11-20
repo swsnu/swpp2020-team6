@@ -21,7 +21,7 @@ class CreateRoadmap extends Component {
     const { selectedUser, history } = this.props;
     if (selectedUser === undefined) {
       window.alert("Please sign in!");
-      history.goBack();
+      history.push("/");
       return <div />;
     }
 

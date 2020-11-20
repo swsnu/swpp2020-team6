@@ -12,9 +12,13 @@ class EditRoadmap extends Component {
     onGetRoadmap(match.params.id);
   }
 
-  onClickEditBack = () => {
-    const { history, onResetRoadmap } = this.props;
+  componentWillUnmount() {
+    const { onResetRoadmap } = this.props;
     onResetRoadmap();
+  }
+
+  onClickEditBack = () => {
+    const { history } = this.props;
     history.goBack();
   };
 
@@ -26,7 +30,6 @@ class EditRoadmap extends Component {
   render() {
     const { selectedRoadmap, selectedUser, history } = this.props;
     if (selectedUser === undefined) {
-      window.alert("Please sign in!");
       return <div />;
     }
     if (selectedRoadmap === undefined) {
