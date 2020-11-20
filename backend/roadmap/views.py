@@ -1,5 +1,7 @@
 import json
 from json import JSONDecodeError
+from operator import and_, or_
+from functools import reduce
 from .models import Roadmap
 from django.http import (
     HttpResponse,
@@ -9,6 +11,7 @@ from django.http import (
     HttpResponseNotFound,
     JsonResponse,
 )
+from django.db.models import Q
 from django.core.exceptions import ObjectDoesNotExist
 from datetime import datetime
 from section.models import Section
@@ -290,14 +293,17 @@ def simple_search(request):
             return HttpResponse(status=401)
         try:
             req_data = json.loads(request.body.decode())
-        # TODO: parse input - title
-        except (KeyError, JSONDecodeError):
+            title = req_data["title"]
+            target_keywords = title.split()
+        except (KeyError, JSONDecodeError, AttributeError):
             return HttpResponseBadRequest()
 
-        # TODO: search with input
+        result = Roadmap.objects.filter(
+            reduce(and_, [Q(title__icontains=keyword) for keyword in target_keywords])
+        )
 
-        # TODO: response simple roadmap result
-        return
+        result_dict = {"roadmaps": list(roadmap.to_dict_simple() for roadmap in result)}
+        return JsonResponse(result_dict)
     return HttpResponseNotAllowed(["GET"])
 
 
