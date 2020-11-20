@@ -152,7 +152,6 @@ describe("<EditRoadmap />", () => {
     const component = mount(tmpEditRoadmap);
     const wrapper = component.find(".EditRoadmap");
     expect(wrapper.length).toBe(0);
-    expect(spyAlert).toHaveBeenCalledTimes(1);
   });
 
   it("should wait if 'selectedRoadmap' has not been received", () => {
@@ -512,5 +511,12 @@ describe("<EditRoadmap />", () => {
     const wrapper = component.find("#confirm-roadmap-button");
     wrapper.simulate("click");
     expect(spyEditRoadmap).toHaveBeenCalledTimes(1);
+  });
+
+  it("should clear MyPageUser before unmount", () => {
+    const spyReset = jest.spyOn(actionCreators, "resetRoadmap_");
+    const component = mount(editRoadmap);
+    component.unmount();
+    expect(spyReset).toHaveBeenCalledTimes(1);
   });
 });
