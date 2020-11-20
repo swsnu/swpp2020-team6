@@ -1,0 +1,54 @@
+.SignIn {
+  width: 40%;
+  max-width: 400px;
+  margin: 100px auto;
+  label {
+    position: relative;
+    color: black;
+    margin: 0;
+    margin-left: 10px;
+    padding: 0;
+    font-size: 12px;
+  }
+  input[type="username"],
+  input[type="password"] {
+    width: 98%;
+    padding: 25px 10px 5px 10px;
+    font-size: 15px;
+    font-weight: 700;
+    margin: -20px 0 20px;
+    margin-right: 2%;
+    border: 1px solid #ccc;
+    box-sizing: border-box;
+    &:focus {
+      outline: none;
+      border-left: deeppink 4px solid;
+    }
+  }
+  button {
+    border: none;
+    width: 120px;
+    height: 40px;
+    border-radius: 3px;
+    font-size: 15px;
+    margin-left: 30px;
+    margin-right: 40px;
+    margin-bottom: 20px;
+    cursor: pointer;
+    &#signin-button {
+      color: white;
+      background-color: black;
+      &:disabled {
+        background-color: grey;
+        cursor: not-allowed;
+      }
+    }
+  }
+  //   @media (max-width: 768px) {
+  //     width: 70%;
+  //   }
+  //   @media (max-width: 500px) {
+  //     width: 80%;
+  //     margin: 50px auto;
+  //   }
+}

@@ -6,9 +6,11 @@ from user.models import User
 
 
 class Roadmap(models.Model):
+    private = models.BooleanField(default=False)
     title = models.CharField(max_length=64, default="")
     date = models.DateTimeField(auto_now_add=True)
     level = models.IntegerField(default=0)
+    description = models.TextField(default="")
     like_count = models.IntegerField(default=0)
     comment_count = models.IntegerField(default=0)
     pin_count = models.IntegerField(default=0)
@@ -118,3 +120,21 @@ class Roadmap(models.Model):
     def delete_sections(self):
         for section in self.section_roadmap.all():
             section.delete()
+
+    def increment_comment_count(self):
+        self.comment_count += 1
+
+    def decrement_comment_count(self):
+        self.comment_count -= 1
+
+    def increment_like_count(self):
+        self.like_count += 1
+
+    def decrement_like_count(self):
+        self.like_count -= 1
+
+    def increment_pin_count(self):
+        self.pin_count += 1
+
+    def decrement_pin_count(self):
+        self.pin_count -= 1
