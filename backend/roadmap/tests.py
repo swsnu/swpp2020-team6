@@ -325,8 +325,8 @@ class RoadmapTestCase(TestCase):
         self.assertEqual(response.status_code, 400)
 
         # Add roadmaps
-        roadmap1 = create_roadmap(title="roadmap with title", user=user)
-        roadmap2 = create_roadmap(title="title roadmap", user=user)
+        create_roadmap(title="roadmap with title", user=user)
+        create_roadmap(title="title roadmap", user=user)
 
         # 200 (GET)
         print(path)
