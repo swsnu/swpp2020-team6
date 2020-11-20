@@ -1,6 +1,13 @@
 import React, { Component } from "react";
 import { connect } from "react-redux";
 import PropTypes from "prop-types";
+import Button from "@material-ui/core/Button";
+import Dialog from "@material-ui/core/Dialog";
+import DialogActions from "@material-ui/core/DialogActions";
+import DialogContent from "@material-ui/core/DialogContent";
+import DialogContentText from "@material-ui/core/DialogContentText";
+import DialogTitle from "@material-ui/core/DialogTitle";
+import Slide from "@material-ui/core/Slide";
 import * as actionCreators from "../../store/actions/index";
 import "./RoadmapDetail.css";
 import Comment from "../../components/Comment";
@@ -8,9 +15,15 @@ import ProgressBar from "../../components/RoadmapDetail/ProgressBar";
 import RoadmapButtons from "./RoadmapButtons";
 import Section from "../../components/RoadmapDetail/Section";
 
+const Transition = React.forwardRef(function Transition(props, ref) {
+  // eslint-disable-next-line react/jsx-props-no-spreading
+  return <Slide direction="up" ref={ref} {...props} />;
+});
+
 class RoadmapDetail extends Component {
   state = {
     comment: "",
+    open: true,
   };
 
   componentDidMount() {
@@ -77,6 +90,11 @@ class RoadmapDetail extends Component {
     onDeleteComment(id);
   };
 
+  handleClose = () => {
+    this.setState({ open: false });
+    this.backToList();
+  };
+
   render() {
     const { selectedUser, isSignedIn, match, selectedRoadmap } = this.props;
 
@@ -89,6 +107,38 @@ class RoadmapDetail extends Component {
       return (
         <div className="RoadmapDetail">
           <div className="Loading">Loading...</div>
+        </div>
+      );
+    }
+
+    if (selectedRoadmap.private && selectedRoadmap.author_id !== selectedUser.user_id) {
+      // if the roadmap's private field is set true and the user isn't the author
+      // show that only the author can view it
+      const { open } = this.state;
+
+      // later the return statement will be replaced with the material-ui's Dialog
+      return (
+        <div className="RoadmapDetail">
+          <Dialog
+            open={open}
+            TransitionComponent={Transition}
+            keepMounted
+            aria-labelledby="alert-dialog-slide-title"
+            aria-describedby="alert-dialog-slide-description"
+          >
+            <DialogTitle id="alert-dialog-slide-title">Private page!</DialogTitle>
+            <DialogContent>
+              <DialogContentText id="alert-dialog-slide-description">
+                Only the author can access this Roadmap. If you press the OK button, you will be
+                redirected to your previous page.
+              </DialogContentText>
+            </DialogContent>
+            <DialogActions>
+              <Button onClick={this.handleClose} color="primary">
+                OK
+              </Button>
+            </DialogActions>
+          </Dialog>
         </div>
       );
     }
@@ -199,6 +249,7 @@ class RoadmapDetail extends Component {
             {originalAuthor}
             {roadmapLevel}
             <div className="roadmap-tags">{roadmapTags}</div>
+            <div className="roadmap-description">{selectedRoadmap.description}</div>
             <div className="roadmap-sections">{roadmapSections}</div>
           </div>
           <div className="rightcolumn">

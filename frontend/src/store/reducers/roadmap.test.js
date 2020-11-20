@@ -10,8 +10,10 @@ const stubSelectedRoadmap = {
   title: "new-rm-title",
   date: "2020-11-14 05:46:47",
   level: 1,
+  description: "description",
+  private: false,
   like_count: 0,
-  comment_count: 1,
+  comment_count: 2,
   pin_count: 0,
   progress: 1,
   original_author_id: 5,
@@ -78,6 +80,14 @@ const stubSelectedRoadmap = {
       author_name: "swpp",
       author_picture_url: "",
     },
+    {
+      comment_id: 11,
+      roadmap_id: 11,
+      content: "great!",
+      author_id: 7,
+      author_name: "swpp7",
+      author_picture_url: "",
+    },
   ],
 };
 
@@ -86,6 +96,8 @@ const stubSimpleRoadmap = {
   title: "new-rm-title",
   date: "2020-11-14 05:46:47",
   level: 1,
+  description: "description",
+  private: false,
   like_count: 1,
   comment_count: 0,
   pin_count: 0,
@@ -206,17 +218,25 @@ describe("User Reducer", () => {
     expect(newState).toEqual({ selectedRoadmap: commentAddedRoadmap });
   });
 
-  it("should create comment properly ", () => {
+  it("should edit comment properly ", () => {
+    const stubEditComment = {
+      comment_id: 5,
+      roadmap_id: 11,
+      content: "it is great!",
+      author_id: 5,
+      author_name: "swpp",
+      author_picture_url: "",
+    };
     const newState = reducer(
       { selectedRoadmap: stubSelectedRoadmap },
       {
         type: actionTypes.EDIT_COMMENT_SUCCESS,
-        newComment: stubComment,
+        newComment: stubEditComment,
       },
     );
     const modifiedComments = stubSelectedRoadmap.comments.map((comment) => {
-      if (comment.comment_id === stubComment.comment_id) {
-        return stubComment;
+      if (comment.comment_id === stubEditComment.comment_id) {
+        return stubEditComment;
       }
       return comment;
     });

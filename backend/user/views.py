@@ -3,9 +3,11 @@ from json import JSONDecodeError
 from django.http import (
     HttpResponse,
     HttpResponseNotAllowed,
+    HttpResponseNotFound,
     JsonResponse,
     HttpResponseBadRequest,
 )
+from django.core.exceptions import ObjectDoesNotExist
 from django.views.decorators.csrf import ensure_csrf_cookie
 from django.contrib.auth import authenticate, login, logout
 from django.db.utils import IntegrityError
@@ -33,7 +35,8 @@ def user(request):
         except (KeyError, JSONDecodeError):
             return HttpResponse(status=400)
         try:
-            User.objects.create_user(username=username, email=email, password=password)
+            User.objects.create_user(
+                username=username, email=email, password=password)
             return HttpResponse(status=201)
         except IntegrityError:
             return HttpResponse(status=400)
@@ -57,7 +60,8 @@ def signin(request):
             password = req_data["password"]
         except (KeyError, JSONDecodeError):
             return HttpResponseBadRequest()
-        signin_user = authenticate(request, username=username, password=password)
+        signin_user = authenticate(
+            request, username=username, password=password)
         if signin_user is not None:
             login(request, signin_user)
             response_user = signin_user.to_dict()
@@ -84,5 +88,20 @@ def users(request):
             user for user in User.objects.all().values("id", "username", "email")
         ]
         return JsonResponse(user_list, safe=False)
+
+    return HttpResponseNotAllowed(["GET"])
+
+
+def user_id(request, user_id):
+    if request.method == "GET":
+        if not request.user.is_authenticated:
+            return HttpResponse(status=401)
+        try:
+            user = User.objects.get(id=user_id)
+        except ObjectDoesNotExist:
+            return HttpResponseNotFound()
+
+        user_dict = user.to_dict_simple()
+        return JsonResponse(user_dict, status=200)
 
     return HttpResponseNotAllowed(["GET"])

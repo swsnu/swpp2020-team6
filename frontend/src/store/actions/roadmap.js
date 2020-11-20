@@ -152,7 +152,7 @@ export const duplicateRoadmap = (roadmapId) => {
         dispatch(duplicateRoadmap_(response.data));
         const edit = window.confirm("Successfully duplicated! Would you like to edit?");
         if (edit) {
-          dispatch(push(`/roadmap/${response.data.id}`));
+          dispatch(push(`/roadmap/${response.data.id}/edit`));
         }
       })
       .catch((error) => {
