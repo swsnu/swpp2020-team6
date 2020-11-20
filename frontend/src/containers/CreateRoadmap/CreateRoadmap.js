@@ -27,6 +27,7 @@ class CreateRoadmap extends Component {
 
     return (
       <div className="CreateRoadmap">
+        <h1>Create Roadmap</h1>
         <Roadmap
           isEdit={false}
           onClickBackHandler={this.onClickCreateBack}
