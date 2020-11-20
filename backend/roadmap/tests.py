@@ -1,15 +1,11 @@
 import json
 from django.test import TestCase, Client
+from utils.test_util import get_csrf, signup_signin, JSON_TYPE
 from user.models import User
 from .models import Roadmap
 
 
 class RoadmapTestCase(TestCase):
-    dump_user = {"username": "chris", "email": "chris@gmail.com", "password": "chris"}
-    dump_user_json = json.dumps(dump_user)
-    json_type = "application/json"
-    user_path = "/api/user/"
-    csrf_token_path = user_path + "token/"
     roadmap_path = "/api/roadmap/"
     dump_roadmap_input = {
         "private": False,
@@ -53,30 +49,9 @@ class RoadmapTestCase(TestCase):
         "deletedTagList": ["python", "django"],
     }
 
-    def get_csrf(self, client):
-        path = self.csrf_token_path
-        response = client.get(path)
-        return response.cookies["csrftoken"].value
-
-    def signup_signin(self, client):
-        User.objects.create_user(
-            username=self.dump_user["username"],
-            email=self.dump_user["email"],
-            password=self.dump_user["password"],
-        )
-
-        csrftoken = self.get_csrf(client)
-        path = self.user_path + "signin/"
-        client.post(
-            path,
-            self.dump_user_json,
-            content_type=self.json_type,
-            HTTP_X_CSRFTOKEN=csrftoken,
-        )
-
     def test_roadmap(self):
         client = Client(enforce_csrf_checks=True)
-        csrftoken = self.get_csrf(client)
+        csrftoken = get_csrf(client)
         path = self.roadmap_path
 
         # 405 (except for POST)
@@ -91,13 +66,13 @@ class RoadmapTestCase(TestCase):
         response = client.post(path, HTTP_X_CSRFTOKEN=csrftoken)
         self.assertEqual(response.status_code, 401)
 
-        self.signup_signin(client)
-        csrftoken = self.get_csrf(client)
+        signup_signin(client)
+        csrftoken = get_csrf(client)
         # 400
         response = client.post(
             path,
             json.dumps({}),
-            content_type=self.json_type,
+            content_type=JSON_TYPE,
             HTTP_X_CSRFTOKEN=csrftoken,
         )
         self.assertEqual(response.status_code, 400)
@@ -106,7 +81,7 @@ class RoadmapTestCase(TestCase):
         response = client.post(
             path,
             self.dump_roadmap_input,
-            content_type=self.json_type,
+            content_type=JSON_TYPE,
             HTTP_X_CSRFTOKEN=csrftoken,
         )
         self.assertEqual(response.status_code, 201)
@@ -115,7 +90,7 @@ class RoadmapTestCase(TestCase):
         response = client.post(
             path,
             self.dump_roadmap_input,
-            content_type=self.json_type,
+            content_type=JSON_TYPE,
             HTTP_X_CSRFTOKEN=csrftoken,
         )
         self.assertEqual(response.status_code, 201)
@@ -124,7 +99,7 @@ class RoadmapTestCase(TestCase):
 
     def test_roadmap_id(self):
         client = Client(enforce_csrf_checks=True)
-        csrftoken = self.get_csrf(client)
+        csrftoken = get_csrf(client)
         path = self.roadmap_path + "1/"
 
         # 401 (GET, PUT, DELETE, POST)
@@ -137,8 +112,8 @@ class RoadmapTestCase(TestCase):
         response = client.post(path, HTTP_X_CSRFTOKEN=csrftoken)
         self.assertEqual(response.status_code, 401)
 
-        self.signup_signin(client)
-        csrftoken = self.get_csrf(client)
+        signup_signin(client)
+        csrftoken = get_csrf(client)
 
         # 404
         response = client.get(path, HTTP_X_CSRFTOKEN=csrftoken)
@@ -154,7 +129,7 @@ class RoadmapTestCase(TestCase):
         client.post(
             self.roadmap_path,
             self.dump_roadmap_input,
-            content_type=self.json_type,
+            content_type=JSON_TYPE,
             HTTP_X_CSRFTOKEN=csrftoken,
         )
 
@@ -186,7 +161,7 @@ class RoadmapTestCase(TestCase):
         response = client.put(
             path,
             json.dumps({}),
-            content_type=self.json_type,
+            content_type=JSON_TYPE,
             HTTP_X_CSRFTOKEN=csrftoken,
         )
         self.assertEqual(response.status_code, 400)
@@ -241,7 +216,7 @@ class RoadmapTestCase(TestCase):
 
     def test_roadmap_id_like(self):
         client = Client(enforce_csrf_checks=True)
-        csrftoken = self.get_csrf(client)
+        csrftoken = get_csrf(client)
         path = self.roadmap_path + "1/like/"
 
         # 405 (except for PUT)
@@ -256,8 +231,8 @@ class RoadmapTestCase(TestCase):
         response = client.put(path, HTTP_X_CSRFTOKEN=csrftoken)
         self.assertEqual(response.status_code, 401)
 
-        self.signup_signin(client)
-        csrftoken = self.get_csrf(client)
+        signup_signin(client)
+        csrftoken = get_csrf(client)
 
         # 404
         response = client.put(path, HTTP_X_CSRFTOKEN=csrftoken)
@@ -292,7 +267,7 @@ class RoadmapTestCase(TestCase):
 
     def test_roadmap_id_pin(self):
         client = Client(enforce_csrf_checks=True)
-        csrftoken = self.get_csrf(client)
+        csrftoken = get_csrf(client)
         path = self.roadmap_path + "1/pin/"
 
         # 405 (except for PUT)
@@ -307,8 +282,8 @@ class RoadmapTestCase(TestCase):
         response = client.put(path, HTTP_X_CSRFTOKEN=csrftoken)
         self.assertEqual(response.status_code, 401)
 
-        self.signup_signin(client)
-        csrftoken = self.get_csrf(client)
+        signup_signin(client)
+        csrftoken = get_csrf(client)
 
         # 404
         response = client.put(path, HTTP_X_CSRFTOKEN=csrftoken)
