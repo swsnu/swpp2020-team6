@@ -276,3 +276,58 @@ def roadmap_id_pin(request, roadmap_id):
         return JsonResponse(response_dict)
 
     return HttpResponseNotAllowed(["PUT"])
+
+
+def roadmap_id_progress(request, roadmap_id):
+    if request.method == "PUT":
+        if not request.user.is_authenticated:
+            return HttpResponse(status=401)
+
+        try:
+            target_roadmap = Roadmap.objects.get(id=roadmap_id)
+        except ObjectDoesNotExist:
+            return HttpResponseNotFound()
+
+        # check if the user is the author
+        if not target_roadmap.author_id == request.user.id:
+            return HttpResponseForbidden()
+
+        # parse request body
+        try:
+            req_data = json.loads(request.body.decode())
+            new_progress_state = req_data["progress_state"]
+        except (KeyError, JSONDecodeError):
+            return HttpResponseBadRequest()
+
+        # check if the transition is valid & change progress state
+        if new_progress_state == 1:
+            if target_roadmap.progress == 3:
+                target_roadmap.progress = 1
+                target_roadmap.save()
+                response_dict = {"progress_state": 1}
+                return JsonResponse(response_dict)
+            else:
+                return HttpResponseBadRequest()
+        elif new_progress_state == 3:
+            if target_roadmap.progress == 2:
+                target_roadmap.progress = 3
+                target_roadmap.clear_section_progress()
+                target_roadmap.save()
+
+                response_dict = {"progress_state": 3}
+                return JsonResponse(response_dict)
+            else:
+                return HttpResponseBadRequest()
+        elif new_progress_state == 2:
+            if target_roadmap.progress == 1:
+                target_roadmap.progress = 2
+                target_roadmap.save()
+
+                response_dict = {"progress_state": 2}
+                return JsonResponse(response_dict)
+            else:
+                return HttpResponseBadRequest()
+        else:
+            return HttpResponseBadRequest()
+
+    return HttpResponseNotAllowed(["PUT"])

@@ -3,6 +3,7 @@ from django.test import TestCase
 from .models import Section
 from roadmap.models import Roadmap
 from user.models import User
+from task.models import Task
 
 
 class SectionTestCase(TestCase):
@@ -17,4 +18,12 @@ class SectionTestCase(TestCase):
         roadmap = Roadmap(title="roadmap title", original_author=user, author=user)
         roadmap.save()
         section = Section.objects.create(title="section title", roadmap=roadmap)
+        task = Task.objects.create(
+            title="task title", checked=True, roadmap=roadmap, section=section
+        )
         self.assertEqual(section.__str__(), "section title")
+        self.assertEqual(task.checked, True)
+        section.clear_task_progress()
+        section.save()
+        for task in section.task_section.all():
+            self.assertEqual(task.checked, False)
