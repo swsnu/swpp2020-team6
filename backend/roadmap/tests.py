@@ -1,6 +1,6 @@
 import json
 from django.test import TestCase, Client
-from utils.test_util import get_csrf, signup_signin, JSON_TYPE
+from utils.test_util import get_csrf, signup_signin, JSON_TYPE, create_roadmap
 from user.models import User
 from .models import Roadmap
 
@@ -137,12 +137,7 @@ class RoadmapTestCase(TestCase):
         another_user = User.objects.create_user(
             username="johndoe", email="johndoe@domain.com", password="johndoe"
         )
-        not_my_roadmap = Roadmap.objects.create(
-            title="roadmap title",
-            level=1,
-            original_author=another_user,
-            author=another_user,
-        )
+        not_my_roadmap = create_roadmap(title="roadmap title", user=another_user)
         self.assertEqual(not_my_roadmap.__str__(), "roadmap title")
 
         # 403 (PUT, DELETE)
@@ -242,12 +237,7 @@ class RoadmapTestCase(TestCase):
         another_user = User.objects.create_user(
             username="johndoe", email="johndoe@domain.com", password="johndoe"
         )
-        not_my_roadmap = Roadmap.objects.create(
-            title="roadmap title",
-            level=1,
-            original_author=another_user,
-            author=another_user,
-        )
+        not_my_roadmap = create_roadmap(title="roadmap title", user=another_user)
 
         # 200 (Like the roadmap)
         response = client.put(
@@ -293,12 +283,7 @@ class RoadmapTestCase(TestCase):
         another_user = User.objects.create_user(
             username="johndoe", email="johndoe@domain.com", password="johndoe"
         )
-        not_my_roadmap = Roadmap.objects.create(
-            title="roadmap title",
-            level=1,
-            original_author=another_user,
-            author=another_user,
-        )
+        not_my_roadmap = create_roadmap(title="roadmap title", user=another_user)
 
         # 200 (Pin the roadmap)
         response = client.put(

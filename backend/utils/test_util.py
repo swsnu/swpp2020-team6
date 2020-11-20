@@ -1,5 +1,6 @@
 import json
 from user.models import User
+from roadmap.models import Roadmap
 
 JSON_TYPE = "application/json"
 USER_PATH = "/api/user/"
@@ -31,3 +32,12 @@ def signup_signin(client):
         HTTP_X_CSRFTOKEN=csrftoken,
     )
     return user
+
+
+def create_roadmap(title, user):
+    return Roadmap.objects.create(
+        title=title,
+        level=1,
+        original_author=user,
+        author=user,
+    )
