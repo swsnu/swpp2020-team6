@@ -528,6 +528,8 @@ describe("<RoadmapDetail />", () => {
   let spyResetRoadmap;
   let spyToggleRoadmapLike;
   let spyToggleRoadmapPin;
+  let spyChangeProgress;
+  let spyChangeCheckbox;
 
   beforeEach(() => {
     spyPush = jest.spyOn(history, "push").mockImplementation(() => {});
@@ -556,6 +558,12 @@ describe("<RoadmapDetail />", () => {
         return () => {};
       });
     spyToggleRoadmapPin = jest.spyOn(actionCreators, "toggleRoadmapPin").mockImplementation(() => {
+      return () => {};
+    });
+    spyChangeProgress = jest.spyOn(actionCreators, "changeProgress").mockImplementation(() => {
+      return () => {};
+    });
+    spyChangeCheckbox = jest.spyOn(actionCreators, "changeCheckbox").mockImplementation(() => {
       return () => {};
     });
   });
@@ -831,8 +839,6 @@ describe("<RoadmapDetail />", () => {
     const duplicateButton = component.find("#duplicate-button");
     expect(duplicateButton.length).toBe(1);
     duplicateButton.simulate("click");
-    // need to mock onChangeRoadmapProgressStatus
-    // expect(spyLike).toHaveBeenCalledTimes(1);
   });
 
   /* ----------------------- progress tracking ----------------------- */
@@ -856,8 +862,30 @@ describe("<RoadmapDetail />", () => {
     const startButton = component.find("#start-progress-button");
     expect(startButton.at(0).text()).toBe("Start");
     startButton.simulate("click");
-    // need to mock onChangeRoadmapProgressStatus
-    // expect(spyConfirm).toHaveBeenCalledTimes(1);
+    expect(spyChangeProgress).toHaveBeenCalledTimes(1);
+  });
+
+  /* ----------------------- click checkbox ----------------------- */
+  it(`should show change the checkbox state when the box is clicked on a
+    'In Progress' state roadmap.`, () => {
+    const component = mount(
+      <Provider store={mockAuthorizedUserMyRoadmapInProgressStore}>
+        <ConnectedRouter history={history}>
+          <Switch>
+            <Route
+              path="/"
+              exact
+              render={() => <RoadmapDetail history={history} match={{ params: { id: 1 } }} />}
+            />
+          </Switch>
+        </ConnectedRouter>
+      </Provider>,
+    );
+    const outerWrapper = component.find(".RoadmapDetail");
+    expect(outerWrapper.length).toBe(1);
+    const checkbox = component.find(".task-checkbox").at(0);
+    checkbox.simulate("change", { target: { value: false } });
+    expect(spyChangeCheckbox).toHaveBeenCalledTimes(1);
   });
 
   it(`should show progress buttons properly and they should work well when 

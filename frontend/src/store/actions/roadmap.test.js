@@ -41,12 +41,16 @@ const stubRoadmapData = {
             task_url: "tasl0_url",
             task_type: 1,
             task_description: "task0_description",
+            task_checked: false,
+            task_id: 1,
           },
           {
             task_title: "task1_title",
             task_url: "tasl1_url",
             task_type: 1,
             task_description: "task1_description",
+            task_checked: false,
+            task_id: 2,
           },
         ],
       },
@@ -58,12 +62,16 @@ const stubRoadmapData = {
             task_url: "tasl0_url",
             task_type: 1,
             task_description: "task0_description",
+            task_checked: false,
+            task_id: 3,
           },
           {
             task_title: "task1_title",
             task_url: "tasl1_url",
             task_type: 1,
             task_description: "task1_description",
+            task_checked: false,
+            task_id: 4,
           },
         ],
       },
@@ -1270,6 +1278,262 @@ describe("ActionCreators", () => {
       expect(spy).toHaveBeenCalledTimes(1);
       expect(spyAlert).toHaveBeenCalledTimes(0);
       expect(spyGoBack).toHaveBeenCalledTimes(1);
+      done();
+    });
+  });
+
+  // ---------- progress tracking ------------ //
+  it(`should properly change progress state of my roadmap`, (done) => {
+    const spy = jest.spyOn(axios, "put").mockImplementation((url) => {
+      return new Promise((resolve, reject) => {
+        const result = {
+          status: 200,
+          data: {
+            progress_state: 2,
+            sections: [
+              {
+                section_id: 1,
+                section_title: "section title 1",
+                tasks: [
+                  {
+                    task_id: 1,
+                    task_title: "task title 1-1",
+                    task_type: 3,
+                    task_url: "task url 1-1",
+                    task_description: "task description 1-1",
+                    task_checked: false,
+                  },
+                  {
+                    task_id: 2,
+                    task_title: "task title 1-2",
+                    task_type: 1,
+                    task_url: "task url 1-2",
+                    task_description: "task description 1-2",
+                    task_checked: false,
+                  },
+                ],
+              },
+              {
+                section_id: 2,
+                section_title: "section title 2",
+                tasks: [
+                  {
+                    task_id: 3,
+                    task_title: "task title 2-1",
+                    task_type: 3,
+                    task_url: "task url 2-1",
+                    task_description: "task description 2-1",
+                    task_checked: false,
+                  },
+                ],
+              },
+            ],
+          },
+        };
+        resolve(result);
+      });
+    });
+
+    mockedStore.dispatch(roadmapActionCreators.changeProgress(1, 4)).then(() => {
+      expect(spy).toHaveBeenCalledTimes(1);
+      done();
+    });
+  });
+
+  it(`error from 'changeProgress' during axios.put should be catched(401)`, (done) => {
+    const spy = jest.spyOn(axios, "put").mockImplementation((url) => {
+      return new Promise((resolve, reject) => {
+        const result = {
+          response: { status: 401 },
+        };
+        reject(result);
+      });
+    });
+
+    mockedStore.dispatch(roadmapActionCreators.changeProgress(1, 4)).then(() => {
+      expect(spy).toHaveBeenCalledTimes(1);
+      expect(spyGoBack).toHaveBeenCalledTimes(1);
+      done();
+    });
+  });
+
+  it(`error from 'changeProgress' during axios.put should be catched(404)`, (done) => {
+    const spy = jest.spyOn(axios, "put").mockImplementation((url) => {
+      return new Promise((resolve, reject) => {
+        const result = {
+          response: { status: 404 },
+        };
+        reject(result);
+      });
+    });
+
+    mockedStore.dispatch(roadmapActionCreators.changeProgress(1, 4)).then(() => {
+      expect(spy).toHaveBeenCalledTimes(1);
+      expect(spyGoBack).toHaveBeenCalledTimes(1);
+      done();
+    });
+  });
+
+  it(`error from 'changeProgress' during axios.put should be catched(403)`, (done) => {
+    const spy = jest.spyOn(axios, "put").mockImplementation((url) => {
+      return new Promise((resolve, reject) => {
+        const result = {
+          response: { status: 403 },
+        };
+        reject(result);
+      });
+    });
+
+    mockedStore.dispatch(roadmapActionCreators.changeProgress(1, 4)).then(() => {
+      expect(spy).toHaveBeenCalledTimes(1);
+      expect(spyGoBack).toHaveBeenCalledTimes(0);
+      done();
+    });
+  });
+
+  it(`error from 'changeProgress' during axios.put should be catched(400)`, (done) => {
+    const spy = jest.spyOn(axios, "put").mockImplementation((url) => {
+      return new Promise((resolve, reject) => {
+        const result = {
+          response: { status: 400 },
+        };
+        reject(result);
+      });
+    });
+
+    mockedStore.dispatch(roadmapActionCreators.changeProgress(1, 4)).then(() => {
+      expect(spy).toHaveBeenCalledTimes(1);
+      expect(spyGoBack).toHaveBeenCalledTimes(0);
+      done();
+    });
+  });
+
+  it(`error from 'changeProgress' during axios.put should be catched(default)`, (done) => {
+    const spy = jest.spyOn(axios, "put").mockImplementation((url) => {
+      return new Promise((resolve, reject) => {
+        const result = {
+          response: { status: 302 },
+        };
+        reject(result);
+      });
+    });
+
+    mockedStore.dispatch(roadmapActionCreators.changeProgress(1, 4)).then(() => {
+      expect(spy).toHaveBeenCalledTimes(1);
+      expect(spyAlert).toHaveBeenCalledTimes(0);
+      done();
+    });
+  });
+
+  // ---------- progress tracking ------------ //
+  it(`should properly change progress state of my roadmap`, (done) => {
+    const spy = jest.spyOn(axios, "put").mockImplementation((url) => {
+      return new Promise((resolve, reject) => {
+        const result = {
+          status: 200,
+          data: {
+            checked: true,
+            task: {
+              task_id: 1,
+              task_title: "task title 1-1",
+              task_type: 3,
+              task_url: "task url 1-1",
+              task_description: "task description 1-1",
+              task_checked: false,
+            },
+          },
+        };
+        resolve(result);
+      });
+    });
+
+    mockedStore.dispatch(roadmapActionCreators.changeCheckbox(4)).then(() => {
+      expect(spy).toHaveBeenCalledTimes(1);
+      done();
+    });
+  });
+
+  it(`error from 'changeProgress' during axios.put should be catched(401)`, (done) => {
+    const spy = jest.spyOn(axios, "put").mockImplementation((url) => {
+      return new Promise((resolve, reject) => {
+        const result = {
+          response: { status: 401 },
+        };
+        reject(result);
+      });
+    });
+
+    mockedStore.dispatch(roadmapActionCreators.changeCheckbox(4)).then(() => {
+      expect(spy).toHaveBeenCalledTimes(1);
+      expect(spyGoBack).toHaveBeenCalledTimes(1);
+      done();
+    });
+  });
+
+  it(`error from 'changeProgress' during axios.put should be catched(404)`, (done) => {
+    const spy = jest.spyOn(axios, "put").mockImplementation((url) => {
+      return new Promise((resolve, reject) => {
+        const result = {
+          response: { status: 404 },
+        };
+        reject(result);
+      });
+    });
+
+    mockedStore.dispatch(roadmapActionCreators.changeCheckbox(4)).then(() => {
+      expect(spy).toHaveBeenCalledTimes(1);
+      expect(spyGoBack).toHaveBeenCalledTimes(1);
+      done();
+    });
+  });
+
+  it(`error from 'changeProgress' during axios.put should be catched(403)`, (done) => {
+    const spy = jest.spyOn(axios, "put").mockImplementation((url) => {
+      return new Promise((resolve, reject) => {
+        const result = {
+          response: { status: 403 },
+        };
+        reject(result);
+      });
+    });
+
+    mockedStore.dispatch(roadmapActionCreators.changeCheckbox(4)).then(() => {
+      expect(spy).toHaveBeenCalledTimes(1);
+      expect(spyGoBack).toHaveBeenCalledTimes(0);
+      done();
+    });
+  });
+
+  it(`error from 'changeProgress' during axios.put should be catched(400)`, (done) => {
+    const spy = jest.spyOn(axios, "put").mockImplementation((url) => {
+      return new Promise((resolve, reject) => {
+        const result = {
+          response: { status: 400 },
+        };
+        reject(result);
+      });
+    });
+
+    mockedStore.dispatch(roadmapActionCreators.changeCheckbox(4)).then(() => {
+      expect(spy).toHaveBeenCalledTimes(1);
+      expect(spyGoBack).toHaveBeenCalledTimes(0);
+      done();
+    });
+  });
+
+  it(`error from 'changeProgress' during axios.put should be catched(default)`, (done) => {
+    const spy = jest.spyOn(axios, "put").mockImplementation((url) => {
+      return new Promise((resolve, reject) => {
+        const result = {
+          response: { status: 302 },
+        };
+        reject(result);
+      });
+    });
+
+    mockedStore.dispatch(roadmapActionCreators.changeCheckbox(4)).then(() => {
+      expect(spy).toHaveBeenCalledTimes(1);
+      expect(spyAlert).toHaveBeenCalledTimes(0);
       done();
     });
   });
