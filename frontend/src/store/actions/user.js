@@ -2,7 +2,7 @@
  * Send request to the backend using the desired API, then receive response.
  */
 import axios from "axios";
-import { push, goBack } from "connected-react-router";
+import { push } from "connected-react-router";
 
 import * as actionTypes from "./actionTypes";
 
@@ -123,7 +123,7 @@ export const getMyPageUser = (userId) => {
           default:
             break;
         }
-        dispatch(goBack());
+        dispatch(push("/"));
       });
   };
 };
