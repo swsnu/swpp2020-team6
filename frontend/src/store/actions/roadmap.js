@@ -359,3 +359,41 @@ export const toggleRoadmapPin = (roadmapId) => {
       });
   };
 };
+
+export const changeProgress_ = (responseData, roadmapId) => {
+  return {
+    type: actionTypes.PROGRESS_CHANGE,
+    progress: responseData.progress_state,
+    tasks: responseData.tasks,
+    roadmapId,
+  };
+};
+
+export const changeProgress = (newState, roadmapId) => {
+  return (dispatch) => {
+    return axios
+      .put(`/api/roadmap/${roadmapId}/progress/`, newState)
+      .then((response) => {
+        dispatch(changeProgress_(response.data, roadmapId));
+      })
+      .catch((error) => {
+        switch (error.response.status) {
+          case 401:
+            window.alert("Only signed in users can pin/unpin Roadmaps! Please sign in!");
+            break;
+          case 404:
+            window.alert("No such Roadmap!");
+            break;
+          case 403:
+            window.alert("only the author can change progress!");
+            break;
+          case 400:
+            window.alert("Parsing error!");
+            break;
+          default:
+            break;
+        }
+        dispatch(goBack());
+      });
+  };
+};

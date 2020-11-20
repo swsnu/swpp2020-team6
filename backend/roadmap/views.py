@@ -305,7 +305,20 @@ def roadmap_id_progress(request, roadmap_id):
                 # progress clear(3->1) or quit(2->1)
                 target_roadmap.progress = 1
                 target_roadmap.save()
-                response_dict = {"progress_state": 1}
+                response_dict = {
+                    "progress_state": 1,
+                    "tasks": list(
+                        {
+                            "task_id": task.id,
+                            "task_title": task.title,
+                            "task_type": task.type,
+                            "task_url": task.url,
+                            "task_description": task.description,
+                            "task_checked": task.checked,
+                        }
+                        for task in target_roadmap.task_roadmap.all()
+                    ),
+                }
                 return JsonResponse(response_dict)
             else:
                 return HttpResponseBadRequest()
@@ -315,7 +328,20 @@ def roadmap_id_progress(request, roadmap_id):
                 target_roadmap.clear_section_progress()
                 target_roadmap.save()
 
-                response_dict = {"progress_state": 3}
+                response_dict = {
+                    "progress_state": 3,
+                    "tasks": list(
+                        {
+                            "task_id": task.id,
+                            "task_title": task.title,
+                            "task_type": task.type,
+                            "task_url": task.url,
+                            "task_description": task.description,
+                            "task_checked": task.checked,
+                        }
+                        for task in target_roadmap.task_roadmap.all()
+                    ),
+                }
                 return JsonResponse(response_dict)
             else:
                 return HttpResponseBadRequest()
@@ -324,7 +350,20 @@ def roadmap_id_progress(request, roadmap_id):
                 target_roadmap.progress = 2
                 target_roadmap.save()
 
-                response_dict = {"progress_state": 2}
+                response_dict = {
+                    "progress_state": 2,
+                    "tasks": list(
+                        {
+                            "task_id": task.id,
+                            "task_title": task.title,
+                            "task_type": task.type,
+                            "task_url": task.url,
+                            "task_description": task.description,
+                            "task_checked": task.checked,
+                        }
+                        for task in target_roadmap.task_roadmap.all()
+                    ),
+                }
                 return JsonResponse(response_dict)
             else:
                 return HttpResponseBadRequest()

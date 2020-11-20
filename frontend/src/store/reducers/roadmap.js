@@ -82,6 +82,15 @@ const reducer = (state = initialState, action) => {
           pin_count: action.responseData.pinCount,
         },
       };
+    case actionTypes.PROGRESS_CHANGE:
+      return {
+        ...state,
+        selectedRoadmap: {
+          ...state.selectedRoadmap,
+          progress: action.progress,
+          tasks: action.tasks,
+        },
+      };
     default:
       break;
   }

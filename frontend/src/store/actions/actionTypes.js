@@ -22,3 +22,5 @@ export const ROADMAP_LIKE = "ROADMAP_LIKE";
 export const ROADMAP_UNLIKE = "ROADMAP_UNLIKE";
 export const ROADMAP_PIN = "ROADMAP_PIN";
 export const ROADMAP_UNPIN = "ROADMAP_UNPIN";
+
+export const PROGRESS_CHANGE = "PROGRESS_CHANGE";

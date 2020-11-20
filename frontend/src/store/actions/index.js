@@ -12,4 +12,5 @@ export {
   deleteComment,
   toggleRoadmapLike,
   toggleRoadmapPin,
+  changeProgress,
 } from "./roadmap";
