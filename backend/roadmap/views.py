@@ -292,9 +292,8 @@ def simple_search(request):
         if not request.user.is_authenticated:
             return HttpResponse(status=401)
         try:
-            req_data = json.loads(request.body.decode())
-            title = req_data["title"]
-            target_keywords = title.split()
+            target_keywords = request.GET.get("title").split()
+            print(target_keywords)
         except (KeyError, JSONDecodeError, AttributeError):
             return HttpResponseBadRequest()
 
