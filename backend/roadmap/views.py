@@ -47,8 +47,10 @@ def roadmap(request):
             tag_query = Tag.objects.filter(tag_name__iexact=tag)
             if tag_query.exists():
                 new_roadmap.tags.add(tag_query.first())
+                tag_query.first().increment_count_roadmap()
             else:
                 new_tag = Tag(tag_name=tag)
+                new_tag.increment_count_roadmap()
                 new_tag.save()
                 new_roadmap.tags.add(new_tag)
 
@@ -143,14 +145,17 @@ def roadmap_id(request, roadmap_id):
             tag_query = roadmap.tags.filter(tag_name__iexact=tag)
             if tag_query.exists():
                 roadmap.tags.remove(tag_query.first())
+                tag_query.first().decrement_count_roadmap()
 
         # Add new tags m2m field in roadmap
         for tag in added_tag_list:
             tag_query = Tag.objects.filter(tag_name__iexact=tag)
             if tag_query.exists():
                 roadmap.tags.add(tag_query.first())
+                tag_query.first().increment_count_roadmap()
             else:
                 new_tag = Tag(tag_name=tag)
+                new_tag.increment_count_roadmap()
                 new_tag.save()
                 roadmap.tags.add(new_tag)
 
