@@ -13,6 +13,8 @@ const stubRoadmapData = {
     title: "title1",
     date: "2020-11-14 05:18:20",
     level: 1,
+    description: "description",
+    private: false,
     like_count: 0,
     comment_count: 0,
     pin_count: 0,
@@ -75,6 +77,8 @@ const stubRoadmapData = {
 const stubCreateRoadmapData = {
   title: "title2",
   level: 1,
+  description: "description",
+  private: false,
   sections: [
     {
       section_title: "section0_title",
@@ -119,6 +123,8 @@ const stubRoadmapSimpleData = {
   title: "title1",
   date: "2020-11-14 05:18:20",
   level: 1,
+  description: "description",
+  private: false,
   like_count: 0,
   comment_count: 0,
   pin_count: 0,
@@ -145,6 +151,8 @@ const stubRoadmapSimpleData2 = {
   title: "title2",
   date: "2020-11-14 05:18:20",
   level: 1,
+  description: "description",
+  private: false,
   like_count: 0,
   comment_count: 0,
   pin_count: 0,
