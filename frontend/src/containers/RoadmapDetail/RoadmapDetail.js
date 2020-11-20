@@ -19,8 +19,7 @@ class RoadmapDetail extends Component {
   }
 
   backToList = () => {
-    const { onResetRoadmap, history } = this.props;
-    onResetRoadmap();
+    const { history } = this.props;
     history.goBack();
   };
 
