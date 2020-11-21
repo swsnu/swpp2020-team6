@@ -6,17 +6,16 @@ const RoadmapSimple = (props) => {
   const {
     roadmapID,
     title,
-    date, // do not need?
+    date,
     level,
     likeCount,
     commentCount,
     pinCount,
     progress,
-    authorID,
     authorName,
-    authorPictureUrl,
     tags,
     onClickTitleHandler,
+    isMyRoadmap,
   } = props;
 
   return (
@@ -48,11 +47,10 @@ RoadmapSimple.propTypes = {
   commentCount: PropTypes.number,
   pinCount: PropTypes.number,
   progress: PropTypes.number,
-  authorID: PropTypes.number,
   authorName: PropTypes.string,
-  authorPictureUrl: PropTypes.string,
   tags: PropTypes.objectOf(PropTypes.any),
   onClickTitleHandler: PropTypes.func,
+  isMyRoadmap: PropTypes.bool,
 };
 
 export default RoadmapSimple;

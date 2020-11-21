@@ -9,13 +9,17 @@ export const getSimpleSearchFailure_ = () => {
 };
 
 export const getSimpleSearchSuccess_ = (data) => {
-  return { type: actionTypes.GET_SIMPLE_SEARCH_SUCCESS, searchResult: data.roadmaps };
+  return {
+    type: actionTypes.GET_SIMPLE_SEARCH_SUCCESS,
+    searchResult: data.roadmaps,
+    totalCount: data.total_count,
+  };
 };
 
 export const getSimpleSearch = (searchData) => {
   return (dispatch) => {
     return axios
-      .get("/api/roadmap/simple_search/", { params: searchData })
+      .get("/api/roadmap/search/", { params: searchData })
       .then((res) => {
         dispatch(getSimpleSearchSuccess_(res.data));
       })
@@ -43,13 +47,17 @@ export const getAdvancedSearchFailure_ = () => {
 };
 
 export const getAdvancedSearchSuccess_ = (data) => {
-  return { type: actionTypes.GET_ADVANCED_SEARCH_SUCCESS, searchResult: data.roadmaps };
+  return {
+    type: actionTypes.GET_ADVANCED_SEARCH_SUCCESS,
+    searchResult: data.roadmaps,
+    totalCount: data.total_count,
+  };
 };
 
 export const getAdvancedSearch = (searchData) => {
   return (dispatch) => {
     return axios
-      .get("/api/roadmap/advanced_search/", { params: searchData })
+      .get("/api/roadmap/search/", { params: searchData })
       .then((res) => {
         dispatch(getAdvancedSearchSuccess_(res.data));
       })

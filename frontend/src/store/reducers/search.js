@@ -1,18 +1,27 @@
 import * as actionTypes from "../actions/actionTypes";
 
 const initialState = {
-  searchResult: [{ title: "test search result1", id: 1, author_name: "test author name" }],
-  topTags: [{ tag_id: "tag_id_1", tag_content: "test_top_tag_1" }],
+  searchResult: [{ title: "test search result1", id: 1, author_name: "test author name" }], // default: []
+  topTags: [{ tag_id: "tag_id_1", tag_content: "test_top_tag_1" }], // default: []
+  totalCount: 30, //  default: 1
 };
 
 const reducer = (state = initialState, action) => {
   switch (action.type) {
     case actionTypes.GET_SIMPLE_SEARCH_SUCCESS:
-      return { ...state, searchResult: action.searchResult };
+      return {
+        ...state,
+        searchResult: action.searchResult,
+        totalCount: action.totalCount,
+      };
     case actionTypes.GET_SIMPLE_SEARCH_FAILURE:
       return { ...state };
     case actionTypes.GET_ADVANCED_SEARCH_SUCCESS:
-      return { ...state, searchResult: action.searchResult };
+      return {
+        ...state,
+        searchResult: action.searchResult,
+        totalCount: action.totalCount,
+      };
     case actionTypes.GET_ADVANCED_SEARCH_FAILURE:
       return { ...state };
     case actionTypes.GET_TOP_TAGS_SUCCESS:
