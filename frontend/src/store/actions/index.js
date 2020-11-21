@@ -13,3 +13,5 @@ export {
   toggleRoadmapLike,
   toggleRoadmapPin,
 } from "./roadmap";
+
+export { getSimpleSearch, getAdvancedSearch, getTopTags } from "./search";
