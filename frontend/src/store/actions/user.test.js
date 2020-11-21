@@ -36,7 +36,11 @@ describe("ActionCreatorsUser", () => {
 
     return store.dispatch(actionCreators.getUserAuth()).then(() => {
       const newState = store.getState();
-      expect(newState.user).toStrictEqual({ isSignedIn: true, selectedUser: stubSelectedUser });
+      expect(newState.user).toStrictEqual({
+        isSignedIn: true,
+        selectedUser: stubSelectedUser,
+        myPageUser: undefined,
+      });
       expect(spy).toHaveBeenCalledTimes(1);
     });
   });
@@ -54,7 +58,11 @@ describe("ActionCreatorsUser", () => {
 
     return store.dispatch(actionCreators.signIn()).then(() => {
       const newState = store.getState();
-      expect(newState.user).toStrictEqual({ isSignedIn: true, selectedUser: stubSelectedUser });
+      expect(newState.user).toStrictEqual({
+        isSignedIn: true,
+        selectedUser: stubSelectedUser,
+        myPageUser: undefined,
+      });
       expect(spy).toHaveBeenCalledTimes(1);
     });
   });
@@ -193,6 +201,71 @@ describe("ActionCreatorsUser", () => {
     store.dispatch(actionCreators.signUp()).then(() => {
       expect(spy).toHaveBeenCalledTimes(1);
       expect(spyAlert).toHaveBeenCalledTimes(1);
+      done();
+    });
+  });
+
+  it("should properly 'getMyPageUser'", (done) => {
+    const spy = jest.spyOn(axios, "get").mockImplementation(() => {
+      return new Promise((resolve) => {
+        const result = {
+          status: 200,
+          data: {},
+        };
+        resolve(result);
+      });
+    });
+    store.dispatch(actionCreators.getMyPageUser()).then(() => {
+      expect(spy).toHaveBeenCalledTimes(1);
+      done();
+    });
+  });
+
+  it("should fail 'getMyPageUser' with 401 error", (done) => {
+    const spy = jest.spyOn(axios, "get").mockImplementation(() => {
+      return new Promise((resolve, reject) => {
+        const result = {
+          response: { status: 401 },
+        };
+        reject(result);
+      });
+    });
+    store.dispatch(actionCreators.getMyPageUser()).then(() => {
+      expect(spy).toHaveBeenCalledTimes(1);
+      expect(spyAlert).toHaveBeenCalledTimes(1);
+      done();
+    });
+  });
+
+  it("should fail 'getMyPageUser' with 404 error", (done) => {
+    const spy = jest.spyOn(axios, "get").mockImplementation(() => {
+      return new Promise((resolve, reject) => {
+        const result = {
+          response: { status: 404 },
+        };
+        reject(result);
+      });
+    });
+    store.dispatch(actionCreators.getMyPageUser()).then(() => {
+      expect(spy).toHaveBeenCalledTimes(1);
+      expect(spyAlert).toHaveBeenCalledTimes(1);
+      done();
+    });
+  });
+
+  it("should fail 'getMyPageUser' with random error", (done) => {
+    const spy = jest.spyOn(axios, "get").mockImplementation(() => {
+      return new Promise((resolve, reject) => {
+        const result = {
+          response: {
+            status: 405,
+          },
+        };
+        reject(result);
+      });
+    });
+    store.dispatch(actionCreators.getMyPageUser()).then(() => {
+      expect(spy).toHaveBeenCalledTimes(1);
       done();
     });
   });

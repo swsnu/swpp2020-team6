@@ -1,4 +1,4 @@
-export { getUserAuth, signIn, signUp, signOut } from "./user";
+export { getUserAuth, signIn, signUp, signOut, getMyPageUser, resetMyPageUser_ } from "./user";
 
 export {
   getRoadmap,

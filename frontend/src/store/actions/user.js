@@ -100,3 +100,34 @@ export const signUp = (userCredentials) => {
       });
   };
 };
+
+export const getMyPageUser_ = (userData) => {
+  return { type: actionTypes.GET_MYPAGE_USER, userData };
+};
+
+export const getMyPageUser = (userId) => {
+  return (dispatch) => {
+    return axios
+      .get(`/api/user/${userId}/`)
+      .then((response) => {
+        dispatch(getMyPageUser_(response.data));
+      })
+      .catch((error) => {
+        switch (error.response.status) {
+          case 401:
+            window.alert("Please sign in!");
+            break;
+          case 404:
+            window.alert("No such user!");
+            break;
+          default:
+            break;
+        }
+        dispatch(push("/"));
+      });
+  };
+};
+
+export const resetMyPageUser_ = () => {
+  return { type: actionTypes.RESET_MYPAGE_USER };
+};
