@@ -76,6 +76,11 @@ class SearchResult extends Component {
     this.setState({ tags: tags.filter((_, index) => index !== id) });
   };
 
+  onClickAddFromTopTag = (tag) => {
+    const { tags } = this.state;
+    this.setState({ tags: tags.concat(tag) });
+  };
+
   render() {
     const {
       simpleSearchInput,
@@ -88,6 +93,8 @@ class SearchResult extends Component {
       tags,
       newTag,
     } = this.state;
+
+    const { topTags } = this.props;
 
     const tagList = tags.map((tag, index) => {
       return (
@@ -103,93 +110,121 @@ class SearchResult extends Component {
         </div>
       );
     });
+
+    const topTagList = topTags.map((tag) => {
+      return (
+        <div className="topTags">
+          <button
+            className="delete-tag-button"
+            type="button"
+            key={tag}
+            onClick={() => this.onClickAddFromTopTag(tag)}
+          >
+            {tag}
+          </button>
+        </div>
+      );
+    });
+
     return (
       <div className="SearchResult">
         <h1>Search Result</h1>
 
-        <label>Level: </label>
-        <input type="checkbox" checked={basicChecked} onChange={this.onClickBasic} />
-        <label>Basic</label>
-        <input type="checkbox" checked={intermediateChecked} onChange={this.onClickIntermediate} />
-        <label>Intermediate</label>
-        <input type="checkbox" checked={advancedChecked} onChange={this.onClickAdvanced} />
-        <label>Advanced</label>
+        <div className="level">
+          <label>Level: </label>
+          <input type="checkbox" checked={basicChecked} onChange={this.onClickBasic} />
+          <label>Basic</label>
+          <input
+            type="checkbox"
+            checked={intermediateChecked}
+            onChange={this.onClickIntermediate}
+          />
+          <label>Intermediate</label>
+          <input type="checkbox" checked={advancedChecked} onChange={this.onClickAdvanced} />
+          <label>Advanced</label>
+        </div>
 
-        <br />
+        <div className="advanced-search-bar">
+          <select
+            id="sortBy"
+            value={sortBy}
+            onChange={(event) => {
+              return this.onChangeSortBy(event.target.value);
+            }}
+          >
+            <option value={sortType.LIKE}>Sort by: Like</option>
+            <option value={sortType.PIN}>Sort by: Pin</option>
+            <option value={sortType.NEW}>Sort by: New</option>
+          </select>
+          <input
+            id="advanced-search-input"
+            value={advancedSearchInput}
+            placeholder="Roadmap to search..."
+            onChange={(event) => this.setState({ advancedSearchInput: event.target.value })}
+          />
+          <button
+            id="advanced-search-button"
+            onClick={
+              () =>
+                this.onClickAdvancedSearch({
+                  title: advancedSearchInput,
+                  tags,
+                  level,
+                  sort: sortBy,
+                })
+              // eslint-disable-next-line react/jsx-curly-newline
+            }
+            type="button"
+          >
+            Search
+          </button>
+        </div>
 
-        <select
-          id="sortBy"
-          value={sortBy}
-          onChange={(event) => {
-            return this.onChangeSortBy(event.target.value);
-          }}
-        >
-          <option value={sortType.LIKE}>Sort by: Like</option>
-          <option value={sortType.PIN}>Sort by: Pin</option>
-          <option value={sortType.NEW}>Sort by: New</option>
-        </select>
-        <input
-          id="advanced-search-input"
-          value={advancedSearchInput}
-          placeholder="Roadmap to search..."
-          onChange={(event) => this.setState({ advancedSearchInput: event.target.value })}
-        />
-        <button
-          id="advanced-search-button"
-          onClick={
-            () =>
-              this.onClickAdvancedSearch({
-                title: advancedSearchInput,
-                tags,
-                level,
-                sort: sortBy,
-              })
-            // eslint-disable-next-line react/jsx-curly-newline
-          }
-          type="button"
-        >
-          Search
-        </button>
+        <div className="tags">
+          <label>Tags</label>
+          {tagList}
+          <input
+            id="new-tag"
+            value={newTag}
+            onChange={(event) => this.onSetNewTag(event.target.value)}
+          />
+          <button id="add-tag-button" type="button" onClick={() => this.onClickAddTag()}>
+            add
+          </button>
+        </div>
 
-        <br />
+        <div clasName="topTags">
+          <label>Top Tags</label>
+          {topTagList}
+        </div>
 
-        <label>Tags</label>
-        {tagList}
-        <input
-          id="new-tag"
-          value={newTag}
-          onChange={(event) => this.onSetNewTag(event.target.value)}
-        />
-        <button id="add-tag-button" type="button" onClick={() => this.onClickAddTag()}>
-          add
-        </button>
-
-        <br />
-
-        <input
-          id="simple-search-input"
-          value={simpleSearchInput}
-          placeholder="Simple search testing..."
-          onChange={(event) => this.setState({ simpleSearchInput: event.target.value })}
-        />
-        <button
-          id="simple-search-button"
-          onClick={() => this.onClickSimpleSearch(simpleSearchInput)}
-          type="button"
-        >
-          Simple Search Test
-        </button>
+        <div className="simple-search">
+          <input
+            id="simple-search-input"
+            value={simpleSearchInput}
+            placeholder="Simple search testing..."
+            onChange={(event) => this.setState({ simpleSearchInput: event.target.value })}
+          />
+          <button
+            id="simple-search-button"
+            onClick={() => this.onClickSimpleSearch(simpleSearchInput)}
+            type="button"
+          >
+            Simple Search Test
+          </button>
+        </div>
       </div>
     );
   }
 }
 
-// TODO: show roadmaps, top tags received.
+// TODO: show roadmaps.
 
 SearchResult.propTypes = {
   onGetSimpleSearch: PropTypes.func,
   onGetAdvancedSearch: PropTypes.func,
   onGetTopTags: PropTypes.func,
+  topTags: PropTypes.objectOf(PropTypes.any),
 };
 
 const mapStateToProps = (state) => {

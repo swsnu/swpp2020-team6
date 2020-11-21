@@ -94,7 +94,7 @@ class SignUp extends Component {
 }
 
 SignUp.propTypes = {
-  onSignUp: PropTypes.func.isRequired,
+  onSignUp: PropTypes.func,
   isSignedIn: PropTypes.bool,
   history: PropTypes.objectOf(PropTypes.any),
 };
