@@ -6,13 +6,13 @@ from django.db import migrations, models
 class Migration(migrations.Migration):
 
     dependencies = [
-        ('tag', '0001_initial'),
+        ("tag", "0001_initial"),
     ]
 
     operations = [
         migrations.AddField(
-            model_name='tag',
-            name='count_roadmap',
+            model_name="tag",
+            name="count_roadmap",
             field=models.IntegerField(default=0),
         ),
     ]

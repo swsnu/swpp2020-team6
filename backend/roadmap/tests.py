@@ -329,7 +329,6 @@ class RoadmapTestCase(TestCase):
         create_roadmap(title="title roadmap", user=user)
 
         # 200 (GET)
-        print(path)
         response = client.get(
             path,
             {"title": "roadmap title"},
