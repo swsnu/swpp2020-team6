@@ -6,7 +6,7 @@ const RoadmapSimple = (props) => {
   const {
     roadmapID,
     title,
-    date,
+    date, // do not need?
     level,
     likeCount,
     commentCount,

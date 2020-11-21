@@ -17,18 +17,12 @@ class SearchResult extends Component {
     simpleSearchInput: "",
     advancedSearchInput: "",
     sortBy: sortType.LIKE,
-    level: [{ basic: true, intermediate: true, advanced: true }],
     basicChecked: true,
     intermediateChecked: true,
     advancedChecked: true,
     tags: [],
     newTag: "",
   };
-
-  componentDidMount() {
-    const { onGetTopTags } = this.props;
-    onGetTopTags(10);
-  }
 
   onClickSimpleSearch = (searchWord) => {
     const { onGetSimpleSearch } = this.props;
@@ -41,21 +35,15 @@ class SearchResult extends Component {
   };
 
   onClickBasic = (event) => {
-    const { level } = this.state;
     this.setState({ basicChecked: event.target.checked });
-    this.setState({ level: { ...level, basic: event.target.checked } });
   };
 
   onClickIntermediate = (event) => {
-    const { level } = this.state;
     this.setState({ intermediateChecked: event.target.checked });
-    this.setState({ level: { ...level, intermediate: event.target.checked } });
   };
 
   onClickAdvanced = (event) => {
-    const { level } = this.state;
     this.setState({ advancedChecked: event.target.checked });
-    this.setState({ level: { ...level, advanced: event.target.checked } });
   };
 
   onChangeSortBy = (sorttype) => {
@@ -87,6 +75,23 @@ class SearchResult extends Component {
     history.push(`/roadmap/${roadmapID}`);
   };
 
+  calcLevelData = (basic, intermediate, advanced) => {
+    let levelData = [];
+    if (basic) {
+      levelData = levelData.concat(1);
+    }
+    if (intermediate) {
+      levelData = levelData.concat(2);
+    }
+    if (advanced) {
+      levelData = levelData.concat(3);
+    }
+    if (!basic && !intermediate && !advanced) {
+      levelData = [1, 2, 3];
+    }
+    return levelData;
+  };
+
   render() {
     const {
       simpleSearchInput,
@@ -95,12 +100,12 @@ class SearchResult extends Component {
       basicChecked,
       intermediateChecked,
       advancedChecked,
-      level,
       tags,
       newTag,
     } = this.state;
 
-    const { searchResult, topTags } = this.props;
+    const { searchResult, topTags, onGetTopTags } = this.props;
+    onGetTopTags(10);
 
     const searchResultList = searchResult.map((simpleObject) => {
       return (
@@ -170,6 +175,8 @@ class SearchResult extends Component {
           <label>Advanced</label>
         </div>
 
+        <br />
+
         <div className="advanced-search-bar">
           <select
             id="sortBy"
@@ -195,7 +202,7 @@ class SearchResult extends Component {
                 this.onClickAdvancedSearch({
                   title: advancedSearchInput,
                   tags,
-                  level,
+                  levels: this.calcLevelData(basicChecked, intermediateChecked, advancedChecked),
                   sort: sortBy,
                 })
               // eslint-disable-next-line react/jsx-curly-newline
@@ -205,6 +212,8 @@ class SearchResult extends Component {
             Search
           </button>
         </div>
+
+        <br />
 
         <div className="tags">
           <label>Tags</label>
@@ -219,10 +228,14 @@ class SearchResult extends Component {
           </button>
         </div>
 
+        <br />
+
         <div clasName="topTags">
           <label>Top Tags</label>
           {topTagList}
         </div>
+
+        <br />
 
         <div className="simple-search">
           <input
@@ -240,7 +253,12 @@ class SearchResult extends Component {
           </button>
         </div>
 
-        <div className="search-result-list">{searchResultList}</div>
+        <br />
+
+        <div className="search-result-list">
+          <p>Search Result List</p>
+          {searchResultList}
+        </div>
       </div>
     );
   }

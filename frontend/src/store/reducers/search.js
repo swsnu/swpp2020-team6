@@ -2,7 +2,7 @@ import * as actionTypes from "../actions/actionTypes";
 
 const initialState = {
   searchResult: [{ title: "test search result1", id: 1, author_name: "test author name" }],
-  topTags: [{ tag_id: "tag_id_1", tag_content: "tag_content_1" }],
+  topTags: [{ tag_id: "tag_id_1", tag_content: "test_top_tag_1" }],
 };
 
 const reducer = (state = initialState, action) => {
