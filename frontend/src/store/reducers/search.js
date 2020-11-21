@@ -15,9 +15,9 @@ const reducer = (state = initialState, action) => {
       return { ...state, searchResult: action.searchResult };
     case actionTypes.GET_ADVACNED_SEARCH_FAILURE:
       return { ...state };
-    case actionTypes.GET_TAGS_SUCCESS:
+    case actionTypes.GET_TOP_TAGS_SUCCESS:
       return { ...state, topTags: action.topTags };
-    case actionTypes.GET_TAGS_FAILURE:
+    case actionTypes.GET_TOP_TAGS_FAILURE:
       return { ...state };
     default:
       break;
