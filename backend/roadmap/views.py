@@ -293,7 +293,7 @@ def simple_search(request):
             return HttpResponse(status=401)
         try:
             target_keywords = request.GET.get("title").split()
-        except (KeyError, JSONDecodeError, AttributeError):
+        except (KeyError, JSONDecodeError, AttributeError, ValueError):
             return HttpResponseBadRequest()
 
         result = Roadmap.objects.filter(
@@ -305,18 +305,64 @@ def simple_search(request):
     return HttpResponseNotAllowed(["GET"])
 
 
-def advanced_search(request):
+def search(request):
+    """
+    roadmap search with title, tag, level, sort options
+    :param request: with GET parameter
+    :return: search result n(#roadmaps per page) simple roadmaps
+    """
     if request.method == "GET":
         if not request.user.is_authenticated:
             return HttpResponse(status=401)
         try:
-            req_data = json.loads(request.body.decode())
-        # TODO: parse input - title, tags, level, sort
-        except (KeyError, JSONDecodeError):
+            # Parse GET parameters
+            title_keywords = request.GET.get("title", "").split()
+            tags = request.GET.getlist("tags", [])
+            levels = list(
+                int(level) for level in request.GET.getlist("levels", ["1", "2", "3"])
+            )
+            sort = request.GET.get("sort", "1")
+            page_index = int(request.GET.get("page", 1))
+            roadmap_per_page = int(request.GET.get("perpage", 9))
+
+            # Convert sort number into order_by field
+            if sort == "1":
+                sort = "-like_count"
+            elif sort == "2":
+                sort = "-pin_count"
+            elif sort == "3":
+                sort = "-date"
+            else:
+                sort = "-like_count"
+        except (KeyError, JSONDecodeError, AttributeError, ValueError):
             return HttpResponseBadRequest()
 
-        # TODO: search with input
+        # Accumulate each filter
+        filters = []
+        if title_keywords:
+            filters.append(
+                reduce(
+                    and_, [Q(title__icontains=keyword) for keyword in title_keywords]
+                )
+            )
+        if tags:
+            filters.append(
+                reduce(or_, [Q(tags__tag_name__icontains=tag) for tag in tags])
+            )
+        if levels:
+            filters.append(reduce(or_, [Q(level__exact=level) for level in levels]))
 
-        # TODO: response simple roadmap result
-        return
+        # Lookup roadmap db with filters
+        result = Roadmap.objects.filter(reduce(and_, filters)).distinct().order_by(sort)
+
+        # Select #roadmap_per_page of given page
+        partial_result = result[
+            (page_index - 1) * roadmap_per_page : page_index * roadmap_per_page
+        ]
+        result_dict = {
+            "page": page_index,
+            "total_count": result.count(),
+            "roadmaps": list(r.to_dict_simple() for r in partial_result),
+        }
+        return JsonResponse(result_dict)
     return HttpResponseNotAllowed(["GET"])
