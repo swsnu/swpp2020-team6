@@ -8,6 +8,7 @@ import { connect } from "react-redux";
 import PropTypes from "prop-types";
 import { sortType } from "../../constants";
 import * as actionCreators from "../../store/actions/index";
+import RoadmapSimple from "../../components/RoadmapSimple/RoadmapSimple";
 
 // import "./SearchResult.scss";
 
@@ -16,12 +17,12 @@ class SearchResult extends Component {
     simpleSearchInput: "",
     advancedSearchInput: "",
     sortBy: sortType.LIKE,
-    level: [{ basic: true, intermediate: true, advanced: true }],
     basicChecked: true,
     intermediateChecked: true,
     advancedChecked: true,
     tags: [],
     newTag: "",
+    page: 1,
   };
 
   componentDidMount() {
@@ -40,21 +41,15 @@ class SearchResult extends Component {
   };
 
   onClickBasic = (event) => {
-    const { level } = this.state;
     this.setState({ basicChecked: event.target.checked });
-    this.setState({ level: { ...level, basic: event.target.checked } });
   };
 
   onClickIntermediate = (event) => {
-    const { level } = this.state;
     this.setState({ intermediateChecked: event.target.checked });
-    this.setState({ level: { ...level, intermediate: event.target.checked } });
   };
 
   onClickAdvanced = (event) => {
-    const { level } = this.state;
     this.setState({ advancedChecked: event.target.checked });
-    this.setState({ level: { ...level, advanced: event.target.checked } });
   };
 
   onChangeSortBy = (sorttype) => {
@@ -76,9 +71,61 @@ class SearchResult extends Component {
     this.setState({ tags: tags.filter((_, index) => index !== id) });
   };
 
-  onClickAddFromTopTag = (tag) => {
+  onClickAddFromTopTag = (topTag) => {
     const { tags } = this.state;
-    this.setState({ tags: tags.concat(tag) });
+    let tagExists = false;
+    tags.forEach((tag) => {
+      if (tag === topTag) tagExists = true;
+    });
+    if (!tagExists) {
+      this.setState({ tags: tags.concat(topTag) });
+    }
+  };
+
+  onClickTitle = (roadmapID) => {
+    const { history } = this.props;
+    history.push(`/roadmap/${roadmapID}`);
+  };
+
+  calcLevelData = (basic, intermediate, advanced) => {
+    let levelData = [];
+    if (basic) {
+      levelData = levelData.concat(1);
+    }
+    if (intermediate) {
+      levelData = levelData.concat(2);
+    }
+    if (advanced) {
+      levelData = levelData.concat(3);
+    }
+    if (!basic && !intermediate && !advanced) {
+      levelData = [1, 2, 3];
+    }
+    return levelData;
+  };
+
+  onClickPageNumber = (pageNumber) => {
+    const { onGetAdvancedSearch } = this.props;
+    const {
+      advancedSearchInput,
+      tags,
+      basicChecked,
+      intermediateChecked,
+      advancedChecked,
+      sortBy,
+      page,
+    } = this.state;
+
+    this.setState({ page: pageNumber });
+
+    onGetAdvancedSearch({
+      title: advancedSearchInput,
+      tags,
+      levels: this.calcLevelData(basicChecked, intermediateChecked, advancedChecked),
+      sort: sortBy,
+      page,
+      perpage: 9,
+    });
   };
 
   render() {
@@ -89,12 +136,32 @@ class SearchResult extends Component {
       basicChecked,
       intermediateChecked,
       advancedChecked,
-      level,
       tags,
       newTag,
+      page,
     } = this.state;
 
-    const { topTags } = this.props;
+    const { searchResult, topTags, totalCount } = this.props;
+
+    const searchResultList = searchResult.map((simpleObject) => {
+      return (
+        <RoadmapSimple
+          roadmapID={simpleObject.id}
+          title={simpleObject.title}
+          date={simpleObject.date}
+          level={simpleObject.level}
+          likeCount={simpleObject.like_count}
+          commentCount={simpleObject.comment_count}
+          pinCount={simpleObject.pin_count}
+          progress={simpleObject.progress}
+          authorID={simpleObject.author_id}
+          authorName={simpleObject.author_name}
+          authorPictureUrl={simpleObject.author_picture_url}
+          tags={simpleObject.tags}
+          onClickTitleHandler={this.onClickTitle}
+        />
+      );
+    });
 
     const tagList = tags.map((tag, index) => {
       return (
@@ -115,16 +182,32 @@ class SearchResult extends Component {
       return (
         <div className="topTags">
           <button
-            className="delete-tag-button"
+            className="add-top-tag-button"
             type="button"
-            key={tag}
-            onClick={() => this.onClickAddFromTopTag(tag)}
+            key={tag.tag_content}
+            onClick={() => this.onClickAddFromTopTag(tag.tag_content)}
           >
-            {tag}
+            {tag.tag_content}
           </button>
         </div>
       );
     });
+
+    // Create page buttons.
+    let pageCount;
+    if (totalCount % 9 === 0) {
+      pageCount = totalCount / 9;
+    } else {
+      pageCount = parseInt(totalCount / 9, 10) + 1;
+    }
+    let pageList = [];
+    for (let i = 1; i <= pageCount; i += 1) {
+      pageList = pageList.concat(
+        <button id={`page${i}`} onClick={() => this.onClickPageNumber(i)} type="button">
+          {i}
+        </button>,
+      );
+    }
 
     return (
       <div className="SearchResult">
@@ -143,6 +226,30 @@ class SearchResult extends Component {
           <input type="checkbox" checked={advancedChecked} onChange={this.onClickAdvanced} />
           <label>Advanced</label>
         </div>
+
+        <br />
+
+        <div className="tags">
+          <label>Tags</label>
+          {tagList}
+          <input
+            id="new-tag"
+            value={newTag}
+            onChange={(event) => this.onSetNewTag(event.target.value)}
+          />
+          <button id="add-tag-button" type="button" onClick={() => this.onClickAddTag()}>
+            add
+          </button>
+        </div>
+
+        <br />
+
+        <div clasName="topTags">
+          <label>Top Tags</label>
+          {topTagList}
+        </div>
+
+        <br />
 
         <div className="advanced-search-bar">
           <select
@@ -169,8 +276,10 @@ class SearchResult extends Component {
                 this.onClickAdvancedSearch({
                   title: advancedSearchInput,
                   tags,
-                  level,
+                  levels: this.calcLevelData(basicChecked, intermediateChecked, advancedChecked),
                   sort: sortBy,
+                  page,
+                  perpage: 9,
                 })
               // eslint-disable-next-line react/jsx-curly-newline
             }
@@ -180,23 +289,7 @@ class SearchResult extends Component {
           </button>
         </div>
 
-        <div className="tags">
-          <label>Tags</label>
-          {tagList}
-          <input
-            id="new-tag"
-            value={newTag}
-            onChange={(event) => this.onSetNewTag(event.target.value)}
-          />
-          <button id="add-tag-button" type="button" onClick={() => this.onClickAddTag()}>
-            add
-          </button>
-        </div>
-
-        <div clasName="topTags">
-          <label>Top Tags</label>
-          {topTagList}
-        </div>
+        <br />
 
         <div className="simple-search">
           <input
@@ -213,23 +306,37 @@ class SearchResult extends Component {
             Simple Search Test
           </button>
         </div>
+
+        <br />
+
+        <div className="search-result-list">
+          <p>Search Result List</p>
+          {searchResultList}
+        </div>
+
+        <br />
+
+        <div className="pages">{pageList}</div>
       </div>
     );
   }
 }
 
-// TODO: show roadmaps.
-
 SearchResult.propTypes = {
   onGetSimpleSearch: PropTypes.func,
   onGetAdvancedSearch: PropTypes.func,
   onGetTopTags: PropTypes.func,
+  searchResult: PropTypes.objectOf(PropTypes.any),
   topTags: PropTypes.objectOf(PropTypes.any),
+  history: PropTypes.objectOf(PropTypes.any),
+  totalCount: PropTypes.number,
 };
 
 const mapStateToProps = (state) => {
   return {
+    searchResult: state.search.searchResult,
     topTags: state.search.topTags,
+    totalCount: state.search.totalCount,
   };
 };
 
