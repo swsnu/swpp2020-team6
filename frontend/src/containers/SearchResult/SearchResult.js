@@ -14,7 +14,7 @@ import { sortType } from "../../constants";
 class SearchResult extends Component {
   state = {
     advancedSearchInput: "",
-    sortBy: 1,
+    sortBy: sortType.LIKE,
     level: [{ basic: true, intermediate: true, advanced: true }],
     basicChecked: true,
     intermediateChecked: true,
@@ -69,6 +69,7 @@ class SearchResult extends Component {
       basicChecked,
       intermediateChecked,
       advancedChecked,
+      level,
       tags,
       newTag,
     } = this.state;
@@ -124,8 +125,8 @@ class SearchResult extends Component {
             () =>
               this.onClickAdvancedSearch({
                 title: advancedSearchInput,
-                tags: [],
-                level: [1, 2, 3],
+                tags,
+                level,
                 sort: sortBy,
               })
             // eslint-disable-next-line react/jsx-curly-newline
