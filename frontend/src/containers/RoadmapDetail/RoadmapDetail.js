@@ -31,10 +31,10 @@ class RoadmapDetail extends Component {
     onGetRoadmap(parseInt(match.params.id, 10));
   }
 
-  backToList = () => {
-    const { history } = this.props;
-    history.goBack();
-  };
+  componentWillUnmount() {
+    const { onResetRoadmap } = this.props;
+    onResetRoadmap();
+  }
 
   /* ---------------- Roadmap Progress -------------------- */
   onChangeRoadmapProgressStatus = (type) => {
@@ -92,7 +92,8 @@ class RoadmapDetail extends Component {
 
   handleClose = () => {
     this.setState({ open: false });
-    this.backToList();
+    const { history } = this.props;
+    history.goBack();
   };
 
   render() {
@@ -290,9 +291,6 @@ class RoadmapDetail extends Component {
               {commentConfirmButton}
             </div>
             <div className="roadmap-comments">{roadmapComments}</div>
-            <button id="back-button" type="button" onClick={() => this.backToList()}>
-              Back
-            </button>
           </div>
         </div>
       </div>
@@ -309,6 +307,7 @@ RoadmapDetail.propTypes = {
   selectedRoadmap: PropTypes.objectOf(PropTypes.any),
 
   onGetRoadmap: PropTypes.func.isRequired,
+  onResetRoadmap: PropTypes.func.isRequired,
 
   onCreateComment: PropTypes.func.isRequired,
   onEditComment: PropTypes.func.isRequired,
