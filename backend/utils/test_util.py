@@ -34,10 +34,10 @@ def signup_signin(client):
     return user
 
 
-def create_roadmap(title, user):
+def create_roadmap(title, user, level=1):
     return Roadmap.objects.create(
         title=title,
-        level=1,
+        level=level,
         original_author=user,
         author=user,
     )
