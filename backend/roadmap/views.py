@@ -287,24 +287,6 @@ def roadmap_id_pin(request, roadmap_id):
     return HttpResponseNotAllowed(["PUT"])
 
 
-def simple_search(request):
-    if request.method == "GET":
-        if not request.user.is_authenticated:
-            return HttpResponse(status=401)
-        try:
-            target_keywords = request.GET.get("title").split()
-        except (KeyError, JSONDecodeError, AttributeError, ValueError):
-            return HttpResponseBadRequest()
-
-        result = Roadmap.objects.filter(
-            reduce(and_, [Q(title__icontains=keyword) for keyword in target_keywords])
-        )
-
-        result_dict = {"roadmaps": list(roadmap.to_dict_simple() for roadmap in result)}
-        return JsonResponse(result_dict)
-    return HttpResponseNotAllowed(["GET"])
-
-
 def search(request):
     """
     roadmap search with title, tag, level, sort options
