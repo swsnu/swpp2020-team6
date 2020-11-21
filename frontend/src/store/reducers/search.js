@@ -13,7 +13,7 @@ const reducer = (state = initialState, action) => {
       return { ...state };
     case actionTypes.GET_ADVANCED_SEARCH_SUCCESS:
       return { ...state, searchResult: action.searchResult };
-    case actionTypes.GET_ADVACNED_SEARCH_FAILURE:
+    case actionTypes.GET_ADVANCED_SEARCH_FAILURE:
       return { ...state };
     case actionTypes.GET_TOP_TAGS_SUCCESS:
       return { ...state, topTags: action.topTags };
