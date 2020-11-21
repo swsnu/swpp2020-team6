@@ -8,6 +8,7 @@ import { connect } from "react-redux";
 import PropTypes from "prop-types";
 import { sortType } from "../../constants";
 import * as actionCreators from "../../store/actions/index";
+import RoadmapSimple from "../../components/RoadmapSimple/RoadmapSimple";
 
 // import "./SearchResult.scss";
 
@@ -81,6 +82,11 @@ class SearchResult extends Component {
     this.setState({ tags: tags.concat(tag) });
   };
 
+  onClickTitle = (roadmapID) => {
+    const { history } = this.props;
+    history.push(`/roadmap/${roadmapID}`);
+  };
+
   render() {
     const {
       simpleSearchInput,
@@ -94,7 +100,27 @@ class SearchResult extends Component {
       newTag,
     } = this.state;
 
-    const { topTags } = this.props;
+    const { searchResult, topTags } = this.props;
+
+    const searchResultList = searchResult.map((simpleObject) => {
+      return (
+        <RoadmapSimple
+          roadmapID={simpleObject.id}
+          title={simpleObject.title}
+          date={simpleObject.date}
+          level={simpleObject.level}
+          likeCount={simpleObject.like_count}
+          commentCount={simpleObject.comment_count}
+          pinCount={simpleObject.pin_count}
+          progress={simpleObject.progress}
+          authorID={simpleObject.author_id}
+          authorName={simpleObject.author_name}
+          authorPictureUrl={simpleObject.author_picture_url}
+          tags={simpleObject.tags}
+          onClickTitleHandler={this.onClickTitle}
+        />
+      );
+    });
 
     const tagList = tags.map((tag, index) => {
       return (
@@ -115,12 +141,12 @@ class SearchResult extends Component {
       return (
         <div className="topTags">
           <button
-            className="delete-tag-button"
+            className="add-top-tag-button"
             type="button"
-            key={tag}
-            onClick={() => this.onClickAddFromTopTag(tag)}
+            key={tag.tag_content}
+            onClick={() => this.onClickAddFromTopTag(tag.tag_content)}
           >
-            {tag}
+            {tag.tag_content}
           </button>
         </div>
       );
@@ -213,22 +239,25 @@ class SearchResult extends Component {
             Simple Search Test
           </button>
         </div>
+
+        <div className="search-result-list">{searchResultList}</div>
       </div>
     );
   }
 }
 
-// TODO: show roadmaps.
-
 SearchResult.propTypes = {
   onGetSimpleSearch: PropTypes.func,
   onGetAdvancedSearch: PropTypes.func,
   onGetTopTags: PropTypes.func,
+  searchResult: PropTypes.objectOf(PropTypes.any),
   topTags: PropTypes.objectOf(PropTypes.any),
+  history: PropTypes.objectOf(PropTypes.any),
 };
 
 const mapStateToProps = (state) => {
   return {
+    searchResult: state.search.searchResult,
     topTags: state.search.topTags,
   };
 };
