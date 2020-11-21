@@ -4,15 +4,16 @@
  */
 
 import React, { Component } from "react";
-// import { connect } from "react-redux";
-// import PropTypes from "prop-types";
+import { connect } from "react-redux";
+import PropTypes from "prop-types";
 import { sortType } from "../../constants";
+import * as actionCreators from "../../store/actions/index";
 
-// import * as actionCreators from "../../store/actions/index";
 // import "./SearchResult.scss";
 
 class SearchResult extends Component {
   state = {
+    simpleSearchInput: "",
     advancedSearchInput: "",
     sortBy: sortType.LIKE,
     level: [{ basic: true, intermediate: true, advanced: true }],
@@ -23,11 +24,20 @@ class SearchResult extends Component {
     newTag: "",
   };
 
-  onChangeSortBy = (sorttype) => {
-    this.setState({ sortBy: parseInt(sorttype, 10) });
+  componentDidMount() {
+    const { onGetTopTags } = this.props;
+    onGetTopTags(10);
+  }
+
+  onClickSimpleSearch = (searchWord) => {
+    const { onGetSimpleSearch } = this.props;
+    onGetSimpleSearch({ title: searchWord });
   };
 
-  // onClickAdvancedSearch = (title, tags, level, sort) => {};
+  onClickAdvancedSearch = (searchData) => {
+    const { onGetAdvancedSearch } = this.props;
+    onGetAdvancedSearch(searchData);
+  };
 
   onClickBasic = (event) => {
     const { level } = this.state;
@@ -47,6 +57,10 @@ class SearchResult extends Component {
     this.setState({ level: { ...level, advanced: event.target.checked } });
   };
 
+  onChangeSortBy = (sorttype) => {
+    this.setState({ sortBy: parseInt(sorttype, 10) });
+  };
+
   onSetNewTag = (newTag) => {
     this.setState({ newTag });
   };
@@ -64,6 +78,7 @@ class SearchResult extends Component {
 
   render() {
     const {
+      simpleSearchInput,
       advancedSearchInput,
       sortBy,
       basicChecked,
@@ -148,29 +163,47 @@ class SearchResult extends Component {
         <button id="add-tag-button" type="button" onClick={() => this.onClickAddTag()}>
           add
         </button>
+
+        <br />
+
+        <input
+          id="simple-search-input"
+          value={simpleSearchInput}
+          placeholder="Simple search testing..."
+          onChange={(event) => this.setState({ simpleSearchInput: event.target.value })}
+        />
+        <button
+          id="simple-search-button"
+          onClick={() => this.onClickSimpleSearch(simpleSearchInput)}
+          type="button"
+        >
+          Simple Search Test
+        </button>
       </div>
     );
   }
 }
 
-// SearchResult.propTypes = {
-//   onSignUp: PropTypes.func.isRequired,
-//   isSignedIn: PropTypes.bool,
-//   history: PropTypes.objectOf(PropTypes.any),
-// };
+// TODO: show roadmaps, top tags received.
 
-// const mapStateToProps = (state) => {
-//   return {
-//     isSignedIn: state.user.isSignedIn,
-//   };
-// };
+SearchResult.propTypes = {
+  onGetSimpleSearch: PropTypes.func,
+  onGetAdvancedSearch: PropTypes.func,
+  onGetTopTags: PropTypes.func,
+};
 
-// const mapDispatchToProps = (dispatch) => {
-//   return {
-//     onSignUp: (userCredentials) => dispatch(actionCreators.signUp(userCredentials)),
-//   };
-// };
+const mapStateToProps = (state) => {
+  return {
+    topTags: state.search.topTags,
+  };
+};
 
-// export default connect(mapStateToProps, mapDispatchToProps)(SearchResult);
+const mapDispatchToProps = (dispatch) => {
+  return {
+    onGetSimpleSearch: (searchData) => dispatch(actionCreators.getSimpleSearch(searchData)),
+    onGetAdvancedSearch: (searchData) => dispatch(actionCreators.getAdvancedSearch(searchData)),
+    onGetTopTags: (tagCount) => dispatch(actionCreators.getTopTags(tagCount)),
+  };
+};
 
-export default SearchResult;
+export default connect(mapStateToProps, mapDispatchToProps)(SearchResult);
