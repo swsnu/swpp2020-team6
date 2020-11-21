@@ -331,8 +331,7 @@ def search(request):
             filters.append(
                 reduce(or_, [Q(tags__tag_name__icontains=tag) for tag in tags])
             )
-        if levels:
-            filters.append(reduce(or_, [Q(level__exact=level) for level in levels]))
+        filters.append(reduce(or_, [Q(level__exact=level) for level in levels]))
 
         # Lookup roadmap db with filters
         result = Roadmap.objects.filter(reduce(and_, filters)).distinct().order_by(sort)
