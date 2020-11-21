@@ -381,7 +381,6 @@ class Roadmap extends Component {
 
     return (
       <div className="Roadmap">
-        <h1>Edit Roadmap</h1>
         <div className="roadmap">
           <label>
             Private
