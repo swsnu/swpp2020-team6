@@ -70,8 +70,10 @@ describe("<CreateRoadmap />", () => {
         </ConnectedRouter>
       </Provider>
     );
+
+    const spyHistoryPush = jest.spyOn(history, "push").mockImplementation(() => {});
     mount(tmpCreateRoadmap);
-    expect(spyHistoryGoBack).toHaveBeenCalledTimes(1);
+    expect(spyHistoryPush).toHaveBeenCalledTimes(1);
     expect(spyAlert).toHaveBeenCalledTimes(1);
   });
 

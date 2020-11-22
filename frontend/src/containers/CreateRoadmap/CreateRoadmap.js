@@ -21,12 +21,13 @@ class CreateRoadmap extends Component {
     const { selectedUser, history } = this.props;
     if (selectedUser === undefined) {
       window.alert("Please sign in!");
-      history.goBack();
+      history.push("/");
       return <div />;
     }
 
     return (
       <div className="CreateRoadmap">
+        <h1>Create Roadmap</h1>
         <Roadmap
           isEdit={false}
           onClickBackHandler={this.onClickCreateBack}

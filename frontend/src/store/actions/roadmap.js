@@ -27,7 +27,7 @@ export const getRoadmap = (roadmapId) => {
             window.alert("Please sign in!");
             break;
           case 400:
-            window.alert("Parsing error!@");
+            window.alert("Parsing error!");
             break;
           default:
             break;

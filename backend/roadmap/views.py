@@ -1,5 +1,7 @@
 import json
 from json import JSONDecodeError
+from operator import and_, or_
+from functools import reduce
 from .models import Roadmap
 from django.http import (
     HttpResponse,
@@ -9,6 +11,7 @@ from django.http import (
     HttpResponseNotFound,
     JsonResponse,
 )
+from django.db.models import Q
 from django.core.exceptions import ObjectDoesNotExist
 from datetime import datetime
 from section.models import Section
@@ -47,8 +50,10 @@ def roadmap(request):
             tag_query = Tag.objects.filter(tag_name__iexact=tag)
             if tag_query.exists():
                 new_roadmap.tags.add(tag_query.first())
+                tag_query.first().increment_count_roadmap()
             else:
                 new_tag = Tag(tag_name=tag)
+                new_tag.increment_count_roadmap()
                 new_tag.save()
                 new_roadmap.tags.add(new_tag)
 
@@ -142,15 +147,19 @@ def roadmap_id(request, roadmap_id):
         for tag in deleted_tag_list:
             tag_query = roadmap.tags.filter(tag_name__iexact=tag)
             if tag_query.exists():
-                roadmap.tags.remove(tag_query.first())
+                target_tag = tag_query.first()
+                target_tag.decrement_count_roadmap()
+                roadmap.tags.remove(target_tag)
 
         # Add new tags m2m field in roadmap
         for tag in added_tag_list:
             tag_query = Tag.objects.filter(tag_name__iexact=tag)
             if tag_query.exists():
                 roadmap.tags.add(tag_query.first())
+                tag_query.first().increment_count_roadmap()
             else:
                 new_tag = Tag(tag_name=tag)
+                new_tag.increment_count_roadmap()
                 new_tag.save()
                 roadmap.tags.add(new_tag)
 
@@ -428,5 +437,66 @@ def new(request, top_n):
             for roadmap in sorted_roadmaps[:return_roadmaps_count]
         )
         return JsonResponse({"roadmaps": new_roadmaps})
+    return HttpResponseNotAllowed(["GET"])
 
+
+def search(request):
+    """
+    roadmap search with title, tag, level, sort options
+    :param request: with GET parameter
+    :return: search result n(#roadmaps per page) simple roadmaps
+    """
+    if request.method == "GET":
+        if not request.user.is_authenticated:
+            return HttpResponse(status=401)
+        try:
+            # Parse GET parameters
+            title_keywords = request.GET.get("title", "").split()
+            tags = request.GET.getlist("tags", [])
+            levels = list(
+                int(level) for level in request.GET.getlist("levels", ["1", "2", "3"])
+            )
+            sort = request.GET.get("sort", "1")
+            page_index = int(request.GET.get("page", 1))
+            roadmap_per_page = int(request.GET.get("perpage", 9))
+
+            # Convert sort number into order_by field
+            if sort == "1":
+                sort = "-like_count"
+            elif sort == "2":
+                sort = "-pin_count"
+            elif sort == "3":
+                sort = "-date"
+            else:
+                sort = "-like_count"
+        except (KeyError, JSONDecodeError, AttributeError, ValueError):
+            return HttpResponseBadRequest()
+
+        # Accumulate each filter
+        filters = []
+        if title_keywords:
+            filters.append(
+                reduce(
+                    and_, [Q(title__icontains=keyword) for keyword in title_keywords]
+                )
+            )
+        if tags:
+            filters.append(
+                reduce(or_, [Q(tags__tag_name__icontains=tag) for tag in tags])
+            )
+        filters.append(reduce(or_, [Q(level__exact=level) for level in levels]))
+
+        # Lookup roadmap db with filters
+        result = Roadmap.objects.filter(reduce(and_, filters)).distinct().order_by(sort)
+
+        # Select #roadmap_per_page of given page
+        partial_result = result[
+            (page_index - 1) * roadmap_per_page : page_index * roadmap_per_page
+        ]
+        result_dict = {
+            "page": page_index,
+            "total_count": result.count(),
+            "roadmaps": list(r.to_dict_simple() for r in partial_result),
+        }
+        return JsonResponse(result_dict)
     return HttpResponseNotAllowed(["GET"])

@@ -38,7 +38,7 @@ matrix:
         - "coveralls-lcov -v -n coverage/lcov.info > coverage/coverage.json"
         - "cd ../backend"
         - "pylint --rcfile=./.pylintrc ./backend --disable='fixme, duplicate-code'"
-        - "coverage run --source=\"./user/\",\"./roadmap/\" --omit='manage.py','*/__init__..py','backend/*' manage.py test"
+        - "coverage run --source='./user/','./roadmap/','./comment/','./task/','./section/','./tag/' --omit='manage.py','*/__init__..py','backend/*','utils/*' manage.py test"
         - "coverage report"
         - "coverage xml"
         - "cd .."
