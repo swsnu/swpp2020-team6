@@ -64,7 +64,8 @@ class User(AbstractUser):
 
         # public my_roadmaps
         data["my_roadmaps"] = list(
-            roadmap.to_dict_simple() for roadmap in self.author_roadmap.filter(private=False)
+            roadmap.to_dict_simple()
+            for roadmap in self.author_roadmap.filter(private=False)
         )
 
         return data
