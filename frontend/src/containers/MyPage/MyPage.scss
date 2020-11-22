@@ -1,0 +1,26 @@
+.MyPage {
+  margin: 10px;
+
+  #user-info {
+    position: relative;
+    background: #ffffff;
+    width: 230px;
+    height: 400px;
+    padding: 10px 10px 10px 10px;
+    margin: 10px 10px 10px 10px;
+  }
+  #mypage-tab {
+    position: relative;
+    width: 100%;
+    margin: 10px 10px 10px 10px;
+
+    .TmpRoadmapItem {
+      position: relative;
+      background: #cccccc;
+      width: 200px;
+      height: 200px;
+      padding: 10px 10px 10px 10px;
+      margin: 10px 10px 10px 10px;
+    }
+  }
+}

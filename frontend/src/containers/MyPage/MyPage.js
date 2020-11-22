@@ -2,32 +2,36 @@ import React, { Component } from "react";
 import { connect } from "react-redux";
 import { withRouter } from "react-router";
 import PropTypes from "prop-types";
-import AppBar from "@material-ui/core/AppBar";
-import Tabs from "@material-ui/core/Tabs";
-import Tab from "@material-ui/core/Tab";
+import CssBaseline from "@material-ui/core/CssBaseline";
 import Typography from "@material-ui/core/Typography";
+import Container from "@material-ui/core/Container";
 import Box from "@material-ui/core/Box";
+import StyledMyPage from "../../components/MyPage/StyledComponents/StyledMyPage";
 import * as actionCreators from "../../store/actions/index";
 import userImg from "../../misc/rotus-img.png";
+import "./MyPage.scss";
 
-const TabPanel = (props) => {
-  const { children, value, index, ...other } = props;
-
+const TmpRoadmapItem = (props) => {
+  const { roadmap, history } = props;
   return (
-    <div
-      role="tabpanel"
-      hidden={value !== index}
-      id={`simple-tabpanel-${index}`}
-      aria-labelledby={`simple-tab-${index}`}
-      {...other}
-    >
-      {value === index && (
-        <Box p={2}>
-          <Typography>{children}</Typography>
-        </Box>
-      )}
+    <div className="TmpRoadmapItem">
+      <h1>
+        <button
+          id={`roadmap-${roadmap.id}`}
+          type="button"
+          onClick={() => history.push(`/roadmap/${roadmap.id}`)}
+        >
+          {roadmap.id}
+        </button>
+        {roadmap.title}
+      </h1>
     </div>
   );
+};
+
+TmpRoadmapItem.propTypes = {
+  roadmap: PropTypes.objectOf(PropTypes.any),
+  history: PropTypes.objectOf(PropTypes.any),
 };
 
 class MyPage extends Component {
@@ -67,72 +71,48 @@ class MyPage extends Component {
     const { tab } = this.state;
     let user;
     let pinnedRoadmaps;
-    let hidden = false;
+    let disabled = false;
 
     if (selectedUser.user_id === myPageUser.user_id) {
       user = selectedUser;
       pinnedRoadmaps = user.pinned_roadmaps.map((roadmap) => {
-        return (
-          // temporary Roadmap Item
-          <h1>
-            <button
-              id={`roadmap-${roadmap.id}`}
-              type="button"
-              onClick={() => history.push(`/roadmap/${roadmap.id}`)}
-            >
-              {roadmap.id}
-            </button>
-            {roadmap.title}
-          </h1>
-        );
+        return <TmpRoadmapItem roadmap={roadmap} history={history} />;
       });
     } else {
       user = myPageUser;
       pinnedRoadmaps = [];
-      hidden = true;
+      disabled = true;
     }
 
     const myRoadmaps = user.my_roadmaps.map((roadmap) => {
-      return (
-        // temporary Roadmap Item
-        <h1>
-          <button
-            id={`roadmap-${roadmap.id}`}
-            type="button"
-            onClick={() => history.push(`/roadmap/${roadmap.id}`)}
-          >
-            {roadmap.id}
-          </button>
-          {roadmap.title}
-        </h1>
-      );
+      return <TmpRoadmapItem roadmap={roadmap} history={history} />;
     });
 
     return (
       <div className="MyPage">
-        <div className="user-info">
-          <img src={userImg} alt="user-img" width="500" height="500" />
-          <h1>{user.username}</h1>
-        </div>
-        <AppBar position="relative">
-          <Tabs
-            id="mypage-tab"
-            value={tab}
-            onChange={this.onChangeTab}
-            aria-label="simple tabs example"
-            variant="fullWidth"
-            centered
-          >
-            <Tab label="My Roadmaps" />
-            <Tab label="Pinned Roadmaps" disabled={hidden} />
-          </Tabs>
-        </AppBar>
-        <TabPanel value={tab} index={0}>
-          {myRoadmaps}
-        </TabPanel>
-        <TabPanel value={tab} index={1}>
-          {pinnedRoadmaps}
-        </TabPanel>
+        <>
+          <CssBaseline />
+          <Container maxWidth="lg">
+            <Typography component="div" style={{ backgroundColor: "#FFF4E8" }}>
+              <Box display="flex" flexDirection="row">
+                <Box id="user-info">
+                  <h1>User Info</h1>
+                  <img src={userImg} alt="user-img" width="200" height="200" border="1px solid" />
+                  <h2>{user.username}</h2>
+                </Box>
+                <Box id="mypage-tab">
+                  <StyledMyPage
+                    tab={tab}
+                    onChange={this.onChangeTab}
+                    disabled={disabled}
+                    myRoadmaps={myRoadmaps}
+                    pinnedRoadmaps={pinnedRoadmaps}
+                  />
+                </Box>
+              </Box>
+            </Typography>
+          </Container>
+        </>
       </div>
     );
   }
@@ -145,12 +125,6 @@ MyPage.propTypes = {
   history: PropTypes.objectOf(PropTypes.any),
   onGetMyPageUser: PropTypes.func.isRequired,
   onResetMyPageUser: PropTypes.func.isRequired,
-};
-
-TabPanel.propTypes = {
-  children: PropTypes.node,
-  index: PropTypes.number,
-  value: PropTypes.number,
 };
 
 const mapStateToProps = (state) => {

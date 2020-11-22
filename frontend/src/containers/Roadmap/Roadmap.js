@@ -1,12 +1,12 @@
 import React, { Component } from "react";
-// import FormGroup from "@material-ui/core/FormGroup";
-// import FormControlLabel from "@material-ui/core/FormControlLabel";
-import Switch from "@material-ui/core/Switch";
+import Box from "@material-ui/core/Box";
 import PropTypes from "prop-types";
+import Switch from "@material-ui/core/Switch";
 
 import CreateSection from "../../components/CreateSection/CreateSection";
+import StyledSelect from "../../components/Roadmap/StyledComponents/StyledSelect";
 import { levelType } from "../../constants";
-import "./Roadmap.scss";
+// import "./Roadmap.scss";
 
 class Roadmap extends Component {
   state = {
@@ -356,7 +356,7 @@ class Roadmap extends Component {
       );
     });
 
-    const EditSections = sections.map((section, index) => {
+    const Sections = sections.map((section, index) => {
       return (
         <CreateSection
           tmpSectionId={index}
@@ -381,57 +381,91 @@ class Roadmap extends Component {
 
     return (
       <div className="Roadmap">
-        <div className="roadmap">
-          <label>
-            Private
-            <Switch
-              id="roadmap-private"
-              checked={isPrivate}
-              onClick={() => this.onClickPrivate()}
+        <Box
+          className="private-level-tag"
+          display="flex"
+          flexDirection="column"
+          flexWrap="wrap"
+          p={2}
+          m={2}
+          bgcolor="#FFF4E8"
+          border="1px solid"
+        >
+          <div className="roadmap">
+            <Box
+              className="title-private"
+              display="flex"
+              flexDirection="row"
+              flexWrap="wrap"
+              p={1}
+              m={1}
+              bgcolor="background.paper"
+            >
+              <label>Roadmap Title</label>
+              <input
+                id="roadmap-title"
+                type="text"
+                value={title}
+                onChange={(event) => this.onChangeTitle(event.target.value)}
+              />
+              <label>
+                Private
+                <Switch
+                  id="roadmap-private"
+                  checked={isPrivate}
+                  onClick={() => this.onClickPrivate()}
+                />
+              </label>
+            </Box>
+            <Box
+              className="level-tag"
+              display="flex"
+              flexWrap="nowrap"
+              p={1}
+              m={1}
+              bgcolor="background.paper"
+            >
+              <StyledSelect
+                value={level}
+                onChange={(event) => this.onChangeLevel(event.target.value)}
+                items={[
+                  { name: "Basic", value: levelType.BASIC },
+                  { name: "Intermediate", value: levelType.INTERMEDIATE },
+                  { name: "Advanced", value: levelType.ADVANCED },
+                ]}
+                customId="roadmap-level"
+                label="Level"
+                placeholder="Choose level"
+              />
+              <label>Tags</label>
+              {taglist}
+              <input
+                id="new-tag"
+                value={newTag}
+                onChange={(event) => this.onChangeNewTag(event.target.value)}
+              />
+              <button id="add-tag-button" type="button" onClick={() => this.onClickAddTag()}>
+                add
+              </button>
+            </Box>
+            <label>Description</label>
+            <input
+              id="roadmap-description"
+              value={description}
+              onChange={(event) => this.onChangeDescription(event.target.value)}
             />
-          </label>
-          <label>Roadmap Title</label>
-          <input
-            id="roadmap-title"
-            type="text"
-            value={title}
-            onChange={(event) => this.onChangeTitle(event.target.value)}
-          />
-          <br />
-          <select
-            id="roadmap-level"
-            value={level}
-            onChange={(event) => {
-              return this.onChangeLevel(event.target.value);
-            }}
+          </div>
+          <Box
+            className="sections"
+            flexDirection="column"
+            flexWrap="nowrap"
+            p={2}
+            m={2}
+            bgcolor="background.paper"
+            border="1px solid"
           >
-            Level
-            <option value={0}>Choose level</option>
-            <option value={levelType.BASIC}>Basic</option>
-            <option value={levelType.INTERMEDIATE}>Intermediate</option>
-            <option value={levelType.ADVANCED}>Advanced</option>
-          </select>
-          <br />
-          <label>Tags</label>
-          {taglist}
-          <input
-            id="new-tag"
-            value={newTag}
-            onChange={(event) => this.onChangeNewTag(event.target.value)}
-          />
-          <button id="add-tag-button" type="button" onClick={() => this.onClickAddTag()}>
-            add
-          </button>
-          <br />
-          <label>Description</label>
-          <input
-            id="roadmap-description"
-            value={description}
-            onChange={(event) => this.onChangeDescription(event.target.value)}
-          />
-        </div>
-        <div className="sections">
-          {EditSections}
+            {Sections}
+          </Box>
           <button
             type="button"
             id="create-section-button"
@@ -439,20 +473,29 @@ class Roadmap extends Component {
           >
             Create Section
           </button>
-        </div>
-        <div className="buttons">
-          <button id="back-roadmap-button" type="button" onClick={() => this.onClickBack()}>
-            Back
-          </button>
-          <button
-            id="confirm-roadmap-button"
-            type="button"
-            disabled={title === "" || level === 0 || sections.length === 0}
-            onClick={() => onClickConfirmHandler(this.onClickConfirm())}
+          <Box
+            className="buttons"
+            display="flex"
+            flexDirection="row-reverse"
+            flexWrap="nowrap"
+            alignContent="flex-end"
+            p={2}
+            m={2}
+            bgcolor="#FFF4E8"
           >
-            Confirm
-          </button>
-        </div>
+            <button id="back-roadmap-button" type="button" onClick={() => this.onClickBack()}>
+              Back
+            </button>
+            <button
+              id="confirm-roadmap-button"
+              type="button"
+              disabled={title === "" || level === 0 || sections.length === 0}
+              onClick={() => onClickConfirmHandler(this.onClickConfirm())}
+            >
+              Confirm
+            </button>
+          </Box>
+        </Box>
       </div>
     );
   }

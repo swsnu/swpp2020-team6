@@ -2,6 +2,10 @@ import React, { Component } from "react";
 import { connect } from "react-redux";
 import { withRouter } from "react-router";
 import PropTypes from "prop-types";
+import CssBaseline from "@material-ui/core/CssBaseline";
+import Typography from "@material-ui/core/Typography";
+import Container from "@material-ui/core/Container";
+
 import * as actionCreators from "../../store/actions/index";
 
 import Roadmap from "../Roadmap/Roadmap";
@@ -47,13 +51,20 @@ class EditRoadmap extends Component {
 
     return (
       <div className="EditRoadmap">
-        <h1>Edit Roadmap</h1>
-        <Roadmap
-          isEdit
-          onClickBackHandler={this.onClickEditBack}
-          onClickConfirmHandler={this.onClickEditConfirm}
-          selectedRoadmap={selectedRoadmap}
-        />
+        <>
+          <CssBaseline />
+          <Container maxWidth="md">
+            <Typography component="div" style={{ backgroundColor: "#FFF4E8" }}>
+              <h1>Edit Roadmap</h1>
+              <Roadmap
+                isEdit
+                onClickBackHandler={this.onClickEditBack}
+                onClickConfirmHandler={this.onClickEditConfirm}
+                selectedRoadmap={selectedRoadmap}
+              />
+            </Typography>
+          </Container>
+        </>
       </div>
     );
   }

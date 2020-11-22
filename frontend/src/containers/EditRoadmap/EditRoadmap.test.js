@@ -222,7 +222,10 @@ describe("<EditRoadmap />", () => {
     let wrapper = component.find("#roadmap-title");
     wrapper.simulate("change", { target: { value: title } });
     wrapper = component.find("#roadmap-level");
-    wrapper.simulate("change", { target: { value: level } });
+    wrapper
+      .at(0)
+      .props()
+      .onChange({ target: { value: level } });
     wrapper = component.find("#new-tag");
     wrapper.simulate("change", { target: { value: newTag } });
     wrapper = component.find("#roadmap-private");

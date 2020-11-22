@@ -2,6 +2,10 @@ import React, { Component } from "react";
 import { connect } from "react-redux";
 import { withRouter } from "react-router";
 import PropTypes from "prop-types";
+import CssBaseline from "@material-ui/core/CssBaseline";
+import Typography from "@material-ui/core/Typography";
+import Container from "@material-ui/core/Container";
+
 import * as actionCreators from "../../store/actions/index";
 
 import Roadmap from "../Roadmap/Roadmap";
@@ -27,12 +31,19 @@ class CreateRoadmap extends Component {
 
     return (
       <div className="CreateRoadmap">
-        <h1>Create Roadmap</h1>
-        <Roadmap
-          isEdit={false}
-          onClickBackHandler={this.onClickCreateBack}
-          onClickConfirmHandler={this.onClickCreateConfirm}
-        />
+        <>
+          <CssBaseline />
+          <Container maxWidth="md">
+            <Typography component="div" style={{ backgroundColor: "#FFF3E8" }}>
+              <h1>Create Roadmap</h1>
+              <Roadmap
+                isEdit={false}
+                onClickBackHandler={this.onClickCreateBack}
+                onClickConfirmHandler={this.onClickCreateConfirm}
+              />
+            </Typography>
+          </Container>
+        </>
       </div>
     );
   }

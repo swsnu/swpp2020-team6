@@ -1,7 +1,8 @@
 import React from "react";
 import PropTypes from "prop-types";
+import Box from "@material-ui/core/Box";
 import CreateTask from "../CreateTask/CreateTask";
-import "./CreateSection.scss";
+// import "./CreateSection.scss";
 
 const CreateSection = (props) => {
   const {
@@ -23,7 +24,7 @@ const CreateSection = (props) => {
     changeTaskDescriptionHandler,
   } = props;
 
-  const CreateTasks = tasks.map((task, index) => {
+  const Tasks = tasks.map((task, index) => {
     return (
       <CreateTask
         tmpSectionId={tmpSectionId}
@@ -46,53 +47,78 @@ const CreateSection = (props) => {
 
   return (
     <div className="CreateSection">
-      <button
-        className="up-section-button"
-        type="button"
-        disabled={tmpSectionId === 0}
-        onClick={() => clickUpSectionHandler(tmpSectionId)}
+      <Box
+        className="section"
+        flexDirection="column"
+        flexWrap="nowrap"
+        p={2}
+        m={2}
+        border="1px solid"
+        bgcolor="background.paper"
       >
-        Up
-      </button>
-      <button
-        className="down-section-button"
-        type="button"
-        disabled={tmpSectionId === sectionLastId}
-        onClick={() => clickDownSectionHandler(tmpSectionId)}
-      >
-        Down
-      </button>
-      <label>Section Title</label>
-      <input
-        className="section-title"
-        type="text"
-        value={title}
-        onChange={(event) => {
-          changeSectionTitleHandler(tmpSectionId, event.target.value);
-        }}
-      />
-      <br />
-      {CreateTasks}
-      <br />
-      <button
-        className="create-task-button"
-        type="button"
-        onClick={() => {
-          clickCreateTaskHandler(tmpSectionId);
-        }}
-      >
-        Create Task
-      </button>
-      <br />
-      <button
-        className="delete-section-button"
-        type="button"
-        onClick={() => {
-          clickDeleteSectionHandler(tmpSectionId);
-        }}
-      >
-        Delete Section
-      </button>
+        <Box
+          className="up-down"
+          flexDirection="column"
+          flexWrap="nowrap"
+          p={2}
+          m={2}
+          bgcolor="#FFF4E8"
+        >
+          <button
+            className="up-section-button"
+            type="button"
+            disabled={tmpSectionId === 0}
+            onClick={() => clickUpSectionHandler(tmpSectionId)}
+          >
+            Up
+          </button>
+          <button
+            className="down-section-button"
+            type="button"
+            disabled={tmpSectionId === sectionLastId}
+            onClick={() => clickDownSectionHandler(tmpSectionId)}
+          >
+            Down
+          </button>
+        </Box>
+        <label>Section Title</label>
+        <input
+          className="section-title"
+          type="text"
+          value={title}
+          onChange={(event) => {
+            changeSectionTitleHandler(tmpSectionId, event.target.value);
+          }}
+        />
+        <Box
+          className="tasks"
+          flexDirection="column"
+          flexWrap="nowrap"
+          p={2}
+          m={2}
+          bgcolor="#FFF4E8"
+        >
+          {Tasks}
+        </Box>
+        <button
+          className="create-task-button"
+          type="button"
+          onClick={() => {
+            clickCreateTaskHandler(tmpSectionId);
+          }}
+        >
+          Create Task
+        </button>
+        <button
+          className="delete-section-button"
+          type="button"
+          onClick={() => {
+            clickDeleteSectionHandler(tmpSectionId);
+          }}
+        >
+          Delete Section
+        </button>
+      </Box>
     </div>
   );
 };
