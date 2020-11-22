@@ -1,10 +1,10 @@
 .CreateTask {
   position: relative;
-  width: 100%;
+  width: 90%;
   padding: 10px 10px 10px 10px;
   margin: 0px 0px 10px 0px;
-  box-shadow: 2px 2px 4px #000000;
-  background-color: #f6efe4;
+  border: 3px solid #faa999;
+  border-radius: 10px;
 
   .task-type-title-buttons {
     width: 100%;
@@ -14,20 +14,20 @@
     flex-direction: row;
     flex-wrap: nowrap;
     padding: 20px 10px 20px 10px;
-    border: 1px solid;
 
     .task-type-select {
-      margin: 0px 10px 0px 0px;
-    }
+      margin-right: 10px;
 
-    .task-title-label {
-      min-width: 70px;
-      margin: 0px 10px 0px 10px;
+      .task-type-select-item {
+        top: 50%;
+        left: 50%;
+      }
     }
     .task-title {
       width: 100%;
-      border: 1px solid #bbbbbb;
-      padding: 10px 10px 10px 10px;
+      border: 2px solid #cccccc;
+      border-radius: 4px;
+      padding: 10px;
       margin: 0px 10px 0px 10px;
     }
     .up-task-button,
@@ -36,8 +36,12 @@
       width: 30px;
       height: 30px;
       margin: 0px 2px 0px 0px;
-      font-weight: 500;
-      font-size: 10px;
+      font-size: 90%;
+      color: #faa999;
+      border: ridge;
+      border-radius: 4px;
+      background-color: #ffffff;
+      box-shadow: 1px 1px 1px #555555;
     }
   }
 
@@ -49,14 +53,12 @@
     flex-direction: row;
     flex-wrap: nowrap;
     padding: 10px 10px 10px 10px;
-    border: 1px solid;
 
-    .task-url-label {
-      min-width: 150px;
-    }
     .task-url {
       width: 100%;
       padding: 10px 10px 10px 10px;
+      border: 2px solid #cccccc;
+      border-radius: 4px;
     }
   }
 
@@ -68,20 +70,22 @@
     flex-direction: row;
     flex-wrap: nowrap;
     padding: 10px 10px 10px 10px;
-    border: 1px solid;
 
-    .task-description-label {
-      min-width: 150px;
-    }
     .task-description {
       width: 100%;
       height: 100px;
       padding: 10px 10px 10px 10px;
+      border: 2px solid #cccccc;
+      border-radius: 4px;
     }
   }
 
   .delete-task-button {
     float: right;
-    margin: 20px 0px 20px 0px;
+    border: none;
+    border-radius: 3px;
+    padding: 10px;
+    background-color: #dddddd;
+    margin: 20px;
   }
 }

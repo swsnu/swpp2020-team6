@@ -52,11 +52,11 @@ const CreateSection = (props) => {
     <div className="CreateSection">
       <div className="section">
         <div className="title-up-down">
-          <label className="section-title-label">Title</label>
           <input
             className="section-title"
             type="text"
             value={title}
+            placeholder={`Section ${tmpSectionId + 1} Title`}
             onChange={(event) => {
               changeSectionTitleHandler(tmpSectionId, event.target.value);
             }}

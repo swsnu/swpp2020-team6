@@ -32,55 +32,55 @@ const CreateTask = (props) => {
   const selectItems = [
     {
       name: (
-        <div>
+        <>
           <Book />
-          Book
-        </div>
+          <label className="task-type-select-item">Book</label>
+        </>
       ),
       value: taskType.BOOK,
     },
     {
       name: (
-        <div>
+        <>
           <PublicOutlined />
-          Website
-        </div>
+          <label className="task-type-select-item">Website</label>
+        </>
       ),
       value: taskType.WEBSITE,
     },
     {
       name: (
-        <div>
+        <>
           <OndemandVideo />
-          Video
-        </div>
+          <label className="task-type-select-item">Video</label>
+        </>
       ),
       value: taskType.VIDEO,
     },
     {
       name: (
-        <div>
+        <>
           <DescriptionOutlined />
-          Paper
-        </div>
+          <label className="task-type-select-item">Paper</label>
+        </>
       ),
       value: taskType.PAPER,
     },
     {
       name: (
-        <div>
+        <>
           <TagFacesOutlined />
-          Roadmap
-        </div>
+          <label className="task-type-select-item">Roadmap</label>
+        </>
       ),
       value: taskType.ROADMAP,
     },
     {
       name: (
-        <div>
+        <>
           <EditOutlined />
-          Other
-        </div>
+          <label className="task-type-select-item">Other</label>
+        </>
       ),
       value: taskType.OTHER,
     },
@@ -102,11 +102,11 @@ const CreateTask = (props) => {
               label="Type"
             />
           </div>
-          <label className="task-title-label">Task Title</label>
           <input
             className="task-title"
             type="text"
             value={title}
+            placeholder="Task Title"
             onChange={(event) => {
               changeTaskTitleHandler(tmpSectionId, tmpTaskId, event.target.value);
             }}
@@ -129,22 +129,22 @@ const CreateTask = (props) => {
           </button>
         </div>
         <div className="task-contents-url">
-          <label className="task-url-label">Task URL</label>
           <input
             className="task-url"
             type="text"
             value={url}
+            placeholder="Task URL"
             onChange={(event) => {
               changeTaskUrlHandler(tmpSectionId, tmpTaskId, event.target.value);
             }}
           />
         </div>
         <div className="task-contents-description">
-          <label className="task-description-label">Task Description</label>
           <input
             className="task-description"
             type="text"
             value={description}
+            placeholder="Task Description"
             onChange={(event) => {
               changeTaskDescriptionHandler(tmpSectionId, tmpTaskId, event.target.value);
             }}

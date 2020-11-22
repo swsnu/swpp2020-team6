@@ -93,7 +93,7 @@ class MyPage extends Component {
         <>
           <CssBaseline />
           <Container maxWidth="lg">
-            <Typography component="div" style={{ backgroundColor: "#FFF4E8" }}>
+            <Typography component="div">
               <Box display="flex" flexDirection="row">
                 <Box className="user-info" boxShadow={2}>
                   <h2>User Profile</h2>

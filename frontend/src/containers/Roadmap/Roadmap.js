@@ -343,7 +343,9 @@ class Roadmap extends Component {
     const taglist = tags.map((tag, index) => {
       return (
         <div className="tag">
-          <div key={tag}>{tag}</div>
+          <div className="tag-name" key={tag}>
+            {tag}
+          </div>
           <button
             className="delete-tag"
             type="button"
@@ -382,11 +384,11 @@ class Roadmap extends Component {
       <div className="Roadmap">
         <div className="roadmap">
           <div className="title-private">
-            <label id="roadmap-title-label">Title</label>
             <input
               id="roadmap-title"
               type="text"
               value={title}
+              placeholder="Title"
               onChange={(event) => this.onChangeTitle(event.target.value)}
             />
             <label id="roadmap-private-label">{isPrivate ? "Private" : "Public"}</label>
@@ -413,10 +415,10 @@ class Roadmap extends Component {
               />
             </div>
             <div className="new-tag">
-              <label id="tag-label">Tag</label>
               <input
                 id="new-tag"
                 value={newTag}
+                placeholder="Add tags"
                 onChange={(event) => this.onChangeNewTag(event.target.value)}
               />
               <button id="add-tag-button" type="button" onClick={() => this.onClickAddTag()}>
@@ -426,37 +428,37 @@ class Roadmap extends Component {
             <div className="tags">{taglist}</div>
           </div>
           <div className="roadmap-description">
-            <label id="roadmap-description-label">Description</label>
             <input
               id="roadmap-description"
               value={description}
+              placeholder="Description"
               onChange={(event) => this.onChangeDescription(event.target.value)}
             />
           </div>
+        </div>
+        <div className="sections" flexDirection="column">
+          {Sections}
+          <button
+            type="button"
+            id="create-section-button"
+            onClick={() => this.onClickCreateSection()}
+          >
+            Create Section
+          </button>
+        </div>
 
-          <div className="sections" flexDirection="column">
-            {Sections}
-            <button
-              type="button"
-              id="create-section-button"
-              onClick={() => this.onClickCreateSection()}
-            >
-              Create Section
-            </button>
-          </div>
-          <div className="buttons">
-            <button id="back-roadmap-button" type="button" onClick={() => this.onClickBack()}>
-              Back
-            </button>
-            <button
-              id="confirm-roadmap-button"
-              type="button"
-              disabled={title === "" || level === 0 || sections.length === 0}
-              onClick={() => onClickConfirmHandler(this.onClickConfirm())}
-            >
-              Confirm
-            </button>
-          </div>
+        <div className="buttons">
+          <button
+            id="confirm-roadmap-button"
+            type="button"
+            disabled={title === "" || level === 0 || sections.length === 0}
+            onClick={() => onClickConfirmHandler(this.onClickConfirm())}
+          >
+            Confirm
+          </button>
+          <button id="back-roadmap-button" type="button" onClick={() => this.onClickBack()}>
+            Back
+          </button>
         </div>
       </div>
     );

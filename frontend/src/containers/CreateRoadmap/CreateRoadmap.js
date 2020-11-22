@@ -33,8 +33,8 @@ class CreateRoadmap extends Component {
       <div className="CreateRoadmap">
         <>
           <CssBaseline />
-          <Container maxWidth="md">
-            <Typography component="div" style={{ backgroundColor: "#FFF3E8" }}>
+          <Container maxWidth="lg">
+            <Typography component="div">
               <h1>Create Roadmap</h1>
               <Roadmap
                 isEdit={false}
