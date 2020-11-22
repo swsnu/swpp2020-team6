@@ -14,6 +14,7 @@ import RoadmapDetail from "./containers/RoadmapDetail/RoadmapDetail";
 import MyPage from "./containers/MyPage/MyPage";
 
 import "./App.css";
+import MainPage from "./containers/MainPage/MainPage";
 
 class App extends React.Component {
   componentDidMount() {
@@ -41,6 +42,7 @@ class App extends React.Component {
             <Route path="/roadmap/:id/edit" exact component={EditRoadmap} />
             <Route path="/roadmap/:id" exact component={RoadmapDetail} />
             <Route path="/mypage/:id" exact component={MyPage} />
+            <Route path="/main" exact component={MainPage} />
             <Redirect exact from="/" to="/home" />
             <Route render={() => <h1>Not Found</h1>} />
           </Switch>
