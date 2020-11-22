@@ -6,18 +6,18 @@ from django.db import migrations, models
 class Migration(migrations.Migration):
 
     dependencies = [
-        ('roadmap', '0007_auto_20201109_2258'),
+        ("roadmap", "0007_auto_20201109_2258"),
     ]
 
     operations = [
         migrations.AddField(
-            model_name='roadmap',
-            name='description',
-            field=models.TextField(default=''),
+            model_name="roadmap",
+            name="description",
+            field=models.TextField(default=""),
         ),
         migrations.AddField(
-            model_name='roadmap',
-            name='private',
+            model_name="roadmap",
+            name="private",
             field=models.BooleanField(default=False),
         ),
     ]
