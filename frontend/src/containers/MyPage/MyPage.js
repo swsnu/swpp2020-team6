@@ -95,20 +95,21 @@ class MyPage extends Component {
           <Container maxWidth="lg">
             <Typography component="div" style={{ backgroundColor: "#FFF4E8" }}>
               <Box display="flex" flexDirection="row">
-                <Box id="user-info">
-                  <h1>User Info</h1>
-                  <img src={userImg} alt="user-img" width="200" height="200" border="1px solid" />
+                <Box className="user-info" boxShadow={2}>
+                  <h2>User Profile</h2>
+                  <img id="user-img" src={userImg} alt="user-img" />
                   <h2>{user.username}</h2>
                 </Box>
-                <Box id="mypage-tab">
+                <div className="mypage-tab">
                   <StyledMyPage
+                    id="mypage-tab"
                     tab={tab}
                     onChange={this.onChangeTab}
                     disabled={disabled}
                     myRoadmaps={myRoadmaps}
                     pinnedRoadmaps={pinnedRoadmaps}
                   />
-                </Box>
+                </div>
               </Box>
             </Typography>
           </Container>

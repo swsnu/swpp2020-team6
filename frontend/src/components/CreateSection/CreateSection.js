@@ -1,8 +1,11 @@
 import React from "react";
 import PropTypes from "prop-types";
-import Box from "@material-ui/core/Box";
+// import Button from "@material-ui/core/Button/Button";
+// import ArrowUpwardOutlinedIcon from "@material-ui/icons/ArrowUpwardOutlined";
+// import ArrowDownwardOutlinedIcon from "@material-ui/icons/ArrowDownwardOutlined";
 import CreateTask from "../CreateTask/CreateTask";
-// import "./CreateSection.scss";
+// import { Up, Down } from "../Roadmap/StyledComponents/UpDown";
+import "./CreateSection.scss";
 
 const CreateSection = (props) => {
   const {
@@ -47,30 +50,24 @@ const CreateSection = (props) => {
 
   return (
     <div className="CreateSection">
-      <Box
-        className="section"
-        flexDirection="column"
-        flexWrap="nowrap"
-        p={2}
-        m={2}
-        border="1px solid"
-        bgcolor="background.paper"
-      >
-        <Box
-          className="up-down"
-          flexDirection="column"
-          flexWrap="nowrap"
-          p={2}
-          m={2}
-          bgcolor="#FFF4E8"
-        >
+      <div className="section">
+        <div className="title-up-down">
+          <label className="section-title-label">Title</label>
+          <input
+            className="section-title"
+            type="text"
+            value={title}
+            onChange={(event) => {
+              changeSectionTitleHandler(tmpSectionId, event.target.value);
+            }}
+          />
           <button
             className="up-section-button"
             type="button"
             disabled={tmpSectionId === 0}
             onClick={() => clickUpSectionHandler(tmpSectionId)}
           >
-            Up
+            ▲
           </button>
           <button
             className="down-section-button"
@@ -78,37 +75,21 @@ const CreateSection = (props) => {
             disabled={tmpSectionId === sectionLastId}
             onClick={() => clickDownSectionHandler(tmpSectionId)}
           >
-            Down
+            ▼
           </button>
-        </Box>
-        <label>Section Title</label>
-        <input
-          className="section-title"
-          type="text"
-          value={title}
-          onChange={(event) => {
-            changeSectionTitleHandler(tmpSectionId, event.target.value);
-          }}
-        />
-        <Box
-          className="tasks"
-          flexDirection="column"
-          flexWrap="nowrap"
-          p={2}
-          m={2}
-          bgcolor="#FFF4E8"
-        >
+        </div>
+        <div className="tasks">
           {Tasks}
-        </Box>
-        <button
-          className="create-task-button"
-          type="button"
-          onClick={() => {
-            clickCreateTaskHandler(tmpSectionId);
-          }}
-        >
-          Create Task
-        </button>
+          <button
+            className="create-task-button"
+            type="button"
+            onClick={() => {
+              clickCreateTaskHandler(tmpSectionId);
+            }}
+          >
+            Create Task
+          </button>
+        </div>
         <button
           className="delete-section-button"
           type="button"
@@ -118,7 +99,7 @@ const CreateSection = (props) => {
         >
           Delete Section
         </button>
-      </Box>
+      </div>
     </div>
   );
 };

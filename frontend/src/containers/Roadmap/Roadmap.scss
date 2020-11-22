@@ -1,59 +1,136 @@
 .Roadmap {
-  max-width: 1200px;
-  min-width: 800px;
-  margin: auto;
+  width: 100%;
+  margin: 10px 0px 0px 0px;
+
   .roadmap {
     position: relative;
-    left: 15%;
-    width: 77%;
-    border: 1px solid rgb(82, 82, 87);
-    box-sizing: border-box;
-    padding: 5px;
-    margin: 5px 5px 5px 5px;
+    width: 100%;
+    padding: 10px 10px 10px 10px;
+    border: 1px solid;
 
-    #roadmap-title {
-      position: relative;
-      width: 60%;
-      margin: 5px 5px 5px 5px;
-      border: 1px solid rgb(87, 82, 82);
-      box-sizing: border-box;
-      padding: 5px;
-      font-weight: 700;
-      color: rgb(0, 0, 225);
-      font-size: 20px;
-    }
-    #roadmap-level {
-      position: relative;
-      width: 20%;
-      border: 1px solid rgb(87, 82, 82);
-      box-sizing: border-box;
-      padding: 5px;
-      margin: 5px 5px 5px 5px;
-      font-weight: 700;
-      color: rgb(0, 0, 225);
-      font-size: 20px;
+    .title-private {
+      display: flex;
+      justify-content: center;
+      align-items: center;
+      width: 100%;
+      padding: 10px 10px 10px 10px;
+      border: 1px solid;
+
+      #roadmap-title-label {
+        margin: 0px 10px 0px 10px;
+      }
+
+      #roadmap-title {
+        width: 100%;
+        border: 1px solid #bbbbbb;
+        padding: 10px 10px 10px 10px;
+        margin: 0px 10px 0px 10px;
+      }
+
+      #roadmap-private-label {
+        width: 90px;
+        margin: 0px 0px 0px 10px;
+      }
+
+      #roadmap-private {
+        margin: 0px 10px 0px 0px;
+      }
     }
 
-    label {
-      position: relative;
-      color: black;
-      margin: 10px;
-      font-size: 15px;
-    }
-  }
+    .level-tag {
+      display: grid;
+      grid-template-columns: 200px auto;
+      grid-template-rows: 40px auto;
+      row-gap: 1px;
+      column-gap: 10px;
+      width: 100%;
+      padding: 10px 10px 10px 10px;
+      border: 1px solid;
 
-  #create-section-button {
-    position: relative;
-    height: 30px;
-    margin: 15px 15px 70px 15px;
-  }
-  #back-roadmap-button,
-  #confirm-roadmap-button {
-    float: right;
-    position: relative;
-    height: 50px;
-    padding: 10px;
-    font-size: 20px;
-    margin: 15px 15px 70px 15px;
+      .roadmap-level-select {
+        grid-column-start: 1;
+        grid-column-end: 2;
+        grid-row-start: 1;
+        grid-row-end: 3;
+        margin: 0px 10px 0px 0px;
+      }
+
+      .new-tag {
+        width: 100%;
+        display: flex;
+        align-items: center;
+        grid-column-start: 2;
+        grid-column-end: 3;
+        grid-row-start: 1;
+        grid-row-end: 2;
+        padding: 12px 0px 0px 0px;
+
+        #tag-label {
+          float: left;
+          margin: 0px 10px 0px 0px;
+        }
+        #new-tag {
+          float: left;
+          width: 150px;
+          padding: 5px 5px 5px 5px;
+          margin: 0px 10px 0px 0px;
+        }
+        #add-tag-button {
+          float: left;
+        }
+      }
+
+      .tags {
+        grid-column-start: 2;
+        grid-column-end: 3;
+        grid-row-start: 2;
+        grid-row-end: 3;
+        display: flex;
+        flex-wrap: wrap;
+
+        .tag {
+          display: flex;
+          height: 25px;
+          border: 1px solid;
+          margin: 0px 5px 0px 5px;
+        }
+      }
+    }
+
+    .roadmap-description {
+      display: flex;
+      align-items: center;
+      width: 100%;
+      padding: 10px 10px 10px 10px;
+      border: 1px solid;
+
+      #roadmap-description-label {
+        margin: 0px 10px 0px 10px;
+      }
+      #roadmap-description {
+        width: 100%;
+        height: 100px;
+        padding: 10px 10px 10px 10px;
+      }
+    }
+
+    .sections {
+      width: 100%;
+      display: flex;
+      flex-direction: column;
+      align-items: center;
+      padding: 10px 10px 10px 10px;
+      border: 1px solid;
+    }
+
+    #create-section-button {
+      margin: 10px 0px 10px 0px;
+    }
+
+    .buttons {
+      display: flex;
+      flex-direction: row-reverse;
+      margin: 20px 0px 10px 0px;
+    }
   }
 }

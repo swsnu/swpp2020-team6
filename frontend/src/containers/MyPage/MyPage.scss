@@ -1,15 +1,21 @@
 .MyPage {
   margin: 10px;
 
-  #user-info {
+  .user-info {
     position: relative;
     background: #ffffff;
     width: 230px;
     height: 400px;
     padding: 10px 10px 10px 10px;
     margin: 10px 10px 10px 10px;
+
+    #user-img {
+      width: 200px;
+      height: 200px;
+      border: 1px solid #dddddd;
+    }
   }
-  #mypage-tab {
+  .mypage-tab {
     position: relative;
     width: 100%;
     margin: 10px 10px 10px 10px;
@@ -17,8 +23,8 @@
     .TmpRoadmapItem {
       position: relative;
       background: #cccccc;
-      width: 200px;
-      height: 200px;
+      width: 250px;
+      height: 250px;
       padding: 10px 10px 10px 10px;
       margin: 10px 10px 10px 10px;
     }

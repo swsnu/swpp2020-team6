@@ -358,8 +358,11 @@ describe("<EditRoadmap />", () => {
   it("should call 'onChangeTaskType'", () => {
     const component = mount(editRoadmap);
     const testType = 2;
-    const wrapper = component.find(".task-type");
-    wrapper.at(0).simulate("change", { target: { value: testType } });
+    const wrapper = component.find("#task-type");
+    wrapper
+      .at(0)
+      .props()
+      .onChange({ target: { value: testType } });
     const instance = component.find(Roadmap).instance();
     expect(instance.state.sections[0].tasks[0].task_type).toEqual(testType);
     expect(instance.state.sections[0].tasks[1].task_type).toEqual(2);

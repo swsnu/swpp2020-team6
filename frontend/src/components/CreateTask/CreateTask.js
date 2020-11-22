@@ -1,8 +1,15 @@
 import React from "react";
 import PropTypes from "prop-types";
-import Box from "@material-ui/core/Box";
+import OndemandVideo from "@material-ui/icons/OndemandVideo";
+import Book from "@material-ui/icons/Book";
+import DescriptionOutlined from "@material-ui/icons/DescriptionOutlined";
+import EditOutlined from "@material-ui/icons/EditOutlined";
+import PublicOutlined from "@material-ui/icons/PublicOutlined";
+import TagFacesOutlined from "@material-ui/icons/TagFacesOutlined";
+// import { UpIcon, DownIcon } from "../Roadmap/StyledComponents/UpDown";
 import { taskType } from "../../constants";
-// import "./CreateTask.scss";
+import StyledSelect from "../Roadmap/StyledComponents/StyledSelect";
+import "./CreateTask.scss";
 
 const CreateTask = (props) => {
   const {
@@ -22,44 +29,80 @@ const CreateTask = (props) => {
     changeTaskDescriptionHandler,
   } = props;
 
+  const selectItems = [
+    {
+      name: (
+        <div>
+          <Book />
+          Book
+        </div>
+      ),
+      value: taskType.BOOK,
+    },
+    {
+      name: (
+        <div>
+          <PublicOutlined />
+          Website
+        </div>
+      ),
+      value: taskType.WEBSITE,
+    },
+    {
+      name: (
+        <div>
+          <OndemandVideo />
+          Video
+        </div>
+      ),
+      value: taskType.VIDEO,
+    },
+    {
+      name: (
+        <div>
+          <DescriptionOutlined />
+          Paper
+        </div>
+      ),
+      value: taskType.PAPER,
+    },
+    {
+      name: (
+        <div>
+          <TagFacesOutlined />
+          Roadmap
+        </div>
+      ),
+      value: taskType.ROADMAP,
+    },
+    {
+      name: (
+        <div>
+          <EditOutlined />
+          Other
+        </div>
+      ),
+      value: taskType.OTHER,
+    },
+  ];
+
   return (
     <div className="CreateTask">
-      <Box
-        className="task"
-        flexDirection="column"
-        flexWrap="nowrap"
-        p={2}
-        m={2}
-        border="1px solid"
-        bgcolor="#FFF4E8"
-      >
-        <Box className="up-down" display="flex" flexWrap="nowrap" bgcolor="background.paper">
-          <button
-            className="up-task-button"
-            type="button"
-            disabled={tmpTaskId === 0}
-            onClick={() => clickUpTaskHandler(tmpSectionId, tmpTaskId)}
-          >
-            Up
-          </button>
-          <button
-            className="down-task-button"
-            type="button"
-            disabled={tmpTaskId === taskLastId}
-            onClick={() => clickDownTaskHandler(tmpSectionId, tmpTaskId)}
-          >
-            Down
-          </button>
-        </Box>
-        <Box
-          className="task-contents"
-          flexDirection="column"
-          flexWrap="nowrap"
-          p={2}
-          m={2}
-          bgcolor="#FFF4E8"
-        >
-          <label>Task Title</label>
+      <div className="task">
+        <div className="task-type-title-buttons">
+          <div className="task-type-select">
+            <StyledSelect
+              id="task-type"
+              value={type}
+              onChange={(event) => {
+                return changeTaskTypeHandler(tmpSectionId, tmpTaskId, event.target.value);
+              }}
+              items={selectItems}
+              customId="task-type"
+              label="Type"
+            />
+          </div>
+          <label className="task-title-label">Task Title</label>
           <input
             className="task-title"
             type="text"
@@ -68,23 +111,25 @@ const CreateTask = (props) => {
               changeTaskTitleHandler(tmpSectionId, tmpTaskId, event.target.value);
             }}
           />
-          <br />
-          <label>Task Type</label>
-          <select
-            className="task-type"
-            value={type}
-            onChange={(event) => {
-              return changeTaskTypeHandler(tmpSectionId, tmpTaskId, event.target.value);
-            }}
+          <button
+            className="up-task-button"
+            type="button"
+            disabled={tmpTaskId === 0}
+            onClick={() => clickUpTaskHandler(tmpSectionId, tmpTaskId)}
           >
-            <option value={taskType.BOOK}>Book</option>
-            <option value={taskType.WEBSITE}>Website</option>
-            <option value={taskType.VIDEO}>Video</option>
-            <option value={taskType.PAPER}>Paper</option>
-            <option value={taskType.OTHER}>Other</option>
-          </select>
-          <br />
-          <label>Task URL</label>
+            ▲
+          </button>
+          <button
+            className="down-task-button"
+            type="button"
+            disabled={tmpTaskId === taskLastId}
+            onClick={() => clickDownTaskHandler(tmpSectionId, tmpTaskId)}
+          >
+            ▼
+          </button>
+        </div>
+        <div className="task-contents-url">
+          <label className="task-url-label">Task URL</label>
           <input
             className="task-url"
             type="text"
@@ -93,9 +138,10 @@ const CreateTask = (props) => {
               changeTaskUrlHandler(tmpSectionId, tmpTaskId, event.target.value);
             }}
           />
-          <br />
-          <label>Task Description</label>
-          <textarea
+        </div>
+        <div className="task-contents-description">
+          <label className="task-description-label">Task Description</label>
+          <input
             className="task-description"
             type="text"
             value={description}
@@ -103,7 +149,7 @@ const CreateTask = (props) => {
               changeTaskDescriptionHandler(tmpSectionId, tmpTaskId, event.target.value);
             }}
           />
-        </Box>
+        </div>
         <button
           className="delete-task-button"
           type="button"
@@ -113,7 +159,7 @@ const CreateTask = (props) => {
         >
           Delete Task
         </button>
-      </Box>
+      </div>
     </div>
   );
 };

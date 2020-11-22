@@ -35,8 +35,7 @@ def user(request):
         except (KeyError, JSONDecodeError):
             return HttpResponse(status=400)
         try:
-            User.objects.create_user(
-                username=username, email=email, password=password)
+            User.objects.create_user(username=username, email=email, password=password)
             return HttpResponse(status=201)
         except IntegrityError:
             return HttpResponse(status=400)
@@ -60,8 +59,7 @@ def signin(request):
             password = req_data["password"]
         except (KeyError, JSONDecodeError):
             return HttpResponseBadRequest()
-        signin_user = authenticate(
-            request, username=username, password=password)
+        signin_user = authenticate(request, username=username, password=password)
         if signin_user is not None:
             login(request, signin_user)
             response_user = signin_user.to_dict()

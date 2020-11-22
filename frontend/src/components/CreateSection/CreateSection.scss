@@ -1,42 +1,57 @@
 .CreateSection {
   position: relative;
-  left: 15%;
-  width: 77%;
-  border: 1px solid rgb(87, 82, 82);
-  box-sizing: border-box;
-  padding: 5px;
-  margin: 5px 5px 5px 5px;
+  width: 100%;
+  padding: 10px 10px 10px 10px;
+  margin: 0px 0px 30px 0px;
+  box-shadow: 2px 2px 4px #000000;
+  background-color: #eea7a7;
 
-  .up-section-button,
-  .down-section-button {
-    position: relative;
-    height: 30px;
-    left: -3%;
-    margin: 5px 5px 5px 5px;
+  .title-up-down {
+    width: 100%;
+    display: flex;
+    justify-content: center;
+    align-items: center;
+    flex-direction: row;
+    flex-wrap: nowrap;
+    border: 1px solid;
+    padding: 20px 10px 20px 10px;
+
+    .section-title-label {
+      margin: 0px 10px 0px 10px;
+    }
+    .section-title {
+      width: 100%;
+      border: 1px solid #bbbbbb;
+      padding: 10px 10px 10px 10px;
+      margin: 0px 10px 0px 10px;
+    }
+    .up-section-button,
+    .down-section-button {
+      width: 35px;
+      height: 35px;
+      margin: 0px 2px 0px 0px;
+      font-weight: 400;
+      font-size: 20px;
+    }
   }
 
-  .create-task-button {
-    position: relative;
-    height: 30px;
-    right: -10%;
+  .tasks {
+    width: 100%;
+    display: flex;
+    justify-content: center;
+    align-items: center;
+    flex-direction: column;
+    flex-wrap: nowrap;
+    padding: 10px 10px 10px 10px;
+    border: 1px solid;
+
+    .create-task-button {
+      margin: 20px 0px 20px 0px;
+    }
   }
 
   .delete-section-button {
-    position: relative;
-    height: 30px;
-    right: 40%;
-    margin: 5px 5px 5px 5px;
-  }
-
-  .section-title {
-    position: relative;
-    width: 60%;
-    border: 1px solid rgb(87, 82, 82);
-    box-sizing: border-box;
-    padding: 5px;
-    margin: 15px 5px 15px 5px;
-    font-weight: 700;
-    color: rgb(0, 0, 225);
-    font-size: 20px;
+    float: right;
+    margin: 20px 0px 20px 0px;
   }
 }

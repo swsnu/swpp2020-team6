@@ -42,7 +42,7 @@ const TabPanel = (props) => {
       {...other}
     >
       {value === index && (
-        <Box p={2}>
+        <Box p={2} boxShadow={2}>
           <Typography>{children}</Typography>
         </Box>
       )}
@@ -62,18 +62,6 @@ const styles = (theme) => ({
     width: "100%",
     background: "#FA391E",
   },
-  tabs: {
-    indicator: {
-      display: "flex",
-      justifyContent: "center",
-      backgroundColor: "transparent",
-      "& > span": {
-        maxWidth: 40,
-        width: "100%",
-        backgroundColor: "#000000",
-      },
-    },
-  },
 });
 
 function a11yProps(index) {
@@ -89,27 +77,25 @@ const StyledMyPage = (props) => {
   return (
     <div className={classes.root}>
       <AppBar position="relative" style={{ backgroundColor: "#ED351C" }}>
-        <div className={classes.tabs}>
-          <StyledTabs
-            id="mypage-tabs"
-            value={tab}
-            onChange={onChange}
-            aria-label="simple tabs example"
-            variant="fullWidth"
-            centered
-          >
-            <StyledTab label="My Roadmaps" {...a11yProps(0)} />
-            <StyledTab label="Pinned Roadmaps" {...a11yProps(1)} disabled={disabled} />
-          </StyledTabs>
-        </div>
+        <StyledTabs
+          id="mypage-tabs"
+          value={tab}
+          onChange={onChange}
+          aria-label="simple tabs example"
+          variant="fullWidth"
+          centered
+        >
+          <StyledTab label="My Roadmaps" {...a11yProps(0)} />
+          <StyledTab label="Pinned Roadmaps" {...a11yProps(1)} disabled={disabled} />
+        </StyledTabs>
       </AppBar>
       <TabPanel value={tab} index={0}>
-        <Box display="flex" flexDirection="row" flexWrap="wrap">
+        <Box className="roadmap-list" display="flex" flexDirection="row" flexWrap="wrap">
           {myRoadmaps}
         </Box>
       </TabPanel>
       <TabPanel value={tab} index={1}>
-        <Box display="flex" flexDirection="row" flexWrap="wrap">
+        <Box className="roadmap-list" display="flex" flexDirection="row" flexWrap="wrap">
           {pinnedRoadmaps}
         </Box>
       </TabPanel>
