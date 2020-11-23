@@ -82,6 +82,33 @@ const reducer = (state = initialState, action) => {
           pin_count: action.responseData.pinCount,
         },
       };
+    case actionTypes.PROGRESS_CHANGE:
+      return {
+        ...state,
+        selectedRoadmap: {
+          ...state.selectedRoadmap,
+          progress: action.progress,
+          sections: action.sections,
+        },
+      };
+    case actionTypes.CHANGE_CHECKBOX:
+      const updatedSections = state.selectedRoadmap.sections.map((section) => {
+        const updatedTasks = section.tasks.map((task) => {
+          if (task.task_id === action.taskId) {
+            return { ...task, task_checked: action.checked };
+          }
+          return task;
+        });
+        return { ...section, tasks: updatedTasks };
+      });
+
+      return {
+        ...state,
+        selectedRoadmap: {
+          ...state.selectedRoadmap,
+          sections: updatedSections,
+        },
+      };
     default:
       break;
   }

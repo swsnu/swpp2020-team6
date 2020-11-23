@@ -25,5 +25,11 @@ class Task(models.Model):
     def __str__(self):
         return "{}".format(self.title)
 
-    # def toggle_progress(self):
-    #    self.checkd= self.checked
+    def clear_progress(self):
+        self.checked = False
+
+    def toggle_progress(self):
+        if self.checked:
+            self.checked = False
+        else:
+            self.checked = True

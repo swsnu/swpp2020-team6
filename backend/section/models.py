@@ -13,3 +13,8 @@ class Section(models.Model):
 
     def __str__(self):
         return "{}".format(self.title)
+
+    def clear_task_progress(self):
+        for task in self.task_section.all():
+            task.clear_progress()
+            task.save()

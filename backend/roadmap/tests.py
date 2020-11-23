@@ -373,3 +373,290 @@ class RoadmapTestCase(TestCase):
             response.json()["roadmaps"][0]["date"]
             >= response.json()["roadmaps"][1]["date"]
         )
+
+    def test_roadmap_id_progress(self):
+        client = Client(enforce_csrf_checks=True)
+        csrftoken = get_csrf(client)
+        path = self.roadmap_path + "1/progress/"
+
+        # 405 (except for PUT)
+        response = client.get(path, HTTP_X_CSRFTOKEN=csrftoken)
+        self.assertEqual(response.status_code, 405)
+        response = client.post(path, HTTP_X_CSRFTOKEN=csrftoken)
+        self.assertEqual(response.status_code, 405)
+        response = client.delete(path, HTTP_X_CSRFTOKEN=csrftoken)
+        self.assertEqual(response.status_code, 405)
+
+        # 401 (PUT)
+        response = client.put(path, HTTP_X_CSRFTOKEN=csrftoken)
+        self.assertEqual(response.status_code, 401)
+
+        # sign up -> sign in
+        author_user = signup_signin(client)
+
+        csrftoken = get_csrf(client)
+
+        # 404
+        response = client.put(path, HTTP_X_CSRFTOKEN=csrftoken)
+        self.assertEqual(response.status_code, 404)
+
+        # create another user, and her roadmap
+        another_user = User.objects.create_user(
+            username="johndoe", email="johndoe@domain.com", password="johndoe"
+        )
+        not_my_roadmap = Roadmap.objects.create(
+            title="roadmap title",
+            level=1,
+            original_author=another_user,
+            author=another_user,
+        )
+
+        others_path = self.roadmap_path + str(not_my_roadmap.id) + "/progress/"
+
+        # 403
+        response = client.put(others_path, HTTP_X_CSRFTOKEN=csrftoken)
+        self.assertEqual(response.status_code, 403)
+
+        # create my roadmap (progress 1)
+        response = client.post(
+            self.roadmap_path,
+            self.dump_roadmap_input,
+            content_type=JSON_TYPE,
+            HTTP_X_CSRFTOKEN=csrftoken,
+        )
+
+        # change roadmap progress into 2 (in progress)
+        # this has to be done manually after the creation process
+        # since roadmaps are always created with progress 1 (before studying)
+        roadmap_progress1_roadmap_id = response.json()["id"]
+        roadmap_progress1_roadmap = Roadmap.objects.get(id=roadmap_progress1_roadmap_id)
+
+        # change the 'checked' task manually
+        # since task's 'checked' attribute is always set to False on creation
+        # Doing this to check if all tasks are cleared on progress state transition
+        roadmap_progress1_task = roadmap_progress1_roadmap.task_roadmap.all()[0]
+        roadmap_progress1_task.toggle_progress()
+        roadmap_progress1_task.save()
+        self.assertTrue(roadmap_progress1_task.checked)
+
+        # 400
+        # invalid state trainsition (1->1), (1->3)
+        response = client.put(
+            self.roadmap_path + "{}/progress/".format(roadmap_progress1_roadmap_id),
+            {"progress_state": 1},
+            content_type=JSON_TYPE,
+            HTTP_X_CSRFTOKEN=csrftoken,
+        )
+        self.assertEqual(response.status_code, 400)
+
+        response = client.put(
+            self.roadmap_path + "{}/progress/".format(roadmap_progress1_roadmap_id),
+            {"progress_state": 3},
+            content_type=JSON_TYPE,
+            HTTP_X_CSRFTOKEN=csrftoken,
+        )
+        self.assertEqual(response.status_code, 400)
+
+        # 200
+        # state trainsition: start (1->2)
+        response = client.put(
+            self.roadmap_path + "{}/progress/".format(roadmap_progress1_roadmap_id),
+            {"progress_state": 2},
+            content_type=JSON_TYPE,
+            HTTP_X_CSRFTOKEN=csrftoken,
+        )
+        self.assertEqual(response.status_code, 200)
+        self.assertEqual(response.json()["progress_state"], 2)
+
+        # every task's 'checked state should be cleared
+        roadmap_progress1_roadmap = Roadmap.objects.get(id=roadmap_progress1_roadmap_id)
+        for task in roadmap_progress1_roadmap.task_roadmap.all():
+            self.assertFalse(task.checked)
+
+        # create my roadmap (progress 2)
+        dump_roadmap_progress2 = {
+            "private": False,
+            "title": "swpp",
+            "level": 1,
+            "description": "test-description",
+            "sections": [
+                {
+                    "section_title": "design pattern",
+                    "tasks": [
+                        {
+                            "task_title": "proxy",
+                            "task_url": "www.proxy.com",
+                            "task_type": 3,
+                            "task_description": "proxy hoxy proxy",
+                        },
+                    ],
+                },
+            ],
+            "tags": ["python", "CV"],
+        }
+        response = client.post(
+            self.roadmap_path,
+            dump_roadmap_progress2,
+            content_type=JSON_TYPE,
+            HTTP_X_CSRFTOKEN=csrftoken,
+        )
+
+        # change roadmap progress into 2 (in progress)
+        # this has to be done manually after the creation process
+        # since roadmaps are always created with progress 1 (before studying)
+        roadmap_progress2_roadmap_id = response.json()["id"]
+        roadmap_progress2_roadmap = Roadmap.objects.get(id=roadmap_progress2_roadmap_id)
+        roadmap_progress2_roadmap.progress = 2
+        roadmap_progress2_roadmap.save()
+
+        # 400
+        # invalid state transition (2 -> 2)
+        response = client.put(
+            self.roadmap_path
+            + "{}/progress/".format(str(roadmap_progress2_roadmap_id)),
+            {"progress_state": 2},
+            content_type=JSON_TYPE,
+            HTTP_X_CSRFTOKEN=csrftoken,
+        )
+        self.assertEqual(response.status_code, 400)
+
+        # 200
+        # progress state transition (2 -> 3)
+        response = client.put(
+            self.roadmap_path
+            + "{}/progress/".format(str(roadmap_progress2_roadmap_id)),
+            {"progress_state": 3},
+            content_type=JSON_TYPE,
+            HTTP_X_CSRFTOKEN=csrftoken,
+        )
+        self.assertEqual(response.status_code, 200)
+        self.assertEqual(response.json()["progress_state"], 3)
+
+        # create my roadmap (progress 3)
+        dump_roadmap_progress3 = {
+            "private": False,
+            "title": "swpp",
+            "level": 1,
+            "description": "test-description",
+            "sections": [
+                {
+                    "section_title": "design pattern",
+                    "tasks": [
+                        {
+                            "task_title": "proxy",
+                            "task_url": "www.proxy.com",
+                            "task_type": 3,
+                            "task_description": "proxy hoxy proxy",
+                        },
+                    ],
+                },
+            ],
+            "tags": ["python", "CV"],
+        }
+        response = client.post(
+            self.roadmap_path,
+            dump_roadmap_progress3,
+            content_type=JSON_TYPE,
+            HTTP_X_CSRFTOKEN=csrftoken,
+        )
+
+        # change roadmap progress into 3 (in progress)
+        # this has to be done manually after the creation process
+        # since roadmaps are always created with progress 1 (before studying)
+        roadmap_progress3_roadmap_id = response.json()["id"]
+        roadmap_progress3_roadmap = Roadmap.objects.get(id=roadmap_progress3_roadmap_id)
+        roadmap_progress3_roadmap.progress = 3
+        roadmap_progress3_roadmap.save()
+
+        # 400
+        # invalid state transition (3 -> 2)
+        response = client.put(
+            self.roadmap_path
+            + "{}/progress/".format(str(roadmap_progress3_roadmap_id)),
+            {"progress_state": 2},
+            content_type=JSON_TYPE,
+            HTTP_X_CSRFTOKEN=csrftoken,
+        )
+        self.assertEqual(response.status_code, 400)
+
+        # 200
+        # progress state transition (3 -> 1)
+        response = client.put(
+            self.roadmap_path
+            + "{}/progress/".format(str(roadmap_progress3_roadmap_id)),
+            {"progress_state": 1},
+            content_type=JSON_TYPE,
+            HTTP_X_CSRFTOKEN=csrftoken,
+        )
+        self.assertEqual(response.status_code, 200)
+        self.assertEqual(response.json()["progress_state"], 1)
+
+        # 400
+        # progress state transition into an invalid state (any state except 1,2,3)
+        response = client.put(
+            self.roadmap_path
+            + "{}/progress/".format(str(roadmap_progress2_roadmap_id)),
+            {"progress_state": 4},
+            content_type=JSON_TYPE,
+            HTTP_X_CSRFTOKEN=csrftoken,
+        )
+        self.assertEqual(response.status_code, 400)
+
+        # 400
+        # request body is invalid
+        response = client.put(
+            self.roadmap_path
+            + "{}/progress/".format(str(roadmap_progress2_roadmap_id)),
+            {"progress": 1},
+            content_type=JSON_TYPE,
+            HTTP_X_CSRFTOKEN=csrftoken,
+        )
+        self.assertEqual(response.status_code, 400)
+
+    def test_best(self):
+        client = Client(enforce_csrf_checks=True)
+        csrftoken = get_csrf(client)
+        path = self.roadmap_path + "best/2/"
+
+        # 405 (PUT, DELETE, POST)
+        response = client.put(path, HTTP_X_CSRFTOKEN=csrftoken)
+        self.assertEqual(response.status_code, 405)
+        response = client.delete(path, HTTP_X_CSRFTOKEN=csrftoken)
+        self.assertEqual(response.status_code, 405)
+        response = client.post(path, HTTP_X_CSRFTOKEN=csrftoken)
+        self.assertEqual(response.status_code, 405)
+
+        # 401 (GET)
+        response = client.get(path, HTTP_X_CSRFTOKEN=csrftoken)
+        self.assertEqual(response.status_code, 401)
+
+        signup_signin(client)
+        csrftoken = get_csrf(client)
+
+        # 401
+        response = client.get(path, HTTP_X_CSRFTOKEN=csrftoken)
+        self.assertEqual(response.status_code, 200)
+
+    def test_new(self):
+        client = Client(enforce_csrf_checks=True)
+        csrftoken = get_csrf(client)
+        path = self.roadmap_path + "new/2/"
+
+        # 405 (PUT, DELETE, POST)
+        response = client.put(path, HTTP_X_CSRFTOKEN=csrftoken)
+        self.assertEqual(response.status_code, 405)
+        response = client.delete(path, HTTP_X_CSRFTOKEN=csrftoken)
+        self.assertEqual(response.status_code, 405)
+        response = client.post(path, HTTP_X_CSRFTOKEN=csrftoken)
+        self.assertEqual(response.status_code, 405)
+
+        # 401 (GET)
+        response = client.get(path, HTTP_X_CSRFTOKEN=csrftoken)
+        self.assertEqual(response.status_code, 401)
+
+        signup_signin(client)
+        csrftoken = get_csrf(client)
+
+        # 401
+        response = client.get(path, HTTP_X_CSRFTOKEN=csrftoken)
+        self.assertEqual(response.status_code, 200)
