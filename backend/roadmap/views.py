@@ -412,6 +412,43 @@ def progress_change(roadmap_id, new_progress_state):
         return HttpResponseBadRequest()
 
 
+def best(request, top_n):
+    if request.method == "GET":
+        if not request.user.is_authenticated:
+            return HttpResponse(status=401)
+
+        total_roadmaps_count = Roadmap.objects.count()
+        sorted_roadmaps = Roadmap.objects.order_by("-like_count", "-pin_count")
+        return_roadmaps_count = (
+            top_n if top_n < total_roadmaps_count else total_roadmaps_count
+        )
+        best_roadmaps = list(
+            roadmap.to_dict_simple()
+            for roadmap in sorted_roadmaps[:return_roadmaps_count]
+        )
+        return JsonResponse({"roadmaps": best_roadmaps})
+
+    return HttpResponseNotAllowed(["GET"])
+
+
+def new(request, top_n):
+    if request.method == "GET":
+        if not request.user.is_authenticated:
+            return HttpResponse(status=401)
+
+        total_roadmaps_count = Roadmap.objects.count()
+        sorted_roadmaps = Roadmap.objects.order_by("-date")
+        return_roadmaps_count = (
+            top_n if top_n < total_roadmaps_count else total_roadmaps_count
+        )
+        new_roadmaps = list(
+            roadmap.to_dict_simple()
+            for roadmap in sorted_roadmaps[:return_roadmaps_count]
+        )
+        return JsonResponse({"roadmaps": new_roadmaps})
+    return HttpResponseNotAllowed(["GET"])
+
+
 def search(request):
     """
     roadmap search with title, tag, level, sort options

@@ -1391,7 +1391,7 @@ describe("<RoadmapDetail />", () => {
     expect(spyDeleteComment).toHaveBeenCalledTimes(1);
   });
 
-  it("should clear MyPageUser before unmount", () => {
+  it("should clear selectedRoadmap before unmount", () => {
     const component = mount(
       <Provider store={mockAuthorizedUserOtherRoadmapStore}>
         <ConnectedRouter history={history}>
