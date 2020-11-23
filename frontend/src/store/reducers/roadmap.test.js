@@ -3,6 +3,8 @@ import * as actionTypes from "../actions/actionTypes";
 
 const initialState = {
   selectedRoadmap: undefined,
+  bestRoadmaps: undefined,
+  newRoadmaps: undefined,
 };
 
 const stubSelectedRoadmap = {

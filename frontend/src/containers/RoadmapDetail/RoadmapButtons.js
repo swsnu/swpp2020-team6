@@ -2,6 +2,14 @@ import React from "react";
 import PropTypes from "prop-types";
 import { connect } from "react-redux";
 import { withRouter } from "react-router";
+import FavoriteIcon from "@material-ui/icons/Favorite";
+import FavoriteBorderIcon from "@material-ui/icons/FavoriteBorder";
+import BookmarkBorderIcon from "@material-ui/icons/BookmarkBorder";
+import FileCopyIcon from "@material-ui/icons/FileCopy";
+import BookmarkIcon from "@material-ui/icons/Bookmark";
+import DeleteForeverIcon from "@material-ui/icons/DeleteForever";
+import CreateIcon from "@material-ui/icons/Create";
+import { IconButton } from "@material-ui/core";
 import * as actionCreators from "../../store/actions/index";
 
 const RoadmapButtons = (props) => {
@@ -34,34 +42,64 @@ const RoadmapButtons = (props) => {
   const { liked_roadmaps, pinned_roadmaps } = props.selectedUser;
   const { buttonsRoadmapId } = props;
   const like = liked_roadmaps.find((roadmap) => roadmap.id === buttonsRoadmapId);
-  const likeButtonText = like !== undefined ? "Unlike" : "Like";
+  const likeButton = like !== undefined ? <FavoriteIcon /> : <FavoriteBorderIcon />;
   const pin = pinned_roadmaps.find((roadmap) => roadmap.id === buttonsRoadmapId);
-  const pinButtonText = pin !== undefined ? "Unpin" : "Pin";
+  const pinButton = pin !== undefined ? <BookmarkIcon /> : <BookmarkBorderIcon />;
 
   const { isAuthor } = props;
   const roadmapButtons = isAuthor ? (
     <div className="roadmap-buttons">
-      <button type="button" id="edit-roadmap-button" onClick={() => onClickEditRoadmap()}>
-        Edit
-      </button>
-      <button type="button" id="duplicate-button" onClick={() => onClickDuplicateRoadmap()}>
-        Duplicate
-      </button>
-      <button type="button" id="delete-roadmap-button" onClick={() => onClickDeleteRoadmap()}>
-        Delete
-      </button>
+      <IconButton
+        aria-label="edit"
+        id="edit-roadmap-button"
+        size="medium"
+        onClick={() => onClickEditRoadmap()}
+      >
+        <CreateIcon />
+      </IconButton>
+      <IconButton
+        aria-label="duplicate"
+        id="duplicate-button"
+        size="medium"
+        onClick={() => onClickDuplicateRoadmap()}
+      >
+        <FileCopyIcon />
+      </IconButton>
+      <IconButton
+        aria-label="delete"
+        id="delete-roadmap-button"
+        size="medium"
+        onClick={() => onClickDeleteRoadmap()}
+      >
+        <DeleteForeverIcon />
+      </IconButton>
     </div>
   ) : (
     <div className="roadmap-buttons">
-      <button type="button" id="pin-button" onClick={() => onClickPinRoadmap()}>
-        {pinButtonText}
-      </button>
-      <button type="button" id="like-button" onClick={() => onClickLikeRoadmap()}>
-        {likeButtonText}
-      </button>
-      <button type="button" id="duplicate-button" onClick={() => onClickDuplicateRoadmap()}>
-        Duplicate
-      </button>
+      <IconButton
+        aria-label="like"
+        id="pin-button"
+        size="medium"
+        onClick={() => onClickPinRoadmap()}
+      >
+        {pinButton}
+      </IconButton>
+      <IconButton
+        aria-label="like"
+        id="like-button"
+        size="medium"
+        onClick={() => onClickLikeRoadmap()}
+      >
+        {likeButton}
+      </IconButton>
+      <IconButton
+        aria-label="duplicate"
+        id="duplicate-button"
+        size="medium"
+        onClick={() => onClickDuplicateRoadmap()}
+      >
+        <FileCopyIcon />
+      </IconButton>
     </div>
   );
   return roadmapButtons;

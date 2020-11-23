@@ -1,0 +1,30 @@
+.MuiButtonBase-root {
+  margin: 5px !important;
+  padding: 5px !important;
+  width: 80px !important;
+}
+
+.MuiCardContent-root {
+  padding: 0px 12px !important;
+}
+
+#basic-chip {
+  background-color: rgb(201, 106, 18);
+  color: white;
+}
+#basic-icon {
+  color: white;
+}
+
+#intermediate-chip {
+  background-color: rgba(22, 87, 22, 0.651);
+  color: white;
+}
+#advanced-chip {
+  background-color: rgb(104, 9, 9);
+  color: white;
+}
+
+.MuiTypography-body2 {
+  text-align: start;
+}
