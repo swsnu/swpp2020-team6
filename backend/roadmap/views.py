@@ -287,6 +287,168 @@ def roadmap_id_pin(request, roadmap_id):
     return HttpResponseNotAllowed(["PUT"])
 
 
+def roadmap_id_progress(request, roadmap_id):
+    if request.method == "PUT":
+        if not request.user.is_authenticated:
+            return HttpResponse(status=401)
+
+        try:
+            target_roadmap = Roadmap.objects.get(id=roadmap_id)
+        except ObjectDoesNotExist:
+            return HttpResponseNotFound()
+
+        # check if the user is the author
+        if not target_roadmap.author_id == request.user.id:
+            return HttpResponseForbidden()
+
+        # parse request body
+        try:
+            req_data = json.loads(request.body.decode())
+            new_progress_state = req_data["progress_state"]
+        except (KeyError, JSONDecodeError):
+            return HttpResponseBadRequest()
+
+        # check if the transition is valid & change progress state
+        return progress_change(roadmap_id, new_progress_state)
+
+    return HttpResponseNotAllowed(["PUT"])
+
+
+def progress_change(roadmap_id, new_progress_state):
+    try:
+        target_roadmap = Roadmap.objects.get(id=roadmap_id)
+    except ObjectDoesNotExist:
+        return HttpResponseNotFound()
+
+    if new_progress_state == 1:
+        if target_roadmap.progress == 3 or target_roadmap.progress == 2:
+            # progress clear(3->1) or quit(2->1)
+            target_roadmap.progress = 1
+            target_roadmap.save()
+            response_dict = {
+                "progress_state": 1,
+                "sections": list(
+                    {
+                        "section_id": section.id,
+                        "section_title": section.title,
+                        "tasks": list(
+                            {
+                                "task_id": task.id,
+                                "task_title": task.title,
+                                "task_type": task.type,
+                                "task_url": task.url,
+                                "task_description": task.description,
+                                "task_checked": task.checked,
+                            }
+                            for task in section.task_section.all()
+                        ),
+                    }
+                    for section in target_roadmap.section_roadmap.all()
+                ),
+            }
+            return JsonResponse(response_dict)
+        else:
+            return HttpResponseBadRequest()
+    elif new_progress_state == 3:
+        if target_roadmap.progress == 2:  # progress finish
+            target_roadmap.progress = 3
+            target_roadmap.save()
+
+            response_dict = {
+                "progress_state": 3,
+                "sections": list(
+                    {
+                        "section_id": section.id,
+                        "section_title": section.title,
+                        "tasks": list(
+                            {
+                                "task_id": task.id,
+                                "task_title": task.title,
+                                "task_type": task.type,
+                                "task_url": task.url,
+                                "task_description": task.description,
+                                "task_checked": task.checked,
+                            }
+                            for task in section.task_section.all()
+                        ),
+                    }
+                    for section in target_roadmap.section_roadmap.all()
+                ),
+            }
+            return JsonResponse(response_dict)
+        else:
+            return HttpResponseBadRequest()
+    elif new_progress_state == 2:
+        if target_roadmap.progress == 1:  # progress start
+            target_roadmap.progress = 2
+            target_roadmap.clear_section_progress()
+            target_roadmap.save()
+
+            response_dict = {
+                "progress_state": 2,
+                "sections": list(
+                    {
+                        "section_id": section.id,
+                        "section_title": section.title,
+                        "tasks": list(
+                            {
+                                "task_id": task.id,
+                                "task_title": task.title,
+                                "task_type": task.type,
+                                "task_url": task.url,
+                                "task_description": task.description,
+                                "task_checked": task.checked,
+                            }
+                            for task in section.task_section.all()
+                        ),
+                    }
+                    for section in target_roadmap.section_roadmap.all()
+                ),
+            }
+            return JsonResponse(response_dict)
+        else:
+            return HttpResponseBadRequest()
+    else:
+        return HttpResponseBadRequest()
+
+
+def best(request, top_n):
+    if request.method == "GET":
+        if not request.user.is_authenticated:
+            return HttpResponse(status=401)
+
+        total_roadmaps_count = Roadmap.objects.count()
+        sorted_roadmaps = Roadmap.objects.order_by("-like_count", "-pin_count")
+        return_roadmaps_count = (
+            top_n if top_n < total_roadmaps_count else total_roadmaps_count
+        )
+        best_roadmaps = list(
+            roadmap.to_dict_simple()
+            for roadmap in sorted_roadmaps[:return_roadmaps_count]
+        )
+        return JsonResponse({"roadmaps": best_roadmaps})
+
+    return HttpResponseNotAllowed(["GET"])
+
+
+def new(request, top_n):
+    if request.method == "GET":
+        if not request.user.is_authenticated:
+            return HttpResponse(status=401)
+
+        total_roadmaps_count = Roadmap.objects.count()
+        sorted_roadmaps = Roadmap.objects.order_by("-date")
+        return_roadmaps_count = (
+            top_n if top_n < total_roadmaps_count else total_roadmaps_count
+        )
+        new_roadmaps = list(
+            roadmap.to_dict_simple()
+            for roadmap in sorted_roadmaps[:return_roadmaps_count]
+        )
+        return JsonResponse({"roadmaps": new_roadmaps})
+    return HttpResponseNotAllowed(["GET"])
+
+
 def search(request):
     """
     roadmap search with title, tag, level, sort options

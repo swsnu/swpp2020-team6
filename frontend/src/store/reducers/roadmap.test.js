@@ -299,7 +299,7 @@ describe("User Reducer", () => {
     });
   });
 
-  // pin/unpin roadmap
+  // ------------------------ pin/unpin roadmap ------------------------
   it("should change pin_count on roadmap pin ", () => {
     const newState = reducer(
       { selectedRoadmap: stubSelectedRoadmap },
@@ -330,6 +330,99 @@ describe("User Reducer", () => {
     );
     expect(newState).toEqual({
       selectedRoadmap: { ...stubSelectedRoadmap, pin_count: newPinCount },
+    });
+  });
+
+  // ---------------- change progress state of the roadmap ----------------
+  it("should change progress of the roadmap", () => {
+    const clearedSections = [
+      {
+        section_id: 35,
+        section_title: "new-sc1-title",
+        tasks: [
+          {
+            task_id: 43,
+            task_title: "new-task1-title",
+            task_type: 3,
+            task_url: "www.naver.com",
+            task_description: "Naver is better than google",
+            task_checked: false,
+          },
+        ],
+      },
+    ];
+    const newState = reducer(
+      { selectedRoadmap: stubSelectedRoadmap },
+      {
+        type: actionTypes.PROGRESS_CHANGE,
+        progress: 2,
+        sections: clearedSections,
+      },
+    );
+    expect(newState).toEqual({
+      selectedRoadmap: { ...stubSelectedRoadmap, progress: 2, sections: clearedSections },
+    });
+  });
+
+  // ---------------- change checkbox state of the roadmap ----------------
+  it("should change checkbox state of the roadmap's specific task.", () => {
+    const updatedTask = {
+      task_id: 43,
+      task_title: "new-task1-title",
+      task_type: 3,
+      task_url: "www.naver.com",
+      task_description: "Naver is better than google",
+      task_checked: true,
+    };
+    const previousTasks = [
+      {
+        task_id: 43,
+        task_title: "new-task1-title",
+        task_type: 3,
+        task_url: "www.naver.com",
+        task_description: "Naver is better than google",
+        task_checked: false,
+      },
+      {
+        task_id: 20,
+        task_title: "new-task1-title",
+        task_type: 3,
+        task_url: "www.naver.com",
+        task_description: "Naver is better than google",
+        task_checked: true,
+      },
+    ];
+    const stubSelectedRoadmapWith2Task = {
+      ...stubSelectedRoadmap,
+      sections: [
+        {
+          section_id: 35,
+          section_title: "new-sc1-title",
+          tasks: previousTasks,
+        },
+      ],
+    };
+    const newState = reducer(
+      { selectedRoadmap: stubSelectedRoadmapWith2Task },
+      {
+        type: actionTypes.CHANGE_CHECKBOX,
+        checked: true,
+        taskId: updatedTask.task_id,
+      },
+    );
+
+    const updatedSections = stubSelectedRoadmapWith2Task.sections.map((section) => {
+      const updatedTasks = section.tasks.map((task) => {
+        if (task.task_id === updatedTask.task_id) {
+          return updatedTask;
+        }
+        return task;
+      });
+      return { ...section, tasks: updatedTasks };
+    });
+
+    expect(newState).toEqual({
+      selectedRoadmap: { ...stubSelectedRoadmap, sections: updatedSections },
     });
   });
 });
