@@ -33,8 +33,8 @@ const CreateTask = (props) => {
     {
       name: (
         <>
-          <Book />
-          <label className="task-type-select-item">Book</label>
+          <Book className="task-type-select-item-icon" />
+          <label className="task-type-select-item-label">&nbsp;&nbsp;Book</label>
         </>
       ),
       value: taskType.BOOK,
@@ -42,8 +42,8 @@ const CreateTask = (props) => {
     {
       name: (
         <>
-          <PublicOutlined />
-          <label className="task-type-select-item">Website</label>
+          <PublicOutlined className="task-type-select-item-icon" />
+          <label className="task-type-select-item-label">&nbsp;&nbsp;Website</label>
         </>
       ),
       value: taskType.WEBSITE,
@@ -51,8 +51,8 @@ const CreateTask = (props) => {
     {
       name: (
         <>
-          <OndemandVideo />
-          <label className="task-type-select-item">Video</label>
+          <OndemandVideo className="task-type-select-item-icon" />
+          <label className="task-type-select-item-label">&nbsp;&nbsp;Video</label>
         </>
       ),
       value: taskType.VIDEO,
@@ -60,8 +60,8 @@ const CreateTask = (props) => {
     {
       name: (
         <>
-          <DescriptionOutlined />
-          <label className="task-type-select-item">Paper</label>
+          <DescriptionOutlined className="task-type-select-item-icon" />
+          <label className="task-type-select-item-label">&nbsp;&nbsp;Paper</label>
         </>
       ),
       value: taskType.PAPER,
@@ -69,8 +69,8 @@ const CreateTask = (props) => {
     {
       name: (
         <>
-          <TagFacesOutlined />
-          <label className="task-type-select-item">Roadmap</label>
+          <TagFacesOutlined className="task-type-select-item-icon" />
+          <label className="task-type-select-item-label">&nbsp;&nbsp;Roadmap</label>
         </>
       ),
       value: taskType.ROADMAP,
@@ -78,8 +78,8 @@ const CreateTask = (props) => {
     {
       name: (
         <>
-          <EditOutlined />
-          <label className="task-type-select-item">Other</label>
+          <EditOutlined className="task-type-select-item-icon" />
+          <label className="task-type-select-item-label">&nbsp;&nbsp;Other</label>
         </>
       ),
       value: taskType.OTHER,
@@ -88,78 +88,72 @@ const CreateTask = (props) => {
 
   return (
     <div className="CreateTask">
-      <div className="task">
-        <div className="task-type-title-buttons">
-          <div className="task-type-select">
-            <StyledSelect
-              id="task-type"
-              value={type}
-              onChange={(event) => {
-                return changeTaskTypeHandler(tmpSectionId, tmpTaskId, event.target.value);
-              }}
-              items={selectItems}
-              customId="task-type"
-              label="Type"
-            />
-          </div>
-          <input
-            className="task-title"
-            type="text"
-            value={title}
-            placeholder="Task Title"
+      <div className="task-type-title-buttons">
+        <div className="task-type-select">
+          <StyledSelect
+            id="task-type"
+            value={type}
             onChange={(event) => {
-              changeTaskTitleHandler(tmpSectionId, tmpTaskId, event.target.value);
+              return changeTaskTypeHandler(tmpSectionId, tmpTaskId, event.target.value);
             }}
-          />
-          <button
-            className="up-task-button"
-            type="button"
-            disabled={tmpTaskId === 0}
-            onClick={() => clickUpTaskHandler(tmpSectionId, tmpTaskId)}
-          >
-            ▲
-          </button>
-          <button
-            className="down-task-button"
-            type="button"
-            disabled={tmpTaskId === taskLastId}
-            onClick={() => clickDownTaskHandler(tmpSectionId, tmpTaskId)}
-          >
-            ▼
-          </button>
-        </div>
-        <div className="task-contents-url">
-          <input
-            className="task-url"
-            type="text"
-            value={url}
-            placeholder="Task URL"
-            onChange={(event) => {
-              changeTaskUrlHandler(tmpSectionId, tmpTaskId, event.target.value);
-            }}
+            items={selectItems}
+            customId="task-type"
+            label="Type"
           />
         </div>
-        <div className="task-contents-description">
-          <input
-            className="task-description"
-            type="text"
-            value={description}
-            placeholder="Task Description"
-            onChange={(event) => {
-              changeTaskDescriptionHandler(tmpSectionId, tmpTaskId, event.target.value);
-            }}
-          />
-        </div>
-        <button
-          className="delete-task-button"
-          type="button"
-          onClick={() => {
-            clickDeleteTaskHandler(tmpSectionId, tmpTaskId);
+        <input
+          className="task-title"
+          type="text"
+          value={title}
+          placeholder="Task Title"
+          onChange={(event) => {
+            changeTaskTitleHandler(tmpSectionId, tmpTaskId, event.target.value);
           }}
+        />
+        <button
+          className="up-task-button"
+          type="button"
+          disabled={tmpTaskId === 0}
+          onClick={() => clickUpTaskHandler(tmpSectionId, tmpTaskId)}
         >
-          Delete Task
+          ▲
+        </button>
+        <button
+          className="down-task-button"
+          type="button"
+          disabled={tmpTaskId === taskLastId}
+          onClick={() => clickDownTaskHandler(tmpSectionId, tmpTaskId)}
+        >
+          ▼
         </button>
       </div>
+      <input
+        className="task-url"
+        type="text"
+        value={url}
+        placeholder="Task URL"
+        onChange={(event) => {
+          changeTaskUrlHandler(tmpSectionId, tmpTaskId, event.target.value);
+        }}
+      />
+      <input
+        className="task-description"
+        type="text"
+        value={description}
+        placeholder="Task Description"
+        onChange={(event) => {
+          changeTaskDescriptionHandler(tmpSectionId, tmpTaskId, event.target.value);
+        }}
+      />
+      <button
+        className="delete-task-button"
+        type="button"
+        onClick={() => {
+          clickDeleteTaskHandler(tmpSectionId, tmpTaskId);
+        }}
+      >
+        Delete Task
+      </button>
     </div>
   );
 };

@@ -1,33 +1,121 @@
+@import "../../css//constants.scss";
+
+$margin-main: 30px 10px 30px 10px;
+
 .MyPage {
-  margin: 10px;
+  width: 100%;
+  display: flex;
+  flex-direction: row;
+  flex-wrap: nowrap;
+  justify-content: center;
+
+  input {
+    width: 100%;
+    color: $roadmap-input-text-color;
+    border: $roadmap-input-border-style;
+    border-radius: $roadmap-input-border-radius;
+    font-size: $roadmap-input-font-size;
+    padding: $roadmap-input-padding;
+  }
+  input::placeholder {
+    color: $roadmap-input-placeholder-color;
+    font-style: $roadmap-input-placeholder-style;
+  }
+
+  button {
+    background-color: $create-buttons-background-color;
+    border: $create-buttons-border-style;
+    border-radius: $create-buttons-border-radius;
+    padding: $create-buttons-padding;
+    margin-top: $create-buttons-margin-top;
+  }
 
   .user-info {
-    position: relative;
-    background: #ffffff;
-    width: 230px;
-    height: 400px;
-    padding: 10px 10px 10px 10px;
-    margin: 10px 10px 10px 10px;
+    position: sticky;
+    top: 10px;
+    width: $mypage-user-info-width;
+    height: $mypage-user-info-height;
+    margin: $margin-main;
+    background-color: $mypage-user-info-background-color;
+    border-radius: $mypage-user-info-border-radius;
 
     #user-img {
-      width: 200px;
-      height: 200px;
-      border: 1px solid #dddddd;
-      border-radius: 70%;
+      width: $mypage-user-img-width;
+      height: $mypage-user-img-heigth;
+      border: $mypage-user-img-border;
+      border-radius: $mypage-user-img-border-radius;
     }
   }
+
   .mypage-tab {
     position: relative;
-    width: 100%;
-    margin: 10px 10px 10px 10px;
+    width: $mypage-tab-width;
+    min-width: $mypage-tab-width;
+    box-shadow: $mypage-tab-box-shadow;
+    margin: $margin-main;
+
+    .tab-menus {
+      display: flex;
+      flex-direction: row;
+      width: 80%;
+      margin: $mypage-tab-menus-margin;
+
+      .tab-menu {
+        width: 100%;
+        height: $mypage-tab-menu-height;
+        min-width: $mypage-tab-menu-min-width;
+        border: $mypage-tab-menu-border-style;
+        border-radius: $mypage-tab-menu-border-radius;
+        background: $mypage-tab-menu-background-color;
+        text-align: $mypage-tab-menu-text-align;
+        color: $mypage-tab-menu-color;
+        font-size: $mypage-tab-menu-font-size;
+        margin: $mypage-tab-menu-margin;
+      }
+
+      .tab-menu-clicked {
+        width: 100%;
+        height: $mypage-tab-menu-clicked-height;
+        min-width: $mypage-tab-menu-clicked-min-width;
+        border: $mypage-tab-menu-clicked-border-style;
+        border-radius: $mypage-tab-menu-clicked-border-radius;
+        background: $mypage-tab-menu-clicked-background-color;
+        text-align: $mypage-tab-menu-clicked-text-align;
+        color: $mypage-tab-menu-clicked-color;
+        font-size: $mypage-tab-menu-clicked-font-size;
+        margin: $mypage-tab-menu-margin;
+      }
+
+      .tab-menu:hover:enabled {
+        background: $mypage-tab-menu-hover-enabled-background-color;
+      }
+
+      .tab-menu:disabled {
+        opacity: $mypage-tab-menu-disabled-opacity;
+        cursor: $mypage-tab-menu-disabled-cursor;
+      }
+    }
+
+    .tab-panel {
+      display: flex;
+      flex-direction: row;
+      flex-wrap: wrap;
+      background-color: $mypage-tab-panel-background-color;
+      min-height: $mypage-user-info-height;
+      box-shadow: $mypage-tab-panel-box-shadow;
+      padding: $mypage-tab-panel-padding;
+    }
 
     .TmpRoadmapItem {
       position: relative;
-      background: #cccccc;
-      width: 250px;
-      height: 250px;
-      padding: 10px 10px 10px 10px;
-      margin: 10px 10px 10px 10px;
+      background: $mypage-tab-item-background-color;
+      width: $mypage-tab-item-width;
+      height: $mypage-tab-item-height;
+      margin: $mypage-tab-item-margin;
+
+      button {
+        background-color: #ffffff;
+      }
     }
   }
 }

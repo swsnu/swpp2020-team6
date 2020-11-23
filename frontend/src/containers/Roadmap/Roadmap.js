@@ -382,61 +382,64 @@ class Roadmap extends Component {
 
     return (
       <div className="Roadmap">
-        <div className="roadmap">
-          <div className="title-private">
-            <input
-              id="roadmap-title"
-              type="text"
-              value={title}
-              placeholder="Title"
-              onChange={(event) => this.onChangeTitle(event.target.value)}
-            />
-            <label id="roadmap-private-label">{isPrivate ? "Private" : "Public"}</label>
-            <Switch
-              id="roadmap-private"
-              checked={isPrivate}
-              onClick={() => this.onClickPrivate()}
-            />
-          </div>
-          <div className="level-tag">
-            <div className="roadmap-level-select">
-              <StyledSelect
-                value={level}
-                onChange={(event) => this.onChangeLevel(event.target.value)}
-                items={[
-                  { name: "Choose level", value: 0 },
-                  { name: "Basic", value: levelType.BASIC },
-                  { name: "Intermediate", value: levelType.INTERMEDIATE },
-                  { name: "Advanced", value: levelType.ADVANCED },
-                ]}
-                customId="roadmap-level"
-                label="Level"
-                placeholder="Choose level"
-              />
-            </div>
-            <div className="new-tag">
+        <div className="main">
+          <h1>{isEdit ? "Edit Roadmap" : "Create Roadmap"}</h1>
+          <div className="roadmap">
+            <div className="title-private">
               <input
-                id="new-tag"
-                value={newTag}
-                placeholder="Add tags"
-                onChange={(event) => this.onChangeNewTag(event.target.value)}
+                id="roadmap-title"
+                type="text"
+                value={title}
+                placeholder="Title"
+                onChange={(event) => this.onChangeTitle(event.target.value)}
               />
-              <button id="add-tag-button" type="button" onClick={() => this.onClickAddTag()}>
-                add
-              </button>
+              <label id="roadmap-private-label">{isPrivate ? "Private" : "Public"}</label>
+              <Switch
+                id="roadmap-private"
+                checked={isPrivate}
+                onClick={() => this.onClickPrivate()}
+              />
             </div>
-            <div className="tags">{taglist}</div>
+            <div className="level-tag">
+              <div className="roadmap-level-select">
+                <StyledSelect
+                  value={level}
+                  onChange={(event) => this.onChangeLevel(event.target.value)}
+                  items={[
+                    { name: "Choose level", value: 0 },
+                    { name: "Basic", value: levelType.BASIC },
+                    { name: "Intermediate", value: levelType.INTERMEDIATE },
+                    { name: "Advanced", value: levelType.ADVANCED },
+                  ]}
+                  customId="roadmap-level"
+                  label="Level"
+                  placeholder="Choose level"
+                />
+              </div>
+              <div className="tag-block">
+                <div className="new-tag">
+                  <input
+                    id="new-tag"
+                    value={newTag}
+                    placeholder="Add tags"
+                    onChange={(event) => this.onChangeNewTag(event.target.value)}
+                  />
+                  <button id="add-tag-button" type="button" onClick={() => this.onClickAddTag()}>
+                    add
+                  </button>
+                </div>
+                <div className="tags">{taglist}</div>
+              </div>
+            </div>
+            <div className="roadmap-description">
+              <input
+                id="roadmap-description"
+                value={description}
+                placeholder="Description"
+                onChange={(event) => this.onChangeDescription(event.target.value)}
+              />
+            </div>
           </div>
-          <div className="roadmap-description">
-            <input
-              id="roadmap-description"
-              value={description}
-              placeholder="Description"
-              onChange={(event) => this.onChangeDescription(event.target.value)}
-            />
-          </div>
-        </div>
-        <div className="sections" flexDirection="column">
           {Sections}
           <button
             type="button"
@@ -446,20 +449,17 @@ class Roadmap extends Component {
             Create Section
           </button>
         </div>
-
-        <div className="buttons">
-          <button
-            id="confirm-roadmap-button"
-            type="button"
-            disabled={title === "" || level === 0 || sections.length === 0}
-            onClick={() => onClickConfirmHandler(this.onClickConfirm())}
-          >
-            Confirm
-          </button>
-          <button id="back-roadmap-button" type="button" onClick={() => this.onClickBack()}>
-            Back
-          </button>
-        </div>
+        <button id="back-roadmap-button" type="button" onClick={() => this.onClickBack()}>
+          Back
+        </button>
+        <button
+          id="confirm-roadmap-button"
+          type="button"
+          disabled={title === "" || level === 0 || sections.length === 0}
+          onClick={() => onClickConfirmHandler(this.onClickConfirm())}
+        >
+          Confirm
+        </button>
       </div>
     );
   }

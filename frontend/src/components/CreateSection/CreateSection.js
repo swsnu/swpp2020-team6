@@ -50,56 +50,52 @@ const CreateSection = (props) => {
 
   return (
     <div className="CreateSection">
-      <div className="section">
-        <div className="title-up-down">
-          <input
-            className="section-title"
-            type="text"
-            value={title}
-            placeholder={`Section ${tmpSectionId + 1} Title`}
-            onChange={(event) => {
-              changeSectionTitleHandler(tmpSectionId, event.target.value);
-            }}
-          />
-          <button
-            className="up-section-button"
-            type="button"
-            disabled={tmpSectionId === 0}
-            onClick={() => clickUpSectionHandler(tmpSectionId)}
-          >
-            ▲
-          </button>
-          <button
-            className="down-section-button"
-            type="button"
-            disabled={tmpSectionId === sectionLastId}
-            onClick={() => clickDownSectionHandler(tmpSectionId)}
-          >
-            ▼
-          </button>
-        </div>
-        <div className="tasks">
-          {Tasks}
-          <button
-            className="create-task-button"
-            type="button"
-            onClick={() => {
-              clickCreateTaskHandler(tmpSectionId);
-            }}
-          >
-            Create Task
-          </button>
-        </div>
-        <button
-          className="delete-section-button"
-          type="button"
-          onClick={() => {
-            clickDeleteSectionHandler(tmpSectionId);
+      <div className="title-up-down">
+        <input
+          className="section-title"
+          type="text"
+          value={title}
+          placeholder={`Section ${tmpSectionId + 1} Title`}
+          onChange={(event) => {
+            changeSectionTitleHandler(tmpSectionId, event.target.value);
           }}
+        />
+        <button
+          className="up-section-button"
+          type="button"
+          disabled={tmpSectionId === 0}
+          onClick={() => clickUpSectionHandler(tmpSectionId)}
         >
-          Delete Section
+          ▲
+        </button>
+        <button
+          className="down-section-button"
+          type="button"
+          disabled={tmpSectionId === sectionLastId}
+          onClick={() => clickDownSectionHandler(tmpSectionId)}
+        >
+          ▼
         </button>
       </div>
+      {Tasks}
+      <button
+        className="create-task-button"
+        type="button"
+        onClick={() => {
+          clickCreateTaskHandler(tmpSectionId);
+        }}
+      >
+        Create Task
+      </button>
+      <button
+        className="delete-section-button"
+        type="button"
+        onClick={() => {
+          clickDeleteSectionHandler(tmpSectionId);
+        }}
+      >
+        Delete Section
+      </button>
     </div>
   );
 };

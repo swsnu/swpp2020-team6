@@ -2,9 +2,6 @@ import React, { Component } from "react";
 import { connect } from "react-redux";
 import { withRouter } from "react-router";
 import PropTypes from "prop-types";
-import CssBaseline from "@material-ui/core/CssBaseline";
-import Typography from "@material-ui/core/Typography";
-import Container from "@material-ui/core/Container";
 
 import * as actionCreators from "../../store/actions/index";
 
@@ -31,19 +28,11 @@ class CreateRoadmap extends Component {
 
     return (
       <div className="CreateRoadmap">
-        <>
-          <CssBaseline />
-          <Container maxWidth="lg">
-            <Typography component="div">
-              <h1>Create Roadmap</h1>
-              <Roadmap
-                isEdit={false}
-                onClickBackHandler={this.onClickCreateBack}
-                onClickConfirmHandler={this.onClickCreateConfirm}
-              />
-            </Typography>
-          </Container>
-        </>
+        <Roadmap
+          isEdit={false}
+          onClickBackHandler={this.onClickCreateBack}
+          onClickConfirmHandler={this.onClickCreateConfirm}
+        />
       </div>
     );
   }

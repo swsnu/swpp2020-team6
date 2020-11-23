@@ -1,176 +1,197 @@
+@import "../../css/constants.scss";
+
+$padding-main: 40px;
+$margin-bottom-main: 10px;
+
 .Roadmap {
   width: 100%;
-  padding: 20px 0px 20px 0px;
-  margin: 10px 0px 20px 0px;
+  min-width: $create-roadmap-min-width;
+  margin-bottom: 200px;
+  display: flex;
+  flex-direction: row;
+  justify-content: space-between;
+  justify-items: center;
+  align-content: center;
+  align-items: flex-end;
 
-  .roadmap {
-    position: relative;
-    margin: auto;
-    width: 70%;
-    padding: 10px;
-    margin-bottom: 10px;
-    border: 3px solid #faa999;
-    border-radius: 10px;
-
-    .title-private {
-      display: flex;
-      align-items: center;
-      width: 100%;
-      padding: 15px;
-      margin: 10px 0px 5px 0px;
-
-      #roadmap-title {
-        width: 100%;
-        border: 2px solid #cccccc;
-        padding: 10px;
-        margin: 0px 10px 0px 10px;
-        border-radius: 4px;
-      }
-
-      #roadmap-private-label {
-        width: 90px;
-        margin-left: 10px;
-      }
-
-      #roadmap-private {
-        margin-right: 10px;
-      }
-    }
-
-    .level-tag {
-      display: grid;
-      grid-template-columns: 200px auto;
-      grid-template-rows: 30px 30px;
-      row-gap: 3px;
-      column-gap: 10px;
-      width: 100%;
-
-      .roadmap-level-select {
-        grid-column-start: 1;
-        grid-column-end: 2;
-        grid-row-start: 1;
-        grid-row-end: 3;
-      }
-
-      .new-tag {
-        width: 100%;
-        display: flex;
-        align-items: center;
-        grid-column-start: 2;
-        grid-column-end: 3;
-        grid-row-start: 1;
-        grid-row-end: 2;
-
-        #new-tag {
-          float: left;
-          width: 150px;
-          padding: 5px;
-          margin-right: 10px;
-          border: 2px solid #cccccc;
-          border-radius: 4px;
-        }
-        #add-tag-button {
-          width: 40px;
-          height: 28px;
-          float: left;
-          border: none;
-          border-radius: 3px;
-          background-color: #e5e5e5;
-        }
-      }
-
-      .tags {
-        grid-column-start: 2;
-        grid-column-end: 3;
-        grid-row-start: 2;
-        grid-row-end: 3;
-        display: flex;
-        flex-wrap: wrap;
-
-        .tag {
-          display: flex;
-          align-items: center;
-          height: 25px;
-          background-color: #cccccc;
-          border-radius: 5px;
-          padding: 4px 5px 4px 10px;
-          margin: 0px 5px 0px 5px;
-
-          .tag-name {
-            text-align: center;
-            font-size: 80%;
-          }
-
-          .delete-tag {
-            width: 15px;
-            height: 15px;
-            text-align: center;
-            font-size: 50%;
-            border: none;
-            border-radius: 5px;
-            padding: 0px;
-            margin-left: 5px;
-          }
-        }
-      }
-    }
-
-    .roadmap-description {
-      display: flex;
-      align-items: center;
-      width: 100%;
-      padding: 10px 25px 25px 25px;
-
-      #roadmap-description {
-        width: 100%;
-        height: 100px;
-        padding: 10px;
-        border: 2px solid #cccccc;
-        border-radius: 4px;
-      }
-    }
+  input {
+    color: $roadmap-input-text-color;
+    border: $roadmap-input-border-style;
+    border-radius: $roadmap-input-border-radius;
+    font-size: $roadmap-input-font-size;
+    padding: $roadmap-input-padding;
   }
-  .sections {
-    width: 70%;
-    margin: auto;
+  input::placeholder {
+    color: $roadmap-input-placeholder-color;
+    font-style: $roadmap-input-placeholder-style;
+    font-size: $roadmap-input-placeholder-font-size;
+  }
+
+  button {
+    background-color: $create-buttons-background-color;
+    color: $create-buttons-color;
+    border: $create-buttons-border-style;
+    border-radius: $create-buttons-border-radius;
+    padding: $create-buttons-padding;
+    margin-top: $create-buttons-margin-top;
+    font-size: $create-buttons-font-size;
+  }
+
+  .main {
+    order: 1;
+    width: $create-roadmap-body-width;
+    min-width: $create-roadmap-body-min-width;
+    max-width: $create-roadmap-body-max-width;
+    flex-grow: 2;
     display: flex;
     flex-direction: column;
     align-items: center;
+    margin: 30px 30px 100px 30px;
+
+    .roadmap {
+      position: relative;
+      display: flex;
+      width: 100%;
+      flex-direction: column;
+      padding: $padding-main;
+      margin-bottom: $margin-bottom-main;
+      border: $create-roadmap-border-style;
+      border-radius: $create-roadmap-border-radius;
+      background-color: $paper-color;
+
+      .title-private {
+        display: flex;
+        flex-direction: row;
+        flex-wrap: nowrap;
+        align-items: center;
+        width: 100%;
+
+        #roadmap-title {
+          width: 100%;
+        }
+
+        #roadmap-private-label {
+          width: 13%;
+          margin-left: 30px;
+        }
+
+        #roadmap-private {
+          margin-left: 10px;
+        }
+      }
+
+      .level-tag {
+        display: flex;
+        flex-direction: row;
+        flex-wrap: nowrap;
+        justify-content: flex-start;
+        align-items: center;
+        width: 100%;
+
+        .roadmap-level-select {
+          padding: 20px 0px 20px 0px;
+        }
+
+        .tag-block {
+          display: inline-flex;
+          flex-direction: column;
+          justify-content: center;
+          align-items: flex-start;
+          margin-left: 15px;
+
+          .new-tag {
+            display: flex;
+            flex-direction: row;
+            flex-wrap: nowrap;
+            justify-content: flex-start;
+            align-items: center;
+            padding-top: 5px;
+
+            #new-tag {
+              width: 150px;
+              padding: 5px;
+              border-radius: 4px;
+            }
+            #add-tag-button {
+              width: 40px;
+              height: 28px;
+              padding: 0px;
+              margin: 0px 0px 0px 10px;
+            }
+          }
+
+          .tags {
+            display: flex;
+            flex-direction: row;
+            justify-content: flex-start;
+            align-items: center;
+            flex-wrap: wrap;
+            padding-top: 5px;
+
+            .tag {
+              display: inline-flex;
+              flex-direction: row;
+              flex-wrap: nowrap;
+              align-items: center;
+              height: $create-tag-height;
+              background-color: $create-buttons-background-color;
+              border-radius: $create-tag-border-radius;
+              padding: $create-tag-padding;
+              margin-right: $create-tag-margin-right;
+
+              .tag-name {
+                text-align: center;
+                font-size: $create-tag-font-size;
+                color: $create-tag-color;
+              }
+
+              .delete-tag {
+                width: 15px;
+                height: 15px;
+                text-align: center;
+                font-size: 70%;
+                padding: 0px;
+                margin: 0px 0px 0px 5px;
+              }
+            }
+          }
+        }
+      }
+
+      .roadmap-description {
+        display: flex;
+        width: 100%;
+        background-color: $paper-color;
+
+        #roadmap-description {
+          width: 100%;
+          height: 100px;
+        }
+      }
+    }
+
+    #create-section-button {
+    }
   }
 
-  #create-section-button {
-    border: none;
-    border-radius: 3px;
-    padding: 10px;
-    margin: 10px 0px 100px 0px;
-    background-color: #dddddd;
-  }
-
-  .buttons {
+  #back-roadmap-button {
+    order: 0;
     position: sticky;
-    bottom: 120px;
-    margin: 20px 0px 100px 0px;
+    bottom: 30px;
+    width: $create-confirm-button-width;
+    height: $create-confirm-button-heigth;
+    font-size: $create-confirm-button-font-size;
+    margin: 3%;
+    background-color: $create-back-delete-button-background-color;
+  }
 
-    #back-roadmap-button {
-      float: left;
-      border: none;
-      border-radius: 5px;
-      width: 70px;
-      height: 50px;
-      padding: 10px;
-      margin: 20px;
-      background-color: #dddddd;
-    }
-
-    #confirm-roadmap-button {
-      float: right;
-      border: none;
-      border-radius: 5px;
-      width: 70px;
-      height: 50px;
-      padding: 10px;
-      margin: 20px;
-      background-color: #dddddd;
-    }
+  #confirm-roadmap-button {
+    order: 2;
+    position: sticky;
+    bottom: 30px;
+    width: $create-confirm-button-width;
+    height: $create-confirm-button-heigth;
+    font-size: $create-confirm-button-font-size;
+    margin: 3%;
   }
 }

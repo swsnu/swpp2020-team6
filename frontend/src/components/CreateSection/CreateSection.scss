@@ -1,65 +1,80 @@
+@import "../../css/constants.scss";
+
+$padding-main: 40px;
+$margin-bottom-main: 10px;
+
 .CreateSection {
-  position: relative;
+  display: flex;
+  flex-direction: column;
+  align-items: center;
   width: 100%;
-  padding: 10px 10px 10px 10px;
-  margin: 0px 0px 10px 0px;
-  border: 3px solid #faa999;
-  border-radius: 10px;
+  padding: $padding-main;
+  margin-bottom: $margin-bottom-main;
+  border: $create-section-border-style;
+  border-radius: $create-section-border-radius;
+  background-color: $paper-color;
+
+  input {
+    width: 100%;
+    color: $roadmap-input-text-color;
+    border: $roadmap-input-border-style;
+    border-radius: $roadmap-input-border-radius;
+    font-size: $roadmap-input-font-size;
+    padding: $roadmap-input-padding;
+  }
+  input::placeholder {
+    color: $roadmap-input-placeholder-color;
+    font-style: $roadmap-input-placeholder-style;
+    font-size: $roadmap-input-placeholder-font-size;
+  }
+
+  button {
+    background-color: $create-buttons-background-color;
+    color: $create-buttons-color;
+    border: $create-buttons-border-style;
+    border-radius: $create-buttons-border-radius;
+    padding: $create-buttons-padding;
+    margin-top: $create-buttons-margin-top;
+    font-size: $create-buttons-font-size;
+  }
 
   .title-up-down {
     width: 100%;
     display: flex;
-    justify-content: center;
-    align-items: center;
     flex-direction: row;
     flex-wrap: nowrap;
-    padding: 30px 20px 30px 20px;
+    align-items: center;
+    margin-bottom: 40px;
 
     .section-title {
-      width: 100%;
-      border: 2px solid #bbbbbb;
-      border-radius: 4px;
-      padding: 10px;
-      margin: 0px 10px 0px 10px;
+      margin-right: 20px;
     }
+
     .up-section-button,
     .down-section-button {
-      width: 30px;
-      height: 30px;
-      margin-right: 2px;
-      font-size: 90%;
-      color: #faa999;
-      border: ridge;
-      border-radius: 4px;
-      background-color: #ffffff;
-      box-shadow: 1px 1px 1px #555555;
+      background-color: $create-updown-background-color;
+      color: $create-updown-color;
+      font-size: $create-updown-font-size;
+      border: $create-updown-border-style;
+      border-radius: $create-updown-border-radius;
+      box-shadow: $create-updown-box-shadow;
+      padding: $create-updown-padding;
+      margin: $create-updown-margin;
+      width: $create-updown-width;
+      height: $create-updown-height;
+      min-width: $create-updown-min-width;
+    }
+    .up-section-button:disabled,
+    .down-section-button:disabled {
+      opacity: $create-updown-disabled-opacity;
     }
   }
 
-  .tasks {
-    width: 100%;
-    display: flex;
-    justify-content: center;
-    align-items: center;
-    flex-direction: column;
-    flex-wrap: nowrap;
-    padding: 10px;
-
-    .create-task-button {
-      border: none;
-      border-radius: 3px;
-      padding: 10px;
-      background-color: #dddddd;
-      margin: 20px;
-    }
+  .create-task-button {
   }
 
   .delete-section-button {
-    float: right;
-    border: none;
-    border-radius: 3px;
-    padding: 10px;
-    background-color: #dddddd;
-    margin: 20px;
+    align-self: flex-end;
+    background-color: $create-back-delete-button-background-color;
   }
 }

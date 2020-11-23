@@ -1,10 +1,42 @@
+@import "../../css/constants.scss";
+
+$padding-main: 40px;
+$margin-bottom-main: 10px;
+
 .CreateTask {
   position: relative;
-  width: 90%;
-  padding: 10px 10px 10px 10px;
-  margin: 0px 0px 10px 0px;
-  border: 3px solid #faa999;
-  border-radius: 10px;
+  display: flex;
+  flex-direction: column;
+  align-items: flex-end;
+  width: 100%;
+  padding: 40px;
+  margin-bottom: $margin-bottom-main;
+  border: $create-task-border-style;
+  border-radius: $create-task-border-radius;
+
+  input {
+    width: 100%;
+    color: $roadmap-input-text-color;
+    border: $roadmap-input-border-style;
+    border-radius: $roadmap-input-border-radius;
+    font-size: $roadmap-input-font-size;
+    padding: $roadmap-input-padding;
+  }
+  input::placeholder {
+    color: $roadmap-input-placeholder-color;
+    font-style: $roadmap-input-placeholder-style;
+    font-size: $roadmap-input-placeholder-font-size;
+  }
+
+  button {
+    background-color: $create-buttons-background-color;
+    color: $create-buttons-color;
+    border: $create-buttons-border-style;
+    border-radius: $create-buttons-border-radius;
+    padding: $create-buttons-padding;
+    margin-top: $create-buttons-margin-top;
+    font-size: $create-buttons-font-size;
+  }
 
   .task-type-title-buttons {
     width: 100%;
@@ -13,79 +45,65 @@
     align-items: center;
     flex-direction: row;
     flex-wrap: nowrap;
-    padding: 20px 10px 20px 10px;
 
     .task-type-select {
-      margin-right: 10px;
-
-      .task-type-select-item {
-        top: 50%;
-        left: 50%;
+      div {
+        min-width: 105px;
+        min-height: 25px;
+        display: flex;
+        flex-direction: row;
+        justify-content: center;
+        align-items: center;
       }
+
+      /*
+      .task-type-select-item {
+        display: flex;
+        flex-direction: row;
+        align-items: flex-end;
+
+        label {
+          margin-left: 10px;
+          align-self: center;
+        }
+      }
+      */
     }
     .task-title {
-      width: 100%;
-      border: 2px solid #cccccc;
-      border-radius: 4px;
-      padding: 10px;
-      margin: 0px 10px 0px 10px;
+      margin: 0px 20px 0px 15px;
     }
     .up-task-button,
     .down-task-button {
-      float: right;
-      width: 30px;
-      height: 30px;
-      margin: 0px 2px 0px 0px;
-      font-size: 90%;
-      color: #faa999;
-      border: ridge;
-      border-radius: 4px;
-      background-color: #ffffff;
-      box-shadow: 1px 1px 1px #555555;
+      background-color: $create-updown-background-color;
+      color: $create-updown-color;
+      font-size: $create-updown-font-size;
+      border: $create-updown-border-style;
+      border-radius: $create-updown-border-radius;
+      box-shadow: $create-updown-box-shadow;
+      padding: $create-updown-padding;
+      margin: $create-updown-margin;
+      width: $create-updown-width;
+      height: $create-updown-height;
+      min-width: $create-updown-min-width;
+    }
+    .up-task-button:disabled,
+    .down-task-button:disabled {
+      opacity: $create-updown-disabled-opacity;
     }
   }
 
-  .task-contents-url {
+  .task-url {
     width: 100%;
-    display: flex;
-    justify-content: center;
-    align-items: center;
-    flex-direction: row;
-    flex-wrap: nowrap;
-    padding: 10px 10px 10px 10px;
-
-    .task-url {
-      width: 100%;
-      padding: 10px 10px 10px 10px;
-      border: 2px solid #cccccc;
-      border-radius: 4px;
-    }
+    margin: 20px 0px 30px 0px;
   }
 
-  .task-contents-description {
+  .task-description {
     width: 100%;
-    display: flex;
-    justify-content: center;
-    align-items: center;
-    flex-direction: row;
-    flex-wrap: nowrap;
-    padding: 10px 10px 10px 10px;
-
-    .task-description {
-      width: 100%;
-      height: 100px;
-      padding: 10px 10px 10px 10px;
-      border: 2px solid #cccccc;
-      border-radius: 4px;
-    }
+    height: 100px;
   }
 
   .delete-task-button {
     float: right;
-    border: none;
-    border-radius: 3px;
-    padding: 10px;
-    background-color: #dddddd;
-    margin: 20px;
+    background-color: $create-back-delete-button-background-color;
   }
 }
