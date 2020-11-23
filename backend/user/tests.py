@@ -5,8 +5,7 @@ from roadmap.models import Roadmap
 
 
 class UserTestCase(TestCase):
-    dump_user = {"username": "chris",
-                 "email": "chris@gmail.com", "password": "chris"}
+    dump_user = {"username": "chris", "email": "chris@gmail.com", "password": "chris"}
     dump_user_json = json.dumps(dump_user)
     json_type = "application/json"
     user_path = "/api/user/"
