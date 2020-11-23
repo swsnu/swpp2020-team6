@@ -1,13 +1,30 @@
 import React from "react";
 import PropTypes from "prop-types";
+import { connect } from "react-redux";
+import * as actionCreators from "../../store/actions/index";
 
 import "./Task.scss";
 
 const Task = (props) => {
-  const { isAuthor, progressStatus, title, type, url, description, checked } = props;
+  const {
+    taskId,
+    isAuthor,
+    progressStatus,
+    title,
+    type,
+    url,
+    description,
+    checked,
+    changeCheckbox,
+  } = props;
   const checkbox =
     isAuthor && progressStatus === 2 ? (
-      <input type="checkbox" className="task-checkbox" checked={checked} disabled />
+      <input
+        type="checkbox"
+        className="task-checkbox"
+        checked={checked}
+        onChange={() => changeCheckbox(taskId)}
+      />
     ) : null;
   // 'task-type' will be changed into icon corresponding to the type
   return (
@@ -22,6 +39,7 @@ const Task = (props) => {
 };
 
 Task.propTypes = {
+  taskId: PropTypes.number.isRequired,
   isAuthor: PropTypes.bool.isRequired,
   progressStatus: PropTypes.number.isRequired,
   title: PropTypes.string.isRequired,
@@ -29,6 +47,13 @@ Task.propTypes = {
   url: PropTypes.string.isRequired,
   description: PropTypes.string.isRequired,
   checked: PropTypes.bool.isRequired,
+  changeCheckbox: PropTypes.func.isRequired,
 };
 
-export default Task;
+const mapDispatchToProps = (dispatch) => {
+  return {
+    changeCheckbox: (taskId) => dispatch(actionCreators.changeCheckbox(taskId)),
+  };
+};
+
+export default connect(null, mapDispatchToProps)(Task);
