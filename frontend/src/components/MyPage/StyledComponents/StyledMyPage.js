@@ -1,3 +1,4 @@
+/*
 import React from "react";
 import { withStyles } from "@material-ui/core/styles";
 import PropTypes from "prop-types";
@@ -6,6 +7,7 @@ import Tabs from "@material-ui/core/Tabs";
 import Tab from "@material-ui/core/Tab";
 import Typography from "@material-ui/core/Typography";
 import Box from "@material-ui/core/Box";
+import { ubuntu } from "../../../fonts/MuiFont";
 
 const StyledTabs = withStyles({
   root: {
@@ -20,6 +22,7 @@ const StyledTabs = withStyles({
 const StyledTab = withStyles((theme) => ({
   root: {
     textTransform: "none",
+    fontFamily: ubuntu,
     fontSize: 18,
     fontWeight: theme.typography.fontWeightBold,
     marginRight: theme.spacing(4),
@@ -60,7 +63,6 @@ const styles = (theme) => ({
   root: {
     backgroundColor: theme.palette.background.paper,
     width: "100%",
-    background: "#FA391E",
   },
 });
 
@@ -113,3 +115,4 @@ StyledMyPage.propTypes = {
 };
 
 export default withStyles(styles)(StyledMyPage);
+*/

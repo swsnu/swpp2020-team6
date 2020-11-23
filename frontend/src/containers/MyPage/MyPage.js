@@ -6,7 +6,7 @@ import CssBaseline from "@material-ui/core/CssBaseline";
 import Typography from "@material-ui/core/Typography";
 import Container from "@material-ui/core/Container";
 import Box from "@material-ui/core/Box";
-import StyledMyPage from "../../components/MyPage/StyledComponents/StyledMyPage";
+import MyTab from "../../components/MyPage/StyledComponents/MyTab";
 import * as actionCreators from "../../store/actions/index";
 import userImg from "../../misc/rotus-img.png";
 import "./MyPage.scss";
@@ -49,7 +49,7 @@ class MyPage extends Component {
     onResetMyPageUser();
   }
 
-  onChangeTab = (_, tab) => {
+  onChangeTab = (tab) => {
     this.setState({ tab });
   };
 
@@ -71,7 +71,7 @@ class MyPage extends Component {
     const { tab } = this.state;
     let user;
     let pinnedRoadmaps;
-    let disabled = false;
+    let disabled = null;
 
     if (selectedUser.user_id === myPageUser.user_id) {
       user = selectedUser;
@@ -81,7 +81,7 @@ class MyPage extends Component {
     } else {
       user = myPageUser;
       pinnedRoadmaps = [];
-      disabled = true;
+      disabled = 1;
     }
 
     const myRoadmaps = user.my_roadmaps.map((roadmap) => {
@@ -95,19 +95,19 @@ class MyPage extends Component {
           <Container maxWidth="lg">
             <Typography component="div">
               <Box display="flex" flexDirection="row">
-                <Box className="user-info" boxShadow={2}>
+                <Box className="user-info">
                   <h2>User Profile</h2>
                   <img id="user-img" src={userImg} alt="user-img" />
                   <h2>{user.username}</h2>
                 </Box>
                 <div className="mypage-tab">
-                  <StyledMyPage
+                  <MyTab
                     id="mypage-tab"
                     tab={tab}
-                    onChange={this.onChangeTab}
+                    onClick={this.onChangeTab}
                     disabled={disabled}
-                    myRoadmaps={myRoadmaps}
-                    pinnedRoadmaps={pinnedRoadmaps}
+                    itemlists={[myRoadmaps, pinnedRoadmaps]}
+                    labels={["My Roadmaps", "Pinned Roadmaps"]}
                   />
                 </div>
               </Box>
