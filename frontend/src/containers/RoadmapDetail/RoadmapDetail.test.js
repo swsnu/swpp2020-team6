@@ -640,6 +640,7 @@ describe("<RoadmapDetail />", () => {
   let spyToggleRoadmapPin;
   let spyChangeProgress;
   let spyChangeCheckbox;
+  let spyResetRoadmap;
 
   beforeEach(() => {
     spyPush = jest.spyOn(history, "push").mockImplementation(() => {});
@@ -671,6 +672,9 @@ describe("<RoadmapDetail />", () => {
       return () => {};
     });
     spyChangeCheckbox = jest.spyOn(actionCreators, "changeCheckbox").mockImplementation(() => {
+      return () => {};
+    });
+    spyResetRoadmap = jest.spyOn(actionCreators, "resetRoadmap_").mockImplementation(() => {
       return () => {};
     });
   });
@@ -1136,7 +1140,6 @@ describe("<RoadmapDetail />", () => {
     const buttonOK = component.find(Button);
     expect(buttonOK.at(0).text()).toBe("OK");
     buttonOK.simulate("click");
-    expect(spyResetRoadmap).toHaveBeenCalledTimes(1);
     expect(spyGoBack).toHaveBeenCalledTimes(1);
   });
 
@@ -1388,8 +1391,7 @@ describe("<RoadmapDetail />", () => {
     expect(spyDeleteComment).toHaveBeenCalledTimes(1);
   });
 
-  /* ------------------ back button ------------------ */
-  it(`should return to the previous page when 'back' button is clicked.`, () => {
+  it("should clear selectedRoadmap before unmount", () => {
     const component = mount(
       <Provider store={mockAuthorizedUserOtherRoadmapStore}>
         <ConnectedRouter history={history}>
@@ -1403,10 +1405,7 @@ describe("<RoadmapDetail />", () => {
         </ConnectedRouter>
       </Provider>,
     );
-
-    const backButton = component.find("#back-button");
-    expect(backButton.length).toBe(1);
-    backButton.simulate("click");
-    expect(spyGoBack).toHaveBeenCalledTimes(1);
+    component.unmount();
+    expect(spyResetRoadmap).toHaveBeenCalledTimes(1);
   });
 });
