@@ -14,6 +14,8 @@ import RoadmapDetail from "./containers/RoadmapDetail/RoadmapDetail";
 import MyPage from "./containers/MyPage/MyPage";
 
 import "./App.css";
+import LogoButton from "./components/LogoButton/LogoButton";
+import UpperUserBar from "./containers/UpperBar/UpperUserBar";
 
 class App extends React.Component {
   componentDidMount() {
@@ -33,6 +35,8 @@ class App extends React.Component {
     return (
       <ConnectedRouter history={history}>
         <div className="App">
+          <LogoButton />
+          <UpperUserBar />
           <Switch>
             <Route path="/home" exact component={Home} />
             <Route path="/signup" exact component={SignUp} />
