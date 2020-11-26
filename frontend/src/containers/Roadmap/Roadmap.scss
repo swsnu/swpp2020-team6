@@ -1,4 +1,4 @@
-@import "../../css/constants.scss";
+@import "../../css/roadmap.scss";
 
 $padding-main: 40px;
 $margin-bottom-main: 10px;
@@ -54,7 +54,7 @@ $margin-bottom-main: 10px;
       width: 100%;
       flex-direction: column;
       padding: $padding-main;
-      margin-bottom: $margin-bottom-main;
+      margin-bottom: 20px;
       border: $create-roadmap-border-style;
       border-radius: $create-roadmap-border-radius;
       background-color: $paper-color;
@@ -137,7 +137,7 @@ $margin-bottom-main: 10px;
               background-color: $create-buttons-background-color;
               border-radius: $create-tag-border-radius;
               padding: $create-tag-padding;
-              margin-right: $create-tag-margin-right;
+              margin: $create-tag-margin;
 
               .tag-name {
                 text-align: center;

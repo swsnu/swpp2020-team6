@@ -1,4 +1,4 @@
-@import "../../css//constants.scss";
+@import "../../css/mypage.scss";
 
 $margin-main: 30px 10px 30px 10px;
 
@@ -8,27 +8,6 @@ $margin-main: 30px 10px 30px 10px;
   flex-direction: row;
   flex-wrap: nowrap;
   justify-content: center;
-
-  input {
-    width: 100%;
-    color: $roadmap-input-text-color;
-    border: $roadmap-input-border-style;
-    border-radius: $roadmap-input-border-radius;
-    font-size: $roadmap-input-font-size;
-    padding: $roadmap-input-padding;
-  }
-  input::placeholder {
-    color: $roadmap-input-placeholder-color;
-    font-style: $roadmap-input-placeholder-style;
-  }
-
-  button {
-    background-color: $create-buttons-background-color;
-    border: $create-buttons-border-style;
-    border-radius: $create-buttons-border-radius;
-    padding: $create-buttons-padding;
-    margin-top: $create-buttons-margin-top;
-  }
 
   .user-info {
     position: sticky;

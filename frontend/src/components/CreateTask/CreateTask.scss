@@ -1,4 +1,4 @@
-@import "../../css/constants.scss";
+@import "../../css/roadmap.scss";
 
 $padding-main: 40px;
 $margin-bottom-main: 10px;
@@ -55,19 +55,6 @@ $margin-bottom-main: 10px;
         justify-content: center;
         align-items: center;
       }
-
-      /*
-      .task-type-select-item {
-        display: flex;
-        flex-direction: row;
-        align-items: flex-end;
-
-        label {
-          margin-left: 10px;
-          align-self: center;
-        }
-      }
-      */
     }
     .task-title {
       margin: 0px 20px 0px 15px;

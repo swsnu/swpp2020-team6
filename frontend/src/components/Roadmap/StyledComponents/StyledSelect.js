@@ -6,7 +6,7 @@ import MenuItem from "@material-ui/core/MenuItem";
 import FormControl from "@material-ui/core/FormControl";
 import Select from "@material-ui/core/Select";
 import PropTypes from "prop-types";
-import "../../../css/constants.scss";
+import "../../../css/basic.scss";
 
 const BootstrapInput = withStyles((theme) => ({
   root: {
