@@ -8,9 +8,9 @@ class UpperSearchBar extends Component {
     searchInput: "",
   };
 
-  onClickSearch = (searchData) => {
+  onClickSearch = (title) => {
     const { onGetSimpleSearch } = this.props;
-    onGetSimpleSearch(searchData);
+    onGetSimpleSearch({ title });
   };
 
   render() {
