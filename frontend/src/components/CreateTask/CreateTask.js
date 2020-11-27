@@ -30,6 +30,7 @@ const CreateTask = (props) => {
   } = props;
 
   const selectItems = [
+    { name: <em style={{ color: "#aaaaaa" }}>Choose type</em>, value: 0 },
     {
       name: (
         <>
