@@ -322,7 +322,12 @@ class SearchResult extends Component {
 
         <br />
 
-        <div className="pages">{pageList}</div>
+        <div className="pages">
+          {pageList}
+          <br />
+          Current Page:
+          {page}
+        </div>
       </div>
     );
   }

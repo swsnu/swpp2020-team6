@@ -67,7 +67,6 @@ export const getAdvancedSearch = (searchData) => {
         },
       })
       .then((res) => {
-        // console.log(searchData);
         dispatch(getAdvancedSearchSuccess_(res.data));
       })
       .catch((error) => {
