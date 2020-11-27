@@ -87,7 +87,10 @@ describe("<CreateRoadmap />", () => {
     let wrapper = component.find("#roadmap-title");
     wrapper.simulate("change", { target: { value: title } });
     wrapper = component.find("#roadmap-level");
-    wrapper.simulate("change", { target: { value: level } });
+    wrapper
+      .at(0)
+      .props()
+      .onChange({ target: { value: level } });
     wrapper = component.find("#new-tag");
     wrapper.simulate("change", { target: { value: newTag } });
     wrapper = component.find("#roadmap-private");
@@ -245,8 +248,11 @@ describe("<CreateRoadmap />", () => {
     wrapper = component.find(".create-task-button");
     wrapper.at(0).simulate("click");
     wrapper.at(0).simulate("click");
-    wrapper = component.find(".task-type");
-    wrapper.at(0).simulate("change", { target: { value: testType } });
+    wrapper = component.find("#task-type");
+    wrapper
+      .at(0)
+      .props()
+      .onChange({ target: { value: testType } });
     const instance = component.find(Roadmap).instance();
     expect(instance.state.sections[0].tasks[0].task_type).toEqual(testType);
     expect(instance.state.sections[0].tasks[1].task_type).toEqual(0);
@@ -368,7 +374,10 @@ describe("<CreateRoadmap />", () => {
     let wrapper = component.find("#roadmap-title");
     wrapper.simulate("change", { target: { value: testTitle } });
     wrapper = component.find("#roadmap-level");
-    wrapper.simulate("change", { target: { value: testLevel } });
+    wrapper
+      .at(0)
+      .props()
+      .onChange({ target: { value: testLevel } });
     wrapper = component.find("#create-section-button");
     wrapper.simulate("click");
     wrapper = component.find("#confirm-roadmap-button");

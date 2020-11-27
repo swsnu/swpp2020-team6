@@ -1,59 +1,197 @@
+@import "../../css/roadmap.scss";
+
+$padding-main: 40px;
+$margin-bottom-main: 10px;
+
 .Roadmap {
-  max-width: 1200px;
-  min-width: 800px;
-  margin: auto;
-  .roadmap {
-    position: relative;
-    left: 15%;
-    width: 77%;
-    border: 1px solid rgb(82, 82, 87);
-    box-sizing: border-box;
-    padding: 5px;
-    margin: 5px 5px 5px 5px;
+  width: 100%;
+  min-width: $create-roadmap-min-width;
+  margin-bottom: 200px;
+  display: flex;
+  flex-direction: row;
+  justify-content: space-between;
+  justify-items: center;
+  align-content: center;
+  align-items: flex-end;
 
-    #roadmap-title {
+  input {
+    color: $roadmap-input-text-color;
+    border: $roadmap-input-border-style;
+    border-radius: $roadmap-input-border-radius;
+    font-size: $roadmap-input-font-size;
+    padding: $roadmap-input-padding;
+  }
+  input::placeholder {
+    color: $roadmap-input-placeholder-color;
+    font-style: $roadmap-input-placeholder-style;
+    font-size: $roadmap-input-placeholder-font-size;
+  }
+
+  button {
+    background-color: $create-buttons-background-color;
+    color: $create-buttons-color;
+    border: $create-buttons-border-style;
+    border-radius: $create-buttons-border-radius;
+    padding: $create-buttons-padding;
+    margin-top: $create-buttons-margin-top;
+    font-size: $create-buttons-font-size;
+  }
+
+  .main {
+    order: 1;
+    width: $create-roadmap-body-width;
+    min-width: $create-roadmap-body-min-width;
+    max-width: $create-roadmap-body-max-width;
+    flex-grow: 2;
+    display: flex;
+    flex-direction: column;
+    align-items: center;
+    margin: 30px 30px 100px 30px;
+
+    .roadmap {
       position: relative;
-      width: 60%;
-      margin: 5px 5px 5px 5px;
-      border: 1px solid rgb(87, 82, 82);
-      box-sizing: border-box;
-      padding: 5px;
-      font-weight: 700;
-      color: rgb(0, 0, 225);
-      font-size: 20px;
-    }
-    #roadmap-level {
-      position: relative;
-      width: 20%;
-      border: 1px solid rgb(87, 82, 82);
-      box-sizing: border-box;
-      padding: 5px;
-      margin: 5px 5px 5px 5px;
-      font-weight: 700;
-      color: rgb(0, 0, 225);
-      font-size: 20px;
+      display: flex;
+      width: 100%;
+      flex-direction: column;
+      padding: $padding-main;
+      margin-bottom: 20px;
+      border: $create-roadmap-border-style;
+      border-radius: $create-roadmap-border-radius;
+      background-color: $paper-color;
+
+      .title-private {
+        display: flex;
+        flex-direction: row;
+        flex-wrap: nowrap;
+        align-items: center;
+        width: 100%;
+
+        #roadmap-title {
+          width: 100%;
+        }
+
+        #roadmap-private-label {
+          width: 13%;
+          margin-left: 30px;
+        }
+
+        #roadmap-private {
+          margin-left: 10px;
+        }
+      }
+
+      .level-tag {
+        display: flex;
+        flex-direction: row;
+        flex-wrap: nowrap;
+        justify-content: flex-start;
+        align-items: center;
+        width: 100%;
+
+        .roadmap-level-select {
+          padding: 20px 0px 20px 0px;
+        }
+
+        .tag-block {
+          display: inline-flex;
+          flex-direction: column;
+          justify-content: center;
+          align-items: flex-start;
+          margin-left: 15px;
+
+          .new-tag {
+            display: flex;
+            flex-direction: row;
+            flex-wrap: nowrap;
+            justify-content: flex-start;
+            align-items: center;
+            padding-top: 5px;
+
+            #new-tag {
+              width: 150px;
+              padding: 5px;
+              border-radius: 4px;
+            }
+            #add-tag-button {
+              width: 40px;
+              height: 28px;
+              padding: 0px;
+              margin: 0px 0px 0px 10px;
+            }
+          }
+
+          .tags {
+            display: flex;
+            flex-direction: row;
+            justify-content: flex-start;
+            align-items: center;
+            flex-wrap: wrap;
+            padding-top: 5px;
+
+            .tag {
+              display: inline-flex;
+              flex-direction: row;
+              flex-wrap: nowrap;
+              align-items: center;
+              height: $create-tag-height;
+              background-color: $create-buttons-background-color;
+              border-radius: $create-tag-border-radius;
+              padding: $create-tag-padding;
+              margin: $create-tag-margin;
+
+              .tag-name {
+                text-align: center;
+                font-size: $create-tag-font-size;
+                color: $create-tag-color;
+              }
+
+              .delete-tag {
+                width: 15px;
+                height: 15px;
+                text-align: center;
+                font-size: 70%;
+                padding: 0px;
+                margin: 0px 0px 0px 5px;
+              }
+            }
+          }
+        }
+      }
+
+      .roadmap-description {
+        display: flex;
+        width: 100%;
+        background-color: $paper-color;
+
+        #roadmap-description {
+          width: 100%;
+          height: 100px;
+        }
+      }
     }
 
-    label {
-      position: relative;
-      color: black;
-      margin: 10px;
-      font-size: 15px;
+    #create-section-button {
     }
   }
 
-  #create-section-button {
-    position: relative;
-    height: 30px;
-    margin: 15px 15px 70px 15px;
+  #back-roadmap-button {
+    order: 0;
+    position: sticky;
+    bottom: 30px;
+    width: $create-confirm-button-width;
+    height: $create-confirm-button-heigth;
+    font-size: $create-confirm-button-font-size;
+    margin: 3%;
+    background-color: $create-back-delete-button-background-color;
   }
-  #back-roadmap-button,
+
   #confirm-roadmap-button {
-    float: right;
-    position: relative;
-    height: 50px;
-    padding: 10px;
-    font-size: 20px;
-    margin: 15px 15px 70px 15px;
+    order: 2;
+    position: sticky;
+    bottom: 30px;
+    width: $create-confirm-button-width;
+    height: $create-confirm-button-heigth;
+    font-size: $create-confirm-button-font-size;
+    margin: 3%;
   }
 }
