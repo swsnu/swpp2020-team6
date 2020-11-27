@@ -1,11 +1,9 @@
 import React from "react";
 import { Carousel } from "react-bootstrap";
 import "bootstrap/dist/css/bootstrap.min.css";
-// import ImageSlider from "./ImageSlider";
-import Container from "@material-ui/core/Container";
 import CssBaseline from "@material-ui/core/CssBaseline";
 import rotus from "../../misc/rotus.png";
-import BestCarousel from "./BestCarousel";
+import RoadmapCarousel from "./RoadmapCarousel";
 
 const MainPage = () => {
   return (
@@ -34,12 +32,9 @@ const MainPage = () => {
           </Carousel.Caption>
         </Carousel.Item>
       </Carousel>
-      <Container maxWidth="md">
-        <div className="DemoCarousel">
-          <h1>Hi! DemoCarousel!</h1>
-          <BestCarousel />
-        </div>
-      </Container>
+      <div className="RoadmapCarousel">
+        <RoadmapCarousel />
+      </div>
     </>
   );
 };
