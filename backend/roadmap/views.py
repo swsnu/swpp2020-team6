@@ -417,8 +417,10 @@ def best(request, top_n):
         if not request.user.is_authenticated:
             return HttpResponse(status=401)
 
-        total_roadmaps_count = Roadmap.objects.count()
-        sorted_roadmaps = Roadmap.objects.order_by("-like_count", "-pin_count")
+        sorted_roadmaps = Roadmap.objects.filter(private=False).order_by(
+            "-like_count", "-pin_count"
+        )
+        total_roadmaps_count = sorted_roadmaps.count()
         return_roadmaps_count = (
             top_n if top_n < total_roadmaps_count else total_roadmaps_count
         )
@@ -436,8 +438,8 @@ def new(request, top_n):
         if not request.user.is_authenticated:
             return HttpResponse(status=401)
 
-        total_roadmaps_count = Roadmap.objects.count()
-        sorted_roadmaps = Roadmap.objects.order_by("-date")
+        sorted_roadmaps = Roadmap.objects.filter(private=False).order_by("-date")
+        total_roadmaps_count = sorted_roadmaps.count()
         return_roadmaps_count = (
             top_n if top_n < total_roadmaps_count else total_roadmaps_count
         )
