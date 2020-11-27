@@ -16,6 +16,7 @@ import MyPage from "./containers/MyPage/MyPage";
 import "./App.css";
 import LogoButton from "./components/LogoButton/LogoButton";
 import UpperUserBar from "./containers/UpperBar/UpperUserBar";
+import UpperSearchBar from "./containers/UpperBar/UpperSearchBar";
 
 class App extends React.Component {
   componentDidMount() {
@@ -37,6 +38,7 @@ class App extends React.Component {
         <div className="App">
           <LogoButton />
           <UpperUserBar />
+          <UpperSearchBar />
           <Switch>
             <Route path="/home" exact component={Home} />
             <Route path="/signup" exact component={SignUp} />
