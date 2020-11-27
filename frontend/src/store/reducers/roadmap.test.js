@@ -3,8 +3,10 @@ import * as actionTypes from "../actions/actionTypes";
 
 const initialState = {
   selectedRoadmap: undefined,
-  bestRoadmaps: undefined,
-  newRoadmaps: undefined,
+  bestRoadmaps: [],
+  bestRoadmapsError: null,
+  newRoadmaps: [],
+  newRoadmapsError: null,
 };
 
 const stubSelectedRoadmap = {
@@ -153,7 +155,7 @@ const stubComment = {
   content: "it is great!",
 };
 
-describe("User Reducer", () => {
+describe("Roadmap Reducer", () => {
   it("should return default state", () => {
     const newState = reducer(undefined, {}); // initialize
     expect(newState).toEqual(initialState);
@@ -171,7 +173,7 @@ describe("User Reducer", () => {
       type: actionTypes.GET_ROADMAP_SUCCESS,
       roadmapData: stubSelectedRoadmap,
     });
-    expect(newState).toEqual({ selectedRoadmap: stubSelectedRoadmap });
+    expect(newState).toEqual({ ...initialState, selectedRoadmap: stubSelectedRoadmap });
   });
 
   it("should set selectedroadmap as undefined ", () => {

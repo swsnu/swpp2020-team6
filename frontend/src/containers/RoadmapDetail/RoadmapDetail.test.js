@@ -904,7 +904,7 @@ describe("<RoadmapDetail />", () => {
       </Provider>,
     );
 
-    const editButton = component.find("#edit-roadmap-button");
+    const editButton = component.find(".MuiButtonBase-root.MuiIconButton-root#edit-roadmap-button");
     expect(editButton.length).toBe(1);
     editButton.simulate("click");
     expect(spyPush).toHaveBeenCalledTimes(1);
@@ -927,7 +927,9 @@ describe("<RoadmapDetail />", () => {
       </Provider>,
     );
 
-    const deleteButton = component.find("#delete-roadmap-button");
+    const deleteButton = component.find(
+      ".MuiButtonBase-root.MuiIconButton-root#delete-roadmap-button",
+    );
     expect(deleteButton.length).toBe(1);
     deleteButton.simulate("click");
     expect(spyDeleteRoadmap).toHaveBeenCalledTimes(1);
@@ -950,7 +952,9 @@ describe("<RoadmapDetail />", () => {
       </Provider>,
     );
 
-    const duplicateButton = component.find("#duplicate-button");
+    const duplicateButton = component.find(
+      ".MuiButtonBase-root.MuiIconButton-root#duplicate-button",
+    );
     expect(duplicateButton.length).toBe(1);
     duplicateButton.simulate("click");
   });
@@ -1101,10 +1105,12 @@ describe("<RoadmapDetail />", () => {
     const progress = component.find(".roadmap-progress");
     expect(progress.length).toBe(0);
 
-    const editButton = component.find("#edit-roadmap-button");
+    const editButton = component.find(".MuiButtonBase-root.MuiIconButton-root#edit-roadmap-button");
     expect(editButton.length).toBe(0);
 
-    const deleteButton = component.find("#delete-roadmap-button");
+    const deleteButton = component.find(
+      ".MuiButtonBase-root.MuiIconButton-root#delete-roadmap-button",
+    );
     expect(deleteButton.length).toBe(0);
 
     const originalAuthor = component.find("#roadmap-original-author-name");
@@ -1158,9 +1164,8 @@ describe("<RoadmapDetail />", () => {
         </ConnectedRouter>
       </Provider>,
     );
-    const likeButton = component.find("#like-button");
+    const likeButton = component.find(".MuiButtonBase-root.MuiIconButton-root#like-button");
     expect(likeButton.length).toBe(1);
-    expect(likeButton.at(0).text()).toBe("Like");
     likeButton.simulate("click");
     expect(spyToggleRoadmapLike).toHaveBeenCalledTimes(1);
   });
@@ -1179,9 +1184,8 @@ describe("<RoadmapDetail />", () => {
         </ConnectedRouter>
       </Provider>,
     );
-    const likeButton = component.find("#like-button");
+    const likeButton = component.find(".MuiButtonBase-root.MuiIconButton-root#like-button");
     expect(likeButton.length).toBe(1);
-    expect(likeButton.at(0).text()).toBe("Unlike");
     likeButton.simulate("click");
     expect(spyToggleRoadmapLike).toHaveBeenCalledTimes(1);
   });
@@ -1201,9 +1205,8 @@ describe("<RoadmapDetail />", () => {
         </ConnectedRouter>
       </Provider>,
     );
-    const pinButton = component.find("#pin-button");
+    const pinButton = component.find(".MuiButtonBase-root.MuiIconButton-root#pin-button");
     expect(pinButton.length).toBe(1);
-    expect(pinButton.at(0).text()).toBe("Pin");
     pinButton.simulate("click");
     expect(spyToggleRoadmapPin).toHaveBeenCalledTimes(1);
   });
@@ -1222,9 +1225,8 @@ describe("<RoadmapDetail />", () => {
         </ConnectedRouter>
       </Provider>,
     );
-    const pinButton = component.find("#pin-button");
+    const pinButton = component.find(".MuiButtonBase-root.MuiIconButton-root#pin-button");
     expect(pinButton.length).toBe(1);
-    expect(pinButton.at(0).text()).toBe("Unpin");
     pinButton.simulate("click");
     expect(spyToggleRoadmapPin).toHaveBeenCalledTimes(1);
   });
@@ -1245,7 +1247,9 @@ describe("<RoadmapDetail />", () => {
       </Provider>,
     );
 
-    const duplicateButton = component.find("#duplicate-button");
+    const duplicateButton = component.find(
+      ".MuiButtonBase-root.MuiIconButton-root#duplicate-button",
+    );
     expect(duplicateButton.length).toBe(1);
     duplicateButton.simulate("click");
     // need to mock onChangeRoadmapProgressStatus

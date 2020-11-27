@@ -213,6 +213,10 @@ const stubInitialUserState = {
 
 const stubInitialRoadmapState = {
   selectedRoadmap: undefined,
+  bestRoadmaps: [],
+  bestRoadmapsError: null,
+  newRoadmaps: [],
+  newRoadmapsError: null,
 };
 
 const mockedStore = getMockStore(stubInitialUserState, stubInitialRoadmapState);
@@ -1542,6 +1546,74 @@ describe("ActionCreators", () => {
     mockedStore.dispatch(roadmapActionCreators.changeCheckbox(4)).then(() => {
       expect(spy).toHaveBeenCalledTimes(1);
       expect(spyAlert).toHaveBeenCalledTimes(0);
+      done();
+    });
+  });
+
+  /* ---------------------- Get Best Roadmap ---------------------- */
+  it(`'getBestRoadmaps' should fetch top_n liked roadmaps correctly`, (done) => {
+    const spy = jest.spyOn(axios, "get").mockImplementation((url) => {
+      return new Promise((resolve, reject) => {
+        const result = {
+          status: 200,
+          data: [stubRoadmapSimpleData, stubRoadmapSimpleData2],
+        };
+        resolve(result);
+      });
+    });
+
+    mockedStore.dispatch(roadmapActionCreators.getBestRoadmaps(2)).then(() => {
+      expect(spy).toHaveBeenCalledTimes(1);
+      done();
+    });
+  });
+
+  it(`error from 'getBestRoadmaps' during axios.get should be catched`, (done) => {
+    const spy = jest.spyOn(axios, "get").mockImplementation((url, roadmapData) => {
+      return new Promise((resolve, reject) => {
+        const result = {
+          response: { status: 401 },
+        };
+        reject(result);
+      });
+    });
+
+    mockedStore.dispatch(roadmapActionCreators.getBestRoadmaps(2)).then(() => {
+      expect(spy).toHaveBeenCalledTimes(1);
+      done();
+    });
+  });
+
+  /* ---------------------- Get New Roadmap ---------------------- */
+  it(`'getNewRoadmaps' should fetch top_n new roadmaps correctly`, (done) => {
+    const spy = jest.spyOn(axios, "get").mockImplementation((url) => {
+      return new Promise((resolve, reject) => {
+        const result = {
+          status: 200,
+          data: [stubRoadmapSimpleData, stubRoadmapSimpleData2],
+        };
+        resolve(result);
+      });
+    });
+
+    mockedStore.dispatch(roadmapActionCreators.getNewRoadmaps(2)).then(() => {
+      expect(spy).toHaveBeenCalledTimes(1);
+      done();
+    });
+  });
+
+  it(`error from 'getNewRoadmaps' during axios.get should be catched`, (done) => {
+    const spy = jest.spyOn(axios, "get").mockImplementation((url, roadmapData) => {
+      return new Promise((resolve, reject) => {
+        const result = {
+          response: { status: 401 },
+        };
+        reject(result);
+      });
+    });
+
+    mockedStore.dispatch(roadmapActionCreators.getNewRoadmaps(2)).then(() => {
+      expect(spy).toHaveBeenCalledTimes(1);
       done();
     });
   });
