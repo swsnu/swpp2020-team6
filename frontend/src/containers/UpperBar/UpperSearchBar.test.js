@@ -19,7 +19,9 @@ describe("UpperSearchBar", () => {
 
   beforeEach(() => {
     spyPush = jest.spyOn(history, "push").mockImplementation(() => {});
-    spySearch = jest.spyOn(searchActionCreators, "getSimpleSearch").mockImplementation(() => {});
+    spySearch = jest.spyOn(searchActionCreators, "getSimpleSearch").mockImplementation(() => {
+      return () => {};
+    });
     upperSearchBar = (
       <Provider store={mockStore}>
         <ConnectedRouter history={history}>
@@ -55,6 +57,5 @@ describe("UpperSearchBar", () => {
     inputWrapper.simulate("change", { target: { value: "swpp" } });
     buttonWrapper.simulate("click");
     expect(spySearch).toHaveBeenCalledTimes(1);
-    expect(spyPush).toHaveBeenCalledTimes(1);
   });
 });
