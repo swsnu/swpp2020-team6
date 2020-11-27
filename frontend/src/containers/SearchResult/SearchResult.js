@@ -1,6 +1,5 @@
 /* Search Result page.
  * All search actions redirects to this page.
- * On this page, the user can try "advanced search".
  */
 
 import React, { Component } from "react";
@@ -90,16 +89,16 @@ class SearchResult extends Component {
   calcLevelData = (basic, intermediate, advanced) => {
     let levelData = [];
     if (basic) {
-      levelData = levelData.concat(1);
+      levelData = levelData.concat("1");
     }
     if (intermediate) {
-      levelData = levelData.concat(2);
+      levelData = levelData.concat("2");
     }
     if (advanced) {
-      levelData = levelData.concat(3);
+      levelData = levelData.concat("3");
     }
     if (!basic && !intermediate && !advanced) {
-      levelData = [1, 2, 3];
+      levelData = ["1", "2", "3"];
     }
     return levelData;
   };
@@ -113,7 +112,6 @@ class SearchResult extends Component {
       intermediateChecked,
       advancedChecked,
       sortBy,
-      page,
     } = this.state;
 
     this.setState({ page: pageNumber });
@@ -123,9 +121,11 @@ class SearchResult extends Component {
       tags,
       levels: this.calcLevelData(basicChecked, intermediateChecked, advancedChecked),
       sort: sortBy,
-      page,
+      page: pageNumber,
       perpage: 9,
     });
+
+    this.setState({ page: pageNumber });
   };
 
   render() {
@@ -144,6 +144,11 @@ class SearchResult extends Component {
     const { searchResult, topTags, totalCount } = this.props;
 
     const searchResultList = searchResult.map((simpleObject) => {
+      const simpleTags = [];
+      if (simpleObject.tags !== undefined) {
+        // eslint-disable-next-line dot-notation
+        simpleObject.tags.map((item) => simpleTags.push(item["tag_name"]));
+      }
       return (
         <RoadmapSimple
           roadmapID={simpleObject.id}
@@ -157,7 +162,7 @@ class SearchResult extends Component {
           authorID={simpleObject.author_id}
           authorName={simpleObject.author_name}
           authorPictureUrl={simpleObject.author_picture_url}
-          tags={simpleObject.tags}
+          tags={simpleTags}
           onClickTitleHandler={this.onClickTitle}
         />
       );
@@ -184,10 +189,10 @@ class SearchResult extends Component {
           <button
             className="add-top-tag-button"
             type="button"
-            key={tag.tag_content}
-            onClick={() => this.onClickAddFromTopTag(tag.tag_content)}
+            key={tag}
+            onClick={() => this.onClickAddFromTopTag(tag)}
           >
-            {tag.tag_content}
+            {tag}
           </button>
         </div>
       );

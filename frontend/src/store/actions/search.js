@@ -12,6 +12,7 @@ export const getSimpleSearchSuccess_ = (data) => {
   return {
     type: actionTypes.GET_SIMPLE_SEARCH_SUCCESS,
     searchResult: data.roadmaps,
+    page: data.page,
     totalCount: data.total_count,
   };
 };
@@ -50,6 +51,7 @@ export const getAdvancedSearchSuccess_ = (data) => {
   return {
     type: actionTypes.GET_ADVANCED_SEARCH_SUCCESS,
     searchResult: data.roadmaps,
+    page: data.page,
     totalCount: data.total_count,
   };
 };
