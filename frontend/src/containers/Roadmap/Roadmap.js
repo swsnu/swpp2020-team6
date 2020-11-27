@@ -29,7 +29,7 @@ class Roadmap extends Component {
       title: selectedRoadmap.title,
       level: parseInt(selectedRoadmap.level, 10),
       description: selectedRoadmap.description,
-      sections: selectedRoadmap.sections,
+      sections: { ...selectedRoadmap.sections, collapse: false },
       tags: selectedRoadmap.tags.map((tag) => {
         return tag.tag_name;
       }),
@@ -122,6 +122,18 @@ class Roadmap extends Component {
       sections: sections.map((section, index) => {
         if (index === tmpSectionId) {
           section.section_title = title;
+        }
+        return section;
+      }),
+    });
+  };
+
+  onClickSectionCollapse = (tmpSectionId) => {
+    const { sections } = this.state;
+    this.setState({
+      sections: sections.map((section, index) => {
+        if (index === tmpSectionId) {
+          section.collapse = !section.collapse;
         }
         return section;
       }),
@@ -364,6 +376,7 @@ class Roadmap extends Component {
           sectionLastId={sections.length - 1}
           title={section.section_title}
           tasks={section.tasks}
+          collapse={section.collapse}
           clickDeleteSectionHandler={this.onClickDeleteSection}
           clickUpSectionHandler={this.onClickUpSection}
           clickDownSectionHandler={this.onClickDownSection}
@@ -376,6 +389,7 @@ class Roadmap extends Component {
           changeTaskTypeHandler={this.onChangeTaskType}
           changeTaskUrlHandler={this.onChangeTaskUrl}
           changeTaskDescriptionHandler={this.onChangeTaskDescription}
+          clickSectionCollapse={this.onClickSectionCollapse}
         />
       );
     });
@@ -425,7 +439,7 @@ class Roadmap extends Component {
                     onChange={(event) => this.onChangeNewTag(event.target.value)}
                   />
                   <button id="add-tag-button" type="button" onClick={() => this.onClickAddTag()}>
-                    add
+                    +
                   </button>
                 </div>
                 <div className="tags">{taglist}</div>

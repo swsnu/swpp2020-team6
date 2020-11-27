@@ -1,18 +1,20 @@
 @import "../../css/roadmap.scss";
 
 $padding-main: 40px;
-$margin-bottom-main: 10px;
+$margin-bottom-main: 15px;
 
 .CreateTask {
   position: relative;
   display: flex;
   flex-direction: column;
   align-items: flex-end;
-  width: 100%;
+  width: 110%;
   padding: 40px;
   margin-bottom: $margin-bottom-main;
   border: $create-task-border-style;
   border-radius: $create-task-border-radius;
+  background-color: $create-task-background-color;
+  box-shadow: $create-task-box-shadow;
 
   input {
     width: 100%;
@@ -36,6 +38,10 @@ $margin-bottom-main: 10px;
     padding: $create-buttons-padding;
     margin-top: $create-buttons-margin-top;
     font-size: $create-buttons-font-size;
+  }
+
+  button:disabled {
+    opacity: $create-buttons-disabled-opacity;
   }
 
   .task-type-title-buttons {
@@ -72,10 +78,6 @@ $margin-bottom-main: 10px;
       width: $create-updown-width;
       height: $create-updown-height;
       min-width: $create-updown-min-width;
-    }
-    .up-task-button:disabled,
-    .down-task-button:disabled {
-      opacity: $create-updown-disabled-opacity;
     }
   }
 

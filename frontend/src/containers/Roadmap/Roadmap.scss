@@ -5,14 +5,16 @@ $margin-bottom-main: 10px;
 
 .Roadmap {
   width: 100%;
+  height: 100%;
   min-width: $create-roadmap-min-width;
-  margin-bottom: 200px;
+  padding-bottom: 200px;
   display: flex;
   flex-direction: row;
   justify-content: space-between;
   justify-items: center;
   align-content: center;
   align-items: flex-end;
+  background-color: $create-roadmap-main-background-color;
 
   input {
     color: $roadmap-input-text-color;
@@ -35,6 +37,11 @@ $margin-bottom-main: 10px;
     padding: $create-buttons-padding;
     margin-top: $create-buttons-margin-top;
     font-size: $create-buttons-font-size;
+    font-weight: $create-buttons-font-weight;
+  }
+
+  button:disabled {
+    opacity: $create-buttons-disabled-opacity;
   }
 
   .main {
@@ -57,7 +64,7 @@ $margin-bottom-main: 10px;
       margin-bottom: 20px;
       border: $create-roadmap-border-style;
       border-radius: $create-roadmap-border-radius;
-      background-color: $paper-color;
+      background-color: $create-roadmap-background-color;
 
       .title-private {
         display: flex;
@@ -113,7 +120,7 @@ $margin-bottom-main: 10px;
               border-radius: 4px;
             }
             #add-tag-button {
-              width: 40px;
+              width: 28px;
               height: 28px;
               padding: 0px;
               margin: 0px 0px 0px 10px;
@@ -171,6 +178,8 @@ $margin-bottom-main: 10px;
     }
 
     #create-section-button {
+      background-color: $create-buttons2-background-color;
+      color: $create-buttons2-color;
     }
   }
 
@@ -178,9 +187,7 @@ $margin-bottom-main: 10px;
     order: 0;
     position: sticky;
     bottom: 30px;
-    width: $create-confirm-button-width;
-    height: $create-confirm-button-heigth;
-    font-size: $create-confirm-button-font-size;
+    padding: $create-confirm-button-padding;
     margin: 3%;
     background-color: $create-back-delete-button-background-color;
   }
@@ -189,9 +196,9 @@ $margin-bottom-main: 10px;
     order: 2;
     position: sticky;
     bottom: 30px;
-    width: $create-confirm-button-width;
-    height: $create-confirm-button-heigth;
-    font-size: $create-confirm-button-font-size;
+    padding: $create-confirm-button-padding;
     margin: 3%;
+    background-color: $create-buttons2-background-color;
+    color: $create-buttons2-color;
   }
 }

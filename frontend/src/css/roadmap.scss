@@ -2,37 +2,45 @@
 
 /* ------------------ edit/create roadmap variables ------------------ */
 $create-roadmap-min-width: 850px;
+$create-roadmap-main-background-color: $main3-green-light-color;
 
 $create-roadmap-body-min-width: 450px;
 $create-roadmap-body-max-width: 800px;
 
 $create-roadmap-body-width: 50%;
 
-$create-roadmap-border-style: 8px solid $main-dark-color;
-$create-roadmap-border-radius: 10px;
+$create-roadmap-border-style: 0px solid $main3-green-color;
+$create-roadmap-border-radius: 3px;
+$create-roadmap-background-color: $paper-color;
 
-$create-section-border-style: 8px solid $main-light-color;
+$create-section-border-style: 0px solid $main3-green-color;
 $create-section-border-radius: $create-roadmap-border-radius;
+$create-section-background-color: $paper-color;
 
-$create-task-border-style: 8px solid $main-light2-color;
+$create-task-border-style: 0px solid $grey-light-color;
 $create-task-border-radius: $create-roadmap-border-radius;
+$create-task-background-color: $paper-color;
+$create-task-box-shadow: 4px 0px 7px $grey-dark-color;
 
-$create-buttons-background-color: $main-light-color;
+$create-buttons-background-color: $main3-green-color;
 $create-buttons-color: #ffffff;
 $create-buttons-border-style: none;
 $create-buttons-border-radius: 5px;
-$create-buttons-padding: 10px;
+$create-buttons-padding: 15px;
 $create-buttons-margin-top: 40px;
-$create-buttons-font-size: 100%;
+$create-buttons-font-size: 17px;
+$create-buttons-font-weight: 900;
+$create-buttons-disabled-opacity: 0.5;
 
-$create-confirm-button-width: 100px;
-$create-confirm-button-heigth: 60px;
-$create-confirm-button-font-size: 100%;
+$create-buttons2-background-color: #ffffff;
+$create-buttons2-color: $main3-green-color;
+
+$create-confirm-button-padding: 20px;
 
 $create-back-delete-button-background-color: $grey-dark-color;
 
 $create-updown-background-color: #ffffff;
-$create-updown-color: $main-light-color;
+$create-updown-color: $main3-green-color;
 $create-updown-font-size: 100%;
 $create-updown-border-style: ridge $grey-light-color;
 $create-updown-border-radius: 4px;
@@ -42,7 +50,6 @@ $create-updown-margin: 0px 0px 0px 5px;
 $create-updown-width: 35px;
 $create-updown-height: 35px;
 $create-updown-min-width: 35px;
-$create-updown-disabled-opacity: 0.5;
 
 $create-tag-background-color: $grey-medium-color;
 $create-tag-border-style: none;
