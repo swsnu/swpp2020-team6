@@ -10,7 +10,7 @@ class UpperSearchBar extends Component {
 
   onClickSearch = (searchData) => {
     const { onGetSimpleSearch } = this.props;
-    onGetSimpleSearch({ title: searchData });
+    onGetSimpleSearch(searchData);
   };
 
   render() {
@@ -37,7 +37,7 @@ class UpperSearchBar extends Component {
 }
 
 UpperSearchBar.propTypes = {
-  onGetSimpleSearch: PropTypes.func,
+  onGetSimpleSearch: PropTypes.func.isRequired,
 };
 const mapDispatchToProps = (dispatch) => {
   return {
