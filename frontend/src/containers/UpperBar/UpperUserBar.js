@@ -20,8 +20,12 @@ class UpperUserBar extends Component {
   };
 
   onClickMyPage = () => {
-    const { history, selectedUserId } = this.props;
-    history.push(`/mypage/${selectedUserId}`);
+    const { history, selectedUser } = this.props;
+    if (selectedUser !== undefined) {
+      history.push(`/mypage/${selectedUser.id}`);
+    } else {
+      alert("Please sign in!");
+    }
   };
 
   render() {
@@ -50,12 +54,12 @@ class UpperUserBar extends Component {
 
 UpperUserBar.propTypes = {
   history: PropTypes.objectOf(PropTypes.any),
-  selectedUserId: PropTypes.number,
+  selectedUser: PropTypes.objectOf(PropTypes.any),
 };
 
 const mapStateToProps = (state) => {
   return {
-    selectedUserId: state.user.selectedUser.user_id,
+    selectedUser: state.user.selectedUser,
   };
 };
 export default connect(mapStateToProps, null)(withRouter(UpperUserBar));
