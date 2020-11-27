@@ -66,9 +66,8 @@ const useLevelChipStyles = makeStyles((theme) => ({
   },
 }));
 
-const RecipeReviewCard = (props) => {
+const SimpleRoadmap = (props) => {
   const {
-    roadmapId,
     roadmapTitle,
     roadmapImageId,
     roadmapLevel,
@@ -80,7 +79,7 @@ const RecipeReviewCard = (props) => {
     isMyPage,
     tagList,
     date,
-    history,
+    onClick,
   } = props;
 
   const classes = useStyles();
@@ -89,7 +88,7 @@ const RecipeReviewCard = (props) => {
 
   const tagDisplay = tagList.map((tag, tagIndex) => {
     if (tagIndex < 3) {
-      return <Chip label={tag.tag_name} />;
+      return <Chip className="tag-chip" key={tag.tag_id} label={tag.tag_name} />;
     }
     return null;
   });
@@ -130,7 +129,7 @@ const RecipeReviewCard = (props) => {
   }
 
   return (
-    <Card className={classes.root} onClick={() => history.push(`/roadmap/${roadmapId}`)}>
+    <Card className={classes.root} onClick={onClick}>
       <div className="card-wrapper">
         <div className="image-wrapper">
           <CardMedia className={classes.media} image={roadmapImageSrc} title={roadmapTitle} />
@@ -167,8 +166,8 @@ const RecipeReviewCard = (props) => {
   );
 };
 
-RecipeReviewCard.propTypes = {
-  roadmapId: PropTypes.number.isRequired,
+SimpleRoadmap.propTypes = {
+  onClick: PropTypes.func.isRequired,
   roadmapTitle: PropTypes.string.isRequired,
   roadmapDescription: PropTypes.string.isRequired,
   roadmapLevel: PropTypes.number.isRequired,
@@ -178,9 +177,8 @@ RecipeReviewCard.propTypes = {
   pinCount: PropTypes.number.isRequired,
   commentCount: PropTypes.number.isRequired,
   tagList: PropTypes.arrayOf(PropTypes.any).isRequired,
-  history: PropTypes.objectOf(PropTypes.any),
   isMyPage: PropTypes.bool.isRequired,
   roadmapImageId: PropTypes.string,
 };
 
-export default withRouter(RecipeReviewCard);
+export default SimpleRoadmap;

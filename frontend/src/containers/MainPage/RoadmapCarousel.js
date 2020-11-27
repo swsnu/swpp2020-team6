@@ -2,9 +2,11 @@
 import React, { useState, useEffect } from "react";
 import ItemsCarousel from "react-items-carousel";
 import PropTypes from "prop-types";
+import { withRouter } from "react-router";
 import { connect } from "react-redux";
 import * as actionCreators from "../../store/actions/index";
-import RecipeReviewCard from "../../components/SimpleRoadmap/SimpleRoadmap";
+import { history } from "../../store/store";
+import SimpleRoadmap from "../../components/SimpleRoadmap/SimpleRoadmap";
 import "./RoadmapCarousel.scss";
 
 const RoadmapCarousel = (props) => {
@@ -41,7 +43,9 @@ const RoadmapCarousel = (props) => {
             chevronWidth={chevronWidth}
           >
             {bestRoadmaps.map((roadmap) => (
-              <RecipeReviewCard
+              <SimpleRoadmap
+                key={roadmap.id}
+                onClick={() => history.push(`/roadmap/${roadmap.id}`)}
                 roadmapDescription={roadmap.description}
                 roadmapId={roadmap.id}
                 roadmapTitle={roadmap.title}
@@ -73,8 +77,10 @@ const RoadmapCarousel = (props) => {
             chevronWidth={chevronWidth}
           >
             {newRoadmaps.map((roadmap) => (
-              <RecipeReviewCard
-                authorId={roadmap.author_id}
+              <SimpleRoadmap
+                key={roadmap.id}
+                onClick={() => history.push(`/roadmap/${roadmap.id}`)}
+                roadmapDescription={roadmap.description}
                 roadmapId={roadmap.id}
                 roadmapTitle={roadmap.title}
                 roadmapLevel={roadmap.level}
@@ -83,7 +89,6 @@ const RoadmapCarousel = (props) => {
                 likeCount={roadmap.like_count}
                 pinCount={roadmap.pin_count}
                 commentCount={roadmap.comment_count}
-                authorPictureUrl={roadmap.author_user_picture_url}
                 tagList={roadmap.tags}
                 isMyPage={false}
                 roadmapImageId="1"
@@ -118,4 +123,4 @@ const mapDispatchToProps = (dispatch) => {
   };
 };
 
-export default connect(mapStateToProps, mapDispatchToProps)(RoadmapCarousel);
+export default connect(mapStateToProps, mapDispatchToProps)(withRouter(RoadmapCarousel));
