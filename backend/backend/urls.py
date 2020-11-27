@@ -22,4 +22,5 @@ urlpatterns = [
     path("api/roadmap/", include("roadmap.urls")),
     path("api/task/", include("task.urls")),
     path("api/comment/", include("comment.urls")),
+    path("api/tag/", include("tag.urls")),
 ]

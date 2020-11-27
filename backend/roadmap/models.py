@@ -138,3 +138,7 @@ class Roadmap(models.Model):
 
     def decrement_pin_count(self):
         self.pin_count -= 1
+
+    def clear_section_progress(self):
+        for section in self.section_roadmap.all():
+            section.clear_task_progress()

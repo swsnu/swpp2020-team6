@@ -11,7 +11,11 @@ import SignUp from "./containers/SignUp/SignUp";
 import SignIn from "./containers/SignIn/SignIn";
 import Home from "./containers/Home/Home";
 import RoadmapDetail from "./containers/RoadmapDetail/RoadmapDetail";
+<<<<<<< HEAD
 import SearchResult from "./containers/SearchResult/SearchResult";
+=======
+import MyPage from "./containers/MyPage/MyPage";
+>>>>>>> 355f25fe5ac3feb5edd03933b5f613d09311798f
 
 import "./App.css";
 
@@ -22,7 +26,7 @@ class App extends React.Component {
   }
 
   render() {
-    const { isSignedIn, history, selectedUser } = this.props;
+    const { isSignedIn, history } = this.props;
     if (isSignedIn === undefined) {
       return (
         <div className="App">
@@ -37,30 +41,11 @@ class App extends React.Component {
             <Route path="/home" exact component={Home} />
             <Route path="/signup" exact component={SignUp} />
             <Route path="/signin" exact component={SignIn} />
-            <Route
-              path="/roadmap/create"
-              exact
-              render={() => {
-                return (
-                  <div>
-                    <CreateRoadmap selectedUser={selectedUser} />
-                  </div>
-                );
-              }}
-            />
-            <Route
-              path="/roadmap/:id/edit"
-              exact
-              render={() => {
-                return (
-                  <div>
-                    <EditRoadmap selectedUser={selectedUser} />
-                  </div>
-                );
-              }}
-            />
+            <Route path="/roadmap/create" exact component={CreateRoadmap} />
+            <Route path="/roadmap/:id/edit" exact component={EditRoadmap} />
             <Route path="/roadmap/:id" exact component={RoadmapDetail} />
             <Route path="/search" exact component={SearchResult} />
+            <Route path="/mypage/:id" exact component={MyPage} />
             <Redirect exact from="/" to="/home" />
             <Route render={() => <h1>Not Found</h1>} />
           </Switch>
@@ -72,7 +57,6 @@ class App extends React.Component {
 
 App.propTypes = {
   isSignedIn: PropTypes.bool,
-  selectedUser: PropTypes.objectOf(PropTypes.any),
   onGetUserAuth: PropTypes.func.isRequired,
   history: PropTypes.objectOf(PropTypes.any),
 };

@@ -31,16 +31,14 @@ class RoadmapDetail extends Component {
     onGetRoadmap(parseInt(match.params.id, 10));
   }
 
-  backToList = () => {
-    const { onResetRoadmap, history } = this.props;
+  componentWillUnmount() {
+    const { onResetRoadmap } = this.props;
     onResetRoadmap();
-    history.goBack();
-  };
+  }
 
   /* ---------------- Roadmap Progress -------------------- */
-  onChangeRoadmapProgressStatus = () => {
-    // Progress tracking isn't implemented yet.
-    /*
+  onChangeRoadmapProgressStatus = (type) => {
+    const { changeRoadmapProgress, match } = this.props;
     let newState;
     switch (type) {
       case "start":
@@ -59,7 +57,6 @@ class RoadmapDetail extends Component {
         break;
     }
     changeRoadmapProgress(newState, parseInt(match.params.id, 10));
-    */
   };
 
   /* ---------------- comment handlers -------------------- */
@@ -95,7 +92,8 @@ class RoadmapDetail extends Component {
 
   handleClose = () => {
     this.setState({ open: false });
-    this.backToList();
+    const { history } = this.props;
+    history.goBack();
   };
 
   render() {
@@ -240,7 +238,7 @@ class RoadmapDetail extends Component {
           <div className="leftcolumn">
             <ProgressBar
               isAuthor={selectedUser.user_id === selectedRoadmap.author_id}
-              onChangeRoadmapProgressStatus={() => this.onChangeRoadmapProgressStatus()}
+              onChangeRoadmapProgressStatus={this.onChangeRoadmapProgressStatus}
               currentProgressStatus={selectedRoadmap.progress}
             />
             <h1 className="roadmap-title">{title}</h1>
@@ -293,9 +291,6 @@ class RoadmapDetail extends Component {
               {commentConfirmButton}
             </div>
             <div className="roadmap-comments">{roadmapComments}</div>
-            <button id="back-button" type="button" onClick={() => this.backToList()}>
-              Back
-            </button>
           </div>
         </div>
       </div>
@@ -317,6 +312,8 @@ RoadmapDetail.propTypes = {
   onCreateComment: PropTypes.func.isRequired,
   onEditComment: PropTypes.func.isRequired,
   onDeleteComment: PropTypes.func.isRequired,
+
+  changeRoadmapProgress: PropTypes.func.isRequired,
 };
 
 const mapDispatchToProps = (dispatch) => {
@@ -325,9 +322,11 @@ const mapDispatchToProps = (dispatch) => {
     onResetRoadmap: () => dispatch(actionCreators.resetRoadmap_()),
     onCreateComment: (roadmapId, comment) =>
       dispatch(actionCreators.createComment({ roadmap_id: roadmapId, content: comment })),
-    onEditComment: (commentID, roadmapID, comment) =>
-      dispatch(actionCreators.editComment(commentID, { roadmap_id: roadmapID, content: comment })),
+    onEditComment: (commentId, roadmapId, comment) =>
+      dispatch(actionCreators.editComment(commentId, { roadmap_id: roadmapId, content: comment })),
     onDeleteComment: (id) => dispatch(actionCreators.deleteComment(id)),
+    changeRoadmapProgress: (newState, roadmapId) =>
+      dispatch(actionCreators.changeProgress({ progress_state: newState }, roadmapId)),
   };
 };
 

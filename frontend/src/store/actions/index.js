@@ -1,4 +1,4 @@
-export { getUserAuth, signIn, signUp, signOut } from "./user";
+export { getUserAuth, signIn, signUp, signOut, getMyPageUser, resetMyPageUser_ } from "./user";
 
 export {
   getRoadmap,
@@ -12,6 +12,8 @@ export {
   deleteComment,
   toggleRoadmapLike,
   toggleRoadmapPin,
+  changeProgress,
+  changeCheckbox,
 } from "./roadmap";
 
 export { getSimpleSearch, getAdvancedSearch, getTopTags } from "./search";

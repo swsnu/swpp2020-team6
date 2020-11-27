@@ -9,6 +9,7 @@ const Section = (props) => {
   const taskList = tasks.map((task) => {
     return (
       <Task
+        taskId={task.task_id}
         isAuthor={isAuthor}
         progressStatus={progressStatus}
         title={task.task_title}
