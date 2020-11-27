@@ -438,52 +438,52 @@ export const changeCheckbox = (taskId) => {
   };
 };
 
-export const getBestRoadmapSuccess_ = (roadmapData) => {
+export const getBestRoadmapsSuccess_ = (roadmapData) => {
   return { type: actionTypes.GET_BEST_ROADMAP_SUCCESS, roadmaps: roadmapData.roadmaps };
 };
 
-export const getBestRoadmapFail_ = (errorStatus) => {
+export const getBestRoadmapsFail_ = (errorStatus) => {
   return { type: actionTypes.GET_BEST_ROADMAP_FAILURE, errorStatus };
 };
 
-export const resetBestRoadmap_ = () => {
+export const resetBestRoadmaps_ = () => {
   return { type: actionTypes.RESET_BEST_ROADMAP };
 };
 
-export const getBestRoadmap = (topN) => {
+export const getBestRoadmaps = (topN) => {
   return (dispatch) => {
     return axios
       .get(`/api/roadmap/best/${topN}/`)
       .then((response) => {
-        dispatch(getBestRoadmapSuccess_(response.data));
+        dispatch(getBestRoadmapsSuccess_(response.data));
       })
       .catch((error) => {
-        dispatch(getBestRoadmapFail_(error.response.status));
+        dispatch(getBestRoadmapsFail_(error.response.status));
       });
   };
 };
 
-export const getNewRoadmapSuccess_ = (roadmapData) => {
+export const getNewRoadmapsSuccess_ = (roadmapData) => {
   return { type: actionTypes.GET_NEW_ROADMAP_SUCCESS, roadmaps: roadmapData.roadmaps };
 };
 
-export const getNewRoadmapFail_ = (errorStatus) => {
+export const getNewRoadmapsFail_ = (errorStatus) => {
   return { type: actionTypes.GET_NEW_ROADMAP_FAILURE, errorStatus };
 };
 
-export const resetNewRoadmap_ = () => {
+export const resetNewRoadmaps_ = () => {
   return { type: actionTypes.RESET_NEW_ROADMAP };
 };
 
-export const getNewRoadmap = (topN) => {
+export const getNewRoadmaps = (topN) => {
   return (dispatch) => {
     return axios
       .get(`/api/roadmap/new/${topN}/`)
       .then((response) => {
-        dispatch(getNewRoadmapSuccess_(response.data));
+        dispatch(getNewRoadmapsSuccess_(response.data));
       })
       .catch((error) => {
-        dispatch(getNewRoadmapFail_(error.response.status));
+        dispatch(getNewRoadmapsFail_(error.response.status));
       });
   };
 };

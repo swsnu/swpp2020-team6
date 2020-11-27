@@ -14,8 +14,8 @@ export {
   toggleRoadmapPin,
   changeProgress,
   changeCheckbox,
-  resetBestRoadmap_,
-  getBestRoadmap,
-  resetNewRoadmap_,
-  getNewRoadmap,
+  resetBestRoadmaps_,
+  getBestRoadmaps,
+  resetNewRoadmaps_,
+  getNewRoadmaps,
 } from "./roadmap";
