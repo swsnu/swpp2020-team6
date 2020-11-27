@@ -24,7 +24,7 @@ class UpperUserBar extends Component {
     if (selectedUser !== undefined) {
       history.push(`/mypage/${selectedUser.id}`);
     } else {
-      alert("Please sign in!");
+      window.alert("Please sign in!");
     }
   };
 
