@@ -244,7 +244,7 @@ class SearchResult extends Component {
 
         <br />
 
-        <div clasName="topTags">
+        <div className="topTags">
           <label>Top Tags</label>
           {topTagList}
         </div>

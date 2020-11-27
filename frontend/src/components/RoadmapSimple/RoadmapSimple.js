@@ -33,7 +33,7 @@ const RoadmapSimple = (props) => {
       <div className="likeCount">{likeCount}</div>
       <div className="pinCount">{pinCount}</div>
       <div className="commentCount">{commentCount}</div>
-      <div clasName="tags">{tags}</div>
+      <div className="tags">{tags}</div>
     </div>
   );
 };
