@@ -13,12 +13,10 @@ const stubRoadmapState = { selectedRoadmap: undefined };
 const mockStore = getMockStore(stubUserState, stubRoadmapState);
 
 describe("UpperSearchBar", () => {
-  let spyPush;
   let spySearch;
   let upperSearchBar;
 
   beforeEach(() => {
-    spyPush = jest.spyOn(history, "push").mockImplementation(() => {});
     spySearch = jest.spyOn(searchActionCreators, "getSimpleSearch").mockImplementation(() => {
       return () => {};
     });
