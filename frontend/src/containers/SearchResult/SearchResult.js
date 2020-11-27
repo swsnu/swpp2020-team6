@@ -37,6 +37,7 @@ class SearchResult extends Component {
   onClickAdvancedSearch = (searchData) => {
     const { onGetAdvancedSearch } = this.props;
     onGetAdvancedSearch(searchData);
+    this.setState({ page: 1 });
   };
 
   onClickBasic = (event) => {
@@ -283,7 +284,7 @@ class SearchResult extends Component {
                   tags,
                   levels: this.calcLevelData(basicChecked, intermediateChecked, advancedChecked),
                   sort: sortBy,
-                  page,
+                  page: 1,
                   perpage: 9,
                 })
               // eslint-disable-next-line react/jsx-curly-newline

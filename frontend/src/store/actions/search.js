@@ -2,6 +2,7 @@
  * Send request to the backend using the desired API, then receive response.
  */
 import axios from "axios";
+import qs from "qs";
 import * as actionTypes from "./actionTypes";
 
 export const getSimpleSearchFailure_ = () => {
@@ -59,8 +60,14 @@ export const getAdvancedSearchSuccess_ = (data) => {
 export const getAdvancedSearch = (searchData) => {
   return (dispatch) => {
     return axios
-      .get("/api/roadmap/search/", { params: searchData })
+      .get("/api/roadmap/search/", {
+        params: searchData,
+        paramsSerializer: (params) => {
+          return qs.stringify(params, { indices: false });
+        },
+      })
       .then((res) => {
+        // console.log(searchData);
         dispatch(getAdvancedSearchSuccess_(res.data));
       })
       .catch((error) => {
