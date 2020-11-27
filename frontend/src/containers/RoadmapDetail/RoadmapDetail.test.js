@@ -592,40 +592,65 @@ const stubOtherPrivateRoadmapState = {
   },
 };
 
-const mockUnauthorizedUserStore = getMockStore(stubUnauthorizedUserState, stubInitialRoadmapState);
+const stubInitialSearchState = {
+  searchResult: [],
+  topTags: [],
+  page: 1,
+  totalCount: 1,
+};
 
-const mockAuthorizedUserInitStore = getMockStore(stubAuthorizedUserState, stubInitialRoadmapState);
+const mockUnauthorizedUserStore = getMockStore(
+  stubUnauthorizedUserState,
+  stubInitialRoadmapState,
+  stubInitialSearchState,
+);
+
+const mockAuthorizedUserInitStore = getMockStore(
+  stubAuthorizedUserState,
+  stubInitialRoadmapState,
+  stubInitialSearchState,
+);
 
 const mockAuthorizedUserMyRoadmapBeforeStudyingStore = getMockStore(
   stubAuthorizedUserState,
   stubMyRoadmapBeforeStudyingState,
+  stubInitialSearchState,
 );
 
 const mockAuthorizedUserMyRoadmapInProgressStore = getMockStore(
   stubAuthorizedUserState,
   stubMyRoadmapInProgressState,
+  stubInitialSearchState,
 );
 
 const mockAuthorizedUserMyRoadmapFinishedStore = getMockStore(
   stubAuthorizedUserState,
   stubMyRoadmapFinishedState,
+  stubInitialSearchState,
 );
 
-const mockAuthorizedUserBuggyStore = getMockStore(stubAuthorizedUserState, stubBuggyState);
+const mockAuthorizedUserBuggyStore = getMockStore(
+  stubAuthorizedUserState,
+  stubBuggyState,
+  stubInitialSearchState,
+);
 
 const mockAuthorizedUserOtherRoadmapStore = getMockStore(
   stubAuthorizedUserState,
   stubOtherRoadmapState,
+  stubInitialSearchState,
 );
 
 const mockAuthorizedUserOtherPrivateRoadmapStore = getMockStore(
   stubAuthorizedUserState,
   stubOtherPrivateRoadmapState,
+  stubInitialSearchState,
 );
 
 const mockAuthorizedUserLikePinRoadmapStore = getMockStore(
   stubAuthorizedUserLikePinState,
   stubOtherRoadmapState,
+  stubInitialSearchState,
 );
 
 describe("<RoadmapDetail />", () => {

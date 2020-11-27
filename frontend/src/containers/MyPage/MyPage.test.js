@@ -198,15 +198,31 @@ const initialUserStateOther = {
   myPageUser: stubMyPageUserData,
 };
 
+const stubInitialSearchState = {
+  searchResult: [],
+  topTags: [],
+  page: 1,
+  totalCount: 1,
+};
+
 const initialRoadmapState = { selectedRoadmap: undefined };
 
-const mockStoreNotSignedIn = getMockStore(initialUserStateNotSignedIn, initialRoadmapState);
+const mockStoreNotSignedIn = getMockStore(
+  initialUserStateNotSignedIn,
+  initialRoadmapState,
+  stubInitialSearchState,
+);
 const mockStoreMyPageUserUndefined = getMockStore(
   initialUserStateMyPageUserUndefined,
   initialRoadmapState,
+  stubInitialSearchState,
 );
-const mockStoreMy = getMockStore(initialUserStateMy, initialRoadmapState);
-const mockStoreOther = getMockStore(initialUserStateOther, initialRoadmapState);
+const mockStoreMy = getMockStore(initialUserStateMy, initialRoadmapState, stubInitialSearchState);
+const mockStoreOther = getMockStore(
+  initialUserStateOther,
+  initialRoadmapState,
+  stubInitialSearchState,
+);
 
 describe("<MyPage />", () => {
   let spyHistoryPush;

@@ -221,15 +221,21 @@ class SearchResult extends Component {
 
         <div className="level">
           <label>Level: </label>
-          <input type="checkbox" checked={basicChecked} onChange={this.onClickBasic} />
+          <input type="checkbox" id="basic" checked={basicChecked} onChange={this.onClickBasic} />
           <label>Basic</label>
           <input
             type="checkbox"
+            id="intermediate"
             checked={intermediateChecked}
             onChange={this.onClickIntermediate}
           />
           <label>Intermediate</label>
-          <input type="checkbox" checked={advancedChecked} onChange={this.onClickAdvanced} />
+          <input
+            type="checkbox"
+            id="advanced"
+            checked={advancedChecked}
+            onChange={this.onClickAdvanced}
+          />
           <label>Advanced</label>
         </div>
 

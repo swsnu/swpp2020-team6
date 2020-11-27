@@ -96,10 +96,29 @@ const initialRoadmapState = {
   },
 };
 
-const mockStore = getMockStore(initialUserState, initialRoadmapState);
-const mockStoreUserUndefined = getMockStore(initialUserStateUndefined, initialRoadmapState);
-const mockStoreUserNonAuthor = getMockStore(initialUserStateNonAuthor, initialRoadmapState);
-const mockStoreRoadmapUndefined = getMockStore(initialUserState, initialRoadmapStateUndefined);
+const stubInitialSearchState = {
+  searchResult: [],
+  topTags: [],
+  page: 1,
+  totalCount: 1,
+};
+
+const mockStore = getMockStore(initialUserState, initialRoadmapState, stubInitialSearchState);
+const mockStoreUserUndefined = getMockStore(
+  initialUserStateUndefined,
+  initialRoadmapState,
+  stubInitialSearchState,
+);
+const mockStoreUserNonAuthor = getMockStore(
+  initialUserStateNonAuthor,
+  initialRoadmapState,
+  stubInitialSearchState,
+);
+const mockStoreRoadmapUndefined = getMockStore(
+  initialUserState,
+  initialRoadmapStateUndefined,
+  stubInitialSearchState,
+);
 
 describe("<EditRoadmap />", () => {
   let editRoadmap;
