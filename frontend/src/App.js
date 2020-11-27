@@ -11,11 +11,8 @@ import SignUp from "./containers/SignUp/SignUp";
 import SignIn from "./containers/SignIn/SignIn";
 import Home from "./containers/Home/Home";
 import RoadmapDetail from "./containers/RoadmapDetail/RoadmapDetail";
-<<<<<<< HEAD
 import SearchResult from "./containers/SearchResult/SearchResult";
-=======
 import MyPage from "./containers/MyPage/MyPage";
->>>>>>> 355f25fe5ac3feb5edd03933b5f613d09311798f
 
 import "./App.css";
 
