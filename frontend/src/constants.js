@@ -18,3 +18,9 @@ export const progressState = {
   IN_PROGRESS: 2,
   FINISHED: 3,
 };
+
+export const sortType = {
+  LIKE: 1,
+  PIN: 2,
+  NEW: 3,
+};

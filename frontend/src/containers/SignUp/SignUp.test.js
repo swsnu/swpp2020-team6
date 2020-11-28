@@ -23,8 +23,23 @@ const stubInitialRoadmapState = {
   selectedRoadmap: undefined,
 };
 
-const authorizedMockStore = getMockStore(stubAuthorizedUserState, stubInitialRoadmapState);
-const unauthorizedMockStore = getMockStore(stubUnauthorizedUserState, stubInitialRoadmapState);
+const stubInitialSearchState = {
+  searchResult: [],
+  topTags: [],
+  page: 1,
+  totalCount: 1,
+};
+
+const authorizedMockStore = getMockStore(
+  stubAuthorizedUserState,
+  stubInitialRoadmapState,
+  stubInitialSearchState,
+);
+const unauthorizedMockStore = getMockStore(
+  stubUnauthorizedUserState,
+  stubInitialRoadmapState,
+  stubInitialSearchState,
+);
 
 describe("<SignUp />", () => {
   let spySignUp;

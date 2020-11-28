@@ -15,3 +15,5 @@ export {
   changeProgress,
   changeCheckbox,
 } from "./roadmap";
+
+export { getSimpleSearch, getAdvancedSearch, getTopTags } from "./search";

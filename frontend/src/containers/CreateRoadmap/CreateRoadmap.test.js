@@ -21,8 +21,19 @@ const initialRoadmapState = {
   selectedRoadmap: null,
 };
 
-const mockStore = getMockStore(initialUserState, initialRoadmapState);
-const mockStoreUndefined = getMockStore(initialUserStateUndefined, initialRoadmapState);
+const stubInitialSearchState = {
+  searchResult: [],
+  topTags: [],
+  page: 1,
+  totalCount: 1,
+};
+
+const mockStore = getMockStore(initialUserState, initialRoadmapState, stubInitialSearchState);
+const mockStoreUndefined = getMockStore(
+  initialUserStateUndefined,
+  initialRoadmapState,
+  stubInitialSearchState,
+);
 
 describe("<CreateRoadmap />", () => {
   let createRoadmap;
