@@ -2,6 +2,7 @@
  * Send request to the backend using the desired API, then receive response.
  */
 import axios from "axios";
+import { push } from "connected-react-router";
 import qs from "qs";
 import * as actionTypes from "./actionTypes";
 
@@ -40,6 +41,9 @@ export const getSimpleSearch = (searchData) => {
             break;
         }
         dispatch(getSimpleSearchFailure_());
+      })
+      .then(() => {
+        dispatch(push("/search"));
       });
   };
 };
