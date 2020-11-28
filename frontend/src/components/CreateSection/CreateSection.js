@@ -1,6 +1,10 @@
 import React from "react";
 import PropTypes from "prop-types";
+// import Button from "@material-ui/core/Button/Button";
+// import ArrowUpwardOutlinedIcon from "@material-ui/icons/ArrowUpwardOutlined";
+// import ArrowDownwardOutlinedIcon from "@material-ui/icons/ArrowDownwardOutlined";
 import CreateTask from "../CreateTask/CreateTask";
+// import { Up, Down } from "../Roadmap/StyledComponents/UpDown";
 import "./CreateSection.scss";
 
 const CreateSection = (props) => {
@@ -23,7 +27,7 @@ const CreateSection = (props) => {
     changeTaskDescriptionHandler,
   } = props;
 
-  const CreateTasks = tasks.map((task, index) => {
+  const Tasks = tasks.map((task, index) => {
     return (
       <CreateTask
         tmpSectionId={tmpSectionId}
@@ -46,34 +50,34 @@ const CreateSection = (props) => {
 
   return (
     <div className="CreateSection">
-      <button
-        className="up-section-button"
-        type="button"
-        disabled={tmpSectionId === 0}
-        onClick={() => clickUpSectionHandler(tmpSectionId)}
-      >
-        Up
-      </button>
-      <button
-        className="down-section-button"
-        type="button"
-        disabled={tmpSectionId === sectionLastId}
-        onClick={() => clickDownSectionHandler(tmpSectionId)}
-      >
-        Down
-      </button>
-      <label>Section Title</label>
-      <input
-        className="section-title"
-        type="text"
-        value={title}
-        onChange={(event) => {
-          changeSectionTitleHandler(tmpSectionId, event.target.value);
-        }}
-      />
-      <br />
-      {CreateTasks}
-      <br />
+      <div className="title-up-down">
+        <input
+          className="section-title"
+          type="text"
+          value={title}
+          placeholder={`Section ${tmpSectionId + 1} Title`}
+          onChange={(event) => {
+            changeSectionTitleHandler(tmpSectionId, event.target.value);
+          }}
+        />
+        <button
+          className="up-section-button"
+          type="button"
+          disabled={tmpSectionId === 0}
+          onClick={() => clickUpSectionHandler(tmpSectionId)}
+        >
+          ▲
+        </button>
+        <button
+          className="down-section-button"
+          type="button"
+          disabled={tmpSectionId === sectionLastId}
+          onClick={() => clickDownSectionHandler(tmpSectionId)}
+        >
+          ▼
+        </button>
+      </div>
+      {Tasks}
       <button
         className="create-task-button"
         type="button"
@@ -83,7 +87,6 @@ const CreateSection = (props) => {
       >
         Create Task
       </button>
-      <br />
       <button
         className="delete-section-button"
         type="button"

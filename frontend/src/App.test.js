@@ -65,7 +65,15 @@ const initialUserState = {
 const initialRoadmapState = {
   selectedRoadmap: undefined,
 };
-const mockStore = getMockStore(sutbUserState, initialRoadmapState);
+
+const stubInitialSearchState = {
+  searchResult: [],
+  topTags: [],
+  page: 1,
+  totalCount: 1,
+};
+
+const mockStore = getMockStore(sutbUserState, initialRoadmapState, stubInitialSearchState);
 
 describe("App", () => {
   let app;
@@ -86,7 +94,11 @@ describe("App", () => {
   afterEach(() => jest.clearAllMocks());
 
   it("should render", () => {
-    const mockInitStore = getMockStore(initialUserState, initialRoadmapState);
+    const mockInitStore = getMockStore(
+      initialUserState,
+      initialRoadmapState,
+      stubInitialSearchState,
+    );
     const component = mount(
       <Provider store={mockInitStore}>
         <App history={history} />

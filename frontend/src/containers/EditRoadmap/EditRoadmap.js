@@ -2,6 +2,7 @@ import React, { Component } from "react";
 import { connect } from "react-redux";
 import { withRouter } from "react-router";
 import PropTypes from "prop-types";
+
 import * as actionCreators from "../../store/actions/index";
 
 import Roadmap from "../Roadmap/Roadmap";
@@ -47,7 +48,6 @@ class EditRoadmap extends Component {
 
     return (
       <div className="EditRoadmap">
-        <h1>Edit Roadmap</h1>
         <Roadmap
           isEdit
           onClickBackHandler={this.onClickEditBack}

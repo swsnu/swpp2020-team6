@@ -38,6 +38,7 @@ class SearchResult extends Component {
   onClickAdvancedSearch = (searchData) => {
     const { onGetAdvancedSearch } = this.props;
     onGetAdvancedSearch(searchData);
+    this.setState({ page: 1 });
   };
 
   onClickBasic = (event) => {
@@ -90,16 +91,16 @@ class SearchResult extends Component {
   calcLevelData = (basic, intermediate, advanced) => {
     let levelData = [];
     if (basic) {
-      levelData = levelData.concat(1);
+      levelData = levelData.concat("1");
     }
     if (intermediate) {
-      levelData = levelData.concat(2);
+      levelData = levelData.concat("2");
     }
     if (advanced) {
-      levelData = levelData.concat(3);
+      levelData = levelData.concat("3");
     }
     if (!basic && !intermediate && !advanced) {
-      levelData = [1, 2, 3];
+      levelData = ["1", "2", "3"];
     }
     return levelData;
   };
@@ -113,7 +114,6 @@ class SearchResult extends Component {
       intermediateChecked,
       advancedChecked,
       sortBy,
-      page,
     } = this.state;
 
     this.setState({ page: pageNumber });
@@ -123,9 +123,11 @@ class SearchResult extends Component {
       tags,
       levels: this.calcLevelData(basicChecked, intermediateChecked, advancedChecked),
       sort: sortBy,
-      page,
+      page: pageNumber,
       perpage: 9,
     });
+
+    this.setState({ page: pageNumber });
   };
 
   render() {
@@ -144,6 +146,11 @@ class SearchResult extends Component {
     const { searchResult, topTags, totalCount } = this.props;
 
     const searchResultList = searchResult.map((simpleObject) => {
+      const simpleTags = [];
+      if (simpleObject.tags !== undefined) {
+        // eslint-disable-next-line dot-notation
+        simpleObject.tags.map((item) => simpleTags.push(item["tag_name"]));
+      }
       return (
         <RoadmapSimple
           roadmapID={simpleObject.id}
@@ -157,7 +164,7 @@ class SearchResult extends Component {
           authorID={simpleObject.author_id}
           authorName={simpleObject.author_name}
           authorPictureUrl={simpleObject.author_picture_url}
-          tags={simpleObject.tags}
+          tags={simpleTags}
           onClickTitleHandler={this.onClickTitle}
         />
       );
@@ -184,10 +191,10 @@ class SearchResult extends Component {
           <button
             className="add-top-tag-button"
             type="button"
-            key={tag.tag_content}
-            onClick={() => this.onClickAddFromTopTag(tag.tag_content)}
+            key={tag}
+            onClick={() => this.onClickAddFromTopTag(tag)}
           >
-            {tag.tag_content}
+            {tag}
           </button>
         </div>
       );
@@ -215,15 +222,21 @@ class SearchResult extends Component {
 
         <div className="level">
           <label>Level: </label>
-          <input type="checkbox" checked={basicChecked} onChange={this.onClickBasic} />
+          <input type="checkbox" id="basic" checked={basicChecked} onChange={this.onClickBasic} />
           <label>Basic</label>
           <input
             type="checkbox"
+            id="intermediate"
             checked={intermediateChecked}
             onChange={this.onClickIntermediate}
           />
           <label>Intermediate</label>
-          <input type="checkbox" checked={advancedChecked} onChange={this.onClickAdvanced} />
+          <input
+            type="checkbox"
+            id="advanced"
+            checked={advancedChecked}
+            onChange={this.onClickAdvanced}
+          />
           <label>Advanced</label>
         </div>
 
@@ -278,7 +291,7 @@ class SearchResult extends Component {
                   tags,
                   levels: this.calcLevelData(basicChecked, intermediateChecked, advancedChecked),
                   sort: sortBy,
-                  page,
+                  page: 1,
                   perpage: 9,
                 })
               // eslint-disable-next-line react/jsx-curly-newline
@@ -316,7 +329,12 @@ class SearchResult extends Component {
 
         <br />
 
-        <div className="pages">{pageList}</div>
+        <div className="pages">
+          {pageList}
+          <br />
+          Current Page:
+          {page}
+        </div>
       </div>
     );
   }

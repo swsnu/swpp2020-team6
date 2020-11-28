@@ -2,7 +2,7 @@
  * Send request to the backend using the desired API, then receive response.
  */
 import axios from "axios";
-import { push } from "connected-react-router";
+import qs from "qs";
 import * as actionTypes from "./actionTypes";
 
 export const getSimpleSearchFailure_ = () => {
@@ -13,6 +13,7 @@ export const getSimpleSearchSuccess_ = (data) => {
   return {
     type: actionTypes.GET_SIMPLE_SEARCH_SUCCESS,
     searchResult: data.roadmaps,
+    page: data.page,
     totalCount: data.total_count,
   };
 };
@@ -39,8 +40,7 @@ export const getSimpleSearch = (searchData) => {
             break;
         }
         dispatch(getSimpleSearchFailure_());
-      })
-      .then(() => dispatch(push("/search")));
+      });
   };
 };
 
@@ -52,6 +52,7 @@ export const getAdvancedSearchSuccess_ = (data) => {
   return {
     type: actionTypes.GET_ADVANCED_SEARCH_SUCCESS,
     searchResult: data.roadmaps,
+    page: data.page,
     totalCount: data.total_count,
   };
 };
@@ -59,7 +60,12 @@ export const getAdvancedSearchSuccess_ = (data) => {
 export const getAdvancedSearch = (searchData) => {
   return (dispatch) => {
     return axios
-      .get("/api/roadmap/search/", { params: searchData })
+      .get("/api/roadmap/search/", {
+        params: searchData,
+        paramsSerializer: (params) => {
+          return qs.stringify(params, { indices: false });
+        },
+      })
       .then((res) => {
         dispatch(getAdvancedSearchSuccess_(res.data));
       })

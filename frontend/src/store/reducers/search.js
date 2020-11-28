@@ -1,9 +1,10 @@
 import * as actionTypes from "../actions/actionTypes";
 
 const initialState = {
-  searchResult: [{ title: "test search result1", id: 1, author_name: "test author name" }], // default: []
-  topTags: [{ tag_id: "tag_id_1", tag_content: "test_top_tag_1" }], // default: []
-  totalCount: 30, //  default: 1
+  searchResult: [],
+  topTags: [],
+  page: 1,
+  totalCount: 1,
 };
 
 const reducer = (state = initialState, action) => {
@@ -12,6 +13,7 @@ const reducer = (state = initialState, action) => {
       return {
         ...state,
         searchResult: action.searchResult,
+        page: action.page,
         totalCount: action.totalCount,
       };
     case actionTypes.GET_SIMPLE_SEARCH_FAILURE:
@@ -20,6 +22,7 @@ const reducer = (state = initialState, action) => {
       return {
         ...state,
         searchResult: action.searchResult,
+        page: action.page,
         totalCount: action.totalCount,
       };
     case actionTypes.GET_ADVANCED_SEARCH_FAILURE:
