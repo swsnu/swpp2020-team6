@@ -26,5 +26,6 @@ button:disabled {
 .App {
   font-family: "Ubuntu", sans-serif;
   text-align: center;
+  background-color: gray;
   margin: auto;
 }

@@ -3,6 +3,10 @@ import * as actionTypes from "../actions/actionTypes";
 
 const initialState = {
   selectedRoadmap: undefined,
+  bestRoadmaps: [],
+  bestRoadmapsError: null,
+  newRoadmaps: [],
+  newRoadmapsError: null,
 };
 
 const reducer = (state = initialState, action) => {
@@ -109,6 +113,18 @@ const reducer = (state = initialState, action) => {
           sections: updatedSections,
         },
       };
+    case actionTypes.GET_BEST_ROADMAP_SUCCESS:
+      return { ...state, bestRoadmaps: action.roadmaps, bestRoadmapsError: null };
+    case actionTypes.GET_BEST_ROADMAP_FAILURE:
+      return { ...state, bestRoadmaps: [], bestRoadmapsError: action.errorStatus };
+    case actionTypes.RESET_BEST_ROADMAP:
+      return { ...state, bestRoadmaps: [], bestRoadmapsError: null };
+    case actionTypes.GET_NEW_ROADMAP_SUCCESS:
+      return { ...state, newRoadmaps: action.roadmaps, newRoadmapsError: null };
+    case actionTypes.GET_NEW_ROADMAP_FAILURE:
+      return { ...state, newRoadmaps: [], newRoadmapsError: action.errorStatus };
+    case actionTypes.RESET_NEW_ROADMAP:
+      return { ...state, newRoadmaps: [], newRoadmapsError: null };
     default:
       break;
   }

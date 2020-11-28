@@ -14,6 +14,10 @@ export {
   toggleRoadmapPin,
   changeProgress,
   changeCheckbox,
+  resetBestRoadmaps_,
+  getBestRoadmaps,
+  resetNewRoadmaps_,
+  getNewRoadmaps,
 } from "./roadmap";
 
 export { getSimpleSearch, getAdvancedSearch, getTopTags } from "./search";

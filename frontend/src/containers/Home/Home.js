@@ -3,7 +3,6 @@ import { connect } from "react-redux";
 import PropTypes from "prop-types";
 
 import * as actionCreators from "../../store/actions/index";
-
 import "./Home.scss";
 
 class Home extends Component {
@@ -24,17 +23,19 @@ class Home extends Component {
 
   render() {
     return (
-      <div className="Home">
-        <h1>Home</h1>
-        <button id="signin-button" onClick={() => this.onClickSignIn()} type="button">
-          Sign In
-        </button>
-        <button id="signup-button" onClick={() => this.onClickSignUp()} type="button">
-          Sign Up
-        </button>
-        <button id="signout-button" onClick={() => this.onClickSignOut()} type="button">
-          Sign Out
-        </button>
+      <div>
+        <div className="Home">
+          <h1>Home</h1>
+          <button id="signin-button" onClick={() => this.onClickSignIn()} type="button">
+            Sign In
+          </button>
+          <button id="signup-button" onClick={() => this.onClickSignUp()} type="button">
+            Sign Up
+          </button>
+          <button id="signout-button" onClick={() => this.onClickSignOut()} type="button">
+            Sign Out
+          </button>
+        </div>
       </div>
     );
   }

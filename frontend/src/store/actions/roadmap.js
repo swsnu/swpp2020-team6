@@ -437,3 +437,53 @@ export const changeCheckbox = (taskId) => {
       });
   };
 };
+
+export const getBestRoadmapsSuccess_ = (roadmapData) => {
+  return { type: actionTypes.GET_BEST_ROADMAP_SUCCESS, roadmaps: roadmapData.roadmaps };
+};
+
+export const getBestRoadmapsFail_ = (errorStatus) => {
+  return { type: actionTypes.GET_BEST_ROADMAP_FAILURE, errorStatus };
+};
+
+export const resetBestRoadmaps_ = () => {
+  return { type: actionTypes.RESET_BEST_ROADMAP };
+};
+
+export const getBestRoadmaps = (topN) => {
+  return (dispatch) => {
+    return axios
+      .get(`/api/roadmap/best/${topN}/`)
+      .then((response) => {
+        dispatch(getBestRoadmapsSuccess_(response.data));
+      })
+      .catch((error) => {
+        dispatch(getBestRoadmapsFail_(error.response.status));
+      });
+  };
+};
+
+export const getNewRoadmapsSuccess_ = (roadmapData) => {
+  return { type: actionTypes.GET_NEW_ROADMAP_SUCCESS, roadmaps: roadmapData.roadmaps };
+};
+
+export const getNewRoadmapsFail_ = (errorStatus) => {
+  return { type: actionTypes.GET_NEW_ROADMAP_FAILURE, errorStatus };
+};
+
+export const resetNewRoadmaps_ = () => {
+  return { type: actionTypes.RESET_NEW_ROADMAP };
+};
+
+export const getNewRoadmaps = (topN) => {
+  return (dispatch) => {
+    return axios
+      .get(`/api/roadmap/new/${topN}/`)
+      .then((response) => {
+        dispatch(getNewRoadmapsSuccess_(response.data));
+      })
+      .catch((error) => {
+        dispatch(getNewRoadmapsFail_(error.response.status));
+      });
+  };
+};
