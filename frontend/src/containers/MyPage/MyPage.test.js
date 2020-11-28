@@ -368,7 +368,6 @@ describe("<MyPage />", () => {
       </Provider>
     );
 
-    const spyReset = jest.spyOn(actionCreators, "resetMyPageUser_");
     const component = mount(myPage);
     const wrapper = component.find(SimpleRoadmap);
     wrapper.at(0).props().onClick();
