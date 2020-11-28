@@ -12,7 +12,13 @@ const stubUserState = {
   selectedUser: stubUserData,
 };
 const stubRoadmapState = { selectedRoadmap: undefined };
-const mockStore = getMockStore(stubUserState, stubRoadmapState);
+const stubSearchState = {
+  searchResult: [],
+  topTags: [],
+  page: 1,
+  totalCount: 1,
+};
+const mockStore = getMockStore(stubUserState, stubRoadmapState, stubSearchState);
 
 describe("UpperUserBar", () => {
   let spyPush;
@@ -75,7 +81,7 @@ describe("UpperUserBar", () => {
   });
   it("should not redirect to my page when user is not sign in", () => {
     const stubEmptyUserState = { selectedUser: undefined };
-    const mockEmptyStore = getMockStore(stubEmptyUserState, stubRoadmapState);
+    const mockEmptyStore = getMockStore(stubEmptyUserState, stubRoadmapState, stubSearchState);
     upperUserBar = (
       <Provider store={mockEmptyStore}>
         <ConnectedRouter history={history}>

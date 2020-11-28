@@ -1,12 +1,10 @@
 /* eslint-disable no-unused-vars */
 import React from "react";
-import { shallow, mount } from "enzyme";
+import { mount } from "enzyme";
 import { Provider } from "react-redux";
 
-import { ConnectedRouter } from "connected-react-router";
 import App from "./App";
-import store, { history } from "./store/store";
-import * as roadmapActionCreators from "./store/actions/roadmap";
+import { history } from "./store/store";
 import * as userActionCreators from "./store/actions/user";
 import getMockStore from "./test-utils/mocks";
 
