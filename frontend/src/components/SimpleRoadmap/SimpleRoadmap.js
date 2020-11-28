@@ -127,40 +127,42 @@ const SimpleRoadmap = (props) => {
   }
 
   return (
-    <Card className={classes.root} onClick={onClick}>
-      <div className="card-wrapper">
-        <div className="image-wrapper">
-          <CardMedia className={classes.media} image={roadmapImageSrc} title={roadmapTitle} />
-          <div className="overlay-title">
-            <div className="roadmap-title">{roadmapTitle}</div>
+    <div className="SimpleRoadmap">
+      <Card className={classes.root} onClick={onClick}>
+        <div className="card-wrapper">
+          <div className="image-wrapper">
+            <CardMedia className={classes.media} image={roadmapImageSrc} title={roadmapTitle} />
+            <div className="overlay-title">
+              <div className="roadmap-title">{roadmapTitle}</div>
+            </div>
+          </div>
+          {headerDisplay}
+          <CardContent>
+            <div className={levelChipClasses.root}>{roadmapLevelIcon}</div>
+          </CardContent>
+          <CardContent>
+            <div className={tagChipClasses.root}>{tagDisplay}</div>
+          </CardContent>
+          <CardActions disableSpacing>
+            <IconButton aria-label="add to favorites" size="medium">
+              <FavoriteBorderIcon />
+              <p id="like-count">{likeCount}</p>
+            </IconButton>
+            <IconButton aria-label="pin" size="medium">
+              <BookmarkBorderIcon />
+              <p id="pin-count">{pinCount}</p>
+            </IconButton>
+            <IconButton aria-label="comment" size="medium">
+              <ChatOutlinedIcon />
+              <p id="comment-count">{commentCount}</p>
+            </IconButton>
+          </CardActions>
+          <div className="overlay-description">
+            <div className="roadmap-description">{roadmapDescription}</div>
           </div>
         </div>
-        {headerDisplay}
-        <CardContent>
-          <div className={levelChipClasses.root}>{roadmapLevelIcon}</div>
-        </CardContent>
-        <CardContent>
-          <div className={tagChipClasses.root}>{tagDisplay}</div>
-        </CardContent>
-        <CardActions disableSpacing>
-          <IconButton aria-label="add to favorites" size="medium">
-            <FavoriteBorderIcon />
-            <p id="like-count">{likeCount}</p>
-          </IconButton>
-          <IconButton aria-label="pin" size="medium">
-            <BookmarkBorderIcon />
-            <p id="pin-count">{pinCount}</p>
-          </IconButton>
-          <IconButton aria-label="comment" size="medium">
-            <ChatOutlinedIcon />
-            <p id="comment-count">{commentCount}</p>
-          </IconButton>
-        </CardActions>
-        <div className="overlay-description">
-          <div className="roadmap-description">{roadmapDescription}</div>
-        </div>
-      </div>
-    </Card>
+      </Card>
+    </div>
   );
 };
 

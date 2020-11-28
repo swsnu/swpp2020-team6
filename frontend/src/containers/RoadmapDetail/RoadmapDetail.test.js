@@ -725,7 +725,7 @@ describe("<RoadmapDetail />", () => {
       </Provider>,
     );
     const wrapper = component.find(".RoadmapDetail");
-    expect(wrapper.length).toBe(0);
+    expect(wrapper.length).toBe(1);
     expect(spyGetRoadmap).toHaveBeenCalledTimes(1);
   });
 
