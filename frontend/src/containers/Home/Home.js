@@ -3,7 +3,6 @@ import { connect } from "react-redux";
 import PropTypes from "prop-types";
 
 import * as actionCreators from "../../store/actions/index";
-import RecipeReviewCard from "../../components/SimpleRoadmap/SimpleRoadmap";
 import "./Home.scss";
 
 class Home extends Component {

@@ -3,7 +3,7 @@ import { mount } from "enzyme";
 import { Provider } from "react-redux";
 import { Route, Switch } from "react-router-dom";
 import { ConnectedRouter } from "connected-react-router";
-import store, { history } from "../../store/store";
+import { history } from "../../store/store";
 import * as roadmapActionCreators from "../../store/actions/roadmap";
 import getMockStore from "../../test-utils/mocks";
 
@@ -117,5 +117,22 @@ describe("App", () => {
 
     const bestRoadmaps = component.find(".best-roadmaps");
     expect(bestRoadmaps.length).toBe(1);
+  });
+
+  it("should get new, best roadmaps", () => {
+    const component = mount(
+      <Provider store={mockStore}>
+        <ConnectedRouter history={history}>
+          <Switch>
+            <Route path="/" exact component={RoadmapCarousel} />
+          </Switch>
+        </ConnectedRouter>
+      </Provider>,
+    );
+
+    const bestRoadmaps = component.find(".carousels");
+    expect(bestRoadmaps.length).toBe(1);
+    expect(spyGetBestRoadmaps).toHaveBeenCalledTimes(1);
+    expect(spyGetNewRoadmaps).toHaveBeenCalledTimes(1);
   });
 });

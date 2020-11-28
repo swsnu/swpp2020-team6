@@ -429,4 +429,67 @@ describe("Roadmap Reducer", () => {
       selectedRoadmap: { ...stubSelectedRoadmap, sections: updatedSections },
     });
   });
+
+  // ------------- get best, new roadmaps -------------
+  it("should set bestRoadmapsError as the error status ", () => {
+    const newState = reducer(undefined, {
+      type: actionTypes.GET_BEST_ROADMAP_FAILURE,
+      errorStatus: 401,
+    });
+    expect(newState).toEqual({ ...initialState, bestRoadmapsError: 401 });
+  });
+
+  it("should set bestRoadmaps as the given data ", () => {
+    const newState = reducer(undefined, {
+      type: actionTypes.GET_BEST_ROADMAP_SUCCESS,
+      roadmaps: [stubSimpleRoadmap],
+    });
+    expect(newState).toEqual({
+      ...initialState,
+      bestRoadmaps: [stubSimpleRoadmap],
+      bestRoadmapsError: null,
+    });
+  });
+
+  it("should set newRoadmapsError as the error status ", () => {
+    const newState = reducer(undefined, {
+      type: actionTypes.GET_NEW_ROADMAP_FAILURE,
+      errorStatus: 401,
+    });
+    expect(newState).toEqual({ ...initialState, newRoadmapsError: 401 });
+  });
+
+  it("should set newRoadmaps as the given data ", () => {
+    const newState = reducer(undefined, {
+      type: actionTypes.GET_NEW_ROADMAP_SUCCESS,
+      roadmaps: [stubSimpleRoadmap],
+    });
+    expect(newState).toEqual({
+      ...initialState,
+      newRoadmaps: [stubSimpleRoadmap],
+      newRoadmapsError: null,
+    });
+  });
+
+  it("should reset bestRoadmaps,bestRoadmapsError as the initial state ", () => {
+    const newState = reducer(undefined, {
+      type: actionTypes.RESET_BEST_ROADMAP,
+    });
+    expect(newState).toEqual({
+      ...initialState,
+      bestRoadmaps: [],
+      bestRoadmapsError: null,
+    });
+  });
+
+  it("should reset newRoadmaps,newRoadmapsError as the initial state ", () => {
+    const newState = reducer(undefined, {
+      type: actionTypes.RESET_NEW_ROADMAP,
+    });
+    expect(newState).toEqual({
+      ...initialState,
+      newRoadmaps: [],
+      newRoadmapsError: null,
+    });
+  });
 });

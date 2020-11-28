@@ -67,6 +67,9 @@ describe("App", () => {
         </ConnectedRouter>
       </Provider>,
     );
+
+    const divWrapper = component.find("h1");
+    expect(divWrapper.length).toBe(1);
     expect(spyPush).toHaveBeenCalledTimes(1);
   });
 });
