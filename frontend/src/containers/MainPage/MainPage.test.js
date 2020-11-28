@@ -16,7 +16,7 @@ jest.mock("./RoadmapCarousel", () => {
 
 const stubUserData = { user_id: 1, username: "test" };
 
-const sutbUserState = {
+const stubUserState = {
   isSignedIn: true,
   selectedUser: stubUserData,
 };
@@ -33,8 +33,20 @@ const initialRoadmapState = {
   newRoadmaps: [],
   newRoadmapsError: null,
 };
-const mockStore = getMockStore(sutbUserState, initialRoadmapState);
-const mockUnauthorizedUserStore = getMockStore(unAuthorizedUserState, initialRoadmapState);
+
+const stubSearchState = {
+  searchResult: [],
+  topTags: [],
+  page: 1,
+  totalCount: 1,
+};
+
+const mockStore = getMockStore(stubUserState, initialRoadmapState, stubSearchState);
+const mockUnauthorizedUserStore = getMockStore(
+  unAuthorizedUserState,
+  initialRoadmapState,
+  stubSearchState,
+);
 
 describe("App", () => {
   let spyPush;

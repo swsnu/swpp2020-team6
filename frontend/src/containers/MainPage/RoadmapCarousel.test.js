@@ -11,7 +11,7 @@ import RoadmapCarousel from "./RoadmapCarousel";
 
 const stubUserData = { user_id: 1, username: "test" };
 
-const sutbUserState = {
+const stubUserState = {
   isSignedIn: true,
   selectedUser: stubUserData,
 };
@@ -83,8 +83,15 @@ const filledRoadmapState = {
   newRoadmapsError: null,
 };
 
-const mockStore = getMockStore(sutbUserState, initialRoadmapState);
-const mockStoreFilled = getMockStore(sutbUserState, filledRoadmapState);
+const stubSearchState = {
+  searchResult: [{ title: "test-search-result-title" }],
+  topTags: ["top_tag1"],
+  page: 1,
+  totalCount: 1,
+};
+
+const mockStore = getMockStore(stubUserState, initialRoadmapState, stubSearchState);
+const mockStoreFilled = getMockStore(stubUserState, filledRoadmapState, stubSearchState);
 
 describe("App", () => {
   let spyGetBestRoadmaps;
