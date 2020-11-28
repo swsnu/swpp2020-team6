@@ -8,7 +8,13 @@ import LogoButton from "./LogoButton";
 
 const stubUserState = { selectedUser: undefined };
 const stubRoadmapState = { selectedRoadmap: undefined };
-const mockStore = getMockStore(stubUserState, stubRoadmapState);
+const stubSearchState = {
+  searchResult: [],
+  topTags: [],
+  page: 1,
+  totalCount: 1,
+};
+const mockStore = getMockStore(stubUserState, stubRoadmapState, stubSearchState);
 
 describe("LogoButton", () => {
   let spyPush;

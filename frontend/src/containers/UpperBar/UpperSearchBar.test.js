@@ -10,7 +10,13 @@ import * as searchActionCreators from "../../store/actions/search";
 const stubUserData = { user_id: 1, username: "john" };
 const stubUserState = { selectedUser: stubUserData };
 const stubRoadmapState = { selectedRoadmap: undefined };
-const mockStore = getMockStore(stubUserState, stubRoadmapState);
+const stubSearchState = {
+  searchResult: [],
+  topTags: [],
+  page: 1,
+  totalCount: 1,
+};
+const mockStore = getMockStore(stubUserState, stubRoadmapState, stubSearchState);
 
 describe("UpperSearchBar", () => {
   let spySearch;
