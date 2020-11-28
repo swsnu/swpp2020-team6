@@ -4,10 +4,14 @@ $margin-main: 30px 10px 30px 10px;
 
 .MyPage {
   width: 100%;
+  height: 100%;
+  min-height: 100vh;
   display: flex;
   flex-direction: row;
-  flex-wrap: nowrap;
+  flex-wrap: wrap;
   justify-content: center;
+  background-size: 100vh;
+  background-color: $mypage-main-background-color;
 
   .user-info {
     position: sticky;

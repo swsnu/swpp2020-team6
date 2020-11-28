@@ -221,6 +221,9 @@ describe("<EditRoadmap />", () => {
     const instance = component.find(Roadmap).instance();
     expect(instance.state).toEqual({
       ...initialRoadmapState.selectedRoadmap,
+      sections: initialRoadmapState.selectedRoadmap.sections.map((section) => {
+        return { ...section, collapse: false };
+      }),
       received: true,
       private: undefined,
       isPrivate: initialRoadmapState.selectedRoadmap.private,
@@ -322,6 +325,14 @@ describe("<EditRoadmap />", () => {
     expect(instance.state.sections[1].section_title).toBe("test-section1");
   });
 
+  it("should call 'onClickSectionCollapse'", () => {
+    const component = mount(editRoadmap);
+    const wrapper = component.find(".section-collapse");
+    wrapper.at(0).simulate("click");
+    const instance = component.find(Roadmap).instance();
+    expect(instance.state.sections[0].collapse).toBe(true);
+  });
+
   it("should call 'onClickCreateTask'", () => {
     const component = mount(editRoadmap);
     const wrapper = component.find(".create-task-button");
@@ -371,6 +382,7 @@ describe("<EditRoadmap />", () => {
           task_description: "task1-des",
         },
       ],
+      collapse: false,
     });
   });
 
@@ -401,6 +413,7 @@ describe("<EditRoadmap />", () => {
           task_description: "task1-des",
         },
       ],
+      collapse: false,
     });
   });
 
@@ -428,6 +441,7 @@ describe("<EditRoadmap />", () => {
           task_description: "task1-des",
         },
       ],
+      collapse: false,
     });
   });
 
@@ -455,6 +469,7 @@ describe("<EditRoadmap />", () => {
           task_description: "task1-des",
         },
       ],
+      collapse: false,
     });
   });
 
@@ -482,6 +497,7 @@ describe("<EditRoadmap />", () => {
           task_description: "task1-des",
         },
       ],
+      collapse: false,
     });
   });
 
@@ -509,6 +525,7 @@ describe("<EditRoadmap />", () => {
           task_description: "task1-des",
         },
       ],
+      collapse: false,
     });
   });
 
