@@ -1,42 +1,80 @@
-.CreateSection {
-  position: relative;
-  left: 15%;
-  width: 77%;
-  border: 1px solid rgb(87, 82, 82);
-  box-sizing: border-box;
-  padding: 5px;
-  margin: 5px 5px 5px 5px;
+@import "../../css/roadmap.scss";
 
-  .up-section-button,
-  .down-section-button {
-    position: relative;
-    height: 30px;
-    left: -3%;
-    margin: 5px 5px 5px 5px;
+$padding-main: 40px;
+$margin-bottom-main: 10px;
+
+.CreateSection {
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  width: 100%;
+  padding: $padding-main;
+  margin-bottom: $margin-bottom-main;
+  border: $create-section-border-style;
+  border-radius: $create-section-border-radius;
+  background-color: $paper-color;
+
+  input {
+    width: 100%;
+    color: $roadmap-input-text-color;
+    border: $roadmap-input-border-style;
+    border-radius: $roadmap-input-border-radius;
+    font-size: $roadmap-input-font-size;
+    padding: $roadmap-input-padding;
+  }
+  input::placeholder {
+    color: $roadmap-input-placeholder-color;
+    font-style: $roadmap-input-placeholder-style;
+    font-size: $roadmap-input-placeholder-font-size;
+  }
+
+  button {
+    background-color: $create-buttons-background-color;
+    color: $create-buttons-color;
+    border: $create-buttons-border-style;
+    border-radius: $create-buttons-border-radius;
+    padding: $create-buttons-padding;
+    margin-top: $create-buttons-margin-top;
+    font-size: $create-buttons-font-size;
+  }
+
+  .title-up-down {
+    width: 100%;
+    display: flex;
+    flex-direction: row;
+    flex-wrap: nowrap;
+    align-items: center;
+    margin-bottom: 40px;
+
+    .section-title {
+      margin-right: 20px;
+    }
+
+    .up-section-button,
+    .down-section-button {
+      background-color: $create-updown-background-color;
+      color: $create-updown-color;
+      font-size: $create-updown-font-size;
+      border: $create-updown-border-style;
+      border-radius: $create-updown-border-radius;
+      box-shadow: $create-updown-box-shadow;
+      padding: $create-updown-padding;
+      margin: $create-updown-margin;
+      width: $create-updown-width;
+      height: $create-updown-height;
+      min-width: $create-updown-min-width;
+    }
+    .up-section-button:disabled,
+    .down-section-button:disabled {
+      opacity: $create-updown-disabled-opacity;
+    }
   }
 
   .create-task-button {
-    position: relative;
-    height: 30px;
-    right: -10%;
   }
 
   .delete-section-button {
-    position: relative;
-    height: 30px;
-    right: 40%;
-    margin: 5px 5px 5px 5px;
-  }
-
-  .section-title {
-    position: relative;
-    width: 60%;
-    border: 1px solid rgb(87, 82, 82);
-    box-sizing: border-box;
-    padding: 5px;
-    margin: 15px 5px 15px 5px;
-    font-weight: 700;
-    color: rgb(0, 0, 225);
-    font-size: 20px;
+    align-self: flex-end;
+    background-color: $create-back-delete-button-background-color;
   }
 }

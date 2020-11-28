@@ -88,7 +88,7 @@ class SignIn extends Component {
 }
 
 SignIn.propTypes = {
-  onSignIn: PropTypes.func.isRequired,
+  onSignIn: PropTypes.func,
   isSignedIn: PropTypes.bool,
   history: PropTypes.objectOf(PropTypes.any),
 };

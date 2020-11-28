@@ -3,7 +3,8 @@ export const taskType = {
   WEBSITE: 2,
   VIDEO: 3,
   PAPER: 4,
-  OTHER: 5,
+  ROADMAP: 5,
+  OTHER: 6,
 };
 
 export const levelType = {
@@ -16,4 +17,10 @@ export const progressState = {
   BEFORE_STUDY: 1,
   IN_PROGRESS: 2,
   FINISHED: 3,
+};
+
+export const sortType = {
+  LIKE: 1,
+  PIN: 2,
+  NEW: 3,
 };

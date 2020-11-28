@@ -12,12 +12,14 @@ const getMockReducer = jest.fn((initialState) => (state = initialState, action) 
   return state;
 });
 
-const getMockStore = (initialUserState, initialRoadmapState) => {
+const getMockStore = (initialUserState, initialRoadmapState, initialSearchState) => {
   const mockUserReducer = getMockReducer(initialUserState);
   const mockRoadmapReducer = getMockReducer(initialRoadmapState);
+  const mockSearchReducer = getMockReducer(initialSearchState);
   const rootReducer = combineReducers({
     user: mockUserReducer,
     roadmap: mockRoadmapReducer,
+    search: mockSearchReducer,
     router: connectRouter(history),
   });
   const composeEnhancers = window.__REDUX_DEVTOOLS_EXTENSION_COMPOSE__ || compose;

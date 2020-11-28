@@ -1,4 +1,34 @@
+/* fonts */
+
+@import "./css/basic.scss";
+
+div,
+h1,
+h2,
+h3,
+p,
+input,
+button {
+  font-family: "Ubuntu", sans-serif;
+  box-sizing: border-box;
+}
+
+button:focus {
+  outline: none !important;
+}
+button:hover {
+  cursor: grab;
+}
+button:disabled {
+  cursor: not-allowed;
+}
+
 .App {
+  font-family: "Ubuntu", sans-serif;
   text-align: center;
+<<<<<<< HEAD
   background-color: gray;
+=======
+  margin: auto;
+>>>>>>> 0137f388f8d34fd40875991b6f2a8efb3768be45
 }
