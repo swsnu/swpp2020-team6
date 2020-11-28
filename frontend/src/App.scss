@@ -1,0 +1,50 @@
+/* fonts */
+
+@import "./css/basic.scss";
+
+.App {
+  font-family: "Ubuntu", sans-serif;
+  text-align: center;
+  width: 100%;
+
+  div,
+  h1,
+  h2,
+  h3,
+  p,
+  input,
+  button {
+    font-family: "Ubuntu", sans-serif;
+    box-sizing: border-box;
+  }
+
+  button:focus {
+    outline: none !important;
+  }
+  button:hover {
+    cursor: grab;
+  }
+  button:disabled {
+    cursor: not-allowed;
+  }
+
+  .upper-bar {
+    display: flex;
+    flex-direction: row;
+    align-items: center;
+    justify-content: flex-start;
+
+    .LogoButton {
+      order: 0;
+    }
+
+    .UpperUserBar {
+      order: 2;
+    }
+
+    .UpperSearchBar {
+      order: 1;
+      width: 100%;
+    }
+  }
+}

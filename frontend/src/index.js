@@ -7,7 +7,7 @@ import App from "./App";
 import store, { history } from "./store/store";
 import * as serviceWorker from "./serviceWorker";
 
-import "./index.css";
+import "./index.scss";
 
 axios.defaults.xsrfCookieName = "csrftoken";
 axios.defaults.xsrfHeaderName = "X-CSRFTOKEN";

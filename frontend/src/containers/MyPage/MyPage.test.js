@@ -9,6 +9,7 @@ import { history } from "../../store/store";
 import * as actionCreators from "../../store/actions/user";
 
 import MyPage from "./MyPage";
+import SimpleRoadmap from "../../components/SimpleRoadmap/SimpleRoadmap";
 
 const stubMyPageUserData = {
   user_id: 1,
@@ -348,5 +349,29 @@ describe("<MyPage />", () => {
     const component = mount(myPage);
     component.unmount();
     expect(spyReset).toHaveBeenCalledTimes(1);
+  });
+
+  it("should render RoadmapItem", () => {
+    const myPage = (
+      <Provider store={mockStoreMy}>
+        <ConnectedRouter history={history}>
+          <Switch>
+            <Route
+              path="/"
+              exact
+              render={() => {
+                return <MyPage selectedUser={stubSelectedUserData} />;
+              }}
+            />
+          </Switch>
+        </ConnectedRouter>
+      </Provider>
+    );
+
+    const spyReset = jest.spyOn(actionCreators, "resetMyPageUser_");
+    const component = mount(myPage);
+    const wrapper = component.find(SimpleRoadmap);
+    wrapper.at(0).props().onClick();
+    expect(spyHistoryPush).toHaveBeenCalledTimes(1);
   });
 });
