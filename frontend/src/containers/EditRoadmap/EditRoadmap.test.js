@@ -96,10 +96,29 @@ const initialRoadmapState = {
   },
 };
 
-const mockStore = getMockStore(initialUserState, initialRoadmapState);
-const mockStoreUserUndefined = getMockStore(initialUserStateUndefined, initialRoadmapState);
-const mockStoreUserNonAuthor = getMockStore(initialUserStateNonAuthor, initialRoadmapState);
-const mockStoreRoadmapUndefined = getMockStore(initialUserState, initialRoadmapStateUndefined);
+const stubInitialSearchState = {
+  searchResult: [],
+  topTags: [],
+  page: 1,
+  totalCount: 1,
+};
+
+const mockStore = getMockStore(initialUserState, initialRoadmapState, stubInitialSearchState);
+const mockStoreUserUndefined = getMockStore(
+  initialUserStateUndefined,
+  initialRoadmapState,
+  stubInitialSearchState,
+);
+const mockStoreUserNonAuthor = getMockStore(
+  initialUserStateNonAuthor,
+  initialRoadmapState,
+  stubInitialSearchState,
+);
+const mockStoreRoadmapUndefined = getMockStore(
+  initialUserState,
+  initialRoadmapStateUndefined,
+  stubInitialSearchState,
+);
 
 describe("<EditRoadmap />", () => {
   let editRoadmap;
@@ -202,6 +221,9 @@ describe("<EditRoadmap />", () => {
     const instance = component.find(Roadmap).instance();
     expect(instance.state).toEqual({
       ...initialRoadmapState.selectedRoadmap,
+      sections: initialRoadmapState.selectedRoadmap.sections.map((section) => {
+        return { ...section, collapse: false };
+      }),
       received: true,
       private: undefined,
       isPrivate: initialRoadmapState.selectedRoadmap.private,
@@ -222,7 +244,10 @@ describe("<EditRoadmap />", () => {
     let wrapper = component.find("#roadmap-title");
     wrapper.simulate("change", { target: { value: title } });
     wrapper = component.find("#roadmap-level");
-    wrapper.simulate("change", { target: { value: level } });
+    wrapper
+      .at(0)
+      .props()
+      .onChange({ target: { value: level } });
     wrapper = component.find("#new-tag");
     wrapper.simulate("change", { target: { value: newTag } });
     wrapper = component.find("#roadmap-private");
@@ -300,6 +325,14 @@ describe("<EditRoadmap />", () => {
     expect(instance.state.sections[1].section_title).toBe("test-section1");
   });
 
+  it("should call 'onClickSectionCollapse'", () => {
+    const component = mount(editRoadmap);
+    const wrapper = component.find(".section-collapse");
+    wrapper.at(0).simulate("click");
+    const instance = component.find(Roadmap).instance();
+    expect(instance.state.sections[0].collapse).toBe(true);
+  });
+
   it("should call 'onClickCreateTask'", () => {
     const component = mount(editRoadmap);
     const wrapper = component.find(".create-task-button");
@@ -349,14 +382,18 @@ describe("<EditRoadmap />", () => {
           task_description: "task1-des",
         },
       ],
+      collapse: false,
     });
   });
 
   it("should call 'onChangeTaskType'", () => {
     const component = mount(editRoadmap);
     const testType = 2;
-    const wrapper = component.find(".task-type");
-    wrapper.at(0).simulate("change", { target: { value: testType } });
+    const wrapper = component.find("#task-type");
+    wrapper
+      .at(0)
+      .props()
+      .onChange({ target: { value: testType } });
     const instance = component.find(Roadmap).instance();
     expect(instance.state.sections[0].tasks[0].task_type).toEqual(testType);
     expect(instance.state.sections[0].tasks[1].task_type).toEqual(2);
@@ -376,6 +413,7 @@ describe("<EditRoadmap />", () => {
           task_description: "task1-des",
         },
       ],
+      collapse: false,
     });
   });
 
@@ -403,6 +441,7 @@ describe("<EditRoadmap />", () => {
           task_description: "task1-des",
         },
       ],
+      collapse: false,
     });
   });
 
@@ -430,6 +469,7 @@ describe("<EditRoadmap />", () => {
           task_description: "task1-des",
         },
       ],
+      collapse: false,
     });
   });
 
@@ -457,6 +497,7 @@ describe("<EditRoadmap />", () => {
           task_description: "task1-des",
         },
       ],
+      collapse: false,
     });
   });
 
@@ -484,6 +525,7 @@ describe("<EditRoadmap />", () => {
           task_description: "task1-des",
         },
       ],
+      collapse: false,
     });
   });
 

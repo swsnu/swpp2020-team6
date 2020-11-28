@@ -219,7 +219,18 @@ const stubInitialRoadmapState = {
   newRoadmapsError: null,
 };
 
-const mockedStore = getMockStore(stubInitialUserState, stubInitialRoadmapState);
+const stubInitialSearchState = {
+  searchResult: [],
+  topTags: [],
+  page: 1,
+  totalCount: 1,
+};
+
+const mockedStore = getMockStore(
+  stubInitialUserState,
+  stubInitialRoadmapState,
+  stubInitialSearchState,
+);
 
 describe("ActionCreators", () => {
   let spyPush;

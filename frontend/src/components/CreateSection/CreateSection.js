@@ -1,6 +1,10 @@
 import React from "react";
 import PropTypes from "prop-types";
+// import Button from "@material-ui/core/Button/Button";
+// import ArrowUpwardOutlinedIcon from "@material-ui/icons/ArrowUpwardOutlined";
+// import ArrowDownwardOutlinedIcon from "@material-ui/icons/ArrowDownwardOutlined";
 import CreateTask from "../CreateTask/CreateTask";
+// import { Up, Down } from "../Roadmap/StyledComponents/UpDown";
 import "./CreateSection.scss";
 
 const CreateSection = (props) => {
@@ -9,10 +13,12 @@ const CreateSection = (props) => {
     sectionLastId,
     title,
     tasks,
+    collapse,
     clickDeleteSectionHandler,
     clickUpSectionHandler,
     clickDownSectionHandler,
     changeSectionTitleHandler,
+    clickSectionCollapse,
     clickCreateTaskHandler,
     clickDeleteTaskHandler,
     clickUpTaskHandler,
@@ -23,7 +29,7 @@ const CreateSection = (props) => {
     changeTaskDescriptionHandler,
   } = props;
 
-  const CreateTasks = tasks.map((task, index) => {
+  const Tasks = tasks.map((task, index) => {
     return (
       <CreateTask
         tmpSectionId={tmpSectionId}
@@ -47,43 +53,51 @@ const CreateSection = (props) => {
   return (
     <div className="CreateSection">
       <button
-        className="up-section-button"
+        className="section-collapse"
         type="button"
-        disabled={tmpSectionId === 0}
-        onClick={() => clickUpSectionHandler(tmpSectionId)}
+        onClick={() => clickSectionCollapse(tmpSectionId)}
       >
-        Up
+        {collapse ? "+" : "-"}
       </button>
-      <button
-        className="down-section-button"
-        type="button"
-        disabled={tmpSectionId === sectionLastId}
-        onClick={() => clickDownSectionHandler(tmpSectionId)}
-      >
-        Down
-      </button>
-      <label>Section Title</label>
-      <input
-        className="section-title"
-        type="text"
-        value={title}
-        onChange={(event) => {
-          changeSectionTitleHandler(tmpSectionId, event.target.value);
-        }}
-      />
-      <br />
-      {CreateTasks}
-      <br />
-      <button
-        className="create-task-button"
-        type="button"
-        onClick={() => {
-          clickCreateTaskHandler(tmpSectionId);
-        }}
-      >
-        Create Task
-      </button>
-      <br />
+      <div className="title-up-down">
+        <input
+          className="section-title"
+          type="text"
+          value={title}
+          placeholder={`Section ${tmpSectionId + 1} Title`}
+          onChange={(event) => {
+            changeSectionTitleHandler(tmpSectionId, event.target.value);
+          }}
+        />
+        <button
+          className="up-section-button"
+          type="button"
+          disabled={tmpSectionId === 0}
+          onClick={() => clickUpSectionHandler(tmpSectionId)}
+        >
+          ▲
+        </button>
+        <button
+          className="down-section-button"
+          type="button"
+          disabled={tmpSectionId === sectionLastId}
+          onClick={() => clickDownSectionHandler(tmpSectionId)}
+        >
+          ▼
+        </button>
+      </div>
+      <div className="section" style={{ display: collapse ? "none" : "block" }}>
+        {Tasks}
+        <button
+          className="create-task-button"
+          type="button"
+          onClick={() => {
+            clickCreateTaskHandler(tmpSectionId);
+          }}
+        >
+          Create Task
+        </button>
+      </div>
       <button
         className="delete-section-button"
         type="button"
@@ -106,6 +120,7 @@ CreateSection.propTypes = {
   clickUpSectionHandler: PropTypes.func.isRequired,
   clickDownSectionHandler: PropTypes.func.isRequired,
   changeSectionTitleHandler: PropTypes.func.isRequired,
+  clickSectionCollapse: PropTypes.func.isRequired,
   clickCreateTaskHandler: PropTypes.func.isRequired,
   clickDeleteTaskHandler: PropTypes.func.isRequired,
   clickUpTaskHandler: PropTypes.func.isRequired,
@@ -114,6 +129,7 @@ CreateSection.propTypes = {
   changeTaskTypeHandler: PropTypes.func.isRequired,
   changeTaskUrlHandler: PropTypes.func.isRequired,
   changeTaskDescriptionHandler: PropTypes.func.isRequired,
+  collapse: PropTypes.bool.isRequired,
 };
 
 export default CreateSection;

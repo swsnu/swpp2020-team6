@@ -198,15 +198,31 @@ const initialUserStateOther = {
   myPageUser: stubMyPageUserData,
 };
 
+const stubInitialSearchState = {
+  searchResult: [],
+  topTags: [],
+  page: 1,
+  totalCount: 1,
+};
+
 const initialRoadmapState = { selectedRoadmap: undefined };
 
-const mockStoreNotSignedIn = getMockStore(initialUserStateNotSignedIn, initialRoadmapState);
+const mockStoreNotSignedIn = getMockStore(
+  initialUserStateNotSignedIn,
+  initialRoadmapState,
+  stubInitialSearchState,
+);
 const mockStoreMyPageUserUndefined = getMockStore(
   initialUserStateMyPageUserUndefined,
   initialRoadmapState,
+  stubInitialSearchState,
 );
-const mockStoreMy = getMockStore(initialUserStateMy, initialRoadmapState);
-const mockStoreOther = getMockStore(initialUserStateOther, initialRoadmapState);
+const mockStoreMy = getMockStore(initialUserStateMy, initialRoadmapState, stubInitialSearchState);
+const mockStoreOther = getMockStore(
+  initialUserStateOther,
+  initialRoadmapState,
+  stubInitialSearchState,
+);
 
 describe("<MyPage />", () => {
   let spyHistoryPush;
@@ -280,10 +296,12 @@ describe("<MyPage />", () => {
       </Provider>
     );
     const component = mount(myPage);
-    const wrapper = component.find("#mypage-tab");
-    wrapper.at(0).props().onChange(null, 0);
+    let wrapper = component.find(".tab-menu");
+    wrapper.simulate("click");
     const instance = component.find(MyPage.WrappedComponent).instance();
     expect(instance.state.tab).toBe(0);
+    wrapper = component.find(".tab-panel-item");
+    expect(wrapper.length).toBe(2);
   });
 
   it("should activate both My Roadmaps and Pinned Roadmaps on the user's MyPage", () => {
@@ -303,11 +321,9 @@ describe("<MyPage />", () => {
       </Provider>
     );
     const component = mount(myPage);
-    const wrapper = component.find("#mypage-tab");
-    wrapper.at(0).props().onChange(null, 0);
     const instance = component.find(MyPage.WrappedComponent).instance();
-    expect(instance.state.tab).toBe(0);
-    wrapper.at(0).props().onChange(null, 1);
+    const wrapper = component.find(".tab-menu");
+    wrapper.simulate("click");
     expect(instance.state.tab).toBe(1);
   });
 

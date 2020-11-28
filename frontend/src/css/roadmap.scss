@@ -1,0 +1,78 @@
+@import "./basic.scss";
+
+/* ------------------ edit/create roadmap variables ------------------ */
+$create-roadmap-min-width: 850px;
+$create-roadmap-main-background-color: $main3-red-light-color;
+
+$create-roadmap-body-min-width: 450px;
+$create-roadmap-body-max-width: 800px;
+
+$create-roadmap-body-width: 50%;
+
+$create-roadmap-border-style: 0px solid $main3-red-color;
+$create-roadmap-border-radius: 3px;
+$create-roadmap-background-color: $paper-color;
+
+$create-section-border-style: 0px solid $main3-red-color;
+$create-section-border-radius: $create-roadmap-border-radius;
+$create-section-background-color: $paper-color;
+
+$create-task-border-style: 0px solid $grey-light-color;
+$create-task-border-radius: $create-roadmap-border-radius;
+$create-task-background-color: $paper-color;
+$create-task-box-shadow: 2px 2px 7px $grey-dark-color;
+
+$create-buttons-background-color: $main3-red-color;
+$create-buttons-color: #ffffff;
+$create-buttons-border-style: none;
+$create-buttons-border-radius: 5px;
+$create-buttons-padding: 15px;
+$create-buttons-margin-top: 40px;
+$create-buttons-font-size: 17px;
+$create-buttons-font-weight: 900;
+$create-buttons-disabled-opacity: 0.5;
+
+$create-buttons2-background-color: #ffffff;
+$create-buttons2-color: $main3-red-color;
+
+$create-confirm-button-padding: 20px;
+
+$create-back-delete-button-background-color: $grey-dark-color;
+
+$create-updown-background-color: #ffffff;
+$create-updown-color: $main3-red-color;
+$create-updown-font-size: 100%;
+$create-updown-border-style: ridge $grey-light-color;
+$create-updown-border-radius: 4px;
+$create-updown-box-shadow: 1px 1px 1px $grey-dark-color;
+$create-updown-padding: 0px;
+$create-updown-margin: 0px 0px 0px 5px;
+$create-updown-width: 35px;
+$create-updown-height: 35px;
+$create-updown-min-width: 35px;
+
+$create-tag-background-color: $grey-medium-color;
+$create-tag-border-style: none;
+$create-tag-border-radius: 5px;
+$create-tag-height: 27px;
+$create-tag-font-size: 100%;
+$create-tag-padding: 5px 5px 5px 10px;
+$create-tag-margin: 0px 5px 2px 0px;
+$create-tag-color: #ffffff;
+
+/* <input> variables */
+$roadmap-input-text-color: #111111;
+$roadmap-input-placeholder-color: $grey-medium-color;
+$roadmap-input-placeholder-style: italic;
+$roadmap-input-placeholder-font-size: 100%;
+$roadmap-input-border-style: 2px solid $grey-light-color;
+$roadmap-input-border-radius: 5px;
+$roadmap-input-font-size: 15px;
+$roadmap-input-padding: 10px;
+$tag-input-text-color: $roadmap-input-text-color;
+$tag-input-placeholder-color: $roadmap-input-placeholder-color;
+$tag-input-placeholder-style: $roadmap-input-placeholder-style;
+$tag-input-border-style: $roadmap-input-border-style;
+$tag-input-border-radius: $roadmap-input-border-radius;
+$tag-input-font-size: 7px;
+$tag-input-padding: 2px;

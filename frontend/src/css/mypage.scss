@@ -1,0 +1,53 @@
+@import "./basic.scss";
+
+/* ------------------ MyPage variables ------------------ */
+$mypage-main-background-color: $grey-light2-color;
+
+$mypage-user-info-width: 230px;
+$mypage-user-info-height: 400px;
+$mypage-user-info-background-color: #ffffff;
+$mypage-user-info-border-radius: 20px;
+$mypage-user-img-width: 200px;
+$mypage-user-img-heigth: 200px;
+$mypage-user-img-border: 1px solid $grey-light-color;
+$mypage-user-img-border-radius: 70%;
+
+$mypage-tab-menus-margin: 0px 0px 0px 0px;
+
+$mypage-tab-menu-background-color: $main3-red-dark-color;
+$mypage-tab-menu-border-style: none;
+$mypage-tab-menu-border-radius: 20px 20px 0px 0px;
+$mypage-tab-menu-text-align: center;
+$mypage-tab-menu-font-size: 25px;
+$mypage-tab-menu-min-width: 300px;
+$mypage-tab-menu-height: 70px;
+$mypage-tab-menu-color: #ffffff;
+$mypage-tab-menu-margin: 0px 10px 0px 0px;
+
+$mypage-tab-width: 950px;
+$mypage-tab-box-shadow: none;
+$mypage-tab-background-color: $grey-light-color;
+$mypage-tab-border-radius: $mypage-tab-menu-border-radius;
+
+$mypage-tab-panel-background-color: #ffffff;
+$mypage-tab-panel-box-shadow: none;
+$mypage-tab-panel-padding: 50px;
+
+$mypage-tab-menu-clicked-background-color: $mypage-tab-panel-background-color;
+$mypage-tab-menu-clicked-border-style: $mypage-tab-menu-border-style;
+$mypage-tab-menu-clicked-border-radius: $mypage-tab-menu-border-radius;
+$mypage-tab-menu-clicked-text-align: $mypage-tab-menu-text-align;
+$mypage-tab-menu-clicked-font-size: $mypage-tab-menu-font-size;
+$mypage-tab-menu-clicked-min-width: $mypage-tab-menu-min-width;
+$mypage-tab-menu-clicked-height: $mypage-tab-menu-height;
+$mypage-tab-menu-clicked-color: $mypage-tab-menu-background-color;
+
+$mypage-tab-menu-hover-enabled-background-color: $main3-red-dark2-color;
+
+$mypage-tab-menu-disabled-opacity: 0.5;
+$mypage-tab-menu-disabled-cursor: not-allowed;
+
+$mypage-tab-item-background-color: $grey-light-color;
+$mypage-tab-item-width: 250px;
+$mypage-tab-item-height: 250px;
+$mypage-tab-item-margin: 0px 23px 0px 0px;

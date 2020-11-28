@@ -40,9 +40,9 @@ export const signIn = (userCredentials) => {
       })
       .catch((error) => {
         if (error.response.status === 401) {
-          alert("Can't find user data! Try again or sign up!");
+          window.alert("Can't find user data! Try again or sign up!");
         } else {
-          alert("Sorry! Something went wrong!");
+          window.alert("Sorry! Something went wrong!");
         }
         dispatch(signInFail_());
       });
@@ -62,15 +62,15 @@ export const signOut = () => {
     return axios
       .get("/api/user/signout/")
       .then(() => {
-        alert("Successfully signed out!");
+        window.alert("Successfully signed out!");
         dispatch(signOutSuccess_());
         dispatch(push("/home"));
       })
       .catch((error) => {
         if (error.response.status === 401) {
-          alert("You are not signed in!");
+          window.alert("You are not signed in!");
         } else {
-          alert("Sorry! Something went wrong!");
+          window.alert("Sorry! Something went wrong!");
         }
         dispatch(signOutFail_());
       });
@@ -90,12 +90,12 @@ export const signUp = (userCredentials) => {
     return axios
       .post("/api/user/", userCredentials)
       .then(() => {
-        alert("Successfully signed up!");
+        window.alert("Successfully signed up!");
         dispatch(signUpSuccess_());
         dispatch(push("/home"));
       })
       .catch(() => {
-        alert("Something wrong with the request! Try again.");
+        window.alert("Something wrong with the request! Try again.");
         dispatch(signUpFail_());
       });
   };

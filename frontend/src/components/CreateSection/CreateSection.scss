@@ -1,42 +1,79 @@
-.CreateSection {
-  position: relative;
-  left: 15%;
-  width: 77%;
-  border: 1px solid rgb(87, 82, 82);
-  box-sizing: border-box;
-  padding: 5px;
-  margin: 5px 5px 5px 5px;
+@import "../../css/roadmap.scss";
 
-  .up-section-button,
-  .down-section-button {
+$padding-main: 0px 40px 40px 40px;
+$margin-bottom-main: 10px;
+
+.CreateSection {
+  display: flex;
+  flex-direction: column;
+  align-items: flex-start;
+  width: 100%;
+  padding: $padding-main;
+  margin-bottom: $margin-bottom-main;
+  border: $create-section-border-style;
+  border-radius: $create-section-border-radius;
+  background-color: $create-section-background-color;
+
+  .section-collapse {
     position: relative;
-    height: 30px;
-    left: -3%;
-    margin: 5px 5px 5px 5px;
+    left: -100px;
+    width: 40px;
+    min-width: 40px;
+    height: 35px;
+    font-size: 20px;
+    padding: 0px;
+    background-color: $create-buttons2-background-color;
+    color: $create-buttons2-color;
+    border: 2px solid $create-buttons2-color;
+    margin: 0px;
   }
 
-  .create-task-button {
-    position: relative;
-    height: 30px;
-    right: -10%;
+  .title-up-down {
+    align-self: flex-end;
+    width: 100%;
+    display: flex;
+    flex-direction: row;
+    flex-wrap: nowrap;
+    align-items: center;
+    margin-bottom: 40px;
+
+    .section-title {
+      width: 100%;
+      margin-right: 20px;
+    }
+
+    .up-section-button,
+    .down-section-button {
+      background-color: $create-updown-background-color;
+      color: $create-updown-color;
+      font-size: $create-updown-font-size;
+      border: $create-updown-border-style;
+      border-radius: $create-updown-border-radius;
+      box-shadow: $create-updown-box-shadow;
+      padding: $create-updown-padding;
+      margin: $create-updown-margin;
+      width: $create-updown-width;
+      height: $create-updown-height;
+      min-width: $create-updown-min-width;
+    }
+  }
+
+  .section {
+    display: flex;
+    flex-direction: column;
+    align-items: flex-start;
+    width: 100%;
+    margin-bottom: $margin-bottom-main;
+    border: $create-section-border-style;
+    border-radius: $create-section-border-radius;
+    background-color: $create-section-background-color;
+    .create-task-button {
+      align-self: center;
+    }
   }
 
   .delete-section-button {
-    position: relative;
-    height: 30px;
-    right: 40%;
-    margin: 5px 5px 5px 5px;
-  }
-
-  .section-title {
-    position: relative;
-    width: 60%;
-    border: 1px solid rgb(87, 82, 82);
-    box-sizing: border-box;
-    padding: 5px;
-    margin: 15px 5px 15px 5px;
-    font-weight: 700;
-    color: rgb(0, 0, 225);
-    font-size: 20px;
+    align-self: flex-end;
+    background-color: $create-back-delete-button-background-color;
   }
 }

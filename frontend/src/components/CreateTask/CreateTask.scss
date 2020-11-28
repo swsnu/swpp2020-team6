@@ -1,54 +1,75 @@
+@import "../../css/roadmap.scss";
+
+$padding-main: 40px;
+$margin-bottom-main: 15px;
+
 .CreateTask {
   position: relative;
-  left: 20%;
-  width: 77%;
-  border: 1px solid rgb(87, 82, 82);
-  box-sizing: border-box;
-  padding: 5px;
-  margin: 5px 5px 5px 5px;
+  display: flex;
+  flex-direction: column;
+  align-items: flex-end;
+  width: 110%;
+  padding: 40px;
+  margin-bottom: $margin-bottom-main;
+  border: $create-task-border-style;
+  border-radius: $create-task-border-radius;
+  background-color: $create-task-background-color;
+  box-shadow: $create-task-box-shadow;
 
-  .task-type {
-    position: relative;
-    border: 1px solid rgb(87, 82, 82);
-    box-sizing: border-box;
-    padding: 5px;
-    margin: 5px 5px 5px 5px;
-    font-weight: 700;
-    color: rgb(0, 0, 225);
-    font-size: 20px;
+  button:disabled {
+    opacity: $create-buttons-disabled-opacity;
   }
-  .task-title,
-  .task-url,
+
+  .task-type-title-buttons {
+    width: 100%;
+    display: flex;
+    justify-content: center;
+    align-items: center;
+    flex-direction: row;
+    flex-wrap: nowrap;
+
+    .task-type-select {
+      div {
+        min-width: 105px;
+        min-height: 25px;
+        display: flex;
+        flex-direction: row;
+        justify-content: center;
+        align-items: center;
+      }
+    }
+    .task-title {
+      width: 100%;
+      margin: 0px 20px 0px 15px;
+    }
+    .up-task-button,
+    .down-task-button {
+      background-color: $create-updown-background-color;
+      color: $create-updown-color;
+      font-size: $create-updown-font-size;
+      border: $create-updown-border-style;
+      border-radius: $create-updown-border-radius;
+      box-shadow: $create-updown-box-shadow;
+      padding: $create-updown-padding;
+      margin: $create-updown-margin;
+      width: $create-updown-width;
+      height: $create-updown-height;
+      min-width: $create-updown-min-width;
+    }
+  }
+
+  .task-url {
+    width: 100%;
+    margin: 20px 0px 30px 0px;
+  }
+
   .task-description {
-    position: relative;
-    width: 60%;
-    border: 1px solid rgb(87, 82, 82);
-    box-sizing: border-box;
-    padding: 5px;
-    margin: 5px 5px 5px 5px;
-    font-weight: 700;
-    color: rgb(0, 0, 225);
-    font-size: 20px;
-  }
-  label {
-    position: relative;
-    margin: 10px;
-    color: black;
-    font-size: 15px;
-  }
-
-  .up-task-button,
-  .down-task-button {
-    position: relative;
-    height: 30px;
-    left: -40%;
-    margin: 5px 5px 5px 5px;
+    width: 100%;
+    height: 100px;
   }
 
   .delete-task-button {
-    position: relative;
-    height: 30px;
-    right: -40%;
-    margin: 5px 5px 5px 5px;
+    float: right;
+    background-color: $create-back-delete-button-background-color;
   }
 }

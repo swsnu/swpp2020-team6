@@ -1,10 +1,9 @@
 import React, { Component } from "react";
-// import FormGroup from "@material-ui/core/FormGroup";
-// import FormControlLabel from "@material-ui/core/FormControlLabel";
-import Switch from "@material-ui/core/Switch";
 import PropTypes from "prop-types";
+import Switch from "@material-ui/core/Switch";
 
 import CreateSection from "../../components/CreateSection/CreateSection";
+import StyledSelect from "../../components/Roadmap/StyledComponents/StyledSelect";
 import { levelType } from "../../constants";
 import "./Roadmap.scss";
 
@@ -30,7 +29,9 @@ class Roadmap extends Component {
       title: selectedRoadmap.title,
       level: parseInt(selectedRoadmap.level, 10),
       description: selectedRoadmap.description,
-      sections: selectedRoadmap.sections,
+      sections: selectedRoadmap.sections.map((section) => {
+        return { ...section, collapse: false };
+      }),
       tags: selectedRoadmap.tags.map((tag) => {
         return tag.tag_name;
       }),
@@ -123,6 +124,18 @@ class Roadmap extends Component {
       sections: sections.map((section, index) => {
         if (index === tmpSectionId) {
           section.section_title = title;
+        }
+        return section;
+      }),
+    });
+  };
+
+  onClickSectionCollapse = (tmpSectionId) => {
+    const { sections } = this.state;
+    this.setState({
+      sections: sections.map((section, index) => {
+        if (index === tmpSectionId) {
+          section.collapse = !section.collapse;
         }
         return section;
       }),
@@ -343,26 +356,29 @@ class Roadmap extends Component {
     }
     const taglist = tags.map((tag, index) => {
       return (
-        <div className="tags">
-          <p key={tag}>{tag}</p>
+        <div className="tag">
+          <div className="tag-name" key={tag}>
+            {tag}
+          </div>
           <button
             className="delete-tag"
             type="button"
             onClick={() => this.onClickDeleteTag(tag, index)}
           >
-            delete
+            x
           </button>
         </div>
       );
     });
 
-    const EditSections = sections.map((section, index) => {
+    const Sections = sections.map((section, index) => {
       return (
         <CreateSection
           tmpSectionId={index}
           sectionLastId={sections.length - 1}
           title={section.section_title}
           tasks={section.tasks}
+          collapse={section.collapse}
           clickDeleteSectionHandler={this.onClickDeleteSection}
           clickUpSectionHandler={this.onClickUpSection}
           clickDownSectionHandler={this.onClickDownSection}
@@ -375,63 +391,72 @@ class Roadmap extends Component {
           changeTaskTypeHandler={this.onChangeTaskType}
           changeTaskUrlHandler={this.onChangeTaskUrl}
           changeTaskDescriptionHandler={this.onChangeTaskDescription}
+          clickSectionCollapse={this.onClickSectionCollapse}
         />
       );
     });
 
     return (
       <div className="Roadmap">
-        <div className="roadmap">
-          <label>
-            Private
-            <Switch
-              id="roadmap-private"
-              checked={isPrivate}
-              onClick={() => this.onClickPrivate()}
-            />
-          </label>
-          <label>Roadmap Title</label>
-          <input
-            id="roadmap-title"
-            type="text"
-            value={title}
-            onChange={(event) => this.onChangeTitle(event.target.value)}
-          />
-          <br />
-          <select
-            id="roadmap-level"
-            value={level}
-            onChange={(event) => {
-              return this.onChangeLevel(event.target.value);
-            }}
-          >
-            Level
-            <option value={0}>Choose level</option>
-            <option value={levelType.BASIC}>Basic</option>
-            <option value={levelType.INTERMEDIATE}>Intermediate</option>
-            <option value={levelType.ADVANCED}>Advanced</option>
-          </select>
-          <br />
-          <label>Tags</label>
-          {taglist}
-          <input
-            id="new-tag"
-            value={newTag}
-            onChange={(event) => this.onChangeNewTag(event.target.value)}
-          />
-          <button id="add-tag-button" type="button" onClick={() => this.onClickAddTag()}>
-            add
-          </button>
-          <br />
-          <label>Description</label>
-          <input
-            id="roadmap-description"
-            value={description}
-            onChange={(event) => this.onChangeDescription(event.target.value)}
-          />
-        </div>
-        <div className="sections">
-          {EditSections}
+        <div className="main">
+          <h1>{isEdit ? "Edit Roadmap" : "Create Roadmap"}</h1>
+          <div className="roadmap">
+            <div className="title-private">
+              <input
+                id="roadmap-title"
+                type="text"
+                value={title}
+                placeholder="Title"
+                onChange={(event) => this.onChangeTitle(event.target.value)}
+              />
+              <label id="roadmap-private-label">{isPrivate ? "Private" : "Public"}</label>
+              <Switch
+                id="roadmap-private"
+                checked={isPrivate}
+                onClick={() => this.onClickPrivate()}
+              />
+            </div>
+            <div className="level-tag">
+              <div className="roadmap-level-select">
+                <StyledSelect
+                  value={level}
+                  onChange={(event) => this.onChangeLevel(event.target.value)}
+                  items={[
+                    { name: <em style={{ color: "#aaaaaa" }}>Choose level</em>, value: 0 },
+                    { name: "Basic", value: levelType.BASIC },
+                    { name: "Intermediate", value: levelType.INTERMEDIATE },
+                    { name: "Advanced", value: levelType.ADVANCED },
+                  ]}
+                  customId="roadmap-level"
+                  label="Level"
+                  placeholder="Choose level"
+                />
+              </div>
+              <div className="tag-block">
+                <div className="new-tag">
+                  <input
+                    id="new-tag"
+                    value={newTag}
+                    placeholder="Add tags"
+                    onChange={(event) => this.onChangeNewTag(event.target.value)}
+                  />
+                  <button id="add-tag-button" type="button" onClick={() => this.onClickAddTag()}>
+                    +
+                  </button>
+                </div>
+                <div className="tags">{taglist}</div>
+              </div>
+            </div>
+            <div className="roadmap-description">
+              <input
+                id="roadmap-description"
+                value={description}
+                placeholder="Description"
+                onChange={(event) => this.onChangeDescription(event.target.value)}
+              />
+            </div>
+          </div>
+          {Sections}
           <button
             type="button"
             id="create-section-button"
@@ -440,19 +465,17 @@ class Roadmap extends Component {
             Create Section
           </button>
         </div>
-        <div className="buttons">
-          <button id="back-roadmap-button" type="button" onClick={() => this.onClickBack()}>
-            Back
-          </button>
-          <button
-            id="confirm-roadmap-button"
-            type="button"
-            disabled={title === "" || level === 0 || sections.length === 0}
-            onClick={() => onClickConfirmHandler(this.onClickConfirm())}
-          >
-            Confirm
-          </button>
-        </div>
+        <button id="back-roadmap-button" type="button" onClick={() => this.onClickBack()}>
+          Back
+        </button>
+        <button
+          id="confirm-roadmap-button"
+          type="button"
+          disabled={title === "" || level === 0 || sections.length === 0}
+          onClick={() => onClickConfirmHandler(this.onClickConfirm())}
+        >
+          Confirm
+        </button>
       </div>
     );
   }
