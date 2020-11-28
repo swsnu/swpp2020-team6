@@ -9,7 +9,7 @@ import DialogContentText from "@material-ui/core/DialogContentText";
 import DialogTitle from "@material-ui/core/DialogTitle";
 import Slide from "@material-ui/core/Slide";
 import * as actionCreators from "../../store/actions/index";
-import "./RoadmapDetail.css";
+import "./RoadmapDetail.scss";
 import Comment from "../../components/Comment";
 import ProgressBar from "../../components/RoadmapDetail/ProgressBar";
 import RoadmapButtons from "./RoadmapButtons";
@@ -101,7 +101,7 @@ class RoadmapDetail extends Component {
 
     if (isSignedIn === false) {
       // unsigned in user
-      return <div />;
+      return <div className="RoadmapDetail" />;
     }
     if (selectedRoadmap === undefined) {
       // waiting to get the roadmap data

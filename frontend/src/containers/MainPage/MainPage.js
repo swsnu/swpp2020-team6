@@ -11,38 +11,44 @@ const MainPage = (props) => {
   const { isSignedIn, history } = props;
   if (isSignedIn === false) {
     history.push("/home");
-    return <h1>Redirecting...</h1>;
+    return (
+      <div className="MainPage">
+        <h1>Redirecting...</h1>
+      </div>
+    );
   }
   return (
-    <>
-      <CssBaseline />
-      <Carousel>
-        <Carousel.Item>
-          <img src={rotus} alt="This is the first slide" width="1000px" height="300px" />
-          <Carousel.Caption>
-            <h3>Welcome to Rotus!</h3>
-            <p>Explore awesome well organized, awsome roadamps and plan for your goals!</p>
-          </Carousel.Caption>
-        </Carousel.Item>
-        <Carousel.Item>
-          <img src={rotus} alt="This is the first slide" width="1000px" height="300px" />
-          <Carousel.Caption>
-            <h3>How to get started</h3>
-            <p>A quick walk through with key features and tips to create a great roadmap!</p>
-          </Carousel.Caption>
-        </Carousel.Item>
-        <Carousel.Item>
-          <img src={rotus} alt="This is the first slide" width="1000px" height="300px" />
-          <Carousel.Caption>
-            <h3>[AD] The world-wide best biscuits</h3>
-            <p>enjoy rotus anywhere!</p>
-          </Carousel.Caption>
-        </Carousel.Item>
-      </Carousel>
-      <div className="RoadmapCarousel">
-        <RoadmapCarousel />
-      </div>
-    </>
+    <div className="MainPage">
+      <>
+        <CssBaseline />
+        <Carousel>
+          <Carousel.Item>
+            <img src={rotus} alt="This is the first slide" width="1000px" height="300px" />
+            <Carousel.Caption>
+              <h3>Welcome to Rotus!</h3>
+              <p>Explore awesome well organized, awsome roadamps and plan for your goals!</p>
+            </Carousel.Caption>
+          </Carousel.Item>
+          <Carousel.Item>
+            <img src={rotus} alt="This is the first slide" width="1000px" height="300px" />
+            <Carousel.Caption>
+              <h3>How to get started</h3>
+              <p>A quick walk through with key features and tips to create a great roadmap!</p>
+            </Carousel.Caption>
+          </Carousel.Item>
+          <Carousel.Item>
+            <img src={rotus} alt="This is the first slide" width="1000px" height="300px" />
+            <Carousel.Caption>
+              <h3>[AD] The world-wide best biscuits</h3>
+              <p>enjoy rotus anywhere!</p>
+            </Carousel.Caption>
+          </Carousel.Item>
+        </Carousel>
+        <div className="RoadmapCarousel">
+          <RoadmapCarousel />
+        </div>
+      </>
+    </div>
   );
 };
 

@@ -3,32 +3,10 @@ import { connect } from "react-redux";
 import { withRouter } from "react-router";
 import PropTypes from "prop-types";
 import MyTab from "../../components/MyPage/StyledComponents/MyTab";
+import SimpleRoadmap from "../../components/SimpleRoadmap/SimpleRoadmap";
 import * as actionCreators from "../../store/actions/index";
 import userImg from "../../misc/rotus-img.png";
 import "./MyPage.scss";
-
-const TmpRoadmapItem = (props) => {
-  const { roadmap, history } = props;
-  return (
-    <div className="TmpRoadmapItem">
-      <h1>
-        <button
-          id={`roadmap-${roadmap.id}`}
-          type="button"
-          onClick={() => history.push(`/roadmap/${roadmap.id}`)}
-        >
-          {roadmap.id}
-        </button>
-        {roadmap.title}
-      </h1>
-    </div>
-  );
-};
-
-TmpRoadmapItem.propTypes = {
-  roadmap: PropTypes.objectOf(PropTypes.any),
-  history: PropTypes.objectOf(PropTypes.any),
-};
 
 class MyPage extends Component {
   state = {
@@ -47,6 +25,29 @@ class MyPage extends Component {
 
   onChangeTab = (tab) => {
     this.setState({ tab });
+  };
+
+  makeRoadmapItemList = (roadmapList) => {
+    const { history } = this.props;
+
+    return roadmapList.map((roadmap) => (
+      <SimpleRoadmap
+        key={roadmap.id}
+        onClick={() => history.push(`/roadmap/${roadmap.id}`)}
+        roadmapDescription={roadmap.description}
+        roadmapId={roadmap.id}
+        roadmapTitle={roadmap.title}
+        roadmapLevel={roadmap.level}
+        authorName={roadmap.author_name}
+        date={roadmap.date}
+        likeCount={roadmap.like_count}
+        pinCount={roadmap.pin_count}
+        commentCount={roadmap.comment_count}
+        tagList={roadmap.tags}
+        isMyPage={false}
+        roadmapImageId="1"
+      />
+    ));
   };
 
   render() {
@@ -71,18 +72,14 @@ class MyPage extends Component {
 
     if (selectedUser.user_id === myPageUser.user_id) {
       user = selectedUser;
-      pinnedRoadmaps = user.pinned_roadmaps.map((roadmap) => {
-        return <TmpRoadmapItem roadmap={roadmap} history={history} />;
-      });
+      pinnedRoadmaps = this.makeRoadmapItemList(user.pinned_roadmaps);
     } else {
       user = myPageUser;
       pinnedRoadmaps = [];
       disabled = 1;
     }
 
-    const myRoadmaps = user.my_roadmaps.map((roadmap) => {
-      return <TmpRoadmapItem roadmap={roadmap} history={history} />;
-    });
+    const myRoadmaps = this.makeRoadmapItemList(user.my_roadmaps);
 
     return (
       <div className="MyPage">

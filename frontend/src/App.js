@@ -14,7 +14,7 @@ import RoadmapDetail from "./containers/RoadmapDetail/RoadmapDetail";
 import SearchResult from "./containers/SearchResult/SearchResult";
 import MyPage from "./containers/MyPage/MyPage";
 
-import "./App.css";
+import "./App.scss";
 import MainPage from "./containers/MainPage/MainPage";
 import LogoButton from "./components/LogoButton/LogoButton";
 import UpperUserBar from "./containers/UpperBar/UpperUserBar";
@@ -38,9 +38,11 @@ class App extends React.Component {
     return (
       <ConnectedRouter history={history}>
         <div className="App">
-          <LogoButton />
-          <UpperUserBar />
-          <UpperSearchBar />
+          <div className="upper-bar">
+            <LogoButton />
+            <UpperUserBar />
+            <UpperSearchBar />
+          </div>
           <Switch>
             <Route path="/home" exact component={Home} />
             <Route path="/signup" exact component={SignUp} />

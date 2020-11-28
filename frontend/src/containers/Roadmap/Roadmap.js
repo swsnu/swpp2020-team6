@@ -447,14 +447,12 @@ class Roadmap extends Component {
                 <div className="tags">{taglist}</div>
               </div>
             </div>
-            <div className="roadmap-description">
-              <input
-                id="roadmap-description"
-                value={description}
-                placeholder="Description"
-                onChange={(event) => this.onChangeDescription(event.target.value)}
-              />
-            </div>
+            <input
+              id="roadmap-description"
+              value={description}
+              placeholder="Description"
+              onChange={(event) => this.onChangeDescription(event.target.value)}
+            />
           </div>
           {Sections}
           <button
