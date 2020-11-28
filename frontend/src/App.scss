@@ -29,17 +29,24 @@
   }
 
   .upper-bar {
+    height: 70px;
     display: flex;
     flex-direction: row;
     align-items: center;
     justify-content: flex-start;
+    padding: 0px 0px 0px 10px;
 
     .LogoButton {
       order: 0;
+      height: 80%;
+      button {
+        height: 100%;
+      }
     }
 
     .UpperUserBar {
       order: 2;
+      height: 100%;
     }
 
     .UpperSearchBar {

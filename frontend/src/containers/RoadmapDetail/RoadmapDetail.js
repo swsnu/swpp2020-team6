@@ -153,9 +153,7 @@ class RoadmapDetail extends Component {
       // (inevitable since we use the data from the backend directly)
       // eslint-disable-next-line camelcase
       original_author_id !== author_id ? (
-        <div className="roadmap-original-author">
-          <p id="roadmap-original-author-name">{selectedRoadmap.original_author_name}</p>
-        </div>
+        <p id="roadmap-original-author-name">{selectedRoadmap.original_author_name}</p>
       ) : null;
 
     /* ---------------- Roadmap level -------------------- */
@@ -192,9 +190,9 @@ class RoadmapDetail extends Component {
     /* ---------------- Roadmap tags -------------------- */
     const roadmapTags = selectedRoadmap.tags.map((item) => {
       return (
-        <p key={item.tag_id} className="roadmap-tag">
+        <div key={item.tag_id} className="roadmap-tag">
           {item.tag_name}
-        </p>
+        </div>
       );
     });
 
@@ -234,64 +232,66 @@ class RoadmapDetail extends Component {
     return (
       <div className="RoadmapDetail">
         <div className="header" />
-        <div className="row">
-          <div className="leftcolumn">
+        <div className="leftcolumn">
+          <div className="progress-bar">
             <ProgressBar
               isAuthor={selectedUser.user_id === selectedRoadmap.author_id}
               onChangeRoadmapProgressStatus={this.onChangeRoadmapProgressStatus}
               currentProgressStatus={selectedRoadmap.progress}
             />
+          </div>
+          <div className="title-author-level-tags">
             <h1 className="roadmap-title">{title}</h1>
             <div className="roadmap-author">
               <p id="roadmap-author-picture-url">{selectedRoadmap.author_user_picture_url}</p>
-              <p id="roadmap-author-name">{selectedRoadmap.author_name}</p>
-              <p id="roadmap-written-date">{selectedRoadmap.date}</p>
+              <p id="roadmap-author-name">author: {selectedRoadmap.author_name}</p>
             </div>
-            {originalAuthor}
-            {roadmapLevel}
+            <div className="roadmap-original-author">original: {originalAuthor}</div>
+            <div className="roadmap-level">{roadmapLevel}</div>
             <div className="roadmap-tags">{roadmapTags}</div>
-            <div className="roadmap-description">{selectedRoadmap.description}</div>
-            <div className="roadmap-sections">{roadmapSections}</div>
+            <div id="roadmap-written-date">{selectedRoadmap.date}</div>
           </div>
-          <div className="rightcolumn">
-            <div className="roadmap-panel">
-              <div className="roadmap-statistics">
-                <p id="roadmap-like-count">
-                  Like
-                  {selectedRoadmap.like_count}
-                </p>
-                <p id="roadmap-pin-count">
-                  Pinned
-                  {selectedRoadmap.pin_count}
-                </p>
-                <p id="roadmap-comment-count">
-                  Comments
-                  {selectedRoadmap.comment_count}
-                </p>
-              </div>
-              <RoadmapButtons // change to comopnent and send funcs
-                buttonsRoadmapId={parseInt(match.params.id, 10)}
-                isAuthor={selectedRoadmap.author_id === selectedUser.user_id}
-              />
+          <div className="roadmap-description">{selectedRoadmap.description}</div>
+          <div className="roadmap-sections">{roadmapSections}</div>
+        </div>
+        <div className="rightcolumn">
+          <div className="roadmap-panel">
+            <div className="roadmap-statistics">
+              <p id="roadmap-like-count">
+                Like
+                {selectedRoadmap.like_count}
+              </p>
+              <p id="roadmap-pin-count">
+                Pinned
+                {selectedRoadmap.pin_count}
+              </p>
+              <p id="roadmap-comment-count">
+                Comments
+                {selectedRoadmap.comment_count}
+              </p>
             </div>
-            <div className="comment-input">
-              <textarea
-                id="new-comment-content-input"
-                rows="4"
-                cols="100"
-                type="text"
-                value={comment}
-                onChange={
-                  (event) => {
-                    this.setState({ comment: event.target.value });
-                  }
-                  // eslint-disable-next-line react/jsx-curly-newline
+            <RoadmapButtons // change to comopnent and send funcs
+              buttonsRoadmapId={parseInt(match.params.id, 10)}
+              isAuthor={selectedRoadmap.author_id === selectedUser.user_id}
+            />
+          </div>
+          <div className="comment-input">
+            <input
+              id="new-comment-content-input"
+              rows="4"
+              cols="100"
+              type="text"
+              value={comment}
+              onChange={
+                (event) => {
+                  this.setState({ comment: event.target.value });
                 }
-              />
-              {commentConfirmButton}
-            </div>
-            <div className="roadmap-comments">{roadmapComments}</div>
+                // eslint-disable-next-line react/jsx-curly-newline
+              }
+            />
+            {commentConfirmButton}
           </div>
+          <div className="roadmap-comments">{roadmapComments}</div>
         </div>
       </div>
     );

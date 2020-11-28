@@ -2,6 +2,7 @@ import React from "react";
 import PropTypes from "prop-types";
 import { connect } from "react-redux";
 import * as actionCreators from "../../store/actions/index";
+import taskTypeIcons from "../CreateTask/taskTypeIcons";
 
 import "./Task.scss";
 
@@ -17,6 +18,7 @@ const Task = (props) => {
     checked,
     changeCheckbox,
   } = props;
+
   const checkbox =
     isAuthor && progressStatus === 2 ? (
       <input
@@ -27,10 +29,11 @@ const Task = (props) => {
       />
     ) : null;
   // 'task-type' will be changed into icon corresponding to the type
+
   return (
     <div className="Task">
       {checkbox}
-      <p className="task-type">{`task type:${type}`}</p>
+      <div className="task-type">{taskTypeIcons[type].name}</div>
       <p className="task-title">{`task title:${title}`}</p>
       <p className="task-url">{`url: ${url}`}</p>
       <p className="task-description">{`description: ${description}`}</p>

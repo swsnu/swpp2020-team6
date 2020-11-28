@@ -20,11 +20,6 @@ const BootstrapInput = withStyles((theme) => ({
     padding: "10px 26px 10px 12px",
     transition: theme.transitions.create(["border-color", "box-shadow"]),
     fontFamily: ["Ubuntu"].join(","),
-    "&:focus": {
-      // borderRadius: 5,
-      // borderColor: "#80bdff",
-      // boxShadow: "0 0 0 0.2rem rgba(0,123,255,.25)",
-    },
   },
   error: {
     border: "2px solid #ff0000",
@@ -37,11 +32,6 @@ const StyledMenuItem = withStyles((theme) => ({
     transition: theme.transitions.create(["border-color", "box-shadow"]),
     // Use the system font instead of the default Roboto font.
     fontFamily: ["Ubuntu"].join(","),
-    "&:focus": {
-      // borderRadius: 4,
-      // borderColor: "#80bdff",
-      // boxShadow: "0 0 0 0.2rem rgba(0,123,255,.25)",
-    },
   },
 }))(MenuItem);
 
@@ -49,6 +39,13 @@ const stylesSelect = (theme) => ({
   formControl: {
     padding: theme.spacing(1),
     minWidth: 170,
+  },
+  MenuProps: {
+    PopoverClasses: {
+      "& .label": {
+        margin: 1,
+      },
+    },
   },
 });
 
