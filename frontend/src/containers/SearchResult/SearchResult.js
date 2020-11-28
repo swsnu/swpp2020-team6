@@ -1,5 +1,6 @@
 /* Search Result page.
  * All search actions redirects to this page.
+ * On this page, the user can try "advanced search".
  */
 
 import React, { Component } from "react";
@@ -256,7 +257,7 @@ class SearchResult extends Component {
 
         <br />
 
-        <div clasName="topTags">
+        <div className="topTags">
           <label>Top Tags</label>
           {topTagList}
         </div>

@@ -1,4 +1,3 @@
-/* eslint-disable no-unused-vars */
 import React from "react";
 import PropTypes from "prop-types";
 
@@ -6,16 +5,12 @@ const RoadmapSimple = (props) => {
   const {
     roadmapID,
     title,
-    date,
-    level,
     likeCount,
     commentCount,
     pinCount,
-    progress,
     authorName,
     tags,
     onClickTitleHandler,
-    isMyRoadmap,
   } = props;
 
   return (
@@ -33,7 +28,7 @@ const RoadmapSimple = (props) => {
       <div className="likeCount">{likeCount}</div>
       <div className="pinCount">{pinCount}</div>
       <div className="commentCount">{commentCount}</div>
-      <div clasName="tags">{tags}</div>
+      <div className="tags">{tags}</div>
     </div>
   );
 };
@@ -41,16 +36,16 @@ const RoadmapSimple = (props) => {
 RoadmapSimple.propTypes = {
   roadmapID: PropTypes.number,
   title: PropTypes.string,
-  date: PropTypes.string,
-  level: PropTypes.number,
+  // date: PropTypes.string,
+  // level: PropTypes.number,
   likeCount: PropTypes.number,
   commentCount: PropTypes.number,
   pinCount: PropTypes.number,
-  progress: PropTypes.number,
+  // progress: PropTypes.number,
   authorName: PropTypes.string,
   tags: PropTypes.objectOf(PropTypes.any),
   onClickTitleHandler: PropTypes.func,
-  isMyRoadmap: PropTypes.bool,
+  // isMyRoadmap: PropTypes.bool,
 };
 
 export default RoadmapSimple;

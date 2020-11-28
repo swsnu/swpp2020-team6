@@ -15,6 +15,9 @@ import SearchResult from "./containers/SearchResult/SearchResult";
 import MyPage from "./containers/MyPage/MyPage";
 
 import "./App.css";
+import LogoButton from "./components/LogoButton/LogoButton";
+import UpperUserBar from "./containers/UpperBar/UpperUserBar";
+import UpperSearchBar from "./containers/UpperBar/UpperSearchBar";
 
 class App extends React.Component {
   componentDidMount() {
@@ -34,6 +37,9 @@ class App extends React.Component {
     return (
       <ConnectedRouter history={history}>
         <div className="App">
+          <LogoButton />
+          <UpperUserBar />
+          <UpperSearchBar />
           <Switch>
             <Route path="/home" exact component={Home} />
             <Route path="/signup" exact component={SignUp} />
@@ -43,6 +49,7 @@ class App extends React.Component {
             <Route path="/roadmap/:id" exact component={RoadmapDetail} />
             <Route path="/search" exact component={SearchResult} />
             <Route path="/mypage/:id" exact component={MyPage} />
+            <Route path="/search" exact component={SearchResult} />
             <Redirect exact from="/" to="/home" />
             <Route render={() => <h1>Not Found</h1>} />
           </Switch>
