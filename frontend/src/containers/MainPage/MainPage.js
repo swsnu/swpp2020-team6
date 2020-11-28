@@ -1,13 +1,18 @@
 import React from "react";
 import { Carousel } from "react-bootstrap";
+import { connect } from "react-redux";
+import PropTypes from "prop-types";
 import "bootstrap/dist/css/bootstrap.min.css";
-// import ImageSlider from "./ImageSlider";
-import Container from "@material-ui/core/Container";
 import CssBaseline from "@material-ui/core/CssBaseline";
 import rotus from "../../misc/rotus.png";
-import BestCarousel from "./BestCarousel";
+import RoadmapCarousel from "./RoadmapCarousel";
 
-const MainPage = () => {
+const MainPage = (props) => {
+  const { isSignedIn, history } = props;
+  if (isSignedIn === false) {
+    history.push("/home");
+    return <h1>Redirecting...</h1>;
+  }
   return (
     <>
       <CssBaseline />
@@ -34,17 +39,25 @@ const MainPage = () => {
           </Carousel.Caption>
         </Carousel.Item>
       </Carousel>
-      <Container maxWidth="md">
-        <div className="DemoCarousel">
-          <h1>Hi! DemoCarousel!</h1>
-          <BestCarousel />
-        </div>
-      </Container>
+      <div className="RoadmapCarousel">
+        <RoadmapCarousel />
+      </div>
     </>
   );
 };
 
-export default MainPage;
+MainPage.propTypes = {
+  isSignedIn: PropTypes.bool.isRequired,
+  history: PropTypes.objectOf(PropTypes.any).isRequired,
+};
+
+const mapStateToProps = (state) => {
+  return {
+    isSignedIn: state.user.isSignedIn,
+  };
+};
+
+export default connect(mapStateToProps, null)(MainPage);
 // Don't forget to include the css in your page
 
 // Using webpack or parcel with a style loader

@@ -1,6 +1,11 @@
+.MuiCardActions-root {
+  display: inline !important;
+  padding: 0px !important;
+}
+
 .MuiButtonBase-root {
   margin: 5px !important;
-  padding: 5px !important;
+  padding: 0px !important;
   width: 80px !important;
 }
 
@@ -25,6 +30,73 @@
   color: white;
 }
 
+.makeStyles-media-2 {
+  height: 157.5px !important;
+  width: 280px !important;
+}
+
 .MuiTypography-body2 {
   text-align: start;
+}
+
+.image-wrapper {
+  position: relative;
+}
+
+.overlay-title {
+  position: absolute;
+  top: 0;
+  bottom: 0;
+  left: 0;
+  right: 0;
+  height: 100%;
+  width: 100%;
+  opacity: 0.5;
+  // transition: 0.5s ease;
+  background-color: grey;
+}
+
+.roadmap-title {
+  color: black;
+  font-size: 35px;
+  position: absolute;
+  top: 50%;
+  left: 50%;
+  -webkit-transform: translate(-50%, -50%);
+  -ms-transform: translate(-50%, -50%);
+  transform: translate(-50%, -50%);
+  text-align: center;
+}
+
+.card-wrapper {
+  position: relative;
+}
+
+.overlay-description {
+  position: absolute;
+  top: 0;
+  bottom: 0;
+  left: 0;
+  right: 0;
+  height: 100%;
+  width: 100%;
+  opacity: 0;
+  transition: 0.3s ease;
+  background-color: grey;
+}
+
+.roadmap-description {
+  color: black;
+  font-size: 20px;
+  position: absolute;
+  top: 50%;
+  left: 50%;
+  -webkit-transform: translate(-50%, -50%);
+  -ms-transform: translate(-50%, -50%);
+  transform: translate(-50%, -50%);
+  text-align: center;
+}
+
+.card-wrapper:hover .overlay-description {
+  opacity: 0.8;
 }

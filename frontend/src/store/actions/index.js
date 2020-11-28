@@ -14,10 +14,10 @@ export {
   toggleRoadmapPin,
   changeProgress,
   changeCheckbox,
-  resetBestRoadmap_,
-  getBestRoadmap,
-  resetNewRoadmap_,
-  getNewRoadmap,
+  resetBestRoadmaps_,
+  getBestRoadmaps,
+  resetNewRoadmaps_,
+  getNewRoadmaps,
 } from "./roadmap";
 
 export { getSimpleSearch, getAdvancedSearch, getTopTags } from "./search";

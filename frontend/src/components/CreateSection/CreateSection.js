@@ -13,10 +13,12 @@ const CreateSection = (props) => {
     sectionLastId,
     title,
     tasks,
+    collapse,
     clickDeleteSectionHandler,
     clickUpSectionHandler,
     clickDownSectionHandler,
     changeSectionTitleHandler,
+    clickSectionCollapse,
     clickCreateTaskHandler,
     clickDeleteTaskHandler,
     clickUpTaskHandler,
@@ -50,6 +52,13 @@ const CreateSection = (props) => {
 
   return (
     <div className="CreateSection">
+      <button
+        className="section-collapse"
+        type="button"
+        onClick={() => clickSectionCollapse(tmpSectionId)}
+      >
+        {collapse ? "+" : "-"}
+      </button>
       <div className="title-up-down">
         <input
           className="section-title"
@@ -77,16 +86,18 @@ const CreateSection = (props) => {
           ▼
         </button>
       </div>
-      {Tasks}
-      <button
-        className="create-task-button"
-        type="button"
-        onClick={() => {
-          clickCreateTaskHandler(tmpSectionId);
-        }}
-      >
-        Create Task
-      </button>
+      <div className="section" style={{ display: collapse ? "none" : "block" }}>
+        {Tasks}
+        <button
+          className="create-task-button"
+          type="button"
+          onClick={() => {
+            clickCreateTaskHandler(tmpSectionId);
+          }}
+        >
+          Create Task
+        </button>
+      </div>
       <button
         className="delete-section-button"
         type="button"
@@ -109,6 +120,7 @@ CreateSection.propTypes = {
   clickUpSectionHandler: PropTypes.func.isRequired,
   clickDownSectionHandler: PropTypes.func.isRequired,
   changeSectionTitleHandler: PropTypes.func.isRequired,
+  clickSectionCollapse: PropTypes.func.isRequired,
   clickCreateTaskHandler: PropTypes.func.isRequired,
   clickDeleteTaskHandler: PropTypes.func.isRequired,
   clickUpTaskHandler: PropTypes.func.isRequired,
@@ -117,6 +129,7 @@ CreateSection.propTypes = {
   changeTaskTypeHandler: PropTypes.func.isRequired,
   changeTaskUrlHandler: PropTypes.func.isRequired,
   changeTaskDescriptionHandler: PropTypes.func.isRequired,
+  collapse: PropTypes.bool.isRequired,
 };
 
 export default CreateSection;
