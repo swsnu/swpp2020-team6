@@ -13,7 +13,6 @@ import Home from "./containers/Home/Home";
 import RoadmapDetail from "./containers/RoadmapDetail/RoadmapDetail";
 import SearchResult from "./containers/SearchResult/SearchResult";
 import MyPage from "./containers/MyPage/MyPage";
-import SearchResult from "./containers/SearchResult/SearchResult";
 
 import "./App.css";
 import LogoButton from "./components/LogoButton/LogoButton";
