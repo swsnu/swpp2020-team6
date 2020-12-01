@@ -27,7 +27,7 @@ export const signInSuccess_ = (userData) => {
 };
 
 export const signInFail_ = () => {
-  return { type: actionTypes.SIGN_IN_FAILURE };
+  return { type: actionTypes.SIGN_IN_OUT_FAILURE };
 };
 
 export const signIn = (userCredentials) => {
@@ -54,7 +54,7 @@ export const signOutSuccess_ = () => {
 };
 
 export const signOutFail_ = () => {
-  return { type: actionTypes.SIGN_OUT_FAILURE };
+  return { type: actionTypes.SIGN_IN_OUT_FAILURE };
 };
 
 export const signOut = () => {
@@ -77,26 +77,18 @@ export const signOut = () => {
   };
 };
 
-export const signUpSuccess_ = () => {
-  return { type: actionTypes.SIGN_UP };
-};
-
-export const signUpFail_ = () => {
-  return { type: actionTypes.SIGN_UP };
-};
-
 export const signUp = (userCredentials) => {
   return (dispatch) => {
     return axios
       .post("/api/user/", userCredentials)
-      .then(() => {
+      .then((response) => {
         window.alert("Successfully signed up!");
-        dispatch(signUpSuccess_());
+        dispatch(signInSuccess_(response.data));
         dispatch(push("/home"));
       })
       .catch(() => {
         window.alert("Something wrong with the request! Try again.");
-        dispatch(signUpFail_());
+        dispatch(signInFail_());
       });
   };
 };
