@@ -1,10 +1,8 @@
 // user actions
 export const GET_USER_AUTH = "GET_USER_AUTH";
 export const SIGN_IN_SUCCESS = "SIGN_IN_SUCCESS";
-export const SIGN_IN_FAILURE = "SIGN_IN_FAILURE";
 export const SIGN_OUT_SUCCESS = "SIGN_OUT_SUCCESS";
-export const SIGN_OUT_FAILURE = "SIGN_OUT_FAILURE";
-export const SIGN_UP = "SIGN_UP";
+export const SIGN_IN_OUT_FAILURE = "SIGN_IN_OUT_FAILURE";
 export const GET_MYPAGE_USER = "GET_MYPAGE_USER";
 export const RESET_MYPAGE_USER = "RESET_MYPAGE_USER";
 

@@ -16,14 +16,10 @@ const reducer = (state = initialState, action) => {
       return { ...state, isSignedIn: action.isSignedIn, selectedUser: action.selectedUser };
     case actionTypes.SIGN_IN_SUCCESS:
       return { ...state, isSignedIn: true, selectedUser: action.selectedUser };
-    case actionTypes.SIGN_IN_FAILURE:
+    case actionTypes.SIGN_IN_OUT_FAILURE:
       return { ...state };
     case actionTypes.SIGN_OUT_SUCCESS:
       return { ...state, isSignedIn: false, selectedUser: undefined };
-    case actionTypes.SIGN_OUT_FAILURE:
-      return { ...state };
-    case actionTypes.SIGN_UP:
-      return { ...state };
     case actionTypes.CREATE_ROADMAP:
       return {
         ...state,
