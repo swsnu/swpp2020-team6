@@ -38,19 +38,9 @@ jest.mock("./containers/RoadmapDetail/RoadmapDetail", () => {
   });
 });
 
-jest.mock("./containers/Home/Home", () => {
-  return jest.fn(() => {
-    return (
-      <div className="spyHome">
-        <p>test</p>
-      </div>
-    );
-  });
-});
-
 const stubUserData = { user_id: 1, username: "test" };
 
-const sutbUserState = {
+const stubUserState = {
   isSignedIn: true,
   selectedUser: stubUserData,
 };
@@ -71,7 +61,7 @@ const stubInitialSearchState = {
   totalCount: 1,
 };
 
-const mockStore = getMockStore(sutbUserState, initialRoadmapState, stubInitialSearchState);
+const mockStore = getMockStore(stubUserState, initialRoadmapState, stubInitialSearchState);
 
 describe("App", () => {
   let app;
@@ -106,12 +96,6 @@ describe("App", () => {
     expect(component.find(".loading").length).toBe(1);
   });
 
-  it("should render Home", () => {
-    history.push("/home");
-    const component = mount(app);
-    const wrapper = component.find(".spyHome");
-    expect(wrapper.length).toEqual(1);
-  });
   it("should render SignUp", () => {
     history.push("/signup");
     const component = mount(app);

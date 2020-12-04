@@ -6,7 +6,7 @@ import logoImg from "../../misc/rotus.png";
 class LogoButton extends Component {
   onClickLogo = () => {
     const { history } = this.props;
-    history.push("/home");
+    history.push("/main");
   };
 
   render() {

@@ -5,16 +5,6 @@ import { withRouter } from "react-router";
 import * as actionCreators from "../../store/actions/index";
 
 class UpperUserBar extends Component {
-  onClickSignIn = () => {
-    const { history } = this.props;
-    history.push("/signin");
-  };
-
-  onClickSignUp = () => {
-    const { history } = this.props;
-    history.push("/signup");
-  };
-
   onClickSignOut = () => {
     const { onSignOut } = this.props;
     onSignOut();
@@ -37,12 +27,6 @@ class UpperUserBar extends Component {
   render() {
     return (
       <div className="UpperUserBar">
-        <button type="button" id="signin-button" onClick={() => this.onClickSignIn()}>
-          Sign In
-        </button>
-        <button type="button" id="signup-button" onClick={() => this.onClickSignUp()}>
-          Sign Up
-        </button>
         <button type="button" id="signout-button" onClick={() => this.onClickSignOut()}>
           Sign Out
         </button>
