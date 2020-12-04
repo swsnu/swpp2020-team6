@@ -462,7 +462,11 @@ class Roadmap extends Component {
                     />
                   </div>
                   <label id="roadmap-private-label">{isPrivate ? "Private" : "Public"}</label>
-                  <Switch checked={isPrivate} onClick={() => this.onClickPrivate()} />
+                  <Switch
+                    id="roadmap-private"
+                    checked={isPrivate}
+                    onClick={() => this.onClickPrivate()}
+                  />
                 </div>
                 <div className="tag-block">
                   <div className="new-tag">
