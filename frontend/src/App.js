@@ -28,12 +28,16 @@ class App extends React.Component {
 
   render() {
     const { isSignedIn, history } = this.props;
+    let landingPage = "/signin";
     if (isSignedIn === undefined) {
       return (
         <div className="App">
           <div className="loading" />
         </div>
       );
+    }
+    if (isSignedIn === true) {
+      landingPage = "/main";
     }
     return (
       <ConnectedRouter history={history}>
@@ -53,7 +57,7 @@ class App extends React.Component {
             <Route path="/search" exact component={SearchResult} />
             <Route path="/mypage/:id" exact component={MyPage} />
             <Route path="/main" exact component={MainPage} />
-            <Redirect exact from="/" to="/home" />
+            <Redirect exact from="/" to={landingPage} />
             <Route render={() => <h1>Not Found</h1>} />
           </Switch>
         </div>
