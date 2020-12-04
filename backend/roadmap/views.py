@@ -27,6 +27,7 @@ def roadmap(request):
         try:
             req_data = json.loads(request.body.decode())
             new_private = req_data["private"]
+            new_image_id = req_data["imageId"]
             new_title = req_data["title"]
             new_level = req_data["level"]
             new_description = req_data["description"]
@@ -37,6 +38,7 @@ def roadmap(request):
 
         new_roadmap = Roadmap(
             private=new_private,
+            image_id=new_image_id,
             title=new_title,
             level=new_level,
             description=new_description,
@@ -106,6 +108,7 @@ def roadmap_id(request, roadmap_id):
         try:
             req_data = json.loads(request.body.decode())
             new_private = req_data["private"]
+            new_image_id = req_data["imageId"]
             new_title = req_data["title"]
             new_level = req_data["level"]
             new_description = req_data["description"]
@@ -119,6 +122,7 @@ def roadmap_id(request, roadmap_id):
         # Edit
         roadmap.delete_sections()
         roadmap.private = new_private
+        roadmap.image_id = new_image_id
         roadmap.title = new_title
         roadmap.level = new_level
         roadmap.description = new_description
@@ -190,6 +194,7 @@ def roadmap_id(request, roadmap_id):
 
         new_roadmap = Roadmap(
             private=roadmap.private,
+            image_id=roadmap.image_id,
             title=roadmap.title,
             level=roadmap.level,
             description=roadmap.description,

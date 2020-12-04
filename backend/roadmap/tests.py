@@ -9,6 +9,7 @@ class RoadmapTestCase(TestCase):
     roadmap_path = "/api/roadmap/"
     dump_roadmap_input = {
         "private": False,
+        "imageId": 1,
         "title": "swpp",
         "level": 1,
         "description": "test-description",
@@ -29,6 +30,7 @@ class RoadmapTestCase(TestCase):
     }
     dump_roadmap_edit = {
         "private": True,
+        "imageId": 1,
         "title": "swpp2",
         "level": 2,
         "description": "test-edit-description",
@@ -168,6 +170,7 @@ class RoadmapTestCase(TestCase):
             {
                 "id",
                 "private",
+                "image_id",
                 "title",
                 "level",
                 "description",
@@ -476,6 +479,7 @@ class RoadmapTestCase(TestCase):
         # create my roadmap (progress 2)
         dump_roadmap_progress2 = {
             "private": False,
+            "imageId": 1,
             "title": "swpp",
             "level": 1,
             "description": "test-description",
@@ -535,6 +539,7 @@ class RoadmapTestCase(TestCase):
         # create my roadmap (progress 3)
         dump_roadmap_progress3 = {
             "private": False,
+            "imageId": 1,
             "title": "swpp",
             "level": 1,
             "description": "test-description",

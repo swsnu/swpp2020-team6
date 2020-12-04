@@ -24,3 +24,7 @@ export const sortType = {
   PIN: 2,
   NEW: 3,
 };
+
+export const roadmapImageNum = 6;
+
+export const userImageNum = 1;

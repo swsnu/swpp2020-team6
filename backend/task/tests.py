@@ -16,6 +16,7 @@ class TasktestCase(TestCase):
     csrf_token_path = user_path + "token/"
     dump_roadmap_input = {
         "private": False,
+        "imageId": 1,
         "title": "swpp",
         "level": 1,
         "description": "test-description",
