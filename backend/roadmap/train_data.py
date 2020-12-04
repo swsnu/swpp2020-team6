@@ -19,9 +19,9 @@ def preprocess_roadmaps():
         tags = [0] * len(tag_sample)
         tag_index = 0
 
-        for tag_item in roadmap.tags.all():
+        for tag_item in roadmap.tags.all().values():
             try:
-                tag_index = tag_sample.index(tag_item)
+                tag_index = tag_sample.index(tag_item["tag_name"])
             except (ValueError):
                 continue
             tags[tag_index] = 1
