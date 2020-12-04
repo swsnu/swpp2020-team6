@@ -390,7 +390,7 @@ class Roadmap extends Component {
     });
 
     let imageList = [{ name: <em style={{ color: "#aaaaaa" }}>Choose image</em>, value: 0 }];
-    for (let i = 1; i <= roadmapImageNum; i = i + 1) {
+    for (let i = 1; i <= roadmapImageNum; i += 1) {
       imageList = imageList.concat({
         name: (
           <img
@@ -462,7 +462,11 @@ class Roadmap extends Component {
                     />
                   </div>
                   <label id="roadmap-private-label">{isPrivate ? "Private" : "Public"}</label>
-                  <Switch checked={isPrivate} onClick={() => this.onClickPrivate()} />
+                  <Switch
+                    id="roadmap-private"
+                    checked={isPrivate}
+                    onClick={() => this.onClickPrivate()}
+                  />
                 </div>
                 <div className="tag-block">
                   <div className="new-tag">
