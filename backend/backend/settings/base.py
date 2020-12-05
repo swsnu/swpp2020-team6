@@ -34,7 +34,7 @@ SECRET_KEY = get_secret("SECRET_KEY")
 # See https://docs.djangoproject.com/en/3.1/howto/deployment/checklist/
 
 
-ALLOWED_HOSTS = []
+ALLOWED_HOSTS = ['18.206.120.0', '.localhost', '127.0.0.1', '[::1]']
 
 
 # Application definition
@@ -137,5 +137,5 @@ STATIC_URL = "/static/"
 # Abstract Usermodel
 AUTH_USER_MODEL = "user.User"
 
-CSRF_COOKIE_SECURE = True
-SESSION_COOKIE_SECURE = True
+CSRF_COOKIE_SECURE = False
+SESSION_COOKIE_SECURE = False
