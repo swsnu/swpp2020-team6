@@ -36,7 +36,7 @@ export const signIn = (userCredentials) => {
       .post("/api/user/signin/", userCredentials)
       .then((response) => {
         dispatch(signInSuccess_(response.data));
-        dispatch(push("/home"));
+        dispatch(push("/main"));
       })
       .catch((error) => {
         if (error.response.status === 401) {
@@ -64,7 +64,7 @@ export const signOut = () => {
       .then(() => {
         window.alert("Successfully signed out!");
         dispatch(signOutSuccess_());
-        dispatch(push("/home"));
+        dispatch(push("/main"));
       })
       .catch((error) => {
         if (error.response.status === 401) {
@@ -84,7 +84,7 @@ export const signUp = (userCredentials) => {
       .then((response) => {
         window.alert("Successfully signed up!");
         dispatch(signInSuccess_(response.data));
-        dispatch(push("/home"));
+        dispatch(push("/main"));
       })
       .catch(() => {
         window.alert("Something wrong with the request! Try again.");

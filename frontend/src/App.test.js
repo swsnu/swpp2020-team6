@@ -38,6 +38,7 @@ jest.mock("./containers/RoadmapDetail/RoadmapDetail", () => {
   });
 });
 
+
 jest.mock("./containers/MainPage/MainPage", () => {
   return jest.fn(() => {
     return (
@@ -84,11 +85,13 @@ const stubInitialSearchState = {
 };
 
 const mockStore = getMockStore(stubUserState, initialRoadmapState, stubInitialSearchState);
+
 const mockFalseStore = getMockStore(
   stubFalseUserState,
   initialRoadmapState,
   stubInitialSearchState,
 );
+
 
 describe("App", () => {
   let app;
@@ -133,15 +136,22 @@ describe("App", () => {
     expect(component.find(".loading").length).toBe(1);
   });
 
+
   it("should render main", () => {
     history.push("/main");
     const component = mount(app);
     const wrapper = component.find(".spyMain");
     expect(wrapper.length).toEqual(1);
   });
+
   it("should render SignUp", () => {
     history.push("/signup");
-    const component = mount(app);
+    const mockInitStore = getMockStore(stubFalseUserState, initialRoadmapState, stubInitialSearchState);
+    const component = mount(
+      <Provider store={mockInitStore}>
+        <App history={history} />
+      </Provider>,
+    );
     const wrapper = component.find(".spySignUp");
     expect(wrapper.length).toEqual(1);
   });

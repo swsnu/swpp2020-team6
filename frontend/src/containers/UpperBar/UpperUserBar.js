@@ -2,16 +2,12 @@ import React, { Component } from "react";
 import { connect } from "react-redux";
 import PropTypes from "prop-types";
 import { withRouter } from "react-router";
+import * as actionCreators from "../../store/actions/index";
 
 class UpperUserBar extends Component {
-  onClickSignIn = () => {
-    const { history } = this.props;
-    history.push("/signin");
-  };
-
-  onClickSignUp = () => {
-    const { history } = this.props;
-    history.push("/signup");
+  onClickSignOut = () => {
+    const { onSignOut } = this.props;
+    onSignOut();
   };
 
   onClickCreateRoadmap = () => {
@@ -31,11 +27,8 @@ class UpperUserBar extends Component {
   render() {
     return (
       <div className="UpperUserBar">
-        <button type="button" id="signin-button" onClick={() => this.onClickSignIn()}>
-          Sign In
-        </button>
-        <button type="button" id="signup-button" onClick={() => this.onClickSignUp()}>
-          Sign Up
+        <button type="button" id="signout-button" onClick={() => this.onClickSignOut()}>
+          Sign Out
         </button>
         <button
           type="button"
@@ -55,6 +48,7 @@ class UpperUserBar extends Component {
 UpperUserBar.propTypes = {
   history: PropTypes.objectOf(PropTypes.any),
   selectedUser: PropTypes.objectOf(PropTypes.any),
+  onSignOut: PropTypes.func.isRequired,
 };
 
 const mapStateToProps = (state) => {
@@ -62,4 +56,11 @@ const mapStateToProps = (state) => {
     selectedUser: state.user.selectedUser,
   };
 };
-export default connect(mapStateToProps, null)(withRouter(UpperUserBar));
+
+const mapDispatchToProps = (dispatch) => {
+  return {
+    onSignOut: () => dispatch(actionCreators.signOut()),
+  };
+};
+
+export default connect(mapStateToProps, mapDispatchToProps)(withRouter(UpperUserBar));

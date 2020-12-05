@@ -1,5 +1,5 @@
 /* Sign In page.
- * When the user is already signed in, redirect to home page.
+ * When the user is already signed in, redirect to main page.
  * On valid username and password input, the user is signed in to the service.
  */
 import React, { Component } from "react";
@@ -19,7 +19,7 @@ class SignIn extends Component {
     const { isSignedIn, history } = this.props;
     if (isSignedIn === true) {
       alert("You are already signed in. Please sign out first.");
-      history.push("/home");
+      history.push("/main");
     }
   }
 
@@ -35,11 +35,6 @@ class SignIn extends Component {
 
   onClickForgotPassword = () => {
     alert("Contact us: swpprotus@gmail.com");
-  };
-
-  onClickHome = () => {
-    const { history } = this.props;
-    history.push("/home");
   };
 
   render() {
@@ -78,9 +73,6 @@ class SignIn extends Component {
           type="button"
         >
           Forgot Password
-        </button>
-        <button id="home-button" onClick={() => this.onClickHome()} type="button">
-          Home
         </button>
       </div>
     );
