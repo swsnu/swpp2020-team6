@@ -4,11 +4,9 @@ DEBUG = False
 
 ALLOWED_HOSTS = ['18.206.120.0']
 
-#DATABASES = {
-#    'default': {
-#        'ENGINE': 'django.db.backends.mysql',
-#        'NAME': 'name',
-#        'USER': 'user',
-#        'PASSWORD': 'password'
-#    }
-#}
+DATABASES = {
+    "default": {
+        "ENGINE": "django.db.backends.sqlite3",
+        "NAME": BASE_DIR / "db.sqlite3",
+    }
+}
