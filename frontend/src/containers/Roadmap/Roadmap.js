@@ -398,7 +398,7 @@ class Roadmap extends Component {
 
     const imgs = [img1, img2, img3, img4, img5, img6];
     let imageList = [{ name: <em style={{ color: "#aaaaaa" }}>Choose image</em>, value: 0 }];
-    imgs.map((img, i) => {
+    imgs.forEach((img, i) => {
       imageList = imageList.concat({
         name: (
           <img className="roadmap-image" src={img} width="150" height="150" alt={`roadmap-${i}`} />
