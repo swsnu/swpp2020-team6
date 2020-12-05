@@ -45,6 +45,11 @@ const stubUserState = {
   selectedUser: stubUserData,
 };
 
+const stubUserState2 = {
+  isSignedIn: false,
+  selectedUser: stubUserData,
+};
+
 const initialUserState = {
   isSignedIn: undefined,
   selectedUser: undefined,
@@ -98,7 +103,12 @@ describe("App", () => {
 
   it("should render SignUp", () => {
     history.push("/signup");
-    const component = mount(app);
+    const mockInitStore = getMockStore(stubUserState2, initialRoadmapState, stubInitialSearchState);
+    const component = mount(
+      <Provider store={mockInitStore}>
+        <App history={history} />
+      </Provider>,
+    );
     const wrapper = component.find(".spySignUp");
     expect(wrapper.length).toEqual(1);
   });
