@@ -29,6 +29,7 @@ def get_secret(setting, secrets=secrets):
         raise ImproperlyConfigured(error_msg)
 
 SECRET_KEY = get_secret("SECRET_KEY")
+SECRET_KEY = "dpp$tr=sdez+#!2-bd-w7p_v42_fd5kny$q2w&(gr#g-(5@s4h"
 
 # Quick-start development settings - unsuitable for production
 # See https://docs.djangoproject.com/en/3.1/howto/deployment/checklist/
@@ -137,5 +138,5 @@ STATIC_URL = "/static/"
 # Abstract Usermodel
 AUTH_USER_MODEL = "user.User"
 
-CSRF_COOKIE_SECURE = True
-SESSION_COOKIE_SECURE = True
+CSRF_COOKIE_SECURE = False
+SESSION_COOKIE_SECURE = False

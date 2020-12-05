@@ -1,9 +1,8 @@
 from .base import *
+import os
+SECRET_KEY = "dpp$tr=sdez+#!2-bd-w7p_v42_fd5kny$q2w&(gr#g-(5@s4h"
 
-DEBUG = False
-
-ALLOWED_HOSTS = ['18.206.120.0']
-
+DEBUG = True
 DATABASES = {
     "default": {
         "ENGINE": "django.db.backends.sqlite3",

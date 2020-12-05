@@ -33,7 +33,7 @@ SECRET_KEY = get_secret("SECRET_KEY")
 # See https://docs.djangoproject.com/en/3.1/howto/deployment/checklist/
 
 ## SECURITY WARNING: keep the secret key used in production secret!
-#SECRET_KEY = "dpp$tr=sdez+#!2-bd-w7p_v42_fd5kny$q2w&(gr#g-(5@s4h"
+SECRET_KEY = "dpp$tr=sdez+#!2-bd-w7p_v42_fd5kny$q2w&(gr#g-(5@s4h"
 
 # SECURITY WARNING: don't run with debug turned on in production!
 DEBUG = True
