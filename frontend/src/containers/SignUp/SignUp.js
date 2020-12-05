@@ -1,5 +1,5 @@
 /* Sign Up page.
- * When the user is already signed in, redirect to home page.
+ * When the user is already signed in, redirect to main page.
  * On valid email, username, password, password-confirm input, the user is signed up to the service.
  */
 import React, { Component } from "react";
@@ -22,7 +22,7 @@ class SignUp extends Component {
     const { isSignedIn, history } = this.props;
     if (isSignedIn === true) {
       alert("You are already signed in. Please sign out first.");
-      history.push("/home");
+      history.push("/main");
     }
   }
 

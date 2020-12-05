@@ -116,7 +116,7 @@ describe("<SignUp />", () => {
   });
 
   /* ----------- Authorized User ----------------*/
-  it(`should show alert and push to home when user is already signed in`, () => {
+  it(`should show alert and push to main when user is already signed in`, () => {
     // eslint-disable-next-line no-unused-vars
     const component = mount(
       <Provider store={authorizedMockStore}>

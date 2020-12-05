@@ -5,6 +5,7 @@ import { Provider } from "react-redux";
 import UpperUserBar from "./UpperUserBar";
 import { history } from "../../store/store";
 import getMockStore from "../../test-utils/mocks";
+import * as actionCreatorsUser from "../../store/actions/user";
 
 const stubUserData = { user_id: 1, username: "john" };
 const stubUserState = {
@@ -24,10 +25,14 @@ describe("UpperUserBar", () => {
   let spyPush;
   let spyAlert;
   let upperUserBar;
+  let spySignOut;
 
   beforeEach(() => {
     spyPush = jest.spyOn(history, "push").mockImplementation(() => {});
     spyAlert = jest.spyOn(window, "alert").mockImplementation(() => {});
+    spySignOut = jest.spyOn(actionCreatorsUser, "signOut").mockImplementation(() => {
+      return () => {};
+    });
     upperUserBar = (
       <Provider store={mockStore}>
         <ConnectedRouter history={history}>
@@ -47,22 +52,14 @@ describe("UpperUserBar", () => {
     expect(wrapper.length).toBe(1);
   });
 
-  it("should redirect to signin page when it's clicked", () => {
+  it("should sign out correctly", () => {
     const component = mount(upperUserBar);
-    const buttonWrapper = component.find("#signin-button");
+    const buttonWrapper = component.find("#signout-button");
     expect(buttonWrapper.length).toBe(1);
     buttonWrapper.simulate("click");
-    expect(spyPush).toHaveBeenCalledTimes(1);
-    expect(spyPush).toHaveBeenCalledWith("/signin");
+    expect(spySignOut).toHaveBeenCalledTimes(1);
   });
-  it("should redirect to signup page when it's clicked", () => {
-    const component = mount(upperUserBar);
-    const buttonWrapper = component.find("#signup-button");
-    expect(buttonWrapper.length).toBe(1);
-    buttonWrapper.simulate("click");
-    expect(spyPush).toHaveBeenCalledTimes(1);
-    expect(spyPush).toHaveBeenCalledWith("/signup");
-  });
+
   it("should redirect to create roadmap page when it's clicked", () => {
     const component = mount(upperUserBar);
     const buttonWrapper = component.find("#create-roadmap-button");

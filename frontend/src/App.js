@@ -9,7 +9,6 @@ import EditRoadmap from "./containers/EditRoadmap/EditRoadmap";
 import * as actionCreators from "./store/actions/index";
 import SignUp from "./containers/SignUp/SignUp";
 import SignIn from "./containers/SignIn/SignIn";
-import Home from "./containers/Home/Home";
 import RoadmapDetail from "./containers/RoadmapDetail/RoadmapDetail";
 import SearchResult from "./containers/SearchResult/SearchResult";
 import MyPage from "./containers/MyPage/MyPage";
@@ -28,6 +27,10 @@ class App extends React.Component {
 
   render() {
     const { isSignedIn, history } = this.props;
+    let landingPage = "/signin";
+    let logoButton;
+    let upperUserBar;
+    let upperSearchBar;
     if (isSignedIn === undefined) {
       return (
         <div className="App">
@@ -35,16 +38,21 @@ class App extends React.Component {
         </div>
       );
     }
+    if (isSignedIn === true) {
+      landingPage = "/main";
+      logoButton = <LogoButton />;
+      upperUserBar = <UpperUserBar />;
+      upperSearchBar = <UpperSearchBar />;
+    }
     return (
       <ConnectedRouter history={history}>
         <div className="App">
           <div className="upper-bar">
-            <LogoButton />
-            <UpperUserBar />
-            <UpperSearchBar />
+            {logoButton}
+            {upperUserBar}
+            {upperSearchBar}
           </div>
           <Switch>
-            <Route path="/home" exact component={Home} />
             <Route path="/signup" exact component={SignUp} />
             <Route path="/signin" exact component={SignIn} />
             <Route path="/roadmap/create" exact component={CreateRoadmap} />
@@ -53,7 +61,7 @@ class App extends React.Component {
             <Route path="/search" exact component={SearchResult} />
             <Route path="/mypage/:id" exact component={MyPage} />
             <Route path="/main" exact component={MainPage} />
-            <Redirect exact from="/" to="/home" />
+            <Redirect exact from="/" to={landingPage} />
             <Route render={() => <h1>Not Found</h1>} />
           </Switch>
         </div>

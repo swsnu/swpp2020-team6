@@ -10,7 +10,7 @@ import RoadmapCarousel from "./RoadmapCarousel";
 const MainPage = (props) => {
   const { isSignedIn, history } = props;
   if (isSignedIn === false) {
-    history.push("/home");
+    history.push("/signin");
     return (
       <div className="MainPage">
         <h1>Redirecting...</h1>
