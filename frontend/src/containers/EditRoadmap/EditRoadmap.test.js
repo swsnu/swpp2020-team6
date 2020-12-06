@@ -27,6 +27,7 @@ const initialRoadmapState = {
   selectedRoadmap: {
     author_id: 1,
     private: true,
+    imageId: 1,
     title: "test",
     level: 2,
     description: "test-description",
@@ -227,6 +228,7 @@ describe("<EditRoadmap />", () => {
       received: true,
       private: undefined,
       isPrivate: initialRoadmapState.selectedRoadmap.private,
+      imageId: initialRoadmapState.selectedRoadmap.image_id,
       author_id: undefined,
       tags: ["tag0", "tag1"],
       newTag: "",
@@ -236,6 +238,7 @@ describe("<EditRoadmap />", () => {
   });
 
   it("should set state on input changes", () => {
+    const imageId = 2;
     const title = "test-title";
     const level = 2;
     const newTag = "test";
@@ -250,11 +253,17 @@ describe("<EditRoadmap />", () => {
       .onChange({ target: { value: level } });
     wrapper = component.find("#new-tag");
     wrapper.simulate("change", { target: { value: newTag } });
+    wrapper = component.find("#roadmap-image");
+    wrapper
+      .at(0)
+      .props()
+      .onChange({ target: { value: imageId } });
     wrapper = component.find("#roadmap-private");
     wrapper.at(0).props().onClick();
     wrapper = component.find("#roadmap-description");
     wrapper.simulate("change", { target: { value: description } });
     const instance = component.find(Roadmap).instance();
+    expect(instance.state.imageId).toBe(2);
     expect(instance.state.title).toBe(title);
     expect(instance.state.level).toBe(level);
     expect(instance.state.newTag).toBe(newTag);
