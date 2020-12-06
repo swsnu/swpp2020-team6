@@ -21,10 +21,6 @@ $margin-bottom-main: 15px;
   background-color: $create-task-background-color;
   box-shadow: $create-task-box-shadow;
 
-  button:disabled {
-    opacity: $create-buttons-disabled-opacity;
-  }
-
   .task-type-title-buttons {
     width: 100%;
     display: flex;

@@ -1,3 +1,5 @@
+/* eslint-disable import/no-dynamic-require */
+/* eslint-disable global-require */
 import React, { Component } from "react";
 import PropTypes from "prop-types";
 import Switch from "@material-ui/core/Switch";

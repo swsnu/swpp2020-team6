@@ -29,12 +29,15 @@
   }
 
   .upper-bar {
+    position: sticky;
+    top: 0px;
     height: 70px;
     display: flex;
     flex-direction: row;
     align-items: center;
     justify-content: flex-start;
     padding: 0px 0px 0px 10px;
+    background-color: $main3-red-dark2-color;
 
     .LogoButton {
       order: 0;

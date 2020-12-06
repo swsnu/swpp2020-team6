@@ -1,8 +1,7 @@
 import React from "react";
 import PropTypes from "prop-types";
-import { connect } from "react-redux";
-import * as actionCreators from "../../store/actions/index";
 import taskTypeIcons from "../CreateTask/taskTypeIcons";
+import Checkbox from "@material-ui/core/Checkbox";
 
 import "./Task.scss";
 
@@ -21,22 +20,28 @@ const Task = (props) => {
 
   const checkbox =
     isAuthor && progressStatus === 2 ? (
-      <input
-        type="checkbox"
+      <Checkbox
         className="task-checkbox"
         checked={checked}
         onChange={() => changeCheckbox(taskId)}
+        inputProps={{ "aria-label": "primary checkbox" }}
       />
     ) : null;
   // 'task-type' will be changed into icon corresponding to the type
 
   return (
     <div className="Task">
-      {checkbox}
-      <div className="task-type">{taskTypeIcons[type].name}</div>
-      <p className="task-title">{`task title:${title}`}</p>
-      <p className="task-url">{`url: ${url}`}</p>
-      <p className="task-description">{`description: ${description}`}</p>
+      <div className="task-check">
+        <div className="checkbox-wrapper">{checkbox}</div>
+      </div>
+      <div className="task-content">
+        <div className="task-type-title">
+          <div className="task-type">{taskTypeIcons[type].name}</div>
+          <div className="task-title">{`task title:${title}`}</div>
+        </div>
+        <p className="task-url">{`url: ${url}`}</p>
+        <p className="task-description">{`description: ${description}`}</p>
+      </div>
     </div>
   );
 };
@@ -53,10 +58,4 @@ Task.propTypes = {
   changeCheckbox: PropTypes.func.isRequired,
 };
 
-const mapDispatchToProps = (dispatch) => {
-  return {
-    changeCheckbox: (taskId) => dispatch(actionCreators.changeCheckbox(taskId)),
-  };
-};
-
-export default connect(null, mapDispatchToProps)(Task);
+export default Task;

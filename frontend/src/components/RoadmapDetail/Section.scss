@@ -1,11 +1,59 @@
-/*
+@import "../../css/roadmap.scss";
+
 .Section {
-  position: relative;
-  left: 15%;
-  width: 77%;
-  border: 2px solid rgb(87, 82, 82);
-  box-sizing: border-box;
-  padding: 5px;
-  margin: 5px 5px 5px 5px;
+  display: flex;
+  flex-direction: column;
+  align-items: flex-start;
+  width: 100%;
+  padding: 20px;
+  margin: 50px 0px 10px 0px;
+  border: $create-section-border-style;
+  border-radius: $create-section-border-radius;
+  background-color: $create-roadmap-main-background-color;
+
+  .title {
+    align-self: flex-end;
+    width: 100%;
+    display: flex;
+    flex-direction: row;
+    flex-wrap: nowrap;
+    align-items: center;
+    margin-bottom: 40px;
+
+    .section-collapse {
+      position: relative;
+      width: 30px;
+      min-width: 30px;
+      height: 30px;
+      font-size: 100%;
+      padding: 0px;
+      background-color: $create-buttons2-background-color;
+      color: $create-buttons2-color;
+      border: 2px solid $create-buttons2-color;
+      margin-right: 20px;
+      border-radius: $create-buttons-border-radius;
+      font-weight: $create-buttons-font-weight;
+    }
+
+    .section-title {
+      width: 100%;
+      margin-right: 20px;
+      font-size: $section-title-font-size;
+    }
+  }
+
+  .section {
+    display: flex;
+    flex-direction: column;
+    align-items: center;
+    width: 100%;
+    margin-bottom: 10px;
+    border-radius: $create-section-border-radius;
+    max-height: 0px;
+    overflow: hidden;
+    -webkit-transition: all 0.5s ease-in-out;
+    -moz-transition: all 0.5s ease-in-out;
+    -o-transition: all 0.5s ease-in-out;
+    transition: all 0.5s ease-in-out;
+  }
 }
-*/
