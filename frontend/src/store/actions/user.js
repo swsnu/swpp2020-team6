@@ -84,7 +84,14 @@ export const signUp = (userCredentials) => {
       .then((response) => {
         window.alert("Successfully signed up!");
         dispatch(signInSuccess_(response.data));
-        dispatch(push("/main"));
+        return axios
+          .post("/api/user/signin/", {
+            username: userCredentials.username,
+            password: userCredentials.password,
+          })
+          .then(() => {
+            dispatch(push("/main"));
+          });
       })
       .catch(() => {
         window.alert("Something wrong with the request! Try again.");
