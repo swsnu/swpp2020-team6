@@ -453,6 +453,7 @@ def new(request, top_n):
             for roadmap in sorted_roadmaps[:return_roadmaps_count]
         )
         return JsonResponse({"roadmaps": new_roadmaps})
+
     return HttpResponseNotAllowed(["GET"])
 
 
