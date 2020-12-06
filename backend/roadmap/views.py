@@ -490,7 +490,7 @@ def search(request):
             return HttpResponseBadRequest()
 
         # Accumulate each filter
-        filters = []
+        filters = [Q(private__exact=False)]
         if title_keywords:
             filters.append(
                 reduce(
