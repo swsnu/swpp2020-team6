@@ -10,7 +10,7 @@ import DialogTitle from "@material-ui/core/DialogTitle";
 import Slide from "@material-ui/core/Slide";
 import * as actionCreators from "../../store/actions/index";
 import "./RoadmapDetail.scss";
-import Comment from "../../components/Comment";
+import Comment from "../../components/Comment/Comment";
 import ProgressBar from "../../components/RoadmapDetail/ProgressBar";
 import RoadmapButtons from "./RoadmapButtons";
 import Section from "../../components/RoadmapDetail/Section";

@@ -11,8 +11,8 @@ matrix:
         - "cd backend"
         - "coveralls --merge=../frontend/coverage/coverage.json"
       before_script: 
-        - "python manage.py makemigrations user roadmap section task tag comment"
-        - "python manage.py migrate"
+        - "python manage.py makemigrations user roadmap section task tag comment --settings=backend.settings.ci"
+        - "python manage.py migrate --settings=backend.settings.ci"
       cache: 
         - 
           yarn: true
@@ -38,7 +38,7 @@ matrix:
         - "coveralls-lcov -v -n coverage/lcov.info > coverage/coverage.json"
         - "cd ../backend"
         - "pylint --rcfile=./.pylintrc ./backend --disable='fixme, duplicate-code'"
-        - "coverage run --source='./user/','./roadmap/','./comment/','./task/','./section/','./tag/' --omit='manage.py','*/__init__..py','backend/*','utils/*' manage.py test"
+        - "coverage run --source='./user/','./roadmap/','./comment/','./task/','./section/','./tag/' --omit='manage.py','*/__init__..py','backend/*','utils/*' manage.py test --settings=backend.settings.ci"
         - "coverage report"
         - "coverage xml"
         - "cd .."

@@ -38,10 +38,11 @@ jest.mock("./containers/RoadmapDetail/RoadmapDetail", () => {
   });
 });
 
-jest.mock("./containers/Home/Home", () => {
+
+jest.mock("./containers/MainPage/MainPage", () => {
   return jest.fn(() => {
     return (
-      <div className="spyHome">
+      <div className="spyMain">
         <p>test</p>
       </div>
     );
@@ -50,18 +51,30 @@ jest.mock("./containers/Home/Home", () => {
 
 const stubUserData = { user_id: 1, username: "test" };
 
-const sutbUserState = {
+const stubUserState = {
   isSignedIn: true,
   selectedUser: stubUserData,
+  myPageUser: undefined,
+};
+
+const stubFalseUserState = {
+  isSignedIn: false,
+  selectedUser: undefined,
+  myPageUser: undefined,
 };
 
 const initialUserState = {
   isSignedIn: undefined,
   selectedUser: undefined,
+  myPageUser: undefined,
 };
 
 const initialRoadmapState = {
   selectedRoadmap: undefined,
+  bestRoadmaps: [],
+  bestRoadmapsError: null,
+  newRoadmaps: [],
+  newRoadmapsError: null,
 };
 
 const stubInitialSearchState = {
@@ -71,7 +84,14 @@ const stubInitialSearchState = {
   totalCount: 1,
 };
 
-const mockStore = getMockStore(sutbUserState, initialRoadmapState, stubInitialSearchState);
+const mockStore = getMockStore(stubUserState, initialRoadmapState, stubInitialSearchState);
+
+const mockFalseStore = getMockStore(
+  stubFalseUserState,
+  initialRoadmapState,
+  stubInitialSearchState,
+);
+
 
 describe("App", () => {
   let app;
@@ -91,6 +111,16 @@ describe("App", () => {
 
   afterEach(() => jest.clearAllMocks());
 
+  it("should render signin for unsigned in user", () => {
+    const component = mount(
+      <Provider store={mockFalseStore}>
+        <App history={history} />
+      </Provider>,
+    );
+    const wrapper = component.find(".spySignIn");
+    expect(wrapper.length).toEqual(1);
+  });
+
   it("should render", () => {
     const mockInitStore = getMockStore(
       initialUserState,
@@ -106,15 +136,22 @@ describe("App", () => {
     expect(component.find(".loading").length).toBe(1);
   });
 
-  it("should render Home", () => {
-    history.push("/home");
+
+  it("should render main", () => {
+    history.push("/main");
     const component = mount(app);
-    const wrapper = component.find(".spyHome");
+    const wrapper = component.find(".spyMain");
     expect(wrapper.length).toEqual(1);
   });
+
   it("should render SignUp", () => {
     history.push("/signup");
-    const component = mount(app);
+    const mockInitStore = getMockStore(stubFalseUserState, initialRoadmapState, stubInitialSearchState);
+    const component = mount(
+      <Provider store={mockInitStore}>
+        <App history={history} />
+      </Provider>,
+    );
     const wrapper = component.find(".spySignUp");
     expect(wrapper.length).toEqual(1);
   });

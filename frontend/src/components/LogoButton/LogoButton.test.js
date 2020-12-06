@@ -41,12 +41,12 @@ describe("LogoButton", () => {
     expect(wrapper.length).toBe(1);
   });
 
-  it("should redirect to home page when it's clicked", () => {
+  it("should redirect to main page when it's clicked", () => {
     const component = mount(logoButton);
     const wrapper = component.find("#logo-button");
     expect(wrapper.length).toBe(1);
     wrapper.simulate("click");
     expect(spyPush).toHaveBeenCalledTimes(1);
-    expect(spyPush).toHaveBeenCalledWith("/home");
+    expect(spyPush).toHaveBeenCalledWith("/main");
   });
 });

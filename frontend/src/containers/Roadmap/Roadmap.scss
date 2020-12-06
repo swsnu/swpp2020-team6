@@ -75,7 +75,7 @@ $margin-bottom-main: 10px;
       border-radius: $create-roadmap-border-radius;
       background-color: $create-roadmap-background-color;
 
-      .title-private {
+      .title {
         display: flex;
         flex-direction: row;
         flex-wrap: nowrap;
@@ -85,89 +85,133 @@ $margin-bottom-main: 10px;
         #roadmap-title {
           width: 100%;
         }
-
-        #roadmap-private-label {
-          width: 13%;
-          margin-left: 30px;
-        }
-
-        #roadmap-private {
-          margin-left: 10px;
-        }
       }
 
-      .level-tag {
+      .info {
         display: flex;
         flex-direction: row;
         flex-wrap: nowrap;
         justify-content: flex-start;
         align-items: center;
         width: 100%;
+        min-height: 280px;
 
-        .roadmap-level-select {
-          padding: 20px 0px 20px 0px;
-        }
-
-        .tag-block {
-          display: inline-flex;
+        .private-level-tag {
+          display: flex;
           flex-direction: column;
-          justify-content: center;
-          align-items: flex-start;
-          margin-left: 15px;
+          justify-content: flex-start;
+          align-items: center;
+          width: 48%;
+          min-height: 280px;
 
-          .new-tag {
+          .private-level {
             display: flex;
             flex-direction: row;
-            flex-wrap: nowrap;
             justify-content: flex-start;
             align-items: center;
-            padding-top: 5px;
+            width: 100%;
+            padding: 20px 10px 10px 5px;
 
-            #new-tag {
-              width: 150px;
-              padding: 5px;
-              border-radius: 4px;
+            .roadmap-level-select {
             }
-            #add-tag-button {
-              width: 28px;
-              height: 28px;
-              padding: 0px;
-              margin: 0px 0px 0px 10px;
+
+            #roadmap-private-label {
+              width: 13%;
+              margin: 0px 15px 0px 30px;
             }
           }
 
-          .tags {
-            display: flex;
-            flex-direction: row;
-            justify-content: flex-start;
-            align-items: center;
-            flex-wrap: wrap;
-            padding-top: 5px;
+          .tag-block {
+            display: inline-flex;
+            flex-direction: column;
+            justify-content: center;
+            align-items: flex-start;
+            margin-left: 15px;
+            width: 100%;
+            padding-bottom: 25px;
 
-            .tag {
-              display: inline-flex;
+            .new-tag {
+              display: flex;
               flex-direction: row;
               flex-wrap: nowrap;
+              justify-content: flex-start;
               align-items: center;
-              height: $create-tag-height;
-              background-color: $create-buttons-background-color;
-              border-radius: $create-tag-border-radius;
-              padding: $create-tag-padding;
-              margin: $create-tag-margin;
+              padding: 5px 0px 5px 5px;
 
-              .tag-name {
-                text-align: center;
-                font-size: $create-tag-font-size;
-                color: $create-tag-color;
+              #new-tag {
+                width: 150px;
+                padding: 5px;
+                border-radius: 4px;
               }
-
-              .delete-tag {
-                width: 15px;
-                height: 15px;
-                text-align: center;
-                font-size: 70%;
+              #add-tag-button {
+                width: 28px;
+                height: 28px;
                 padding: 0px;
-                margin: 0px 0px 0px 5px;
+                margin: 0px 0px 0px 10px;
+              }
+            }
+
+            .tags {
+              display: flex;
+              flex-direction: row;
+              justify-content: flex-start;
+              align-items: center;
+              flex-wrap: wrap;
+              padding-top: 5px;
+
+              .tag {
+                display: inline-flex;
+                flex-direction: row;
+                flex-wrap: nowrap;
+                align-items: center;
+                height: $create-tag-height;
+                background-color: $create-buttons-background-color;
+                border-radius: $create-tag-border-radius;
+                padding: $create-tag-padding;
+                margin: $create-tag-margin;
+
+                .tag-name {
+                  text-align: center;
+                  font-size: $create-tag-font-size;
+                  color: $create-tag-color;
+                }
+
+                .delete-tag {
+                  width: 15px;
+                  height: 15px;
+                  text-align: center;
+                  font-size: 70%;
+                  padding: 0px;
+                  margin: 0px 0px 0px 5px;
+                }
+              }
+            }
+          }
+        }
+
+        .roadmap-image-select {
+          .MuiFormControl-root {
+            width: 364px;
+            height: 240px;
+
+            .MuiInputBase-root {
+              height: 100%;
+
+              .MuiSelect-selectMenu {
+                display: flex;
+                flex-direction: row;
+                justify-content: center;
+                align-items: center;
+                height: 100%;
+
+                em {
+                  text-align: center;
+                }
+
+                img {
+                  width: 300px;
+                  height: 200px;
+                }
               }
             }
           }

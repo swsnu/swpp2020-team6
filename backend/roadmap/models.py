@@ -7,6 +7,7 @@ from user.models import User
 
 class Roadmap(models.Model):
     private = models.BooleanField(default=False)
+    image_id = models.IntegerField(default=1)
     title = models.CharField(max_length=64, default="")
     date = models.DateTimeField(auto_now_add=True)
     level = models.IntegerField(default=0)
