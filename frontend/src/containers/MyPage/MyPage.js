@@ -35,7 +35,6 @@ class MyPage extends Component {
         key={roadmap.id}
         onClick={() => history.push(`/roadmap/${roadmap.id}`)}
         roadmapDescription={roadmap.description}
-        roadmapId={roadmap.id}
         roadmapTitle={roadmap.title}
         roadmapLevel={roadmap.level}
         authorName={roadmap.author_name}
@@ -45,7 +44,7 @@ class MyPage extends Component {
         commentCount={roadmap.comment_count}
         tagList={roadmap.tags}
         isMyPage={false}
-        roadmapImageId="1"
+        roadmapImageId={roadmap.image_id}
       />
     ));
   };

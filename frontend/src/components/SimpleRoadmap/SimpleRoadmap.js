@@ -105,7 +105,8 @@ const SimpleRoadmap = (props) => {
     />
   );
 
-  const roadmapImageSrc = require(`misc/${roadmapImageId}.png`);
+  const roadmapImageSrc = require(`../../misc/roadmap/${roadmapImageId}.png`);
+  debugger;
 
   let roadmapLevelIcon;
   if (roadmapLevel === 2) {
@@ -178,7 +179,7 @@ SimpleRoadmap.propTypes = {
   commentCount: PropTypes.number.isRequired,
   tagList: PropTypes.arrayOf(PropTypes.any).isRequired,
   isMyPage: PropTypes.bool.isRequired,
-  roadmapImageId: PropTypes.string,
+  roadmapImageId: PropTypes.number,
 };
 
 export default SimpleRoadmap;

@@ -15,6 +15,13 @@ import ProgressBar from "../../components/RoadmapDetail/ProgressBar";
 import RoadmapButtons from "./RoadmapButtons";
 import Section from "../../components/RoadmapDetail/Section";
 
+import img1 from "../../misc/roadmap/1.png";
+import img2 from "../../misc/roadmap/2.png";
+import img3 from "../../misc/roadmap/3.png";
+import img4 from "../../misc/roadmap/4.png";
+import img5 from "../../misc/roadmap/5.png";
+import img6 from "../../misc/roadmap/6.png";
+
 const Transition = React.forwardRef(function Transition(props, ref) {
   // eslint-disable-next-line react/jsx-props-no-spreading
   return <Slide direction="up" ref={ref} {...props} />;
@@ -146,7 +153,15 @@ class RoadmapDetail extends Component {
 
     // safe zone (selectedUser !== null/undefined,  selectedRoadmap !== null/undefined)
     // eslint-disable-next-line camelcase
-    const { title, sections, comments, level, original_author_id, author_id } = selectedRoadmap;
+    const {
+      image_id,
+      title,
+      sections,
+      comments,
+      level,
+      original_author_id,
+      author_id,
+    } = selectedRoadmap;
 
     /* ---------------- Original Author -------------------- */
     const originalAuthor =
@@ -211,35 +226,27 @@ class RoadmapDetail extends Component {
       );
     });
 
+    const { comment } = this.state;
+    let commentDisabled = true;
+
+    if (comment !== "") {
+      commentDisabled = false;
+    }
     let commentConfirmButton = (
-      <button id="confirm-create-comment-button" type="button" disabled>
+      <button
+        id="confirm-create-comment-button"
+        type="button"
+        onClick={() => this.commentCreateHandler(comment)}
+        disabled={commentDisabled}
+      >
         confirm
       </button>
     );
-    const { comment } = this.state;
-    if (comment !== "") {
-      commentConfirmButton = (
-        <button
-          id="confirm-create-comment-button"
-          type="button"
-          onClick={() => this.commentCreateHandler(comment)}
-        >
-          confirm
-        </button>
-      );
-    }
 
     return (
       <div className="RoadmapDetail">
         <div className="header" />
         <div className="leftcolumn">
-          <div className="progress-bar">
-            <ProgressBar
-              isAuthor={selectedUser.user_id === selectedRoadmap.author_id}
-              onChangeRoadmapProgressStatus={this.onChangeRoadmapProgressStatus}
-              currentProgressStatus={selectedRoadmap.progress}
-            />
-          </div>
           <div className="title-author-level-tags">
             <h1 className="roadmap-title">{title}</h1>
             <div className="roadmap-author">
@@ -256,6 +263,13 @@ class RoadmapDetail extends Component {
         </div>
         <div className="rightcolumn">
           <div className="roadmap-panel">
+            <div className="progress-bar">
+              <ProgressBar
+                isAuthor={selectedUser.user_id === selectedRoadmap.author_id}
+                onChangeRoadmapProgressStatus={this.onChangeRoadmapProgressStatus}
+                currentProgressStatus={selectedRoadmap.progress}
+              />
+            </div>
             <div className="roadmap-statistics">
               <p id="roadmap-like-count">
                 Like

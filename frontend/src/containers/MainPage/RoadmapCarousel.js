@@ -50,7 +50,7 @@ const RoadmapCarousel = (props) => {
         commentCount={roadmap.comment_count}
         tagList={roadmap.tags}
         isMyPage={false}
-        roadmapImageId="1"
+        roadmapImageId={roadmap.image_id}
       />
     ));
   };
