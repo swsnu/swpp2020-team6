@@ -98,6 +98,7 @@ local_settings.py
 
 backend/.python-version
 backend/htmlcov
+backend/backend/settings/secrets.json
 backend/backend/secrets.json
 
 .coveralls.yml
