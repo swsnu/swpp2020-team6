@@ -65,17 +65,10 @@ const mockStore2 = getMockStore(stubUserState, stubInitialRoadmapState, stubInit
 
 describe("<Search />", () => {
   let searchResult;
-  let spyGetSimpleSearch;
   let spyGetAdvancedSearch;
   let spyGetTopTags;
-  // let spyHistoryPush;
 
   beforeEach(() => {
-    spyGetSimpleSearch = jest
-      .spyOn(actionCreatorsUser, "getSimpleSearch")
-      .mockImplementation(() => {
-        return () => {};
-      });
     spyGetAdvancedSearch = jest
       .spyOn(actionCreatorsUser, "getAdvancedSearch")
       .mockImplementation(() => {
@@ -84,7 +77,6 @@ describe("<Search />", () => {
     spyGetTopTags = jest.spyOn(actionCreatorsUser, "getTopTags").mockImplementation(() => {
       return () => {};
     });
-    // spyHistoryPush = jest.spyOn(history, "push").mockImplementation(() => {});
     searchResult = (
       <Provider store={mockStore}>
         <ConnectedRouter history={history}>
