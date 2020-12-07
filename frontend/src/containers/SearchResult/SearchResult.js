@@ -167,6 +167,20 @@ class SearchResult extends Component {
           tags={simpleTags}
           onClickTitleHandler={this.onClickTitle}
         />
+        // <SimpleRoadmap
+        // roadmapTitle={simpleObject.title}
+        // roadmapImageId,
+        // roadmapLevel,
+        // authorName,
+        // likeCount,
+        // pinCount,
+        // commentCount,
+        // roadmapDescription,
+        // isMyPage,
+        // tagList,
+        // date,
+        // onClick,
+        // />
       );
     });
 
