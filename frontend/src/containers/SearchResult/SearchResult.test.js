@@ -28,14 +28,15 @@ const stubInitialRoadmapState = {
 
 const stubInitialSearchState = {
   searchResult: [
-    { title: "test-search-result-title" },
     {
+      title: "test-search-result-title",
       tags: [
         { tag_id: 1, tag_name: "tag1" },
         { tag_id: 2, tag_name: "tag2" },
       ],
+      author_name: "test_user",
+      image_id: 1,
     },
-    { author_name: "test_user" },
   ],
   topTags: ["top_tag1"],
   page: 1,
@@ -44,12 +45,14 @@ const stubInitialSearchState = {
 
 const stubInitialSearchState2 = {
   searchResult: [
-    { title: "test-search-result-title" },
     {
+      title: "test-search-result-title",
       tags: [
         { tag_id: 1, tag_name: "tag1" },
         { tag_id: 2, tag_name: "tag2" },
       ],
+      author_name: "test_user",
+      image_id: 1,
     },
   ],
   topTags: ["top_tag1"],
