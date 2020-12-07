@@ -14,7 +14,6 @@ import SimpleRoadmap from "../../components/SimpleRoadmap/SimpleRoadmap";
 
 class SearchResult extends Component {
   state = {
-    simpleSearchInput: "",
     advancedSearchInput: "",
     sortBy: sortType.LIKE,
     basicChecked: true,
@@ -127,7 +126,6 @@ class SearchResult extends Component {
 
   render() {
     const {
-      simpleSearchInput,
       advancedSearchInput,
       sortBy,
       basicChecked,
@@ -288,24 +286,6 @@ class SearchResult extends Component {
             type="button"
           >
             Search
-          </button>
-        </div>
-
-        <br />
-
-        <div className="simple-search">
-          <input
-            id="simple-search-input"
-            value={simpleSearchInput}
-            placeholder="Simple search testing..."
-            onChange={(event) => this.setState({ simpleSearchInput: event.target.value })}
-          />
-          <button
-            id="simple-search-button"
-            onClick={() => this.onClickSimpleSearch(simpleSearchInput)}
-            type="button"
-          >
-            Simple Search Test
           </button>
         </div>
 

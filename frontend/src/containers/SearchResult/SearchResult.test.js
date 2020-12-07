@@ -200,17 +200,4 @@ describe("<Search />", () => {
     wrapper.simulate("click");
     expect(spyGetAdvancedSearch).toHaveBeenCalledTimes(1);
   });
-
-  it("should work properly with simple search ", () => {
-    const component = mount(searchResult);
-    // type title to search
-    const exampleTitle = "exampleTitle";
-    let wrapper = component.find("#simple-search-input");
-    wrapper.simulate("change", { target: { value: exampleTitle } });
-
-    // click simple search button
-    wrapper = component.find("#simple-search-button");
-    wrapper.simulate("click");
-    expect(spyGetSimpleSearch).toHaveBeenCalledTimes(1);
-  });
 });
