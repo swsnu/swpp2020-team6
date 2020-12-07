@@ -39,9 +39,7 @@ class SignUp extends Component {
   render() {
     const { email, username, password, passwordConfirm } = this.state;
 
-    const emailRegexOne = /^[a-zA-Z0-9.!#$%&'*+/=?^_`{|}~-]+@[a-zA-Z0-9!#$%&'*+/=?^_`{|}~-]+.[a-zA-z]{2,3}$/;
-    const emailRegexTwo = /^[a-zA-Z0-9.!#$%&'*+/=?^_`{|}~-]+@[a-zA-Z0-9!#$%&'*+/=?^_`{|}~-]+.[a-zA-z]+.[a-zA-z]{2,3}$/;
-    const validEmail = emailRegexOne.test(email) || emailRegexTwo.test(email);
+    const emailFilled = email !== "";
     const usernameFilled = username !== "";
     const passwordFilled = password !== "";
     const passwordMatch = password === passwordConfirm;
@@ -81,7 +79,7 @@ class SignUp extends Component {
           id="signup-button"
           onClick={() => this.onClickSignUp({ email, username, password })}
           type="button"
-          disabled={!(validEmail && usernameFilled && passwordFilled && passwordMatch)}
+          disabled={!(emailFilled && usernameFilled && passwordFilled && passwordMatch)}
         >
           Sign Up
         </button>
