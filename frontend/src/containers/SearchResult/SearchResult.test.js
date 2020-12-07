@@ -27,14 +27,20 @@ const stubInitialRoadmapState = {
 };
 
 const stubInitialSearchState = {
-  searchResult: [{ title: "test-search-result-title" }],
+  searchResult: [
+    { title: "test-search-result-title" },
+    { tags: [{ tag_name: "tag1" }, { tag_name: "tag2" }] },
+  ],
   topTags: ["top_tag1"],
   page: 1,
   totalCount: 1,
 };
 
 const stubInitialSearchState2 = {
-  searchResult: [{ title: "test-search-result-title" }, { tags: ["tag1", "tag2"] }],
+  searchResult: [
+    { title: "test-search-result-title" },
+    { tags: [{ tag_name: "tag1" }, { tag_name: "tag2" }] },
+  ],
   topTags: ["top_tag1"],
   page: 1,
   totalCount: 9,
@@ -48,7 +54,7 @@ describe("<Search />", () => {
   let spyGetSimpleSearch;
   let spyGetAdvancedSearch;
   let spyGetTopTags;
-  let spyHistoryPush;
+  // let spyHistoryPush;
 
   beforeEach(() => {
     spyGetSimpleSearch = jest
@@ -64,7 +70,7 @@ describe("<Search />", () => {
     spyGetTopTags = jest.spyOn(actionCreatorsUser, "getTopTags").mockImplementation(() => {
       return () => {};
     });
-    spyHistoryPush = jest.spyOn(history, "push").mockImplementation(() => {});
+    // spyHistoryPush = jest.spyOn(history, "push").mockImplementation(() => {});
     searchResult = (
       <Provider store={mockStore}>
         <ConnectedRouter history={history}>
@@ -152,13 +158,6 @@ describe("<Search />", () => {
     const component = mount(searchResult);
     const searchResultInstance = component.find(SearchResult.WrappedComponent).instance();
     searchResultInstance.onChangeSortBy(1);
-  });
-
-  it("should simulate clicking searchResult titles", () => {
-    const component = mount(searchResult);
-    const searchResultInstance = component.find(SearchResult.WrappedComponent).instance();
-    searchResultInstance.onClickTitle(1);
-    expect(spyHistoryPush).toHaveBeenCalledTimes(1);
   });
 
   it("should work properly when clicking page button", () => {

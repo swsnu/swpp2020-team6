@@ -8,7 +8,7 @@ import { connect } from "react-redux";
 import PropTypes from "prop-types";
 import { sortType } from "../../constants";
 import * as actionCreators from "../../store/actions/index";
-import RoadmapSimple from "../../components/RoadmapSimple/RoadmapSimple";
+import SimpleRoadmap from "../../components/SimpleRoadmap/SimpleRoadmap";
 
 // import "./SearchResult.scss";
 
@@ -83,11 +83,6 @@ class SearchResult extends Component {
     }
   };
 
-  onClickTitle = (roadmapID) => {
-    const { history } = this.props;
-    history.push(`/roadmap/${roadmapID}`);
-  };
-
   calcLevelData = (basic, intermediate, advanced) => {
     let levelData = [];
     if (basic) {
@@ -143,44 +138,29 @@ class SearchResult extends Component {
       page,
     } = this.state;
 
-    const { searchResult, topTags, totalCount } = this.props;
+    const { searchResult, topTags, totalCount, history } = this.props;
 
     const searchResultList = searchResult.map((simpleObject) => {
-      const simpleTags = [];
-      if (simpleObject.tags !== undefined) {
-        // eslint-disable-next-line dot-notation
-        simpleObject.tags.map((item) => simpleTags.push(item["tag_name"]));
-      }
+      // const simpleTags = [];
+      // if (simpleObject.tags !== undefined) {
+      //   // eslint-disable-next-line dot-notation
+      //   simpleObject.tags.map((item) => simpleTags.push(item["tag_name"]));
+      // }
       return (
-        <RoadmapSimple
-          roadmapID={simpleObject.id}
-          title={simpleObject.title}
-          date={simpleObject.date}
-          level={simpleObject.level}
-          likeCount={simpleObject.like_count}
-          commentCount={simpleObject.comment_count}
-          pinCount={simpleObject.pin_count}
-          progress={simpleObject.progress}
-          authorID={simpleObject.author_id}
+        <SimpleRoadmap
+          roadmapTitle={simpleObject.title}
+          roadmapImageId={simpleObject.image_id}
+          roadmapLevel={simpleObject.level}
           authorName={simpleObject.author_name}
-          authorPictureUrl={simpleObject.author_picture_url}
-          tags={simpleTags}
-          onClickTitleHandler={this.onClickTitle}
+          likeCount={simpleObject.like_count}
+          pinCount={simpleObject.pin_count}
+          commentCount={simpleObject.comment_count}
+          roadmapDescription={simpleObject.description}
+          isMyPage={false}
+          tagList={simpleObject.tags}
+          date={simpleObject.date}
+          onClick={() => history.push(`/roadmap/${simpleObject.id}`)}
         />
-        // <SimpleRoadmap
-        // roadmapTitle={simpleObject.title}
-        // roadmapImageId,
-        // roadmapLevel,
-        // authorName,
-        // likeCount,
-        // pinCount,
-        // commentCount,
-        // roadmapDescription,
-        // isMyPage,
-        // tagList,
-        // date,
-        // onClick,
-        // />
       );
     });
 
