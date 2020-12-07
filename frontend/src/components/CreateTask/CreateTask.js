@@ -1,15 +1,8 @@
 import React from "react";
 import PropTypes from "prop-types";
-import OndemandVideo from "@material-ui/icons/OndemandVideo";
-import Book from "@material-ui/icons/Book";
-import DescriptionOutlined from "@material-ui/icons/DescriptionOutlined";
-import EditOutlined from "@material-ui/icons/EditOutlined";
-import PublicOutlined from "@material-ui/icons/PublicOutlined";
-import TagFacesOutlined from "@material-ui/icons/TagFacesOutlined";
-// import { UpIcon, DownIcon } from "../Roadmap/StyledComponents/UpDown";
-import { taskType } from "../../constants";
 import StyledSelect from "../Roadmap/StyledComponents/StyledSelect";
 import "./CreateTask.scss";
+import taskTypeIcons from "./taskTypeIcons";
 
 const CreateTask = (props) => {
   const {
@@ -29,63 +22,7 @@ const CreateTask = (props) => {
     changeTaskDescriptionHandler,
   } = props;
 
-  const selectItems = [
-    { name: <em style={{ color: "#aaaaaa" }}>Choose type</em>, value: 0 },
-    {
-      name: (
-        <>
-          <Book className="task-type-select-item-icon" />
-          <label className="task-type-select-item-label">&nbsp;&nbsp;Book</label>
-        </>
-      ),
-      value: taskType.BOOK,
-    },
-    {
-      name: (
-        <>
-          <PublicOutlined className="task-type-select-item-icon" />
-          <label className="task-type-select-item-label">&nbsp;&nbsp;Website</label>
-        </>
-      ),
-      value: taskType.WEBSITE,
-    },
-    {
-      name: (
-        <>
-          <OndemandVideo className="task-type-select-item-icon" />
-          <label className="task-type-select-item-label">&nbsp;&nbsp;Video</label>
-        </>
-      ),
-      value: taskType.VIDEO,
-    },
-    {
-      name: (
-        <>
-          <DescriptionOutlined className="task-type-select-item-icon" />
-          <label className="task-type-select-item-label">&nbsp;&nbsp;Paper</label>
-        </>
-      ),
-      value: taskType.PAPER,
-    },
-    {
-      name: (
-        <>
-          <TagFacesOutlined className="task-type-select-item-icon" />
-          <label className="task-type-select-item-label">&nbsp;&nbsp;Roadmap</label>
-        </>
-      ),
-      value: taskType.ROADMAP,
-    },
-    {
-      name: (
-        <>
-          <EditOutlined className="task-type-select-item-icon" />
-          <label className="task-type-select-item-label">&nbsp;&nbsp;Other</label>
-        </>
-      ),
-      value: taskType.OTHER,
-    },
-  ];
+  const selectItems = taskTypeIcons;
 
   return (
     <div className="CreateTask">

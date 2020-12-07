@@ -1,24 +1,19 @@
+/* eslint-disable import/no-dynamic-require */
+/* eslint-disable global-require */
 import React, { Component } from "react";
 import PropTypes from "prop-types";
 import Switch from "@material-ui/core/Switch";
 
 import CreateSection from "../../components/CreateSection/CreateSection";
 import StyledSelect from "../../components/Roadmap/StyledComponents/StyledSelect";
-import { levelType } from "../../constants";
+import { levelType, roadmapImageNum } from "../../constants";
 import "./Roadmap.scss";
-
-import img1 from "../../misc/roadmap/1.png";
-import img2 from "../../misc/roadmap/2.png";
-import img3 from "../../misc/roadmap/3.png";
-import img4 from "../../misc/roadmap/4.png";
-import img5 from "../../misc/roadmap/5.png";
-import img6 from "../../misc/roadmap/6.png";
 
 class Roadmap extends Component {
   state = {
     received: false,
     isPrivate: false,
-    imageId: 0,
+    imageId: 1,
     title: "",
     level: 0,
     description: "",
@@ -396,17 +391,21 @@ class Roadmap extends Component {
       );
     });
 
-    const imgs = [img1, img2, img3, img4, img5, img6];
     let imageList = [{ name: <em style={{ color: "#aaaaaa" }}>Choose image</em>, value: 0 }];
-    imgs.forEach((img, i) => {
+    for (let i = 1; i <= roadmapImageNum; i += 1) {
       imageList = imageList.concat({
         name: (
-          <img className="roadmap-image" src={img} width="150" height="150" alt={`roadmap-${i}`} />
+          <img
+            className="roadmap-image"
+            src={require(`misc/roadmap/${i}.png`)}
+            width="150"
+            height="150"
+            alt={`roadmap-${i}`}
+          />
         ),
         value: i,
       });
-      return null;
-    });
+    }
 
     const Sections = sections.map((section, index) => {
       return (

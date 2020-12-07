@@ -21,6 +21,11 @@ $margin-main: 30px 10px 30px 10px;
     background-color: $mypage-user-info-background-color;
     border-radius: $mypage-user-info-border-radius;
 
+    h2 {
+      font-size: $mypage-user-info-font-size;
+      margin: 20px 0px 20px 0px;
+    }
+
     #user-img {
       width: $mypage-user-img-width;
       height: $mypage-user-img-heigth;
@@ -53,6 +58,10 @@ $margin-main: 30px 10px 30px 10px;
         color: $mypage-tab-menu-color;
         font-size: $mypage-tab-menu-font-size;
         margin: $mypage-tab-menu-margin;
+        -webkit-transition: all 0.3s ease-in-out;
+        -moz-transition: all 0.3s ease-in-out;
+        -o-transition: all 0.3s ease-in-out;
+        transition: all 0.3s ease-in-out;
       }
 
       .tab-menu-clicked {

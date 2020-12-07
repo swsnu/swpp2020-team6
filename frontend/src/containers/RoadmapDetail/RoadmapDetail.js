@@ -1,3 +1,5 @@
+/* eslint-disable import/no-dynamic-require */
+/* eslint-disable global-require */
 import React, { Component } from "react";
 import { connect } from "react-redux";
 import PropTypes from "prop-types";
@@ -14,6 +16,8 @@ import Comment from "../../components/Comment/Comment";
 import ProgressBar from "../../components/RoadmapDetail/ProgressBar";
 import RoadmapButtons from "./RoadmapButtons";
 import Section from "../../components/RoadmapDetail/Section";
+import UserCard from "../../components/RoadmapDetail/UserCard";
+import RoadmapLevelIcon from "../../components/SimpleRoadmap/RoadmapLevelIcon";
 
 const Transition = React.forwardRef(function Transition(props, ref) {
   // eslint-disable-next-line react/jsx-props-no-spreading
@@ -22,8 +26,10 @@ const Transition = React.forwardRef(function Transition(props, ref) {
 
 class RoadmapDetail extends Component {
   state = {
+    received: false,
     comment: "",
     open: true,
+    sectionCollapse: [],
   };
 
   componentDidMount() {
@@ -35,6 +41,55 @@ class RoadmapDetail extends Component {
     const { onResetRoadmap } = this.props;
     onResetRoadmap();
   }
+
+  /* ---------------- User Card Handler -------------------- */
+
+  onClickUserCard = () => {
+    const { history, selectedRoadmap } = this.props;
+    history.push(`/mypage/${selectedRoadmap.author_id}`);
+  };
+
+  /* ---------------- Section Collapse -------------------- */
+
+  setInitialState = () => {
+    const { selectedRoadmap } = this.props;
+
+    this.setState({
+      sectionCollapse: selectedRoadmap.sections.map(() => {
+        return false;
+      }),
+      received: true,
+    });
+  };
+
+  onClickSectionCollapse = (tmpSectionId) => {
+    const { sectionCollapse } = this.state;
+    this.setState({
+      sectionCollapse: sectionCollapse.map((collapse, id) => {
+        if (id === tmpSectionId) {
+          return !collapse;
+        }
+        return collapse;
+      }),
+    });
+  };
+
+  /* ---------------- task progress -------------------- */
+
+  calcProgress = () => {
+    const { selectedRoadmap } = this.props;
+    let taskNum = 0;
+    let checkedNum = 0;
+    selectedRoadmap.sections.forEach((section) => {
+      taskNum += section.tasks.length;
+      section.tasks.forEach((task) => {
+        if (task.task_checked) {
+          checkedNum += 1;
+        }
+      });
+    });
+    return (checkedNum / taskNum) * 100;
+  };
 
   /* ---------------- Roadmap Progress -------------------- */
   onChangeRoadmapProgressStatus = (type) => {
@@ -145,46 +200,38 @@ class RoadmapDetail extends Component {
     }
 
     // safe zone (selectedUser !== null/undefined,  selectedRoadmap !== null/undefined)
-    // eslint-disable-next-line camelcase
-    const { title, sections, comments, level, original_author_id, author_id } = selectedRoadmap;
+
+    const { received } = this.state;
+    if (!received) {
+      this.setInitialState();
+    }
 
     /* ---------------- Original Author -------------------- */
     const originalAuthor =
       // (inevitable since we use the data from the backend directly)
       // eslint-disable-next-line camelcase
-      original_author_id !== author_id ? (
+      selectedRoadmap.original_author_id !== selectedRoadmap.author_id ? (
         <div className="roadmap-original-author">
-          <p id="roadmap-original-author-name">{selectedRoadmap.original_author_name}</p>
+          Duplicated from:
+          {` ${selectedRoadmap.original_author_name}`}
         </div>
       ) : null;
 
-    /* ---------------- Roadmap level -------------------- */
-    let roadmapLevel;
-    const levelString = ["  ", "Basic", "Intermediate", "Advanced"];
-    switch (level) {
-      case 1:
-        roadmapLevel = <p id="basic-level">{levelString[1]}</p>;
-        break;
-      case 2:
-        roadmapLevel = <p id="intermediate-level">{levelString[2]}</p>;
-        break;
-      case 3:
-        roadmapLevel = <p id="advanced-level">{levelString[3]}</p>;
-        break;
-      default:
-        roadmapLevel = <p id="null-level">{levelString[0]}</p>;
-        break;
-    }
-
     /* ---------------- Roadmap sections -------------------- */
-    const roadmapSections = sections.map((section) => {
+    const { sectionCollapse } = this.state;
+    const { onChangeCheckbox } = this.props;
+    const roadmapSections = selectedRoadmap.sections.map((section, index) => {
       return (
         <Section
           key={section.section_id}
+          collapse={sectionCollapse[index]}
+          tmpSectionId={index}
           isAuthor={selectedRoadmap.author_id === selectedUser.user_id}
           progressStatus={selectedRoadmap.progress}
           title={section.section_title}
           tasks={section.tasks}
+          clickSectionCollapse={this.onClickSectionCollapse}
+          changeCheckbox={onChangeCheckbox}
         />
       );
     });
@@ -192,14 +239,14 @@ class RoadmapDetail extends Component {
     /* ---------------- Roadmap tags -------------------- */
     const roadmapTags = selectedRoadmap.tags.map((item) => {
       return (
-        <p key={item.tag_id} className="roadmap-tag">
+        <div key={item.tag_id} className="roadmap-tag">
           {item.tag_name}
-        </p>
+        </div>
       );
     });
 
     /* ---------------- Roadmap comments -------------------- */
-    const roadmapComments = comments.map((commentItem) => {
+    const roadmapComments = selectedRoadmap.comments.map((commentItem) => {
       return (
         <Comment
           key={commentItem.comment_id}
@@ -213,85 +260,102 @@ class RoadmapDetail extends Component {
       );
     });
 
-    let commentConfirmButton = (
-      <button id="confirm-create-comment-button" type="button" disabled>
+    const { comment } = this.state;
+    let commentDisabled = true;
+
+    if (comment !== "") {
+      commentDisabled = false;
+    }
+    const commentConfirmButton = (
+      <button
+        id="confirm-create-comment-button"
+        type="button"
+        onClick={() => this.commentCreateHandler(comment)}
+        disabled={commentDisabled}
+      >
         confirm
       </button>
     );
-    const { comment } = this.state;
-    if (comment !== "") {
-      commentConfirmButton = (
-        <button
-          id="confirm-create-comment-button"
-          type="button"
-          onClick={() => this.commentCreateHandler(comment)}
-        >
-          confirm
-        </button>
-      );
-    }
 
     return (
       <div className="RoadmapDetail">
         <div className="header" />
-        <div className="row">
-          <div className="leftcolumn">
-            <ProgressBar
-              isAuthor={selectedUser.user_id === selectedRoadmap.author_id}
-              onChangeRoadmapProgressStatus={this.onChangeRoadmapProgressStatus}
-              currentProgressStatus={selectedRoadmap.progress}
+        <div className="leftcolumn">
+          <div className="roadmap-info">
+            <img
+              id="roadmap-image"
+              src={require(`misc/roadmap/${selectedRoadmap.image_id}.png`)}
+              alt="roadmap"
             />
-            <h1 className="roadmap-title">{title}</h1>
-            <div className="roadmap-author">
-              <p id="roadmap-author-picture-url">{selectedRoadmap.author_user_picture_url}</p>
-              <p id="roadmap-author-name">{selectedRoadmap.author_name}</p>
-              <p id="roadmap-written-date">{selectedRoadmap.date}</p>
+            <div className="title-author-level-tags">
+              <div className="roadmap-title">{selectedRoadmap.title}</div>
+              {originalAuthor}
+              <div className="roadmap-level">
+                <RoadmapLevelIcon roadmapLevel={selectedRoadmap.level} />
+              </div>
+              <div className="roadmap-tags">{roadmapTags}</div>
+              <div id="roadmap-written-date">{selectedRoadmap.date}</div>
             </div>
-            {originalAuthor}
-            {roadmapLevel}
-            <div className="roadmap-tags">{roadmapTags}</div>
+          </div>
+          <div className="roadmap">
             <div className="roadmap-description">{selectedRoadmap.description}</div>
             <div className="roadmap-sections">{roadmapSections}</div>
           </div>
-          <div className="rightcolumn">
-            <div className="roadmap-panel">
-              <div className="roadmap-statistics">
-                <p id="roadmap-like-count">
-                  Like
-                  {selectedRoadmap.like_count}
-                </p>
-                <p id="roadmap-pin-count">
-                  Pinned
-                  {selectedRoadmap.pin_count}
-                </p>
-                <p id="roadmap-comment-count">
-                  Comments
-                  {selectedRoadmap.comment_count}
-                </p>
+        </div>
+        <div className="rightcolumn">
+          <div className="roadmap-panel">
+            <div className="progress-bar">
+              <ProgressBar
+                isAuthor={selectedUser.user_id === selectedRoadmap.author_id}
+                onChangeRoadmapProgressStatus={this.onChangeRoadmapProgressStatus}
+                currentProgressStatus={selectedRoadmap.progress}
+                progressPercentage={this.calcProgress()}
+              />
+            </div>
+            <div
+              className="roadmap-author"
+              style={{
+                display: selectedRoadmap.author_id === selectedUser.user_id ? "none" : "block",
+              }}
+            >
+              <UserCard authorName={selectedRoadmap.author_name} onClick={this.onClickUserCard} />
+            </div>
+            <div className="roadmap-statistics">
+              <div id="roadmap-like-count">
+                Like
+                {selectedRoadmap.like_count}
               </div>
-              <RoadmapButtons // change to comopnent and send funcs
-                buttonsRoadmapId={parseInt(match.params.id, 10)}
-                isAuthor={selectedRoadmap.author_id === selectedUser.user_id}
-              />
+              <div id="roadmap-pin-count">
+                Pinned
+                {selectedRoadmap.pin_count}
+              </div>
+              <div id="roadmap-comment-count">
+                Comments
+                {selectedRoadmap.comment_count}
+              </div>
             </div>
-            <div className="comment-input">
-              <textarea
-                id="new-comment-content-input"
-                rows="4"
-                cols="100"
-                type="text"
-                value={comment}
-                onChange={
-                  (event) => {
-                    this.setState({ comment: event.target.value });
-                  }
-                  // eslint-disable-next-line react/jsx-curly-newline
-                }
-              />
-              {commentConfirmButton}
-            </div>
-            <div className="roadmap-comments">{roadmapComments}</div>
+            <RoadmapButtons // change to comopnent and send funcs
+              buttonsRoadmapId={parseInt(match.params.id, 10)}
+              isAuthor={selectedRoadmap.author_id === selectedUser.user_id}
+            />
           </div>
+          <div className="comment-input">
+            <input
+              id="new-comment-content-input"
+              rows="4"
+              cols="100"
+              type="text"
+              value={comment}
+              onChange={
+                (event) => {
+                  this.setState({ comment: event.target.value });
+                }
+                // eslint-disable-next-line react/jsx-curly-newline
+              }
+            />
+            {commentConfirmButton}
+          </div>
+          <div className="roadmap-comments">{roadmapComments}</div>
         </div>
       </div>
     );
@@ -314,6 +378,7 @@ RoadmapDetail.propTypes = {
   onDeleteComment: PropTypes.func.isRequired,
 
   changeRoadmapProgress: PropTypes.func.isRequired,
+  onChangeCheckbox: PropTypes.func.isRequired,
 };
 
 const mapDispatchToProps = (dispatch) => {
@@ -327,6 +392,7 @@ const mapDispatchToProps = (dispatch) => {
     onDeleteComment: (id) => dispatch(actionCreators.deleteComment(id)),
     changeRoadmapProgress: (newState, roadmapId) =>
       dispatch(actionCreators.changeProgress({ progress_state: newState }, roadmapId)),
+    onChangeCheckbox: (taskId) => dispatch(actionCreators.changeCheckbox(taskId)),
   };
 };
 

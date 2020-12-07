@@ -26,6 +26,7 @@ const initialRoadmapState = {
 
 const stubSimpleRoadmap = {
   id: 11,
+  image_id: 1,
   title: "new-rm-title",
   date: "2020-11-14 05:46:47",
   level: 1,

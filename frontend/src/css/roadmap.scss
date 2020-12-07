@@ -10,7 +10,7 @@ $create-roadmap-body-max-width: 800px;
 $create-roadmap-body-width: 50%;
 
 $create-roadmap-border-style: 0px solid $main3-red-color;
-$create-roadmap-border-radius: 3px;
+$create-roadmap-border-radius: 5px;
 $create-roadmap-background-color: $paper-color;
 
 $create-section-border-style: 0px solid $main3-red-color;
@@ -20,7 +20,7 @@ $create-section-background-color: $paper-color;
 $create-task-border-style: 0px solid $grey-light-color;
 $create-task-border-radius: $create-roadmap-border-radius;
 $create-task-background-color: $paper-color;
-$create-task-box-shadow: 2px 2px 7px $grey-dark-color;
+$create-task-box-shadow: none; // 2px 2px 7px $grey-dark-color;
 
 $create-buttons-background-color: $main3-red-color;
 $create-buttons-color: #ffffff;
@@ -76,3 +76,11 @@ $tag-input-border-style: $roadmap-input-border-style;
 $tag-input-border-radius: $roadmap-input-border-radius;
 $tag-input-font-size: 7px;
 $tag-input-padding: 2px;
+
+$roadmap-description-border: 0px solid $grey-light-color;
+$roadmap-description-border-radius: 5px;
+$roadmap-description-background-color: $grey-light2-color;
+$roadmap-description-font-size: 16px;
+$roadmap-description-color: #333333;
+
+$section-title-font-size: 25px;

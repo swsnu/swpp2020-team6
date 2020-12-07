@@ -13,7 +13,7 @@ class LogoButton extends Component {
     return (
       <div className="LogoButton">
         <button type="button" id="logo-button" onClick={() => this.onClickLogo()}>
-          <img src={logoImg} alt="logo" />
+          <img src={logoImg} alt="logo" height="50px" />
         </button>
       </div>
     );
