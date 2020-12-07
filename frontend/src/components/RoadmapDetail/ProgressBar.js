@@ -21,9 +21,9 @@ const ProgressBar = (props) => {
         <LinearProgress variant="determinate" value={progressPercentage} />
       </Box>
       <Box minWidth={35}>
-        <Typography variant="body2" color="textSecondary">{`${Math.round(
-          progressPercentage,
-        )}%`}</Typography>
+        <Typography variant="body2" color="textSecondary">
+          {`${Math.round(progressPercentage)}%`}
+        </Typography>
       </Box>
     </Box>
   );

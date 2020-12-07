@@ -15,15 +15,17 @@ const UserCard = (props) => {
   const { authorName, onClick } = props;
 
   return (
-    <CardHeader
-      avatar={
-        <Avatar aria-label="recipe" className={classes.avatar}>
-          {authorName.charAt(0)}
-        </Avatar>
-      }
-      title={authorName}
-      onClick={() => onClick()}
-    />
+    <div className="UserCard">
+      <CardHeader
+        avatar={
+          <Avatar aria-label="recipe" className={classes.avatar}>
+            {authorName.charAt(0)}
+          </Avatar>
+        }
+        title={authorName}
+        onClick={() => onClick()}
+      />
+    </div>
   );
 };
 

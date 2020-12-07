@@ -30,7 +30,6 @@ class RoadmapDetail extends Component {
     comment: "",
     open: true,
     sectionCollapse: [],
-    taskChecked: [],
   };
 
   componentDidMount() {
@@ -212,7 +211,10 @@ class RoadmapDetail extends Component {
       // (inevitable since we use the data from the backend directly)
       // eslint-disable-next-line camelcase
       selectedRoadmap.original_author_id !== selectedRoadmap.author_id ? (
-        <p id="roadmap-original-author-name">{selectedRoadmap.original_author_name}</p>
+        <div className="roadmap-original-author">
+          Duplicated from:
+          {` ${selectedRoadmap.original_author_name}`}
+        </div>
       ) : null;
 
     /* ---------------- Roadmap sections -------------------- */
@@ -287,10 +289,7 @@ class RoadmapDetail extends Component {
             />
             <div className="title-author-level-tags">
               <div className="roadmap-title">{selectedRoadmap.title}</div>
-              <div className="roadmap-original-author">
-                Duplicated from:
-                {originalAuthor}
-              </div>
+              {originalAuthor}
               <div className="roadmap-level">
                 <RoadmapLevelIcon roadmapLevel={selectedRoadmap.level} />
               </div>
@@ -379,7 +378,7 @@ RoadmapDetail.propTypes = {
   onDeleteComment: PropTypes.func.isRequired,
 
   changeRoadmapProgress: PropTypes.func.isRequired,
-  changeCheckbox: PropTypes.func.isRequired,
+  onChangeCheckbox: PropTypes.func.isRequired,
 };
 
 const mapDispatchToProps = (dispatch) => {

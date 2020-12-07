@@ -15,7 +15,7 @@ const Section = (props) => {
     tmpSectionId,
     changeCheckbox,
   } = props;
-  const taskList = tasks.map((task, id) => {
+  const taskList = tasks.map((task) => {
     return (
       <Task
         taskId={task.task_id}

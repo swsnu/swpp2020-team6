@@ -1,7 +1,7 @@
 import React from "react";
 import PropTypes from "prop-types";
-import taskTypeIcons from "../CreateTask/taskTypeIcons";
 import Checkbox from "@material-ui/core/Checkbox";
+import taskTypeIcons from "../CreateTask/taskTypeIcons";
 
 import "./Task.scss";
 
