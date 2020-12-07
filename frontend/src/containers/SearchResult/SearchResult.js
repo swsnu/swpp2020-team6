@@ -141,11 +141,6 @@ class SearchResult extends Component {
     const { searchResult, topTags, totalCount, history } = this.props;
 
     const searchResultList = searchResult.map((simpleObject) => {
-      // const simpleTags = [];
-      // if (simpleObject.tags !== undefined) {
-      //   // eslint-disable-next-line dot-notation
-      //   simpleObject.tags.map((item) => simpleTags.push(item["tag_name"]));
-      // }
       return (
         <SimpleRoadmap
           roadmapTitle={simpleObject.title}
