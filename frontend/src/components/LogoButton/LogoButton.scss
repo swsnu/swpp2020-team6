@@ -1,0 +1,13 @@
+.LogoButton {
+  display: flex;
+  align-items: center;
+
+  img {
+    height: 65px;
+    width: 195px;
+  }
+
+  img:hover {
+    cursor: grab;
+  }
+}

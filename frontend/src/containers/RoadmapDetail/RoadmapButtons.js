@@ -2,6 +2,7 @@ import React from "react";
 import PropTypes from "prop-types";
 import { connect } from "react-redux";
 import { withRouter } from "react-router";
+import Badge from "@material-ui/core/Badge";
 import Tooltip from "@material-ui/core/Tooltip";
 import FavoriteIcon from "@material-ui/icons/Favorite";
 import FavoriteBorderIcon from "@material-ui/icons/FavoriteBorder";
@@ -12,6 +13,7 @@ import DeleteForeverIcon from "@material-ui/icons/DeleteForever";
 import CreateIcon from "@material-ui/icons/Create";
 import { IconButton } from "@material-ui/core";
 import * as actionCreators from "../../store/actions/index";
+import "./RoadmapButtons.scss";
 
 const RoadmapButtons = (props) => {
   const onClickEditRoadmap = () => {
@@ -41,7 +43,7 @@ const RoadmapButtons = (props) => {
 
   // eslint-disable-next-line camelcase
   const { liked_roadmaps, pinned_roadmaps } = props.selectedUser;
-  const { buttonsRoadmapId } = props;
+  const { buttonsRoadmapId, likeCount, pinCount, commentCount } = props;
   const like = liked_roadmaps.find((roadmap) => roadmap.id === buttonsRoadmapId);
   const likeButton = like !== undefined ? <FavoriteIcon /> : <FavoriteBorderIcon />;
   const pin = pinned_roadmaps.find((roadmap) => roadmap.id === buttonsRoadmapId);
@@ -60,16 +62,6 @@ const RoadmapButtons = (props) => {
           <CreateIcon />
         </IconButton>
       </Tooltip>
-      <Tooltip title="Duplicate">
-        <IconButton
-          aria-label="duplicate"
-          id="duplicate-button"
-          size="medium"
-          onClick={() => onClickDuplicateRoadmap()}
-        >
-          <FileCopyIcon />
-        </IconButton>
-      </Tooltip>
       <Tooltip title="Delete">
         <IconButton
           aria-label="delete"
@@ -81,27 +73,35 @@ const RoadmapButtons = (props) => {
         </IconButton>
       </Tooltip>
     </div>
-  ) : (
-    <div className="roadmap-buttons">
+  ) : null;
+
+  return (
+    <div className="RoadmapButtons">
       <Tooltip title="Pin">
-        <IconButton
-          aria-label="pin"
-          id="pin-button"
-          size="medium"
-          onClick={() => onClickPinRoadmap()}
-        >
-          {pinButton}
-        </IconButton>
+        <Badge color="secondary" badgeContent={pinCount} showZero>
+          <IconButton
+            aria-label="pin"
+            id="pin-button"
+            size="medium"
+            onClick={() => onClickPinRoadmap()}
+            disabled={isAuthor}
+          >
+            {pinButton}
+          </IconButton>
+        </Badge>
       </Tooltip>
       <Tooltip title="Like">
-        <IconButton
-          aria-label="like"
-          id="like-button"
-          size="medium"
-          onClick={() => onClickLikeRoadmap()}
-        >
-          {likeButton}
-        </IconButton>
+        <Badge color="secondary" badgeContent={likeCount} showZero>
+          <IconButton
+            aria-label="like"
+            id="like-button"
+            size="medium"
+            onClick={() => onClickLikeRoadmap()}
+            disabled={isAuthor}
+          >
+            {likeButton}
+          </IconButton>
+        </Badge>
       </Tooltip>
       <Tooltip title="Duplicate">
         <IconButton
@@ -113,9 +113,9 @@ const RoadmapButtons = (props) => {
           <FileCopyIcon />
         </IconButton>
       </Tooltip>
+      {roadmapButtons}
     </div>
   );
-  return roadmapButtons;
 };
 
 RoadmapButtons.propTypes = {
@@ -129,6 +129,9 @@ RoadmapButtons.propTypes = {
   onDuplicateRoadmap: PropTypes.func.isRequired,
 
   selectedUser: PropTypes.objectOf(PropTypes.any),
+  likeCount: PropTypes.number,
+  pinCount: PropTypes.number,
+  commentCount: PropTypes.number,
 };
 
 const mapDispatchToProps = (dispatch) => {

@@ -1,0 +1,25 @@
+@import "../../css/basic.scss";
+
+.UserCard {
+  width: 250px;
+  display: flex;
+  flex-direction: row;
+  align-items: center;
+
+  .person-icon {
+    width: 30px;
+    height: 30px;
+    margin: 0px 10px 0px 10px;
+  }
+  .card-header {
+    border: 1px solid $grey-light-color;
+
+    .MuiCardHeader-title {
+      font-size: 20px;
+      text-align: left;
+    }
+  }
+}
+.UserCard:hover {
+  cursor: grab;
+}

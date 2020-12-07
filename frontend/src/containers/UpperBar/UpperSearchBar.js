@@ -1,7 +1,11 @@
 import React, { Component } from "react";
 import { connect } from "react-redux";
 import PropTypes from "prop-types";
+import IconButton from "@material-ui/core/IconButton";
+import SearchIcon from "@material-ui/icons/Search";
 import * as actionCreators from "../../store/actions/index";
+
+import "./UpperSearchBar.scss";
 
 class UpperSearchBar extends Component {
   state = {
@@ -15,23 +19,27 @@ class UpperSearchBar extends Component {
 
   render() {
     const { searchInput } = this.state;
+
     return (
       <div className="UpperSearchBar">
-        <input
-          id="search-input"
-          type="text"
-          placeholder="Roadmap to search..."
-          value={searchInput}
-          onChange={(event) => this.setState({ searchInput: event.target.value })}
-        />
-        <button
-          type="button"
-          id="search-button"
-          onClick={() => this.onClickSearch(searchInput)}
-          disabled={searchInput === ""}
-        >
-          Search
-        </button>
+        <div id="input-base">
+          <input
+            id="search-input"
+            type="text"
+            placeholder="Search Roadmap by title"
+            value={searchInput}
+            onChange={(event) => this.setState({ searchInput: event.target.value })}
+          />
+          <IconButton
+            id="search-button"
+            aria-label="search-button"
+            disabled={searchInput === ""}
+            color="primary"
+            onClick={() => this.onClickSearch(searchInput)}
+          >
+            <SearchIcon />
+          </IconButton>
+        </div>
       </div>
     );
   }

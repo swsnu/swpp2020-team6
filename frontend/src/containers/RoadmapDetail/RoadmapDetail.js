@@ -320,26 +320,19 @@ class RoadmapDetail extends Component {
             >
               <UserCard authorName={selectedRoadmap.author_name} onClick={this.onClickUserCard} />
             </div>
-            <div className="roadmap-statistics">
-              <div id="roadmap-like-count">
-                Like
-                {selectedRoadmap.like_count}
-              </div>
-              <div id="roadmap-pin-count">
-                Pinned
-                {selectedRoadmap.pin_count}
-              </div>
-              <div id="roadmap-comment-count">
-                Comments
-                {selectedRoadmap.comment_count}
-              </div>
-            </div>
             <RoadmapButtons // change to comopnent and send funcs
               buttonsRoadmapId={parseInt(match.params.id, 10)}
               isAuthor={selectedRoadmap.author_id === selectedUser.user_id}
+              likeCount={selectedRoadmap.like_count}
+              pinCount={selectedRoadmap.pin_count}
+              commentCount={selectedRoadmap.comment_count}
             />
           </div>
           <div className="comment-input">
+            <div id="roadmap-comment-count">
+              Comments
+              {selectedRoadmap.comment_count}
+            </div>
             <input
               id="new-comment-content-input"
               rows="4"

@@ -1,8 +1,14 @@
 import React, { Component } from "react";
 import { connect } from "react-redux";
 import PropTypes from "prop-types";
+import Tooltip from "@material-ui/core/Tooltip";
+import IconButton from "@material-ui/core/IconButton";
+import ExitToAppIcon from "@material-ui/icons/ExitToApp";
+import PersonOutlineOutlinedIcon from "@material-ui/icons/PersonOutlineOutlined";
 import { withRouter } from "react-router";
 import * as actionCreators from "../../store/actions/index";
+
+import "./UpperUserBar.scss";
 
 class UpperUserBar extends Component {
   onClickSignOut = () => {
@@ -27,9 +33,6 @@ class UpperUserBar extends Component {
   render() {
     return (
       <div className="UpperUserBar">
-        <button type="button" id="signout-button" onClick={() => this.onClickSignOut()}>
-          Sign Out
-        </button>
         <button
           type="button"
           id="create-roadmap-button"
@@ -37,9 +40,16 @@ class UpperUserBar extends Component {
         >
           Create Roadmap
         </button>
-        <button type="button" id="my-page-button" onClick={() => this.onClickMyPage()}>
-          My Page
-        </button>
+        <Tooltip title="My Page">
+          <IconButton id="my-page-button" onClick={() => this.onClickMyPage()}>
+            <PersonOutlineOutlinedIcon className="icons" />
+          </IconButton>
+        </Tooltip>
+        <Tooltip title="Sign Out">
+          <IconButton id="signout-button" onClick={() => this.onClickSignOut()}>
+            <ExitToAppIcon className="icons" />
+          </IconButton>
+        </Tooltip>
       </div>
     );
   }
