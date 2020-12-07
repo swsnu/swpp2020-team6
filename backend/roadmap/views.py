@@ -453,6 +453,7 @@ def new(request, top_n):
             for roadmap in sorted_roadmaps[:return_roadmaps_count]
         )
         return JsonResponse({"roadmaps": new_roadmaps})
+
     return HttpResponseNotAllowed(["GET"])
 
 
@@ -489,7 +490,7 @@ def search(request):
             return HttpResponseBadRequest()
 
         # Accumulate each filter
-        filters = []
+        filters = [Q(private__exact=False)]
         if title_keywords:
             filters.append(
                 reduce(
