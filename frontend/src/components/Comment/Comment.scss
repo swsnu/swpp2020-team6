@@ -1,0 +1,35 @@
+.Comment {
+  background-color: #ffffff;
+  width: 100%;
+  display: flex;
+  flex-direction: row;
+  align-items: center;
+  border-radius: 10px;
+  margin: 20px 0px 0px 0px;
+
+  .comment-author-panel {
+    display: flex;
+    flex-direction: column;
+    align-items: center;
+
+    .UserCard {
+      border: none;
+    }
+
+    .comment-author-buttons {
+      display: flex;
+      flex-direction: row;
+    }
+  }
+
+  .middle-border {
+    height: 80%;
+    width: 2px;
+    background-color: #dddddd;
+    margin: 0px 20px 0px 0px;
+  }
+
+  .comment-view {
+    width: 100%;
+  }
+}

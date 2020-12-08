@@ -74,9 +74,8 @@ const CreateTask = (props) => {
           changeTaskUrlHandler(tmpSectionId, tmpTaskId, event.target.value);
         }}
       />
-      <input
+      <textarea
         className="task-description"
-        type="text"
         value={description}
         placeholder="Task Description"
         onChange={(event) => {

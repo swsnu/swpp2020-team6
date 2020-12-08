@@ -17,19 +17,23 @@ $margin-bottom-main: 10px;
   align-items: flex-end;
   background-color: $create-roadmap-main-background-color;
 
-  input {
+  input,
+  textarea {
     color: $roadmap-input-text-color;
     border: $roadmap-input-border-style;
     border-radius: $roadmap-input-border-radius;
     font-size: $roadmap-input-font-size;
     padding: $roadmap-input-padding;
+    resize: none;
   }
-  input::placeholder {
+  input::placeholder,
+  textarea::placeholder {
     color: $roadmap-input-placeholder-color;
     font-style: $roadmap-input-placeholder-style;
     font-size: $roadmap-input-placeholder-font-size;
   }
-  input:focus {
+  input:focus,
+  textarea:focus {
     outline: none;
   }
 

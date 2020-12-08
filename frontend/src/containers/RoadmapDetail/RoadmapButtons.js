@@ -28,7 +28,10 @@ const RoadmapButtons = (props) => {
 
   const onClickDeleteRoadmap = () => {
     const { onDeleteRoadmap, buttonsRoadmapId } = props;
-    onDeleteRoadmap(buttonsRoadmapId);
+    const yes = window.confirm("Are you sure to delete the Roadmap?");
+    if (yes) {
+      onDeleteRoadmap(buttonsRoadmapId);
+    }
   };
 
   const onClickPinRoadmap = () => {
@@ -43,7 +46,7 @@ const RoadmapButtons = (props) => {
 
   // eslint-disable-next-line camelcase
   const { liked_roadmaps, pinned_roadmaps } = props.selectedUser;
-  const { buttonsRoadmapId, likeCount, pinCount, commentCount } = props;
+  const { buttonsRoadmapId, likeCount, pinCount } = props;
   const like = liked_roadmaps.find((roadmap) => roadmap.id === buttonsRoadmapId);
   const likeButton = like !== undefined ? <FavoriteIcon /> : <FavoriteBorderIcon />;
   const pin = pinned_roadmaps.find((roadmap) => roadmap.id === buttonsRoadmapId);
@@ -51,7 +54,7 @@ const RoadmapButtons = (props) => {
 
   const { isAuthor } = props;
   const roadmapButtons = isAuthor ? (
-    <div className="roadmap-buttons">
+    <>
       <Tooltip title="Edit">
         <IconButton
           aria-label="edit"
@@ -72,48 +75,55 @@ const RoadmapButtons = (props) => {
           <DeleteForeverIcon />
         </IconButton>
       </Tooltip>
-    </div>
+    </>
   ) : null;
 
   return (
     <div className="RoadmapButtons">
-      <Tooltip title="Pin">
-        <Badge color="secondary" badgeContent={pinCount} showZero>
+      <div className="roadmap-buttons">
+        <Tooltip title="Pin">
+          <Badge color="secondary" badgeContent={pinCount} showZero>
+            <IconButton
+              aria-label="pin"
+              id="pin-button"
+              size="medium"
+              onClick={() => onClickPinRoadmap()}
+              disabled={isAuthor}
+            >
+              {pinButton}
+            </IconButton>
+          </Badge>
+        </Tooltip>
+        <Tooltip title="Like">
+          <Badge color="secondary" badgeContent={likeCount} showZero>
+            <IconButton
+              aria-label="like"
+              id="like-button"
+              size="medium"
+              onClick={() => onClickLikeRoadmap()}
+              disabled={isAuthor}
+            >
+              {likeButton}
+            </IconButton>
+          </Badge>
+        </Tooltip>
+        <Tooltip title="Duplicate">
           <IconButton
-            aria-label="pin"
-            id="pin-button"
+            aria-label="duplicate"
+            id="duplicate-button"
             size="medium"
-            onClick={() => onClickPinRoadmap()}
-            disabled={isAuthor}
+            onClick={() => onClickDuplicateRoadmap()}
           >
-            {pinButton}
+            <FileCopyIcon />
           </IconButton>
-        </Badge>
-      </Tooltip>
-      <Tooltip title="Like">
-        <Badge color="secondary" badgeContent={likeCount} showZero>
-          <IconButton
-            aria-label="like"
-            id="like-button"
-            size="medium"
-            onClick={() => onClickLikeRoadmap()}
-            disabled={isAuthor}
-          >
-            {likeButton}
-          </IconButton>
-        </Badge>
-      </Tooltip>
-      <Tooltip title="Duplicate">
-        <IconButton
-          aria-label="duplicate"
-          id="duplicate-button"
-          size="medium"
-          onClick={() => onClickDuplicateRoadmap()}
-        >
-          <FileCopyIcon />
-        </IconButton>
-      </Tooltip>
-      {roadmapButtons}
+        </Tooltip>
+        {roadmapButtons}
+      </div>
+      <div className="roadmap-anchors">
+        <a href="#roadmap-description">Description</a>
+        <a href="#roadmap-sections">Sections</a>
+        <a href="#roadmap-comments">Comments</a>
+      </div>
     </div>
   );
 };
@@ -131,7 +141,7 @@ RoadmapButtons.propTypes = {
   selectedUser: PropTypes.objectOf(PropTypes.any),
   likeCount: PropTypes.number,
   pinCount: PropTypes.number,
-  commentCount: PropTypes.number,
+  // commentCount: PropTypes.number,
 };
 
 const mapDispatchToProps = (dispatch) => {

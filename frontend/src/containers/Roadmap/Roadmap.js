@@ -495,7 +495,7 @@ class Roadmap extends Component {
                 />
               </div>
             </div>
-            <input
+            <textarea
               id="roadmap-description"
               value={description}
               placeholder="Description"
