@@ -43,7 +43,11 @@ class SignIn extends Component {
     return (
       <div className="SignIn">
         <img src={rotus} alt="" />
-        <h1>Sign In</h1>
+        <h4>
+          Welcome to
+          <span> Rotus!</span>
+        </h4>
+        <p>Sign in to create and search for roadmaps.</p>
         <label>Username</label>
         <input
           id="username-input"

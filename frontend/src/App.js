@@ -31,7 +31,6 @@ class App extends React.Component {
     let logoButton;
     let upperUserBar;
     let upperSearchBar;
-    let welcomeMessage = <h1>Welcome to Rotus! :D</h1>;
     if (isSignedIn === undefined) {
       return (
         <div className="App">
@@ -44,16 +43,14 @@ class App extends React.Component {
       logoButton = <LogoButton />;
       upperUserBar = <UpperUserBar />;
       upperSearchBar = <UpperSearchBar />;
-      welcomeMessage = null;
     }
     return (
       <ConnectedRouter history={history}>
         <div className="App">
-          <div className="upper-bar">
+          <div className={isSignedIn ? "upper-bar" : "nothing"}>
             {logoButton}
             {upperUserBar}
             {upperSearchBar}
-            {welcomeMessage}
           </div>
           <Switch>
             <Route path="/signup" exact component={SignUp} />

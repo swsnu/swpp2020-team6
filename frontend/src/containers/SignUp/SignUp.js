@@ -48,7 +48,8 @@ class SignUp extends Component {
     return (
       <div className="SignUp">
         <img src={rotus} alt="" />
-        <h1>Sign Up</h1>
+        <h4>Sign up</h4>
+        <p>Create your account to explore our service.</p>
         <label>Email</label>
         <input
           id="email-input"

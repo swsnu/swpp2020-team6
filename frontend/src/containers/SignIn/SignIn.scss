@@ -1,9 +1,22 @@
 @import "../../css/basic.scss";
-
 .SignIn {
   width: 40%;
   max-width: 400px;
-  margin: 0px auto;
+  margin: 100px auto;
+  p {
+    line-height: 155%;
+    font-size: 14px;
+    max-width: 400px;
+    margin-bottom: 20px;
+  }
+  h4 {
+    margin-bottom: 20px;
+    color: rgba(#000, 0.5);
+    span {
+      color: rgba(#000, 1);
+      font-weight: 700;
+    }
+  }
   label {
     position: relative;
     color: black;
