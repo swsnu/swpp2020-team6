@@ -14,7 +14,7 @@ $margin-main: 30px 10px 30px 10px;
 
   .user-info {
     position: sticky;
-    top: 10px;
+    top: 90px;
     width: $mypage-user-info-width;
     height: $mypage-user-info-height;
     margin: $margin-main;
@@ -48,7 +48,6 @@ $margin-main: 30px 10px 30px 10px;
   .mypage-tab {
     position: relative;
     width: $mypage-tab-width;
-    min-width: $mypage-tab-width;
     box-shadow: $mypage-tab-box-shadow;
     margin: $margin-main;
 
