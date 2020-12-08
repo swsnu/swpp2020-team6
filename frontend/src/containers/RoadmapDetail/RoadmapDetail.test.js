@@ -163,7 +163,7 @@ const stubMyRoadmapBeforeStudyingState = {
           {
             task_id: 1,
             task_title: "task title 1-1",
-            task_type: 3,
+            task_type: 0,
             task_url: "task url 1-1",
             task_description: "task description 1-1",
             task_checked: false,
@@ -1456,4 +1456,27 @@ describe("<RoadmapDetail />", () => {
     component.unmount();
     expect(spyResetRoadmap).toHaveBeenCalledTimes(1);
   });
+});
+
+it(`should show Task type properly.`, () => {
+  const component = mount(
+    <Provider store={mockAuthorizedUserMyRoadmapBeforeStudyingStore}>
+      <ConnectedRouter history={history}>
+        <Switch>
+          <Route
+            path="/"
+            exact
+            render={() => <RoadmapDetail history={history} match={{ params: { id: 1 } }} />}
+          />
+        </Switch>
+      </ConnectedRouter>
+    </Provider>,
+  );
+
+  const wrapper = component.find(".task-type");
+
+  const empty = wrapper.at(0).find(".task-type-select-item-icon");
+  const notEmpty = wrapper.at(1).find(".task-type-select-item-icon");
+  expect(empty.length).toBeFalsy();
+  expect(notEmpty.length).toBeTruthy();
 });
