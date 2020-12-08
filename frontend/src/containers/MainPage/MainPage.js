@@ -4,7 +4,7 @@ import { connect } from "react-redux";
 import PropTypes from "prop-types";
 import "bootstrap/dist/css/bootstrap.min.css";
 import CssBaseline from "@material-ui/core/CssBaseline";
-import rotus from "../../misc/rotus.png";
+import exercise from "../../misc/banner/exercise.png";
 import RoadmapCarousel from "./RoadmapCarousel";
 
 const MainPage = (props) => {
@@ -23,21 +23,17 @@ const MainPage = (props) => {
         <CssBaseline />
         <Carousel>
           <Carousel.Item>
-            <img src={rotus} alt="This is the first slide" width="1000px" height="300px" />
-            <Carousel.Caption>
-              <h3>Welcome to Rotus!</h3>
-              <p>Explore awesome well organized, awsome roadamps and plan for your goals!</p>
-            </Carousel.Caption>
+            <img src={exercise} alt="Images from Flaticon" width="1838px" height="284px" />
           </Carousel.Item>
           <Carousel.Item>
-            <img src={rotus} alt="This is the first slide" width="1000px" height="300px" />
+            <img src={exercise} alt="This is the first slide" width="1838px" height="284px" />
             <Carousel.Caption>
               <h3>How to get started</h3>
               <p>A quick walk through with key features and tips to create a great roadmap!</p>
             </Carousel.Caption>
           </Carousel.Item>
           <Carousel.Item>
-            <img src={rotus} alt="This is the first slide" width="1000px" height="300px" />
+            <img src={exercise} alt="This is the first slide" width="1838px" height="284px" />
             <Carousel.Caption>
               <h3>[AD] The world-wide best biscuits</h3>
               <p>enjoy rotus anywhere!</p>
