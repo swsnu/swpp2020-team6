@@ -6,14 +6,14 @@ import logoImg from "../../misc/rotus.png";
 class LogoButton extends Component {
   onClickLogo = () => {
     const { history } = this.props;
-    history.push("/home");
+    history.push("/main");
   };
 
   render() {
     return (
       <div className="LogoButton">
         <button type="button" id="logo-button" onClick={() => this.onClickLogo()}>
-          <img src={logoImg} alt="logo" />
+          <img src={logoImg} alt="logo" height="50px" />
         </button>
       </div>
     );

@@ -6,6 +6,8 @@ import { Route, Switch } from "react-router-dom";
 
 import Button from "@material-ui/core/Button";
 import Dialog from "@material-ui/core/Dialog";
+import Checkbox from "@material-ui/core/Checkbox";
+import CardHeader from "@material-ui/core/CardHeader";
 import RoadmapDetail from "./RoadmapDetail";
 import getMockStore from "../../test-utils/mocks";
 import { history } from "../../store/store";
@@ -51,6 +53,7 @@ const stubAuthorizedUserLikePinState = {
     pinned_roadmaps: [
       {
         id: 1,
+        image_id: 1,
         title: "title1",
         date: dateData,
         level: 1,
@@ -83,6 +86,7 @@ const stubAuthorizedUserLikePinState = {
     liked_roadmaps: [
       {
         id: 1,
+        image_id: 1,
         title: "title1",
         date: dateData,
         level: 1,
@@ -123,6 +127,7 @@ const stubInitialRoadmapState = {
 const stubMyRoadmapBeforeStudyingState = {
   selectedRoadmap: {
     id: 1,
+    image_id: 1,
     title: "title1",
     date: dateData,
     level: 1,
@@ -196,6 +201,7 @@ const stubMyRoadmapBeforeStudyingState = {
 const stubMyRoadmapInProgressState = {
   selectedRoadmap: {
     id: 1,
+    image_id: 1,
     title: "title1",
     date: dateData,
     level: 2,
@@ -269,6 +275,7 @@ const stubMyRoadmapInProgressState = {
 const stubMyRoadmapFinishedState = {
   selectedRoadmap: {
     id: 1,
+    image_id: 1,
     title: "title1",
     date: dateData,
     level: 3,
@@ -342,6 +349,7 @@ const stubMyRoadmapFinishedState = {
 const stubBuggyState = {
   selectedRoadmap: {
     id: 1,
+    image_id: 1,
     title: "title1",
     date: dateData,
     level: 4,
@@ -415,6 +423,7 @@ const stubBuggyState = {
 const stubOtherRoadmapState = {
   selectedRoadmap: {
     id: 1,
+    image_id: 1,
     title: "title1",
     date: dateData,
     level: 1,
@@ -505,6 +514,7 @@ const stubOtherRoadmapState = {
 const stubOtherPrivateRoadmapState = {
   selectedRoadmap: {
     id: 1,
+    image_id: 1,
     title: "title1",
     date: dateData,
     level: 1,
@@ -752,6 +762,50 @@ describe("<RoadmapDetail />", () => {
     expect(spyGetRoadmap).toHaveBeenCalledTimes(1);
   });
 
+  /* ----------------- Section Collapse ---------------- */
+  it(`should call "onClickSectionCollapse"`, () => {
+    const component = mount(
+      <Provider store={mockAuthorizedUserOtherRoadmapStore}>
+        <ConnectedRouter history={history}>
+          <Switch>
+            <Route
+              path="/"
+              exact
+              render={() => <RoadmapDetail history={history} match={{ params: { id: 1 } }} />}
+            />
+          </Switch>
+        </ConnectedRouter>
+      </Provider>,
+    );
+    const instance = component.find(RoadmapDetail.WrappedComponent).instance();
+    expect(instance.state.sectionCollapse).toEqual([false, false]);
+    const collapseButton = component.find(".section-collapse");
+    expect(collapseButton.length).toBe(2);
+    collapseButton.at(0).simulate("click");
+    expect(instance.state.sectionCollapse).toEqual([true, false]);
+  });
+
+  /* ----------------- User Card ------------------- */
+  it(`should call "onClickUserCard"`, () => {
+    const component = mount(
+      <Provider store={mockAuthorizedUserOtherRoadmapStore}>
+        <ConnectedRouter history={history}>
+          <Switch>
+            <Route
+              path="/"
+              exact
+              render={() => <RoadmapDetail history={history} match={{ params: { id: 1 } }} />}
+            />
+          </Switch>
+        </ConnectedRouter>
+      </Provider>,
+    );
+
+    const userCard = component.find(CardHeader);
+    userCard.at(0).props().onClick();
+    expect(spyPush).toHaveBeenCalledTimes(1);
+  });
+
   /* ----------------- Roadmap Level ----------------- */
   it(`should show appropriate roadmap level(basic).`, () => {
     const component = mount(
@@ -767,14 +821,12 @@ describe("<RoadmapDetail />", () => {
         </ConnectedRouter>
       </Provider>,
     );
-    const basicLevel = component.find("#basic-level");
-    expect(basicLevel.length).toBe(1);
-    const intermediateLevel = component.find("#intermediate-level");
+    const basicLevel = component.find("#basic-chip");
+    expect(basicLevel.length).toBeTruthy();
+    const intermediateLevel = component.find("#intermediate-chip");
     expect(intermediateLevel.length).toBe(0);
-    const advancedLevel = component.find("#advanced-level");
+    const advancedLevel = component.find("#advanced-chip");
     expect(advancedLevel.length).toBe(0);
-    const nullLevel = component.find("#null-level");
-    expect(nullLevel.length).toBe(0);
   });
 
   it(`should show appropriate roadmap level(intermediate).`, () => {
@@ -792,14 +844,12 @@ describe("<RoadmapDetail />", () => {
       </Provider>,
     );
 
-    const basicLevel = component.find("#basic-level");
+    const basicLevel = component.find("#basic-chip");
     expect(basicLevel.length).toBe(0);
-    const intermediateLevel = component.find("#intermediate-level");
-    expect(intermediateLevel.length).toBe(1);
-    const advancedLevel = component.find("#advanced-level");
+    const intermediateLevel = component.find("#intermediate-chip");
+    expect(intermediateLevel.length).toBeTruthy();
+    const advancedLevel = component.find("#advanced-chip");
     expect(advancedLevel.length).toBe(0);
-    const nullLevel = component.find("#null-level");
-    expect(nullLevel.length).toBe(0);
   });
 
   it(`should show appropriate roadmap level(advanced).`, () => {
@@ -817,38 +867,12 @@ describe("<RoadmapDetail />", () => {
       </Provider>,
     );
 
-    const basicLevel = component.find("#basic-level");
+    const basicLevel = component.find("#basic-chip");
     expect(basicLevel.length).toBe(0);
-    const intermediateLevel = component.find("#intermediate-level");
+    const intermediateLevel = component.find("#intermediate-chip");
     expect(intermediateLevel.length).toBe(0);
-    const advancedLevel = component.find("#advanced-level");
-    expect(advancedLevel.length).toBe(1);
-    const nullLevel = component.find("#null-level");
-    expect(nullLevel.length).toBe(0);
-  });
-
-  it(`should show appropriate roadmap level(null).`, () => {
-    const component = mount(
-      <Provider store={mockAuthorizedUserBuggyStore}>
-        <ConnectedRouter history={history}>
-          <Switch>
-            <Route
-              path="/"
-              exact
-              render={() => <RoadmapDetail history={history} match={{ params: { id: 1 } }} />}
-            />
-          </Switch>
-        </ConnectedRouter>
-      </Provider>,
-    );
-    const basicLevel = component.find("#basic-level");
-    expect(basicLevel.length).toBe(0);
-    const intermediateLevel = component.find("#intermediate-level");
-    expect(intermediateLevel.length).toBe(0);
-    const advancedLevel = component.find("#advanced-level");
-    expect(advancedLevel.length).toBe(0);
-    const nullLevel = component.find("#null-level");
-    expect(nullLevel.length).toBe(1);
+    const advancedLevel = component.find("#advanced-chip");
+    expect(advancedLevel.length).toBeTruthy();
   });
 
   // My Roadmap Testing
@@ -872,11 +896,8 @@ describe("<RoadmapDetail />", () => {
     expect(outerWrapper.length).toBe(1);
     expect(outerWrapper.at(0).text()).toBe("title1");
 
-    const authorProfile = component.find("#roadmap-author-picture-url");
-    expect(authorProfile.at(0).text()).toBe(profileURL);
-
-    const authorName = component.find("#roadmap-author-name");
-    expect(authorName.at(0).text()).toBe("user1");
+    const authorProfile = component.find(".UserCard");
+    expect(authorProfile.at(0).text()).toContain("user1");
 
     const originalAuthor = component.find(".roadmap-original-author");
     expect(originalAuthor.length).toBe(0);
@@ -1027,7 +1048,7 @@ describe("<RoadmapDetail />", () => {
     const outerWrapper = component.find(".RoadmapDetail");
     expect(outerWrapper.length).toBe(1);
     const checkbox = component.find(".task-checkbox").at(0);
-    checkbox.simulate("change", { target: { value: false } });
+    checkbox.at(0).props().onChange();
     expect(spyChangeCheckbox).toHaveBeenCalledTimes(1);
   });
 
@@ -1063,7 +1084,7 @@ describe("<RoadmapDetail />", () => {
     // need to mock onChangeRoadmapProgressStatus
     // expect(spyConfirm).toHaveBeenCalledTimes(1);
 
-    const taskCheckboxs = component.find(".task-checkbox");
+    const taskCheckboxs = component.find(Checkbox);
     expect(taskCheckboxs.length).toBe(3);
   });
 
@@ -1138,8 +1159,8 @@ describe("<RoadmapDetail />", () => {
     );
     expect(deleteButton.length).toBe(0);
 
-    const originalAuthor = component.find("#roadmap-original-author-name");
-    expect(originalAuthor.at(0).text()).toBe("user1");
+    const originalAuthor = component.find(".roadmap-original-author");
+    expect(originalAuthor.at(0).text()).toBe("Duplicated from: user1");
   });
 
   /* ---------------------- Other's Roadmap (private) ---------------------- */

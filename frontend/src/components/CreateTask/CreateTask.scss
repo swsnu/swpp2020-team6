@@ -3,6 +3,11 @@
 $padding-main: 40px;
 $margin-bottom-main: 15px;
 
+.MuiPopover-root {
+  .task-type-select-item-label {
+    margin: 1px;
+  }
+}
 .CreateTask {
   position: relative;
   display: flex;
@@ -16,10 +21,6 @@ $margin-bottom-main: 15px;
   background-color: $create-task-background-color;
   box-shadow: $create-task-box-shadow;
 
-  button:disabled {
-    opacity: $create-buttons-disabled-opacity;
-  }
-
   .task-type-title-buttons {
     width: 100%;
     display: flex;
@@ -29,13 +30,18 @@ $margin-bottom-main: 15px;
     flex-wrap: nowrap;
 
     .task-type-select {
-      div {
+      .MuiSelect-selectMenu {
         min-width: 105px;
         min-height: 25px;
         display: flex;
         flex-direction: row;
         justify-content: center;
         align-items: center;
+
+        .task-type-select-item-label {
+          padding: 0;
+          margin: 0;
+        }
       }
     }
     .task-title {

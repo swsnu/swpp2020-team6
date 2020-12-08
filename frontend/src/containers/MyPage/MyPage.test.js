@@ -20,6 +20,7 @@ const stubMyPageUserData = {
     {
       id: 1,
       private: false,
+      image_id: 1,
       title: "test",
       date: "2020-11-20 02:45:00",
       level: 2,
@@ -50,6 +51,7 @@ const stubMyPageUserData = {
     {
       id: 2,
       private: false,
+      image_id: 1,
       title: "test2",
       date: "2020-11-20 02:54:29",
       level: 2,
@@ -78,6 +80,7 @@ const stubSelectedUserData = {
     {
       id: 3,
       private: false,
+      image_id: 1,
       title: "test3",
       date: "2020-11-20 02:45:00",
       level: 2,
@@ -108,6 +111,7 @@ const stubSelectedUserData = {
     {
       id: 4,
       private: false,
+      image_id: 1,
       title: "test4",
       date: "2020-11-20 02:54:29",
       level: 2,
@@ -127,6 +131,7 @@ const stubSelectedUserData = {
     {
       id: 1,
       private: false,
+      image_id: 1,
       title: "test",
       date: "2020-11-20 02:45:00",
       level: 2,
@@ -157,6 +162,7 @@ const stubSelectedUserData = {
     {
       id: 2,
       private: false,
+      image_id: 1,
       title: "test2",
       date: "2020-11-20 02:54:29",
       level: 2,

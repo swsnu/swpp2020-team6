@@ -15,9 +15,7 @@ import PropTypes from "prop-types";
 import FavoriteBorderIcon from "@material-ui/icons/FavoriteBorder";
 import BookmarkBorderIcon from "@material-ui/icons/BookmarkBorder";
 import ChatOutlinedIcon from "@material-ui/icons/ChatOutlined";
-import OfflineBoltIcon from "@material-ui/icons/OfflineBolt";
-import ChildCareIcon from "@material-ui/icons/ChildCare";
-import HighlightIcon from "@material-ui/icons/Highlight";
+import RoadmapLevelIcon from "./RoadmapLevelIcon";
 
 import "./SimpleRoadmap.scss";
 
@@ -105,26 +103,7 @@ const SimpleRoadmap = (props) => {
     />
   );
 
-  const roadmapImageSrc = require(`misc/${roadmapImageId}.png`);
-
-  let roadmapLevelIcon;
-  if (roadmapLevel === 2) {
-    roadmapLevelIcon = (
-      <Chip
-        id="intermediate-chip"
-        icon={<HighlightIcon id="intermediate-icon" />}
-        label="Intermediate"
-      />
-    );
-  } else if (roadmapLevel === 3) {
-    roadmapLevelIcon = (
-      <Chip id="advanced-chip" icon={<OfflineBoltIcon id="advanced-icon" />} label="Advanced" />
-    );
-  } else {
-    roadmapLevelIcon = (
-      <Chip id="basic-chip" icon={<ChildCareIcon id="basic-icon" />} label="Basic" />
-    );
-  }
+  const roadmapImageSrc = require(`misc/roadmap/${roadmapImageId}.png`);
 
   return (
     <div className="SimpleRoadmap">
@@ -138,7 +117,9 @@ const SimpleRoadmap = (props) => {
           </div>
           {headerDisplay}
           <CardContent>
-            <div className={levelChipClasses.root}>{roadmapLevelIcon}</div>
+            <div className={levelChipClasses.root}>
+              <RoadmapLevelIcon roadmapLevel={roadmapLevel} />
+            </div>
           </CardContent>
           <CardContent>
             <div className={tagChipClasses.root}>{tagDisplay}</div>
@@ -178,7 +159,7 @@ SimpleRoadmap.propTypes = {
   commentCount: PropTypes.number.isRequired,
   tagList: PropTypes.arrayOf(PropTypes.any).isRequired,
   isMyPage: PropTypes.bool.isRequired,
-  roadmapImageId: PropTypes.string,
+  roadmapImageId: PropTypes.number,
 };
 
 export default SimpleRoadmap;

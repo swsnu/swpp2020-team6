@@ -1,16 +1,19 @@
+/* eslint-disable import/no-dynamic-require */
+/* eslint-disable global-require */
 import React, { Component } from "react";
 import PropTypes from "prop-types";
 import Switch from "@material-ui/core/Switch";
 
 import CreateSection from "../../components/CreateSection/CreateSection";
 import StyledSelect from "../../components/Roadmap/StyledComponents/StyledSelect";
-import { levelType } from "../../constants";
+import { levelType, roadmapImageNum } from "../../constants";
 import "./Roadmap.scss";
 
 class Roadmap extends Component {
   state = {
     received: false,
     isPrivate: false,
+    imageId: 1,
     title: "",
     level: 0,
     description: "",
@@ -26,6 +29,7 @@ class Roadmap extends Component {
     this.setState({
       received: true,
       isPrivate: selectedRoadmap.private,
+      imageId: selectedRoadmap.image_id,
       title: selectedRoadmap.title,
       level: parseInt(selectedRoadmap.level, 10),
       description: selectedRoadmap.description,
@@ -49,6 +53,10 @@ class Roadmap extends Component {
 
   onChangeLevel = (level) => {
     this.setState({ level: parseInt(level, 10) });
+  };
+
+  onChangeImageId = (imageId) => {
+    this.setState({ imageId: parseInt(imageId, 10) });
   };
 
   onChangeDescription = (description) => {
@@ -326,6 +334,7 @@ class Roadmap extends Component {
   onClickConfirm = () => {
     const {
       isPrivate,
+      imageId,
       title,
       level,
       description,
@@ -336,6 +345,7 @@ class Roadmap extends Component {
     } = this.state;
     const roadmapData = {
       private: isPrivate,
+      imageId,
       title,
       level,
       description,
@@ -349,7 +359,17 @@ class Roadmap extends Component {
 
   render() {
     const { isEdit, onClickConfirmHandler } = this.props;
-    const { received, isPrivate, title, sections, level, description, tags, newTag } = this.state;
+    const {
+      received,
+      isPrivate,
+      imageId,
+      title,
+      sections,
+      level,
+      description,
+      tags,
+      newTag,
+    } = this.state;
 
     if (isEdit && received === false) {
       this.setInitialState();
@@ -370,6 +390,22 @@ class Roadmap extends Component {
         </div>
       );
     });
+
+    let imageList = [{ name: <em style={{ color: "#aaaaaa" }}>Choose image</em>, value: 0 }];
+    for (let i = 1; i <= roadmapImageNum; i += 1) {
+      imageList = imageList.concat({
+        name: (
+          <img
+            className="roadmap-image"
+            src={require(`misc/roadmap/${i}.png`)}
+            width="150"
+            height="150"
+            alt={`roadmap-${i}`}
+          />
+        ),
+        value: i,
+      });
+    }
 
     const Sections = sections.map((section, index) => {
       return (
@@ -401,7 +437,7 @@ class Roadmap extends Component {
         <div className="main">
           <h1>{isEdit ? "Edit Roadmap" : "Create Roadmap"}</h1>
           <div className="roadmap">
-            <div className="title-private">
+            <div className="title">
               <input
                 id="roadmap-title"
                 type="text"
@@ -409,42 +445,54 @@ class Roadmap extends Component {
                 placeholder="Title"
                 onChange={(event) => this.onChangeTitle(event.target.value)}
               />
-              <label id="roadmap-private-label">{isPrivate ? "Private" : "Public"}</label>
-              <Switch
-                id="roadmap-private"
-                checked={isPrivate}
-                onClick={() => this.onClickPrivate()}
-              />
             </div>
-            <div className="level-tag">
-              <div className="roadmap-level-select">
-                <StyledSelect
-                  value={level}
-                  onChange={(event) => this.onChangeLevel(event.target.value)}
-                  items={[
-                    { name: <em style={{ color: "#aaaaaa" }}>Choose level</em>, value: 0 },
-                    { name: "Basic", value: levelType.BASIC },
-                    { name: "Intermediate", value: levelType.INTERMEDIATE },
-                    { name: "Advanced", value: levelType.ADVANCED },
-                  ]}
-                  customId="roadmap-level"
-                  label="Level"
-                  placeholder="Choose level"
-                />
-              </div>
-              <div className="tag-block">
-                <div className="new-tag">
-                  <input
-                    id="new-tag"
-                    value={newTag}
-                    placeholder="Add tags"
-                    onChange={(event) => this.onChangeNewTag(event.target.value)}
+            <div className="info">
+              <div className="private-level-tag">
+                <div className="private-level">
+                  <div className="roadmap-level-select">
+                    <StyledSelect
+                      value={level}
+                      onChange={(event) => this.onChangeLevel(event.target.value)}
+                      items={[
+                        { name: <em style={{ color: "#aaaaaa" }}>Choose level</em>, value: 0 },
+                        { name: "Basic", value: levelType.BASIC },
+                        { name: "Intermediate", value: levelType.INTERMEDIATE },
+                        { name: "Advanced", value: levelType.ADVANCED },
+                      ]}
+                      customId="roadmap-level"
+                      label="Level"
+                    />
+                  </div>
+                  <label id="roadmap-private-label">{isPrivate ? "Private" : "Public"}</label>
+                  <Switch
+                    id="roadmap-private"
+                    checked={isPrivate}
+                    onClick={() => this.onClickPrivate()}
                   />
-                  <button id="add-tag-button" type="button" onClick={() => this.onClickAddTag()}>
-                    +
-                  </button>
                 </div>
-                <div className="tags">{taglist}</div>
+                <div className="tag-block">
+                  <div className="new-tag">
+                    <input
+                      id="new-tag"
+                      value={newTag}
+                      placeholder="Add tags"
+                      onChange={(event) => this.onChangeNewTag(event.target.value)}
+                    />
+                    <button id="add-tag-button" type="button" onClick={() => this.onClickAddTag()}>
+                      +
+                    </button>
+                  </div>
+                  <div className="tags">{taglist}</div>
+                </div>
+              </div>
+              <div className="roadmap-image-select">
+                <StyledSelect
+                  value={imageId}
+                  onChange={(event) => this.onChangeImageId(event.target.value)}
+                  items={imageList}
+                  customId="roadmap-image"
+                  label="Image"
+                />
               </div>
             </div>
             <input

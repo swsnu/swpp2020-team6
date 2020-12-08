@@ -26,6 +26,7 @@ const initialRoadmapState = {
 
 const stubSimpleRoadmap = {
   id: 11,
+  image_id: 1,
   title: "new-rm-title",
   date: "2020-11-14 05:46:47",
   level: 1,
@@ -96,6 +97,8 @@ const mockStoreFilled = getMockStore(stubUserState, filledRoadmapState, stubSear
 describe("App", () => {
   let spyGetBestRoadmaps;
   let spyGetNewRoadmaps;
+  let spyResetBestRoadmaps;
+  let spyResetNewRoadmaps;
   beforeEach(() => {
     spyGetBestRoadmaps = jest
       .spyOn(roadmapActionCreators, "getBestRoadmaps")
@@ -104,6 +107,16 @@ describe("App", () => {
       });
     spyGetNewRoadmaps = jest
       .spyOn(roadmapActionCreators, "getNewRoadmaps")
+      .mockImplementation(() => {
+        return () => {};
+      });
+    spyResetBestRoadmaps = jest
+      .spyOn(roadmapActionCreators, "resetBestRoadmaps_")
+      .mockImplementation(() => {
+        return () => {};
+      });
+    spyResetNewRoadmaps = jest
+      .spyOn(roadmapActionCreators, "resetNewRoadmaps_")
       .mockImplementation(() => {
         return () => {};
       });
@@ -141,5 +154,39 @@ describe("App", () => {
     expect(bestRoadmaps.length).toBe(1);
     expect(spyGetBestRoadmaps).toHaveBeenCalledTimes(1);
     expect(spyGetNewRoadmaps).toHaveBeenCalledTimes(1);
+  });
+
+  it("should redirect on clicking Card", () => {
+    const component = mount(
+      <Provider store={mockStoreFilled}>
+        <ConnectedRouter history={history}>
+          <Switch>
+            <Route path="/" exact component={RoadmapCarousel} />
+          </Switch>
+        </ConnectedRouter>
+      </Provider>,
+    );
+
+    const spyPush = jest.spyOn(history, "push").mockImplementation(() => {});
+
+    const cardWrapper = component.find(".MuiPaper-root.MuiPaper-rounded.MuiPaper-elevation1");
+    cardWrapper.at(0).simulate("click");
+    expect(spyPush).toHaveBeenCalledTimes(1);
+  });
+
+  it("should reset new, best roadmaps on unmount", () => {
+    const component = mount(
+      <Provider store={mockStore}>
+        <ConnectedRouter history={history}>
+          <Switch>
+            <Route path="/" exact component={RoadmapCarousel} />
+          </Switch>
+        </ConnectedRouter>
+      </Provider>,
+    );
+
+    component.unmount();
+    expect(spyResetNewRoadmaps).toHaveBeenCalledTimes(1);
+    expect(spyResetBestRoadmaps).toHaveBeenCalledTimes(1);
   });
 });

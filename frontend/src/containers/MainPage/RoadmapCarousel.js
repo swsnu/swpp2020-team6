@@ -18,6 +18,12 @@ const RoadmapCarousel = (props) => {
   useEffect(() => {
     getBestRoadmaps(12);
     getNewRoadmaps(12);
+
+    return () => {
+      const { onResetBestRoadmaps, onResetNewRoadmaps } = props;
+      onResetBestRoadmaps();
+      onResetNewRoadmaps();
+    };
   }, []);
 
   if (bestRoadmaps.length === 0 || newRoadmaps.length === 0) {
@@ -44,7 +50,7 @@ const RoadmapCarousel = (props) => {
         commentCount={roadmap.comment_count}
         tagList={roadmap.tags}
         isMyPage={false}
-        roadmapImageId="1"
+        roadmapImageId={roadmap.image_id}
       />
     ));
   };
@@ -94,6 +100,8 @@ RoadmapCarousel.propTypes = {
   newRoadmaps: PropTypes.arrayOf(PropTypes.any).isRequired,
   getBestRoadmaps: PropTypes.func.isRequired,
   getNewRoadmaps: PropTypes.func.isRequired,
+  onResetBestRoadmaps: PropTypes.func.isRequired,
+  onResetNewRoadmaps: PropTypes.func.isRequired,
 };
 
 const mapStateToProps = (state) => {
@@ -108,6 +116,8 @@ const mapDispatchToProps = (dispatch) => {
   return {
     getBestRoadmaps: (topN) => dispatch(actionCreators.getBestRoadmaps(topN)),
     getNewRoadmaps: (topN) => dispatch(actionCreators.getNewRoadmaps(topN)),
+    onResetBestRoadmaps: () => dispatch(actionCreators.resetBestRoadmaps_()),
+    onResetNewRoadmaps: () => dispatch(actionCreators.resetNewRoadmaps_()),
   };
 };
 

@@ -1,5 +1,5 @@
 /* Sign Up page.
- * When the user is already signed in, redirect to home page.
+ * When the user is already signed in, redirect to main page.
  * On valid email, username, password, password-confirm input, the user is signed up to the service.
  */
 import React, { Component } from "react";
@@ -22,7 +22,7 @@ class SignUp extends Component {
     const { isSignedIn, history } = this.props;
     if (isSignedIn === true) {
       alert("You are already signed in. Please sign out first.");
-      history.push("/home");
+      history.push("/main");
     }
   }
 
@@ -39,9 +39,7 @@ class SignUp extends Component {
   render() {
     const { email, username, password, passwordConfirm } = this.state;
 
-    const emailRegexOne = /^[a-zA-Z0-9.!#$%&'*+/=?^_`{|}~-]+@[a-zA-Z0-9!#$%&'*+/=?^_`{|}~-]+.[a-zA-z]{2,3}$/;
-    const emailRegexTwo = /^[a-zA-Z0-9.!#$%&'*+/=?^_`{|}~-]+@[a-zA-Z0-9!#$%&'*+/=?^_`{|}~-]+.[a-zA-z]+.[a-zA-z]{2,3}$/;
-    const validEmail = emailRegexOne.test(email) || emailRegexTwo.test(email);
+    const emailFilled = email !== "";
     const usernameFilled = username !== "";
     const passwordFilled = password !== "";
     const passwordMatch = password === passwordConfirm;
@@ -81,7 +79,7 @@ class SignUp extends Component {
           id="signup-button"
           onClick={() => this.onClickSignUp({ email, username, password })}
           type="button"
-          disabled={!(validEmail && usernameFilled && passwordFilled && passwordMatch)}
+          disabled={!(emailFilled && usernameFilled && passwordFilled && passwordMatch)}
         >
           Sign Up
         </button>

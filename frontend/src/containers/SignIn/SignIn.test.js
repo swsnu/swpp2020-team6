@@ -109,21 +109,6 @@ describe("<SignIn />", () => {
     expect(spyHistoryPush).toHaveBeenCalledTimes(1);
   });
 
-  it(`should push at 'onClickHome'`, () => {
-    const component = mount(
-      <Provider store={unauthorizedMockStore}>
-        <ConnectedRouter history={history}>
-          <Switch>
-            <Route path="/" component={SignIn} />
-          </Switch>
-        </ConnectedRouter>
-      </Provider>,
-    );
-    const wrapper = component.find("#home-button");
-    wrapper.simulate("click");
-    expect(spyHistoryPush).toHaveBeenCalledTimes(1);
-  });
-
   it(`should show alert at 'onClickForgotPassword'`, () => {
     const component = mount(
       <Provider store={unauthorizedMockStore}>
