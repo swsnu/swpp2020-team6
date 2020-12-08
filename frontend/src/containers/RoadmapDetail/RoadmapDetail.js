@@ -334,11 +334,13 @@ class RoadmapDetail extends Component {
         <div className="leftcolumn">
           <a name="top" />
           <div className="roadmap-info">
-            <img
-              id="roadmap-image"
-              src={require(`misc/roadmap/${selectedRoadmap.image_id}.png`)}
-              alt="roadmap"
-            />
+            <div className="roadmap-image-wrapper">
+              <img
+                id="roadmap-image"
+                src={require(`misc/roadmap/${selectedRoadmap.image_id}.png`)}
+                alt="roadmap"
+              />
+            </div>
             <div className="title-author-level-tags">
               <div className="roadmap-title">{selectedRoadmap.title}</div>
               {originalAuthor}

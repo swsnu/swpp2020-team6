@@ -6,6 +6,7 @@
   font-family: "Ubuntu", sans-serif;
   text-align: center;
   width: 100%;
+  min-width: 1150px;
   scroll-behavior: smooth;
 
   div,
@@ -39,7 +40,8 @@
     align-items: center;
     justify-content: flex-start;
     padding: 0px 0px 0px 10px;
-    background-color: $main3-red-dark3-color;
+    background-color: #ffffff;
+    box-shadow: 0px 0px 5px #999999;
 
     .LogoButton {
       order: 0;

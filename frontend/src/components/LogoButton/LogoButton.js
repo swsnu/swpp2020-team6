@@ -14,13 +14,9 @@ class LogoButton extends Component {
   render() {
     return (
       <div className="LogoButton">
-        <img
-          id="logo-button"
-          src={logoImg}
-          alt="logo"
-          height="50px"
-          onClick={() => this.onClickLogo()}
-        />
+        <button id="logo-button" type="button" onClick={() => this.onClickLogo()}>
+          <img src={logoImg} alt="logo" height="50px" />
+        </button>
       </div>
     );
   }

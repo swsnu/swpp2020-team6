@@ -1,13 +1,20 @@
 .LogoButton {
-  display: flex;
-  align-items: center;
+  #logo-button {
+    display: flex;
+    align-items: center;
+    border: none;
+    height: 100%;
+    background-color: transparent;
 
-  img {
-    height: 65px;
-    width: 195px;
-  }
+    img {
+      height: 55px;
+      background-color: transparent;
+      border-radius: 20px;
+      padding: 0px 0px 0px 0px;
+    }
 
-  img:hover {
-    cursor: grab;
+    img:hover {
+      cursor: grab;
+    }
   }
 }

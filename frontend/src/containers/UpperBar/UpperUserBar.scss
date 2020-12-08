@@ -12,15 +12,15 @@
     width: 170px;
     height: 40px;
     margin: 0px 20px 0px 0px;
-    background-color: #ffffff;
+    background-color: $main3-red-dark2-color;
     border: none;
     border-radius: 5px;
-    color: $main3-red-dark2-color;
+    color: #ffffff;
     font-size: 17px;
     font-weight: 600;
   }
 
   .icons {
-    color: #ffffff;
+    color: $main3-red-dark2-color;
   }
 }

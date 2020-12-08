@@ -44,12 +44,11 @@ const RoadmapButtons = (props) => {
     toggleRoadmapLike(parseInt(match.params.id, 10));
   };
 
-  // eslint-disable-next-line camelcase
-  const { liked_roadmaps, pinned_roadmaps } = props.selectedUser;
+  const { selectedUser } = props;
   const { buttonsRoadmapId, likeCount, pinCount } = props;
-  const like = liked_roadmaps.find((roadmap) => roadmap.id === buttonsRoadmapId);
+  const like = selectedUser.liked_roadmaps.find((roadmap) => roadmap.id === buttonsRoadmapId);
   const likeButton = like !== undefined ? <FavoriteIcon /> : <FavoriteBorderIcon />;
-  const pin = pinned_roadmaps.find((roadmap) => roadmap.id === buttonsRoadmapId);
+  const pin = selectedUser.pinned_roadmaps.find((roadmap) => roadmap.id === buttonsRoadmapId);
   const pinButton = pin !== undefined ? <BookmarkIcon /> : <BookmarkBorderIcon />;
 
   const { isAuthor } = props;
@@ -141,7 +140,6 @@ RoadmapButtons.propTypes = {
   selectedUser: PropTypes.objectOf(PropTypes.any),
   likeCount: PropTypes.number,
   pinCount: PropTypes.number,
-  // commentCount: PropTypes.number,
 };
 
 const mapDispatchToProps = (dispatch) => {

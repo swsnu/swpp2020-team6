@@ -27,11 +27,15 @@ const Comment = (props) => {
 
   const buttons = isAuthor ? (
     <>
-      <IconButton id="edit-comment-button" type="button" onClick={() => clickEdit(tmpCommentId)}>
+      <IconButton
+        className="edit-comment-button"
+        type="button"
+        onClick={() => clickEdit(tmpCommentId)}
+      >
         <CreateIcon />
       </IconButton>
       <IconButton
-        id="delete-comment-button"
+        className="delete-comment-button"
         type="button"
         onClick={() => clickDelete(tmpCommentId, commentId)}
       >
@@ -75,10 +79,16 @@ const Comment = (props) => {
 };
 
 Comment.propTypes = {
+  commentId: PropTypes.number,
+  tmpCommentId: PropTypes.number,
   authorName: PropTypes.string,
   authorId: PropTypes.number,
   isAuthor: PropTypes.bool,
   clickEdit: PropTypes.func,
+  changeEdit: PropTypes.func,
+  clickEditConfirm: PropTypes.func,
+  edittedComments: PropTypes.arrayOf(PropTypes.string),
+  commentEditMode: PropTypes.arrayOf(PropTypes.bool),
   clickDelete: PropTypes.func,
   content: PropTypes.string,
   onClick: PropTypes.func,

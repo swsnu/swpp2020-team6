@@ -7,7 +7,6 @@ import { Route, Switch } from "react-router-dom";
 import Button from "@material-ui/core/Button";
 import Dialog from "@material-ui/core/Dialog";
 import Checkbox from "@material-ui/core/Checkbox";
-import CardHeader from "@material-ui/core/CardHeader";
 import RoadmapDetail from "./RoadmapDetail";
 import getMockStore from "../../test-utils/mocks";
 import { history } from "../../store/store";
@@ -1323,9 +1322,10 @@ describe("<RoadmapDetail />", () => {
       </Provider>,
     );
 
+    const instance = component.find(RoadmapDetail.WrappedComponent).instance();
     const commentInput = component.find("#new-comment-content-input");
-    commentInput.simulate("change", { target: { value: "c" } });
     commentInput.simulate("change", { target: { value: "" } });
+    expect(instance.state.comment).toEqual("");
     const confirmComment = component.find("#confirm-create-comment-button");
     confirmComment.simulate("click");
     expect(spyPostComment).toHaveBeenCalledTimes(0);
@@ -1370,17 +1370,15 @@ describe("<RoadmapDetail />", () => {
 
     const instance = component.find(RoadmapDetail.WrappedComponent).instance();
     expect(instance.state.commentEditMode).toEqual([false, false]);
-    const editButton = component.find("#edit-comment-button");
-    expect(editButton.length).toBeTruthy();
-    editButton.at(0).props().onClick();
-    expect(instance.state.commentEditMode).toEqual([true, false]);
+    const editButton = component.find(".edit-comment-button.MuiButtonBase-root.MuiIconButton-root");
+    expect(editButton.length).toBe(1);
+    editButton.at(0).simulate("click");
+    expect(instance.state.commentEditMode).toEqual([false, true]);
     const editCommentInput = component.find(".comment-edit-input");
     editCommentInput.simulate("change", { target: { value: "EDITTED" } });
-    expect(instance.state.edittedComments[0]).toEqual("EDITTED");
-
-    const spyPromptOK = jest.spyOn(window, "prompt").mockImplementation(() => "edited");
-    editButton.at(0).props().onClick();
-    expect(spyPromptOK).toHaveBeenCalledTimes(1);
+    expect(instance.state.edittedComments[1]).toEqual("EDITTED");
+    const editCommentConfirm = component.find(".comment-edit-confirm-button");
+    editCommentConfirm.simulate("click");
     expect(spyEditComment).toHaveBeenCalledTimes(1);
   });
 
@@ -1399,36 +1397,12 @@ describe("<RoadmapDetail />", () => {
       </Provider>,
     );
 
-    const editButton = component.find("#edit-comment-button");
-    expect(editButton.length).toBeTruthy();
-
-    const spyPromptEmpty = jest.spyOn(window, "prompt").mockImplementation(() => "");
-    editButton.at(0).props().onClick();
-    expect(spyPromptEmpty).toHaveBeenCalledTimes(1);
-    expect(spyEditComment).toHaveBeenCalledTimes(0);
-  });
-
-  it(`should not edit when the prompt is canceled.`, () => {
-    const component = mount(
-      <Provider store={mockAuthorizedUserOtherRoadmapStore}>
-        <ConnectedRouter history={history}>
-          <Switch>
-            <Route
-              path="/"
-              exact
-              render={() => <RoadmapDetail history={history} match={{ params: { id: 1 } }} />}
-            />
-          </Switch>
-        </ConnectedRouter>
-      </Provider>,
-    );
-
-    const editButton = component.find("#edit-comment-button");
-    expect(editButton.length).toBeTruthy();
-
-    const spyPromptCancel = jest.spyOn(window, "prompt").mockImplementation(() => null);
-    editButton.at(0).props().onClick();
-    expect(spyPromptCancel).toHaveBeenCalledTimes(1);
+    const editButton = component.find(".edit-comment-button.MuiButtonBase-root.MuiIconButton-root");
+    editButton.at(0).simulate("click");
+    const editCommentInput = component.find(".comment-edit-input");
+    editCommentInput.simulate("change", { target: { value: "" } });
+    const editCommentConfirm = component.find(".comment-edit-confirm-button");
+    editCommentConfirm.simulate("click");
     expect(spyEditComment).toHaveBeenCalledTimes(0);
   });
 
@@ -1447,9 +1421,21 @@ describe("<RoadmapDetail />", () => {
       </Provider>,
     );
 
-    const deleteButton = component.find("#delete-comment-button");
+    const spyConfirmFalse = jest.spyOn(window, "confirm").mockImplementation(() => {
+      return false;
+    });
+    const deleteButton = component.find(".delete-comment-button");
     expect(deleteButton.length).toBeTruthy();
     deleteButton.at(0).props().onClick();
+    expect(spyConfirmFalse).toHaveBeenCalledTimes(1);
+    expect(spyDeleteComment).toHaveBeenCalledTimes(0);
+    jest.clearAllMocks();
+
+    const spyConfirmTrue = jest.spyOn(window, "confirm").mockImplementation(() => {
+      return true;
+    });
+    deleteButton.at(0).props().onClick();
+    expect(spyConfirmTrue).toHaveBeenCalledTimes(1);
     expect(spyDeleteComment).toHaveBeenCalledTimes(1);
   });
 
