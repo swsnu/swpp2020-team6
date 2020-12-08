@@ -4,7 +4,7 @@ import PropTypes from "prop-types";
 import Tooltip from "@material-ui/core/Tooltip";
 import IconButton from "@material-ui/core/IconButton";
 import ExitToAppIcon from "@material-ui/icons/ExitToApp";
-import PersonOutlineOutlinedIcon from "@material-ui/icons/PersonOutlineOutlined";
+import PersonIcon from "@material-ui/icons/Person";
 import { withRouter } from "react-router";
 import * as actionCreators from "../../store/actions/index";
 
@@ -42,7 +42,7 @@ class UpperUserBar extends Component {
         </button>
         <Tooltip title="My Page">
           <IconButton id="my-page-button" onClick={() => this.onClickMyPage()}>
-            <PersonOutlineOutlinedIcon className="icons" />
+            <PersonIcon className="icons" />
           </IconButton>
         </Tooltip>
         <Tooltip title="Sign Out">

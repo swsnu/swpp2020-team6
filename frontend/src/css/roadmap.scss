@@ -84,3 +84,17 @@ $roadmap-description-font-size: 16px;
 $roadmap-description-color: #333333;
 
 $section-title-font-size: 25px;
+$section-title-font-weight: 600;
+
+$task-title-font-size: 20px;
+$task-title-font-weight: 500;
+$task-type-border: 1px solid $grey-light-color;
+$task-description-background-color: $grey-light2-color;
+$task-description-border: $roadmap-description-border;
+$task-description-border-radius: $roadmap-description-border-radius;
+
+$comments-background-color: $main3-red-dark-color;
+$comment-confirm-background-color: $main3-red-light-color;
+$comment-confirm-color: #333333;
+$comment-confirm-font-weight: 700;
+$comment-confirm-font-size: 20px;

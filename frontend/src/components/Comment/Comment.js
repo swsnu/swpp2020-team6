@@ -1,44 +1,88 @@
 /* eslint-disable react/no-unused-prop-types */
 import React from "react";
 import PropTypes from "prop-types";
+import { IconButton } from "@material-ui/core";
+import CreateIcon from "@material-ui/icons/Create";
+import DeleteForeverIcon from "@material-ui/icons/DeleteForever";
+import UserCard from "../RoadmapDetail/UserCard";
+
+import "./Comment.scss";
 
 const Comment = (props) => {
-  const Props = props;
-  const buttons = Props.isAuthor ? (
-    <div className="comment-buttons">
-      <button id="edit-comment-button" type="button" onClick={Props.clickEdit}>
-        Edit
-      </button>
-      <button
+  const {
+    commentId,
+    tmpCommentId,
+    isAuthor,
+    authorId,
+    authorName,
+    clickEdit,
+    changeEdit,
+    clickEditConfirm,
+    clickDelete,
+    content,
+    history,
+    edittedComments,
+    commentEditMode,
+  } = props;
+
+  const buttons = isAuthor ? (
+    <>
+      <IconButton id="edit-comment-button" type="button" onClick={() => clickEdit(tmpCommentId)}>
+        <CreateIcon />
+      </IconButton>
+      <IconButton
         id="delete-comment-button"
         type="button"
-        onClick={Props.clickDelete}
+        onClick={() => clickDelete(tmpCommentId, commentId)}
       >
-        Delete
-      </button>
-    </div>
+        <DeleteForeverIcon />
+      </IconButton>
+    </>
   ) : null;
+
+  const commentView =
+    commentEditMode && commentEditMode[tmpCommentId] ? (
+      <div className="comment-edit">
+        <textarea
+          className="comment-edit-input"
+          value={edittedComments[tmpCommentId]}
+          onChange={(event) => changeEdit(tmpCommentId, event.target.value)}
+          placeholder="Edit Comment"
+        />
+        <button
+          className="comment-edit-confirm-button"
+          type="button"
+          disabled={edittedComments[tmpCommentId] === ""}
+          onClick={() => clickEditConfirm(tmpCommentId, commentId)}
+        >
+          Confirm
+        </button>
+      </div>
+    ) : (
+      <div className="comment-view">{content}</div>
+    );
+
   return (
     <div className="Comment">
-      <div className="leftcolumn">{Props.authorPictureUrl}</div>
-      <div className="rightcolumn">
-        <div className="comment-author-panel">
-          <div className="comment-author-name">{Props.authorName}</div>
-          <div className="comment-author-buttons">{buttons}</div>
-        </div>
-        <div className="comment-view">{Props.content}</div>
+      <div className="comment-author-panel">
+        <UserCard authorId={authorId} authorName={authorName} history={history} />
+        <div className="comment-author-buttons">{buttons}</div>
       </div>
+      <div className="middle-border" />
+      {commentView}
     </div>
   );
 };
 
 Comment.propTypes = {
-  authorName: PropTypes.string.isRequired,
-  isAuthor: PropTypes.bool.isRequired,
-  authorPictureUrl: PropTypes.string.isRequired,
-  clickEdit: PropTypes.func.isRequired,
-  clickDelete: PropTypes.func.isRequired,
-  content: PropTypes.string.isRequired,
+  authorName: PropTypes.string,
+  authorId: PropTypes.number,
+  isAuthor: PropTypes.bool,
+  clickEdit: PropTypes.func,
+  clickDelete: PropTypes.func,
+  content: PropTypes.string,
+  onClick: PropTypes.func,
+  history: PropTypes.objectOf(PropTypes.any),
 };
 
 export default Comment;

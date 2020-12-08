@@ -1,5 +1,8 @@
 /* eslint-disable import/no-dynamic-require */
 /* eslint-disable global-require */
+/* eslint-disable jsx-a11y/anchor-has-content */
+/* eslint-disable jsx-a11y/anchor-is-valid */
+
 import React, { Component } from "react";
 import { connect } from "react-redux";
 import PropTypes from "prop-types";
@@ -10,6 +13,7 @@ import DialogContent from "@material-ui/core/DialogContent";
 import DialogContentText from "@material-ui/core/DialogContentText";
 import DialogTitle from "@material-ui/core/DialogTitle";
 import Slide from "@material-ui/core/Slide";
+import ExpandLessOutlinedIcon from "@material-ui/icons/ExpandLessOutlined";
 import * as actionCreators from "../../store/actions/index";
 import "./RoadmapDetail.scss";
 import Comment from "../../components/Comment/Comment";
@@ -27,7 +31,8 @@ const Transition = React.forwardRef(function Transition(props, ref) {
 class RoadmapDetail extends Component {
   state = {
     received: false,
-    comment: "",
+    edittedComments: null,
+    commentEditMode: null,
     open: true,
     sectionCollapse: [],
   };
@@ -42,13 +47,6 @@ class RoadmapDetail extends Component {
     onResetRoadmap();
   }
 
-  /* ---------------- User Card Handler -------------------- */
-
-  onClickUserCard = () => {
-    const { history, selectedRoadmap } = this.props;
-    history.push(`/mypage/${selectedRoadmap.author_id}`);
-  };
-
   /* ---------------- Section Collapse -------------------- */
 
   setInitialState = () => {
@@ -57,6 +55,12 @@ class RoadmapDetail extends Component {
     this.setState({
       sectionCollapse: selectedRoadmap.sections.map(() => {
         return false;
+      }),
+      commentEditMode: selectedRoadmap.comments.map(() => {
+        return false;
+      }),
+      edittedComments: selectedRoadmap.comments.map((comment) => {
+        return comment.content;
       }),
       received: true,
     });
@@ -125,24 +129,63 @@ class RoadmapDetail extends Component {
     }
   };
 
-  commentEditHandler = (commentID, comment) => {
-    const { onEditComment, match } = this.props;
-    const editedComment = prompt("Edit your comment", comment.content);
-
-    if (editedComment !== null) {
-      // user clicked OK
-      if (editedComment === "") {
-        // do nothing on empty input
-      } else {
-        onEditComment(commentID, match.params.id, editedComment);
-      }
-    }
-    // skip else: do nothing when user cancelled pop-up.
+  commentEditHandler = (tmpCommentId) => {
+    const { commentEditMode } = this.state;
+    this.setState({
+      commentEditMode: commentEditMode.map((mode, index) => {
+        if (index === tmpCommentId) {
+          return true;
+        }
+        return mode;
+      }),
+    });
   };
 
-  commentDeleteHandler = (id) => {
+  commentEditChangeHandler = (tmpCommentId, edittedComment) => {
+    const { edittedComments } = this.state;
+
+    this.setState({
+      edittedComments: edittedComments.map((comment, index) => {
+        if (index === tmpCommentId) {
+          return edittedComment;
+        }
+        return comment;
+      }),
+    });
+  };
+
+  commentEditConfirmHandler = (tmpCommentId, commentId) => {
+    const { onEditComment, match } = this.props;
+    const { edittedComments, commentEditMode } = this.state;
+    onEditComment(commentId, match.params.id, edittedComments[tmpCommentId]);
+
+    this.setState({
+      commentEditMode: commentEditMode.map((mode, index) => {
+        if (index === tmpCommentId) {
+          return false;
+        }
+        return mode;
+      }),
+    });
+  };
+
+  commentDeleteHandler = (tmpCommentId, commentId) => {
     const { onDeleteComment } = this.props;
-    onDeleteComment(id);
+    const { commentEditMode } = this.state;
+
+    const yes = window.confirm("Are you sure to delete the comment?");
+
+    if (yes) {
+      this.setState({
+        commentEditMode: commentEditMode.map((mode, index) => {
+          if (index === tmpCommentId) {
+            return false;
+          }
+          return mode;
+        }),
+      });
+      onDeleteComment(commentId);
+    }
   };
 
   handleClose = () => {
@@ -219,7 +262,7 @@ class RoadmapDetail extends Component {
 
     /* ---------------- Roadmap sections -------------------- */
     const { sectionCollapse } = this.state;
-    const { onChangeCheckbox } = this.props;
+    const { onChangeCheckbox, history } = this.props;
     const roadmapSections = selectedRoadmap.sections.map((section, index) => {
       return (
         <Section
@@ -246,16 +289,24 @@ class RoadmapDetail extends Component {
     });
 
     /* ---------------- Roadmap comments -------------------- */
-    const roadmapComments = selectedRoadmap.comments.map((commentItem) => {
+    const { edittedComments, commentEditMode } = this.state;
+    const roadmapComments = selectedRoadmap.comments.map((commentItem, index) => {
       return (
         <Comment
           key={commentItem.comment_id}
+          commentId={commentItem.comment_id}
+          tmpCommentId={index}
+          authorId={commentItem.author_id}
           authorName={commentItem.author_name}
           isAuthor={commentItem.author_id === selectedUser.user_id}
-          authorPictureUrl={commentItem.author_picture_url}
           content={commentItem.content}
-          clickEdit={() => this.commentEditHandler(commentItem.comment_id, commentItem)}
-          clickDelete={() => this.commentDeleteHandler(commentItem.comment_id)}
+          clickEdit={this.commentEditHandler}
+          changeEdit={this.commentEditChangeHandler}
+          clickEditConfirm={this.commentEditConfirmHandler}
+          clickDelete={this.commentDeleteHandler}
+          history={history}
+          edittedComments={edittedComments}
+          commentEditMode={commentEditMode}
         />
       );
     });
@@ -273,14 +324,15 @@ class RoadmapDetail extends Component {
         onClick={() => this.commentCreateHandler(comment)}
         disabled={commentDisabled}
       >
-        confirm
+        Confirm
       </button>
     );
 
     return (
       <div className="RoadmapDetail">
-        <div className="header" />
+        <div className="emptycolumn" />
         <div className="leftcolumn">
+          <a name="top" />
           <div className="roadmap-info">
             <img
               id="roadmap-image"
@@ -298,27 +350,55 @@ class RoadmapDetail extends Component {
             </div>
           </div>
           <div className="roadmap">
+            <a name="roadmap-description" />
             <div className="roadmap-description">{selectedRoadmap.description}</div>
+            <a name="roadmap-sections" />
             <div className="roadmap-sections">{roadmapSections}</div>
+          </div>
+          <div className="comments">
+            <a name="roadmap-comments" />
+            <div id="roadmap-comment-count">
+              {`${selectedRoadmap.comment_count} `}
+              Comments
+            </div>
+            <div className="comment-input">
+              <textarea
+                id="new-comment-content-input"
+                rows="4"
+                cols="100"
+                value={comment}
+                placeholder="New Comment"
+                onChange={
+                  (event) => {
+                    this.setState({ comment: event.target.value });
+                  }
+                  // eslint-disable-next-line react/jsx-curly-newline
+                }
+              />
+              {commentConfirmButton}
+            </div>
+            <div className="roadmap-comments">{roadmapComments}</div>
           </div>
         </div>
         <div className="rightcolumn">
           <div className="roadmap-panel">
-            <div className="progress-bar">
-              <ProgressBar
-                isAuthor={selectedUser.user_id === selectedRoadmap.author_id}
-                onChangeRoadmapProgressStatus={this.onChangeRoadmapProgressStatus}
-                currentProgressStatus={selectedRoadmap.progress}
-                progressPercentage={this.calcProgress()}
-              />
-            </div>
+            <ProgressBar
+              isAuthor={selectedUser.user_id === selectedRoadmap.author_id}
+              onChangeRoadmapProgressStatus={this.onChangeRoadmapProgressStatus}
+              currentProgressStatus={selectedRoadmap.progress}
+              progressPercentage={this.calcProgress()}
+            />
             <div
               className="roadmap-author"
               style={{
                 display: selectedRoadmap.author_id === selectedUser.user_id ? "none" : "block",
               }}
             >
-              <UserCard authorName={selectedRoadmap.author_name} onClick={this.onClickUserCard} />
+              <UserCard
+                authorName={selectedRoadmap.author_name}
+                authorId={selectedRoadmap.author_id}
+                history={history}
+              />
             </div>
             <RoadmapButtons // change to comopnent and send funcs
               buttonsRoadmapId={parseInt(match.params.id, 10)}
@@ -328,27 +408,12 @@ class RoadmapDetail extends Component {
               commentCount={selectedRoadmap.comment_count}
             />
           </div>
-          <div className="comment-input">
-            <div id="roadmap-comment-count">
-              Comments
-              {selectedRoadmap.comment_count}
-            </div>
-            <input
-              id="new-comment-content-input"
-              rows="4"
-              cols="100"
-              type="text"
-              value={comment}
-              onChange={
-                (event) => {
-                  this.setState({ comment: event.target.value });
-                }
-                // eslint-disable-next-line react/jsx-curly-newline
-              }
-            />
-            {commentConfirmButton}
-          </div>
-          <div className="roadmap-comments">{roadmapComments}</div>
+        </div>
+        <div className="anchors">
+          <a className="top-anchor" href="#top">
+            <ExpandLessOutlinedIcon />
+            Top
+          </a>
         </div>
       </div>
     );

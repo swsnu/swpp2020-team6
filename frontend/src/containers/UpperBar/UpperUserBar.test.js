@@ -55,15 +55,15 @@ describe("UpperUserBar", () => {
   it("should sign out correctly", () => {
     const component = mount(upperUserBar);
     const buttonWrapper = component.find("#signout-button");
-    expect(buttonWrapper.length).toBe(1);
-    buttonWrapper.simulate("click");
+    expect(buttonWrapper.length).toBeTruthy();
+    buttonWrapper.at(0).props().onClick();
     expect(spySignOut).toHaveBeenCalledTimes(1);
   });
 
   it("should redirect to create roadmap page when it's clicked", () => {
     const component = mount(upperUserBar);
     const buttonWrapper = component.find("#create-roadmap-button");
-    expect(buttonWrapper.length).toBe(1);
+    expect(buttonWrapper.length).toBeTruthy();
     buttonWrapper.simulate("click");
     expect(spyPush).toHaveBeenCalledTimes(1);
     expect(spyPush).toHaveBeenCalledWith("/roadmap/create");
@@ -71,8 +71,8 @@ describe("UpperUserBar", () => {
   it("should redirect to my page when it's clicked", () => {
     const component = mount(upperUserBar);
     const buttonWrapper = component.find("#my-page-button");
-    expect(buttonWrapper.length).toBe(1);
-    buttonWrapper.simulate("click");
+    expect(buttonWrapper.length).toBeTruthy();
+    buttonWrapper.at(0).props().onClick();
     expect(spyPush).toHaveBeenCalledTimes(1);
     expect(spyPush).toHaveBeenCalledWith(`/mypage/${stubUserData.user_id}`);
   });
@@ -89,8 +89,7 @@ describe("UpperUserBar", () => {
 
     const component = mount(upperUserBar);
     const buttonWrapper = component.find("#my-page-button");
-    expect(buttonWrapper.length).toBe(1);
-    buttonWrapper.simulate("click");
+    buttonWrapper.at(0).props().onClick();
     expect(spyPush).toHaveBeenCalledTimes(0);
     expect(spyAlert).toHaveBeenCalledTimes(1);
   });

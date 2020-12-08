@@ -780,8 +780,7 @@ describe("<RoadmapDetail />", () => {
     const instance = component.find(RoadmapDetail.WrappedComponent).instance();
     expect(instance.state.sectionCollapse).toEqual([false, false]);
     const collapseButton = component.find(".section-collapse");
-    expect(collapseButton.length).toBe(2);
-    collapseButton.at(0).simulate("click");
+    collapseButton.at(0).props().onClick();
     expect(instance.state.sectionCollapse).toEqual([true, false]);
   });
 
@@ -801,7 +800,7 @@ describe("<RoadmapDetail />", () => {
       </Provider>,
     );
 
-    const userCard = component.find(CardHeader);
+    const userCard = component.find(".UserCard");
     userCard.at(0).props().onClick();
     expect(spyPush).toHaveBeenCalledTimes(1);
   });
@@ -908,14 +907,8 @@ describe("<RoadmapDetail />", () => {
     const tags = component.find(".roadmap-tag");
     expect(tags.length).toBe(3);
 
-    const likeCount = component.find("#roadmap-like-count");
-    expect(likeCount.at(0).text()).toBe(`Like0`);
-
-    const pinCount = component.find("#roadmap-pin-count");
-    expect(pinCount.at(0).text()).toBe(`Pinned0`);
-
     const commentCount = component.find("#roadmap-comment-count");
-    expect(commentCount.at(0).text()).toBe(`Comments0`);
+    expect(commentCount.at(0).text()).toBe(`0 Comments`);
 
     const description = component.find(".roadmap-description");
     expect(description.at(0).text()).toBe(`description`);
@@ -924,8 +917,8 @@ describe("<RoadmapDetail />", () => {
     expect(sections.length).toBe(2);
 
     const sectionTitles = component.find(".section-title");
-    expect(sectionTitles.at(0).text()).toBe(`section title: section title 1`);
-    expect(sectionTitles.at(1).text()).toBe(`section title: section title 2`);
+    expect(sectionTitles.at(0).text()).toBe(`1. section title 1`);
+    expect(sectionTitles.at(1).text()).toBe(`2. section title 2`);
 
     const tasks = component.find(".Task");
     expect(tasks.length).toBe(3);
@@ -973,11 +966,23 @@ describe("<RoadmapDetail />", () => {
       </Provider>,
     );
 
+    const spyConfirmFalse = jest.spyOn(window, "confirm").mockImplementation(() => {
+      return false;
+    });
     const deleteButton = component.find(
       ".MuiButtonBase-root.MuiIconButton-root#delete-roadmap-button",
     );
     expect(deleteButton.length).toBe(1);
     deleteButton.simulate("click");
+    expect(spyConfirmFalse).toHaveBeenCalledTimes(1);
+    expect(spyDeleteRoadmap).toHaveBeenCalledTimes(0);
+    jest.clearAllMocks();
+
+    const spyConfirmTrue = jest.spyOn(window, "confirm").mockImplementation(() => {
+      return true;
+    });
+    deleteButton.simulate("click");
+    expect(spyConfirmTrue).toHaveBeenCalledTimes(1);
     expect(spyDeleteRoadmap).toHaveBeenCalledTimes(1);
     expect(spyDeleteRoadmap).toHaveBeenCalledWith(1);
   });
@@ -1363,11 +1368,18 @@ describe("<RoadmapDetail />", () => {
       </Provider>,
     );
 
+    const instance = component.find(RoadmapDetail.WrappedComponent).instance();
+    expect(instance.state.commentEditMode).toEqual([false, false]);
     const editButton = component.find("#edit-comment-button");
-    expect(editButton.length).toBe(1);
+    expect(editButton.length).toBeTruthy();
+    editButton.at(0).props().onClick();
+    expect(instance.state.commentEditMode).toEqual([true, false]);
+    const editCommentInput = component.find(".comment-edit-input");
+    editCommentInput.simulate("change", { target: { value: "EDITTED" } });
+    expect(instance.state.edittedComments[0]).toEqual("EDITTED");
 
     const spyPromptOK = jest.spyOn(window, "prompt").mockImplementation(() => "edited");
-    editButton.simulate("click");
+    editButton.at(0).props().onClick();
     expect(spyPromptOK).toHaveBeenCalledTimes(1);
     expect(spyEditComment).toHaveBeenCalledTimes(1);
   });
@@ -1388,10 +1400,10 @@ describe("<RoadmapDetail />", () => {
     );
 
     const editButton = component.find("#edit-comment-button");
-    expect(editButton.length).toBe(1);
+    expect(editButton.length).toBeTruthy();
 
     const spyPromptEmpty = jest.spyOn(window, "prompt").mockImplementation(() => "");
-    editButton.simulate("click");
+    editButton.at(0).props().onClick();
     expect(spyPromptEmpty).toHaveBeenCalledTimes(1);
     expect(spyEditComment).toHaveBeenCalledTimes(0);
   });
@@ -1412,10 +1424,10 @@ describe("<RoadmapDetail />", () => {
     );
 
     const editButton = component.find("#edit-comment-button");
-    expect(editButton.length).toBe(1);
+    expect(editButton.length).toBeTruthy();
 
     const spyPromptCancel = jest.spyOn(window, "prompt").mockImplementation(() => null);
-    editButton.simulate("click");
+    editButton.at(0).props().onClick();
     expect(spyPromptCancel).toHaveBeenCalledTimes(1);
     expect(spyEditComment).toHaveBeenCalledTimes(0);
   });
@@ -1436,8 +1448,8 @@ describe("<RoadmapDetail />", () => {
     );
 
     const deleteButton = component.find("#delete-comment-button");
-    expect(deleteButton.length).toBe(1);
-    deleteButton.simulate("click");
+    expect(deleteButton.length).toBeTruthy();
+    deleteButton.at(0).props().onClick();
     expect(spyDeleteComment).toHaveBeenCalledTimes(1);
   });
 
