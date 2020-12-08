@@ -31,7 +31,7 @@ class App extends React.Component {
     let logoButton;
     let upperUserBar;
     let upperSearchBar;
-    let welcomeMessage = <h1>Welcome to Rotus!</h1>;
+    let welcomeMessage = <h1>Welcome to Rotus! :D</h1>;
     if (isSignedIn === undefined) {
       return (
         <div className="App">
