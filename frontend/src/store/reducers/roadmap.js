@@ -9,7 +9,8 @@ const initialState = {
   newRoadmapsError: null,
 };
 
-const reducer = (state = initialState, action) => {
+const roadmap = (state, action) => {
+  if (typeof state === "undefined") return initialState;
   switch (action.type) {
     case actionTypes.GET_ROADMAP_SUCCESS:
       return { ...state, selectedRoadmap: action.roadmapData };
@@ -131,4 +132,4 @@ const reducer = (state = initialState, action) => {
   return state;
 };
 
-export default reducer;
+export default roadmap;

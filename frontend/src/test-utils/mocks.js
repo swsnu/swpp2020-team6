@@ -4,11 +4,8 @@ import { connectRouter } from "connected-react-router";
 import { history, middlewares } from "../store/store";
 // import * as actionTypes from "../store/actions/actionTypes";
 
-const getMockReducer = jest.fn((initialState) => (state = initialState, action) => {
-  switch (action.type) {
-    default:
-      break;
-  }
+const getMockReducer = jest.fn((initialState) => (state, action) => {
+  if (typeof state === "undefined") return initialState;
   return state;
 });
 

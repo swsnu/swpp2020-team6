@@ -17,7 +17,7 @@ import "./RoadmapButtons.scss";
 
 const RoadmapButtons = (props) => {
   const onClickEditRoadmap = () => {
-    const { history, buttonsRoadmapId } = props;
+    const { history } = props;
     history.push(`/roadmap/${buttonsRoadmapId}/edit`);
   };
 
@@ -27,7 +27,7 @@ const RoadmapButtons = (props) => {
   };
 
   const onClickDeleteRoadmap = () => {
-    const { onDeleteRoadmap, buttonsRoadmapId } = props;
+    const { onDeleteRoadmap } = props;
     const yes = window.confirm("Are you sure you want to delete this Roadmap?");
     if (yes) {
       onDeleteRoadmap(buttonsRoadmapId);
