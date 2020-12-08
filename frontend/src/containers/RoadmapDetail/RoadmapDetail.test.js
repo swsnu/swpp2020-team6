@@ -1326,9 +1326,14 @@ describe("<RoadmapDetail />", () => {
     const commentInput = component.find("#new-comment-content-input");
     commentInput.simulate("change", { target: { value: "" } });
     expect(instance.state.comment).toEqual("");
+    expect(instance.state.commentEditMode).toEqual([false, false]);
+    expect(instance.state.edittedComments.length).toBe(2);
     const confirmComment = component.find("#confirm-create-comment-button");
     confirmComment.simulate("click");
     expect(spyPostComment).toHaveBeenCalledTimes(0);
+    expect(instance.state.comment).toEqual("");
+    expect(instance.state.commentEditMode).toEqual([false, false]);
+    expect(instance.state.edittedComments.length).toBe(2);
   });
 
   it(`should post non-empty comments.`, () => {
@@ -1346,11 +1351,18 @@ describe("<RoadmapDetail />", () => {
       </Provider>,
     );
 
+    const instance = component.find(RoadmapDetail.WrappedComponent).instance();
     const commentInput = component.find("#new-comment-content-input");
     commentInput.simulate("change", { target: { value: "comment" } });
+    expect(instance.state.comment).toEqual("comment");
+    expect(instance.state.commentEditMode).toEqual([false, false]);
+    expect(instance.state.edittedComments.length).toBe(2);
     const confirmComment = component.find("#confirm-create-comment-button");
     confirmComment.simulate("click");
     expect(spyPostComment).toHaveBeenCalledTimes(1);
+    expect(instance.state.comment).toEqual("");
+    expect(instance.state.commentEditMode).toEqual([false, false, false]);
+    expect(instance.state.edittedComments.length).toBe(3);
   });
 
   it(`should only let the author edit the comment.`, () => {

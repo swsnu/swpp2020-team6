@@ -3,7 +3,7 @@
 @import "./css/basic.scss";
 
 .App {
-  font-family: "Ubuntu", sans-serif;
+  font-family: "Nunito", sans-serif;
   text-align: center;
   width: 100%;
   min-width: 1150px;
@@ -16,7 +16,8 @@
   p,
   input,
   button {
-    font-family: "Ubuntu", sans-serif;
+    font-family: "Nunito", sans-serif;
+    font-weight: 600;
     box-sizing: border-box;
   }
 
@@ -56,5 +57,13 @@
     .UpperSearchBar {
       order: 1;
     }
+  }
+
+  .footer {
+    height: 120px;
+    background-color: #666666;
+    color: #ffffff;
+    padding: 30px;
+    text-align: left;
   }
 }

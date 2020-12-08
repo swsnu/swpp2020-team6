@@ -7,6 +7,7 @@
   min-height: 100vh;
   display: flex;
   flex-direction: row;
+  background-color: $paper-color;
 
   input,
   textarea {
@@ -49,7 +50,7 @@
     border: $create-roadmap-border-style;
     border-radius: $create-roadmap-border-radius;
     text-align: left;
-    margin-bottom: 400px;
+    margin-bottom: 100px;
 
     a {
       padding-top: 110px;
@@ -91,6 +92,12 @@
           order: 0;
           font-size: 30px;
           margin: 0px 0px 10px 0px;
+          display: flex;
+          align-items: center;
+
+          #lock-icon {
+            margin: 0px 10px 0px 0px;
+          }
         }
         .roadmap-level {
           order: 1;

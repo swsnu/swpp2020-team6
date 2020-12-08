@@ -13,6 +13,7 @@ import DialogContent from "@material-ui/core/DialogContent";
 import DialogContentText from "@material-ui/core/DialogContentText";
 import DialogTitle from "@material-ui/core/DialogTitle";
 import Slide from "@material-ui/core/Slide";
+import LockIcon from "@material-ui/icons/Lock";
 import ExpandLessOutlinedIcon from "@material-ui/icons/ExpandLessOutlined";
 import * as actionCreators from "../../store/actions/index";
 import "./RoadmapDetail.scss";
@@ -31,6 +32,7 @@ const Transition = React.forwardRef(function Transition(props, ref) {
 class RoadmapDetail extends Component {
   state = {
     received: false,
+    comment: "",
     edittedComments: null,
     commentEditMode: null,
     open: true,
@@ -99,34 +101,31 @@ class RoadmapDetail extends Component {
   onChangeRoadmapProgressStatus = (type) => {
     const { changeRoadmapProgress, match } = this.props;
     let newState;
-    switch (type) {
-      case "start":
-        newState = 2;
-        break;
-      case "quit":
-        newState = 1;
-        break;
-      case "finish":
-        newState = 3;
-        break;
-      case "clear":
-        newState = 1;
-        break;
-      default:
-        break;
+    if (type === "start") {
+      newState = 2;
+    } else if (type === "quit") {
+      newState = 1;
+    } else if (type === "finish") {
+      newState = 3;
+    } else {
+      // type: "clear"
+      newState = 1;
     }
+
     changeRoadmapProgress(newState, parseInt(match.params.id, 10));
   };
 
   /* ---------------- comment handlers -------------------- */
 
-  commentCreateHandler = (commentData) => {
-    const { comment } = this.state;
+  commentCreateHandler = () => {
+    const { comment, commentEditMode, edittedComments } = this.state;
     const { onCreateComment, match } = this.props;
-    if (comment !== "") {
-      onCreateComment(match.params.id, commentData);
-      this.setState({ comment: "" });
-    }
+    onCreateComment(match.params.id, comment);
+    this.setState({
+      comment: "",
+      commentEditMode: commentEditMode.concat(false),
+      edittedComments: edittedComments.concat(comment),
+    });
   };
 
   commentEditHandler = (tmpCommentId) => {
@@ -171,18 +170,14 @@ class RoadmapDetail extends Component {
 
   commentDeleteHandler = (tmpCommentId, commentId) => {
     const { onDeleteComment } = this.props;
-    const { commentEditMode } = this.state;
+    const { commentEditMode, edittedComments } = this.state;
 
     const yes = window.confirm("Are you sure to delete the comment?");
 
     if (yes) {
       this.setState({
-        commentEditMode: commentEditMode.map((mode, index) => {
-          if (index === tmpCommentId) {
-            return false;
-          }
-          return mode;
-        }),
+        commentEditMode: commentEditMode.filter((mode, index) => index !== tmpCommentId),
+        edittedComments: edittedComments.filter((comment, index) => index !== tmpCommentId),
       });
       onDeleteComment(commentId);
     }
@@ -321,7 +316,7 @@ class RoadmapDetail extends Component {
       <button
         id="confirm-create-comment-button"
         type="button"
-        onClick={() => this.commentCreateHandler(comment)}
+        onClick={() => this.commentCreateHandler()}
         disabled={commentDisabled}
       >
         Confirm
@@ -342,7 +337,10 @@ class RoadmapDetail extends Component {
               />
             </div>
             <div className="title-author-level-tags">
-              <div className="roadmap-title">{selectedRoadmap.title}</div>
+              <div className="roadmap-title">
+                {selectedRoadmap.private ? <LockIcon id="lock-icon" /> : null}
+                {selectedRoadmap.title}
+              </div>
               {originalAuthor}
               <div className="roadmap-level">
                 <RoadmapLevelIcon roadmapLevel={selectedRoadmap.level} />
