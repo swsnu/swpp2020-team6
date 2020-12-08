@@ -28,7 +28,7 @@ const RoadmapButtons = (props) => {
 
   const onClickDeleteRoadmap = () => {
     const { onDeleteRoadmap, buttonsRoadmapId } = props;
-    const yes = window.confirm("Are you sure to delete the Roadmap?");
+    const yes = window.confirm("Are you sure you want to delete this Roadmap?");
     if (yes) {
       onDeleteRoadmap(buttonsRoadmapId);
     }
