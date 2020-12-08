@@ -1,5 +1,5 @@
 import csv
-from .models import Roadmap
+from roadmap.models import Roadmap
 import pandas as pd
 from kmodes.kmodes import KModes
 from tag.make_tag_sample import preprocess_tags

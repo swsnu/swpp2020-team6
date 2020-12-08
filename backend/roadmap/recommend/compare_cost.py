@@ -1,6 +1,6 @@
 from kmodes.kmodes import KModes
 from tag.make_tag_sample import preprocess_tags
-from roadmap.train_data import preprocess_roadmaps
+from roadmap.recommend.train_data import preprocess_roadmaps
 import numpy as np
 
 # Data visualize libs (for cost comparison)
