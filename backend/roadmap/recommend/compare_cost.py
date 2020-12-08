@@ -2,6 +2,7 @@ from kmodes.kmodes import KModes
 from tag.make_tag_sample import preprocess_tags
 from roadmap.recommend.train_data import preprocess_roadmaps
 import numpy as np
+import pandas as pd
 
 # Data visualize libs (for cost comparison)
 import matplotlib.pyplot as plt

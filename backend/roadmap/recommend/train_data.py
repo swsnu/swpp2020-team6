@@ -52,8 +52,9 @@ def run_kmodes():
     cluster_df.columns = ["cluster_predicted"]
     cluster_df["roadmap_id"] = roadmap_id
 
+    print(cluster_df)
     # save as csv
-    cluster_df.to_csv("clustering_result.csv", sep=",", na_reap="NaN", index=False)
+    cluster_df.to_csv("clustering_result.csv", sep=",", na_rep="NaN", index=False)
 
 
 def train_process(build_tag_sample, build_roadmap_data):
