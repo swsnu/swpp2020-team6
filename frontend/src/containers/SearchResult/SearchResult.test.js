@@ -27,14 +27,34 @@ const stubInitialRoadmapState = {
 };
 
 const stubInitialSearchState = {
-  searchResult: [{ title: "test-search-result-title" }],
+  searchResult: [
+    {
+      title: "test-search-result-title",
+      tags: [
+        { tag_id: 1, tag_name: "tag1" },
+        { tag_id: 2, tag_name: "tag2" },
+      ],
+      author_name: "test_user",
+      image_id: 1,
+    },
+  ],
   topTags: ["top_tag1"],
   page: 1,
   totalCount: 1,
 };
 
 const stubInitialSearchState2 = {
-  searchResult: [{ title: "test-search-result-title" }, { tags: ["tag1", "tag2"] }],
+  searchResult: [
+    {
+      title: "test-search-result-title",
+      tags: [
+        { tag_id: 1, tag_name: "tag1" },
+        { tag_id: 2, tag_name: "tag2" },
+      ],
+      author_name: "test_user",
+      image_id: 1,
+    },
+  ],
   topTags: ["top_tag1"],
   page: 1,
   totalCount: 9,
@@ -45,17 +65,10 @@ const mockStore2 = getMockStore(stubUserState, stubInitialRoadmapState, stubInit
 
 describe("<Search />", () => {
   let searchResult;
-  let spyGetSimpleSearch;
   let spyGetAdvancedSearch;
   let spyGetTopTags;
-  let spyHistoryPush;
 
   beforeEach(() => {
-    spyGetSimpleSearch = jest
-      .spyOn(actionCreatorsUser, "getSimpleSearch")
-      .mockImplementation(() => {
-        return () => {};
-      });
     spyGetAdvancedSearch = jest
       .spyOn(actionCreatorsUser, "getAdvancedSearch")
       .mockImplementation(() => {
@@ -64,7 +77,6 @@ describe("<Search />", () => {
     spyGetTopTags = jest.spyOn(actionCreatorsUser, "getTopTags").mockImplementation(() => {
       return () => {};
     });
-    spyHistoryPush = jest.spyOn(history, "push").mockImplementation(() => {});
     searchResult = (
       <Provider store={mockStore}>
         <ConnectedRouter history={history}>
@@ -154,13 +166,6 @@ describe("<Search />", () => {
     searchResultInstance.onChangeSortBy(1);
   });
 
-  it("should simulate clicking searchResult titles", () => {
-    const component = mount(searchResult);
-    const searchResultInstance = component.find(SearchResult.WrappedComponent).instance();
-    searchResultInstance.onClickTitle(1);
-    expect(spyHistoryPush).toHaveBeenCalledTimes(1);
-  });
-
   it("should work properly when clicking page button", () => {
     const component = mount(searchResult);
     const wrapper = component.find("#page1");
@@ -186,18 +191,5 @@ describe("<Search />", () => {
     wrapper = component.find("#advanced-search-button");
     wrapper.simulate("click");
     expect(spyGetAdvancedSearch).toHaveBeenCalledTimes(1);
-  });
-
-  it("should work properly with simple search ", () => {
-    const component = mount(searchResult);
-    // type title to search
-    const exampleTitle = "exampleTitle";
-    let wrapper = component.find("#simple-search-input");
-    wrapper.simulate("change", { target: { value: exampleTitle } });
-
-    // click simple search button
-    wrapper = component.find("#simple-search-button");
-    wrapper.simulate("click");
-    expect(spyGetSimpleSearch).toHaveBeenCalledTimes(1);
   });
 });
