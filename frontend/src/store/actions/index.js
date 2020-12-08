@@ -2,8 +2,10 @@ export { getUserAuth, signIn, signUp, signOut, getMyPageUser, resetMyPageUser_ }
 
 export {
   getRoadmap,
+  getEditRoadmap,
   createRoadmap,
   editRoadmap,
+  resetEditRoadmap_,
   resetRoadmap_,
   deleteRoadmap,
   duplicateRoadmap,

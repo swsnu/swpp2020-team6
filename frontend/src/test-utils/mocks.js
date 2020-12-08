@@ -2,9 +2,8 @@ import { createStore, combineReducers, applyMiddleware, compose } from "redux";
 import { connectRouter } from "connected-react-router";
 
 import { history, middlewares } from "../store/store";
-// import * as actionTypes from "../store/actions/actionTypes";
 
-const getMockReducer = jest.fn((initialState) => (state, action) => {
+const getMockReducer = jest.fn((initialState) => (state) => {
   if (typeof state === "undefined") return initialState;
   return state;
 });

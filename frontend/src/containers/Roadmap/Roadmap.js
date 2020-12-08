@@ -28,18 +28,18 @@ class Roadmap extends Component {
   };
 
   setInitialState = () => {
-    const { selectedRoadmap } = this.props;
+    const { selectedEditRoadmap } = this.props;
     this.setState({
       received: true,
-      isPrivate: selectedRoadmap.private,
-      imageId: selectedRoadmap.image_id,
-      title: selectedRoadmap.title,
-      level: parseInt(selectedRoadmap.level, 10),
-      description: selectedRoadmap.description,
-      sections: selectedRoadmap.sections.map((section) => {
+      isPrivate: selectedEditRoadmap.private,
+      imageId: selectedEditRoadmap.image_id,
+      title: selectedEditRoadmap.title,
+      level: parseInt(selectedEditRoadmap.level, 10),
+      description: selectedEditRoadmap.description,
+      sections: selectedEditRoadmap.sections.map((section) => {
         return { ...section, collapse: false };
       }),
-      tags: selectedRoadmap.tags.map((tag) => {
+      tags: selectedEditRoadmap.tags.map((tag) => {
         return tag.tag_name;
       }),
     });
@@ -543,7 +543,7 @@ class Roadmap extends Component {
 }
 
 Roadmap.propTypes = {
-  selectedRoadmap: PropTypes.objectOf(PropTypes.any),
+  selectedEditRoadmap: PropTypes.objectOf(PropTypes.any),
   isEdit: PropTypes.bool.isRequired,
   onClickBackHandler: PropTypes.func,
   onClickConfirmHandler: PropTypes.func,

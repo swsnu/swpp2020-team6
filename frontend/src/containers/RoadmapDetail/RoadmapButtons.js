@@ -16,6 +16,8 @@ import * as actionCreators from "../../store/actions/index";
 import "./RoadmapButtons.scss";
 
 const RoadmapButtons = (props) => {
+  const { selectedUser, buttonsRoadmapId, likeCount, pinCount } = props;
+
   const onClickEditRoadmap = () => {
     const { history } = props;
     history.push(`/roadmap/${buttonsRoadmapId}/edit`);
@@ -44,8 +46,6 @@ const RoadmapButtons = (props) => {
     toggleRoadmapLike(parseInt(match.params.id, 10));
   };
 
-  const { selectedUser } = props;
-  const { buttonsRoadmapId, likeCount, pinCount } = props;
   const like = selectedUser.liked_roadmaps.find((roadmap) => roadmap.id === buttonsRoadmapId);
   const likeButton = like !== undefined ? <FavoriteIcon /> : <FavoriteBorderIcon />;
   const pin = selectedUser.pinned_roadmaps.find((roadmap) => roadmap.id === buttonsRoadmapId);

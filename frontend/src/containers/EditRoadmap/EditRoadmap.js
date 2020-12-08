@@ -14,8 +14,8 @@ class EditRoadmap extends Component {
   }
 
   componentWillUnmount() {
-    const { onResetRoadmap } = this.props;
-    onResetRoadmap();
+    const { onResetEditRoadmap } = this.props;
+    onResetEditRoadmap();
   }
 
   onClickEditBack = () => {
@@ -29,18 +29,18 @@ class EditRoadmap extends Component {
   };
 
   render() {
-    const { selectedRoadmap, selectedUser, history } = this.props;
+    const { selectedEditRoadmap, selectedUser, history } = this.props;
     if (selectedUser === undefined) {
       return <div />;
     }
-    if (selectedRoadmap === undefined) {
+    if (selectedEditRoadmap === undefined) {
       return (
         <div className="EditRoadmap">
           <div className="loading" />
         </div>
       );
     }
-    if (selectedRoadmap.author_id !== selectedUser.user_id) {
+    if (selectedEditRoadmap.author_id !== selectedUser.user_id) {
       window.alert("Only the author can edit the Roadmap!");
       history.goBack();
       return <div />;
@@ -52,7 +52,7 @@ class EditRoadmap extends Component {
           isEdit
           onClickBackHandler={this.onClickEditBack}
           onClickConfirmHandler={this.onClickEditConfirm}
-          selectedRoadmap={selectedRoadmap}
+          selectedEditRoadmap={selectedEditRoadmap}
         />
       </div>
     );
@@ -60,18 +60,18 @@ class EditRoadmap extends Component {
 }
 
 EditRoadmap.propTypes = {
-  selectedRoadmap: PropTypes.objectOf(PropTypes.any),
+  selectedEditRoadmap: PropTypes.objectOf(PropTypes.any),
   selectedUser: PropTypes.objectOf(PropTypes.any),
   onGetRoadmap: PropTypes.func.isRequired,
   onEditRoadmap: PropTypes.func.isRequired,
-  onResetRoadmap: PropTypes.func.isRequired,
+  onResetEditRoadmap: PropTypes.func.isRequired,
   history: PropTypes.objectOf(PropTypes.any),
   match: PropTypes.objectOf(PropTypes.any),
 };
 
 const mapStateToProps = (state) => {
   return {
-    selectedRoadmap: state.roadmap.selectedRoadmap,
+    selectedEditRoadmap: state.roadmap.selectedEditRoadmap,
     selectedUser: state.user.selectedUser,
   };
 };
@@ -81,7 +81,7 @@ const mapDispatchToProps = (dispatch) => {
     onGetRoadmap: (roadmapId) => dispatch(actionCreators.getRoadmap(roadmapId)),
     onEditRoadmap: (roadmapId, roadmapData) =>
       dispatch(actionCreators.editRoadmap(roadmapId, roadmapData)),
-    onResetRoadmap: () => dispatch(actionCreators.resetRoadmap_()),
+    onResetEditRoadmap: () => dispatch(actionCreators.resetEditRoadmap_()),
   };
 };
 

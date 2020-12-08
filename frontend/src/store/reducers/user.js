@@ -9,8 +9,7 @@ const initialState = {
   myPageUser: undefined,
 };
 
-const reducer = (state, action) => {
-  if (typeof state === "undefined") return initialState;
+const reducer = (state = initialState, action) => {
   const { selectedUser } = state;
   if (action.type === actionTypes.CREATE_ROADMAP || action.type === actionTypes.DUPLICATE_ROADMAP) {
     return {

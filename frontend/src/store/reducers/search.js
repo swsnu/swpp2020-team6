@@ -7,8 +7,7 @@ const initialState = {
   totalCount: 1,
 };
 
-const search = (state, action) => {
-  if (typeof state === "undefined") return initialState;
+const search = (state = initialState, action) => {
   if (
     action.type === actionTypes.GET_SIMPLE_SEARCH_SUCCESS ||
     action.type === actionTypes.GET_ADVANCED_SEARCH_SUCCESS
