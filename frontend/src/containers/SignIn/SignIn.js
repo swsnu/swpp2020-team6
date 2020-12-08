@@ -6,6 +6,7 @@ import React, { Component } from "react";
 import { connect } from "react-redux";
 import PropTypes from "prop-types";
 import * as actionCreators from "../../store/actions/index";
+import rotus from "../../misc/rotus.png";
 
 import "./SignIn.scss";
 
@@ -41,6 +42,7 @@ class SignIn extends Component {
     const { username, password } = this.state;
     return (
       <div className="SignIn">
+        <img src={rotus} alt="" />
         <h1>Sign In</h1>
         <label>Username</label>
         <input
@@ -72,7 +74,7 @@ class SignIn extends Component {
           onClick={() => this.onClickForgotPassword()}
           type="button"
         >
-          Forgot Password
+          Forgot Password ?
         </button>
       </div>
     );

@@ -1,7 +1,9 @@
+@import "../../css/basic.scss";
+
 .SignUp {
   width: 40%;
   max-width: 400px;
-  margin: 100px auto;
+  margin: 0px auto;
   label {
     position: relative;
     color: black;
@@ -23,7 +25,7 @@
     box-sizing: border-box;
     &:focus {
       outline: none;
-      border-left: deeppink 4px solid;
+      border-left: $main-light-color 4px solid;
     }
   }
   button {
@@ -35,25 +37,23 @@
     margin-left: 30px;
     margin-right: 40px;
     margin-bottom: 20px;
+    background-color: $main-dark3-color;
+    color: white;
     cursor: pointer;
     &#signup-button {
       color: white;
-      background-color: black;
+      background-color: $main-light-color;
       &:disabled {
-        background-color: grey;
+        background-color: $main-light2-color;
         cursor: not-allowed;
       }
     }
   }
-  h1 {
-    // text-decoration: underline;
-    // font-family: sans-serif;
+  @media (max-width: 768px) {
+    width: 70%;
   }
-  //   @media (max-width: 768px) {
-  //     width: 70%;
-  //   }
-  //   @media (max-width: 500px) {
-  //     width: 80%;
-  //     margin: 50px auto;
-  //   }
+  @media (max-width: 500px) {
+    width: 80%;
+    margin: 50px auto;
+  }
 }

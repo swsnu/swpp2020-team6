@@ -7,6 +7,7 @@ import { connect } from "react-redux";
 import PropTypes from "prop-types";
 
 import * as actionCreators from "../../store/actions/index";
+import rotus from "../../misc/rotus.png";
 
 import "./SignUp.scss";
 
@@ -46,6 +47,7 @@ class SignUp extends Component {
 
     return (
       <div className="SignUp">
+        <img src={rotus} alt="" />
         <h1>Sign Up</h1>
         <label>Email</label>
         <input
