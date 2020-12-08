@@ -172,7 +172,7 @@ class RoadmapDetail extends Component {
     const { onDeleteComment } = this.props;
     const { commentEditMode, edittedComments } = this.state;
 
-    const yes = window.confirm("Are you sure to delete the comment?");
+    const yes = window.confirm("Are you sure you want to delete this comment?");
 
     if (yes) {
       this.setState({
