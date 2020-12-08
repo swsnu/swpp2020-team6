@@ -42,7 +42,7 @@ def preprocess_roadmaps():
 
 
 def run_kmodes():
-    km_huang = KModes(n_clusters=10, init="Huang", n_init=5, verbose=1)
+    km_huang = KModes(n_clusters=10, init="Huang", verbose=1)
     csv_data = pd.read_csv("kmodes_input.csv")
     input_data = csv_data.iloc[:, 1:]
     roadmap_id = csv_data.iloc[:, 0]
