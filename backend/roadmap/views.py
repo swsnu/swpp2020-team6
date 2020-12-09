@@ -2,6 +2,9 @@ import json
 from json import JSONDecodeError
 from operator import and_, or_
 from functools import reduce
+
+from django.views.decorators.csrf import ensure_csrf_cookie
+
 from .models import Roadmap
 from django.http import (
     HttpResponse,
@@ -20,6 +23,7 @@ from tag.models import Tag
 from user.models import User
 
 
+@ensure_csrf_cookie
 def roadmap(request):
     if request.method == "POST":
         if not request.user.is_authenticated:
@@ -84,6 +88,7 @@ def roadmap(request):
     return HttpResponseNotAllowed(["POST"])
 
 
+@ensure_csrf_cookie
 def roadmap_id(request, roadmap_id):
     if request.method == "GET":
         if not request.user.is_authenticated:
@@ -228,6 +233,7 @@ def roadmap_id(request, roadmap_id):
         return JsonResponse(roadmap_dict_simple, status=201)
 
 
+@ensure_csrf_cookie
 def roadmap_id_like(request, roadmap_id):
     if request.method == "PUT":
         if not request.user.is_authenticated:
@@ -260,6 +266,7 @@ def roadmap_id_like(request, roadmap_id):
     return HttpResponseNotAllowed(["PUT"])
 
 
+@ensure_csrf_cookie
 def roadmap_id_pin(request, roadmap_id):
     if request.method == "PUT":
         if not request.user.is_authenticated:
@@ -292,6 +299,7 @@ def roadmap_id_pin(request, roadmap_id):
     return HttpResponseNotAllowed(["PUT"])
 
 
+@ensure_csrf_cookie
 def roadmap_id_progress(request, roadmap_id):
     if request.method == "PUT":
         if not request.user.is_authenticated:
@@ -319,6 +327,7 @@ def roadmap_id_progress(request, roadmap_id):
     return HttpResponseNotAllowed(["PUT"])
 
 
+@ensure_csrf_cookie
 def progress_change(roadmap_id, new_progress_state):
     try:
         target_roadmap = Roadmap.objects.get(id=roadmap_id)
@@ -417,6 +426,7 @@ def progress_change(roadmap_id, new_progress_state):
         return HttpResponseBadRequest()
 
 
+@ensure_csrf_cookie
 def best(request, top_n):
     if request.method == "GET":
         if not request.user.is_authenticated:
@@ -438,6 +448,7 @@ def best(request, top_n):
     return HttpResponseNotAllowed(["GET"])
 
 
+@ensure_csrf_cookie
 def new(request, top_n):
     if request.method == "GET":
         if not request.user.is_authenticated:
@@ -457,6 +468,7 @@ def new(request, top_n):
     return HttpResponseNotAllowed(["GET"])
 
 
+@ensure_csrf_cookie
 def search(request):
     """
     roadmap search with title, tag, level, sort options

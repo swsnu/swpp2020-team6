@@ -8,11 +8,12 @@ from django.http import (
     HttpResponseNotFound,
     JsonResponse,
 )
-from task.models import Task
-from user.models import User
-from roadmap.models import Roadmap
+from django.views.decorators.csrf import ensure_csrf_cookie
 
-# Create your views here.
+from task.models import Task
+
+
+@ensure_csrf_cookie
 def task_id(request, task_id):
     if request.method == "PUT":
         if not request.user.is_authenticated:
