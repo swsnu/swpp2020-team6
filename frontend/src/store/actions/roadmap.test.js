@@ -1685,6 +1685,11 @@ describe("ActionCreators", () => {
     });
   });
 
+  it(`should properly call 'resetBestRoadmaps_' `, () => {
+    const val = mockedStore.dispatch(roadmapActionCreators.resetBestRoadmaps_);
+    expect(val).toEqual({ type: actionTypes.RESET_BEST_ROADMAP });
+  });
+
   /* ---------------------- Get New Roadmap ---------------------- */
   it(`'getNewRoadmaps' should fetch top_n new roadmaps correctly`, (done) => {
     const spy = jest.spyOn(axios, "get").mockImplementation((url) => {
@@ -1717,6 +1722,11 @@ describe("ActionCreators", () => {
       expect(spy).toHaveBeenCalledTimes(1);
       done();
     });
+  });
+
+  it(`should properly call 'resetNewRoadmaps_' `, () => {
+    const val = mockedStore.dispatch(roadmapActionCreators.resetNewRoadmaps_);
+    expect(val).toEqual({ type: actionTypes.RESET_NEW_ROADMAP });
   });
 
   /* ---------------------- Get Recommended Roadmap ---------------------- */
@@ -1758,5 +1768,9 @@ describe("ActionCreators", () => {
     expect(val).toEqual({ type: actionTypes.RESET_RECOMMENDED_ROADMAP });
   });
 
-  /* ----- Reset -----*/
+  // ------------ reset roadmap ---------- //
+  it(`should properly call 'resetRoadmap_' `, () => {
+    const val = mockedStore.dispatch(roadmapActionCreators.resetRoadmap_);
+    expect(val).toEqual({ type: actionTypes.RESET_ROADMAP });
+  });
 });
