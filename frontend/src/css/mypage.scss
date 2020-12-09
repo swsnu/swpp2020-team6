@@ -3,8 +3,10 @@
 /* ------------------ MyPage variables ------------------ */
 $mypage-main-background-color: $grey-light2-color;
 
-$mypage-user-info-width: 230px;
-$mypage-user-info-height: 400px;
+$mypage-min-width: 1200px;
+
+$mypage-user-info-width: 200px;
+$mypage-user-info-height: 350px;
 $mypage-user-info-background-color: #ffffff;
 $mypage-user-info-border-radius: 20px;
 $mypage-user-info-font-size: 20px;

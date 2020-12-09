@@ -3,24 +3,31 @@ import * as actionTypes from "../actions/actionTypes";
 
 const initialState = {
   selectedRoadmap: undefined,
+  selectedEditRoadmap: undefined,
   bestRoadmaps: [],
   bestRoadmapsError: null,
   newRoadmaps: [],
   newRoadmapsError: null,
 };
 
-const reducer = (state = initialState, action) => {
+const roadmap = (state = initialState, action) => {
   switch (action.type) {
     case actionTypes.GET_ROADMAP_SUCCESS:
       return { ...state, selectedRoadmap: action.roadmapData };
     case actionTypes.GET_ROADMAP_FAILURE:
       return { ...state, selectedRoadmap: undefined };
+    case actionTypes.GET_EDIT_ROADMAP_SUCCESS:
+      return { ...state, selectedEditRoadmap: action.roadmapData };
+    case actionTypes.GET_EDIT_ROADMAP_FAILURE:
+      return { ...state, selectedEditRoadmap: undefined };
     case actionTypes.CREATE_ROADMAP:
       return { ...state, selectedRoadmap: undefined };
     case actionTypes.EDIT_ROADMAP:
       return { ...state, selectedRoadmap: undefined };
     case actionTypes.RESET_ROADMAP:
       return { ...state, selectedRoadmap: undefined };
+    case actionTypes.RESET_EDIT_ROADMAP:
+      return { ...state, selectedEditRoadmap: undefined };
     case actionTypes.DELETE_ROADMAP:
       return { ...state, selectedRoadmap: undefined };
     case actionTypes.CREATE_COMMENT_SUCCESS:
@@ -131,4 +138,4 @@ const reducer = (state = initialState, action) => {
   return state;
 };
 
-export default reducer;
+export default roadmap;
