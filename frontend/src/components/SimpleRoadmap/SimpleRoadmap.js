@@ -88,7 +88,7 @@ const SimpleRoadmap = (props) => {
     return null;
   });
   if (tagList.length === 0) {
-    tagDisplay = <div class="empty-taglist" />;
+    tagDisplay = <div className="empty-taglist" />;
   }
 
   const headerDisplay = isMyPage ? (
