@@ -528,3 +528,28 @@ export const getNewRoadmaps = (topN) => {
       });
   };
 };
+
+export const getRecommendedRoadmapsSuccess_ = (roadmapData) => {
+  return { type: actionTypes.GET_RECOMMENDED_ROADMAP_SUCCESS, roadmaps: roadmapData.roadmaps };
+};
+
+export const getRecommendedRoadmapsFail_ = (errorStatus) => {
+  return { type: actionTypes.GET_RECOMMENDED_ROADMAP_FAILURE, errorStatus };
+};
+
+export const resetRecommendedRoadmaps_ = () => {
+  return { type: actionTypes.RESET_RECOMMENDED_ROADMAP };
+};
+
+export const getRecommendedRoadmaps = () => {
+  return (dispatch) => {
+    return axios
+      .get(`/api/user/recommended/`)
+      .then((response) => {
+        dispatch(getRecommendedRoadmapsSuccess_(response.data));
+      })
+      .catch((error) => {
+        dispatch(getRecommendedRoadmapsFail_(error.response.status));
+      });
+  };
+};

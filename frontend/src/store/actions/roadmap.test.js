@@ -217,6 +217,8 @@ const stubInitialRoadmapState = {
   bestRoadmapsError: null,
   newRoadmaps: [],
   newRoadmapsError: null,
+  recommendedRoadmaps: [],
+  recommendedRoadmapsError: null,
 };
 
 const stubInitialSearchState = {
@@ -1715,6 +1717,45 @@ describe("ActionCreators", () => {
       expect(spy).toHaveBeenCalledTimes(1);
       done();
     });
+  });
+
+  /* ---------------------- Get Recommended Roadmap ---------------------- */
+  it(`'getRecommendedRoadmaps' should fetch 12 recommended roadmaps correctly`, (done) => {
+    const spy = jest.spyOn(axios, "get").mockImplementation((url) => {
+      return new Promise((resolve, reject) => {
+        const result = {
+          status: 200,
+          data: [stubRoadmapSimpleData, stubRoadmapSimpleData2],
+        };
+        resolve(result);
+      });
+    });
+
+    mockedStore.dispatch(roadmapActionCreators.getRecommendedRoadmaps()).then(() => {
+      expect(spy).toHaveBeenCalledTimes(1);
+      done();
+    });
+  });
+
+  it(`error from 'getRecommendedRoadmaps' during axios.get should be catched`, (done) => {
+    const spy = jest.spyOn(axios, "get").mockImplementation((url, roadmapData) => {
+      return new Promise((resolve, reject) => {
+        const result = {
+          response: { status: 401 },
+        };
+        reject(result);
+      });
+    });
+
+    mockedStore.dispatch(roadmapActionCreators.getRecommendedRoadmaps()).then(() => {
+      expect(spy).toHaveBeenCalledTimes(1);
+      done();
+    });
+  });
+
+  it(`should properly call 'resetRecommendedRoadmaps_' `, () => {
+    const val = mockedStore.dispatch(roadmapActionCreators.resetRecommendedRoadmaps_);
+    expect(val).toEqual({ type: actionTypes.RESET_RECOMMENDED_ROADMAP });
   });
 
   /* ----- Reset -----*/
