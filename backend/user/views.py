@@ -12,6 +12,7 @@ from django.views.decorators.csrf import ensure_csrf_cookie
 from django.contrib.auth import authenticate, login, logout
 from django.db.utils import IntegrityError
 from .models import User
+from roadmap.recommend.inference_recommend import top_n_cluster, top_roadmaps
 
 
 # Create your views here.
@@ -103,3 +104,18 @@ def user_id(request, user_id):
         return JsonResponse(user_dict, status=200)
 
     return HttpResponseNotAllowed(["GET"])
+
+
+def recommend(request):
+    if request.method == "GET":
+        if not request.user.is_authenticated:
+            return HttpResponse(status=401)
+
+        user = request.user
+        picked_roadmap = user.picked_roadmap()
+        top_cluster = top_n_cluster(roadmaps=picked_roadmap, n=3)
+
+        # TODO: top_roadmaps 계산
+        top_roadmaps = None
+        recommended_roadmap = list(roadmap.to_dict_simple() for roadmap in top_roadmaps)
+        return JsonResponse({"roadmaps": recommended_roadmap})

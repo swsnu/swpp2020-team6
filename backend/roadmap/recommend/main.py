@@ -7,7 +7,7 @@
 from .train_data import *
 
 build_tag_sample = False
-build_roadmap_data = False
+build_roadmap_data = True
 print("Training Start...")
 print(
     "Training options: build_tag_sampe:{} build_roadmap_data:{}".format(
