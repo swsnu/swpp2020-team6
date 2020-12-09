@@ -98,25 +98,21 @@ $margin-main: 30px 10px 30px 10px;
     }
 
     .tab-panel {
+      width: 100%;
       display: flex;
       flex-direction: row;
       flex-wrap: wrap;
+      justify-content: space-between;
       background-color: $mypage-tab-panel-background-color;
       min-height: $mypage-user-info-height;
       box-shadow: $mypage-tab-panel-box-shadow;
       padding: $mypage-tab-panel-padding;
     }
 
-    .TmpRoadmapItem {
+    .SimpleRoadmap {
       position: relative;
-      background: $mypage-tab-item-background-color;
       width: $mypage-tab-item-width;
-      height: $mypage-tab-item-height;
       margin: $mypage-tab-item-margin;
-
-      button {
-        background-color: #ffffff;
-      }
     }
   }
 }

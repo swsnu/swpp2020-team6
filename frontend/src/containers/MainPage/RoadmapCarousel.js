@@ -1,6 +1,8 @@
 /* eslint-disable react/jsx-props-no-spreading */
 import React, { useState, useEffect } from "react";
 import ItemsCarousel from "react-items-carousel";
+import ChevronLeftIcon from "@material-ui/icons/ChevronLeft";
+import ChevronRightIcon from "@material-ui/icons/ChevronRight";
 import PropTypes from "prop-types";
 import { withRouter } from "react-router";
 import { connect } from "react-redux";
@@ -66,8 +68,16 @@ const RoadmapCarousel = (props) => {
             activeItemIndex={activeBestRoadmap}
             numberOfCards={4}
             gutter={20}
-            leftChevron={<button type="button">{"<"}</button>}
-            rightChevron={<button type="button">{">"}</button>}
+            leftChevron={
+              <button className="left-button" type="button">
+                <ChevronLeftIcon />
+              </button>
+            }
+            rightChevron={
+              <button className="right-button" type="button">
+                <ChevronRightIcon />
+              </button>
+            }
             outsideChevron
             chevronWidth={chevronWidth}
           >
@@ -83,8 +93,16 @@ const RoadmapCarousel = (props) => {
             activeItemIndex={activeNewRoadmap}
             numberOfCards={4}
             gutter={20}
-            leftChevron={<button type="button">{"<"}</button>}
-            rightChevron={<button type="button">{">"}</button>}
+            leftChevron={
+              <button className="left-button" type="button">
+                <ChevronLeftIcon />
+              </button>
+            }
+            rightChevron={
+              <button className="right-button" type="button">
+                <ChevronRightIcon />
+              </button>
+            }
             outsideChevron
             chevronWidth={chevronWidth}
           >

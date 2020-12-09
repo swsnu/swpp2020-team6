@@ -9,7 +9,7 @@ const initialState = {
   myPageUser: undefined,
 };
 
-const user = (state = initialState, action = null) => {
+const user = (state = initialState, action = { type: null }) => {
   const { selectedUser } = state;
   if (action.type === actionTypes.CREATE_ROADMAP || action.type === actionTypes.DUPLICATE_ROADMAP) {
     return {
