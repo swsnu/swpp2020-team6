@@ -3,6 +3,9 @@
 import React, { Component } from "react";
 import PropTypes from "prop-types";
 import Switch from "@material-ui/core/Switch";
+import LockIcon from "@material-ui/icons/Lock";
+import GroupIcon from "@material-ui/icons/Group";
+import Tooltip from "@material-ui/core/Tooltip";
 
 import CreateSection from "../../components/CreateSection/CreateSection";
 import StyledSelect from "../../components/Roadmap/StyledComponents/StyledSelect";
@@ -25,18 +28,18 @@ class Roadmap extends Component {
   };
 
   setInitialState = () => {
-    const { selectedRoadmap } = this.props;
+    const { selectedEditRoadmap } = this.props;
     this.setState({
       received: true,
-      isPrivate: selectedRoadmap.private,
-      imageId: selectedRoadmap.image_id,
-      title: selectedRoadmap.title,
-      level: parseInt(selectedRoadmap.level, 10),
-      description: selectedRoadmap.description,
-      sections: selectedRoadmap.sections.map((section) => {
+      isPrivate: selectedEditRoadmap.private,
+      imageId: selectedEditRoadmap.image_id,
+      title: selectedEditRoadmap.title,
+      level: parseInt(selectedEditRoadmap.level, 10),
+      description: selectedEditRoadmap.description,
+      sections: selectedEditRoadmap.sections.map((section) => {
         return { ...section, collapse: false };
       }),
-      tags: selectedRoadmap.tags.map((tag) => {
+      tags: selectedEditRoadmap.tags.map((tag) => {
         return tag.tag_name;
       }),
     });
@@ -395,13 +398,15 @@ class Roadmap extends Component {
     for (let i = 1; i <= roadmapImageNum; i += 1) {
       imageList = imageList.concat({
         name: (
-          <img
-            className="roadmap-image"
-            src={require(`misc/roadmap/${i}.png`)}
-            width="150"
-            height="150"
-            alt={`roadmap-${i}`}
-          />
+          <div className="roadmap-image-wrapper">
+            <img
+              className="roadmap-image"
+              src={require(`misc/roadmap/${i}.png`)}
+              width="150"
+              height="150"
+              alt={`roadmap-${i}`}
+            />
+          </div>
         ),
         value: i,
       });
@@ -463,7 +468,17 @@ class Roadmap extends Component {
                       label="Level"
                     />
                   </div>
-                  <label id="roadmap-private-label">{isPrivate ? "Private" : "Public"}</label>
+                  <div id="roadmap-private-label">
+                    {isPrivate ? (
+                      <Tooltip title="Private">
+                        <LockIcon id="private-icon" />
+                      </Tooltip>
+                    ) : (
+                      <Tooltip title="Private">
+                        <GroupIcon id="public-icon" />
+                      </Tooltip>
+                    )}
+                  </div>
                   <Switch
                     id="roadmap-private"
                     checked={isPrivate}
@@ -495,7 +510,7 @@ class Roadmap extends Component {
                 />
               </div>
             </div>
-            <input
+            <textarea
               id="roadmap-description"
               value={description}
               placeholder="Description"
@@ -528,7 +543,7 @@ class Roadmap extends Component {
 }
 
 Roadmap.propTypes = {
-  selectedRoadmap: PropTypes.objectOf(PropTypes.any),
+  selectedEditRoadmap: PropTypes.objectOf(PropTypes.any),
   isEdit: PropTypes.bool.isRequired,
   onClickBackHandler: PropTypes.func,
   onClickConfirmHandler: PropTypes.func,

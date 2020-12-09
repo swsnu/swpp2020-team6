@@ -1,5 +1,9 @@
 import React from "react";
 import PropTypes from "prop-types";
+import Tooltip from "@material-ui/core/Tooltip";
+import IconButton from "@material-ui/core/IconButton";
+import AddOutlinedIcon from "@material-ui/icons/AddOutlined";
+import RemoveOutlinedIcon from "@material-ui/icons/RemoveOutlined";
 import Task from "./Task";
 
 import "./Section.scss";
@@ -27,21 +31,21 @@ const Section = (props) => {
         description={task.task_description}
         checked={task.task_checked}
         changeCheckbox={changeCheckbox}
-        tmpSectionId={tmpSectionId}
       />
     );
   });
   return (
     <div className="Section">
       <div className="title">
-        <button
-          className="section-collapse"
-          type="button"
-          onClick={() => clickSectionCollapse(tmpSectionId)}
-        >
-          {collapse ? "+" : "-"}
-        </button>
-        <div className="section-title">{`section title: ${title}`}</div>
+        <Tooltip title={collapse ? "Expand" : "Collapse"}>
+          <IconButton
+            className="section-collapse"
+            onClick={() => clickSectionCollapse(tmpSectionId)}
+          >
+            {collapse ? <AddOutlinedIcon /> : <RemoveOutlinedIcon />}
+          </IconButton>
+        </Tooltip>
+        <div className="section-title">{`${tmpSectionId + 1}. ${title}`}</div>
       </div>
       <div
         className="section"

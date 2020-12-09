@@ -37,6 +37,42 @@ export const getRoadmap = (roadmapId) => {
       });
   };
 };
+
+export const getEditRoadmapSuccess_ = (roadmapData) => {
+  return { type: actionTypes.GET_EDIT_ROADMAP_SUCCESS, roadmapData };
+};
+
+export const getEditRoadmapFail_ = () => {
+  return { type: actionTypes.GET_EDIT_ROADMAP_FAILURE };
+};
+
+export const getEditRoadmap = (roadmapId) => {
+  return (dispatch) => {
+    return axios
+      .get(`/api/roadmap/${roadmapId}/`)
+      .then((response) => {
+        dispatch(getEditRoadmapSuccess_(response.data));
+      })
+      .catch((error) => {
+        switch (error.response.status) {
+          case 404:
+            window.alert("No such Roadmap!");
+            break;
+          case 401:
+            window.alert("Please sign in!");
+            break;
+          case 400:
+            window.alert("Parsing error!");
+            break;
+          default:
+            break;
+        }
+        dispatch(goBack());
+        dispatch(getEditRoadmapFail_());
+      });
+  };
+};
+
 export const createRoadmap_ = (roadmapData) => {
   return { type: actionTypes.CREATE_ROADMAP, roadmapData };
 };
@@ -102,6 +138,12 @@ export const editRoadmap = (roadmapId, roadmapData) => {
 export const resetRoadmap_ = () => {
   return {
     type: actionTypes.RESET_ROADMAP,
+  };
+};
+
+export const resetEditRoadmap_ = () => {
+  return {
+    type: actionTypes.RESET_EDIT_ROADMAP,
   };
 };
 
@@ -240,7 +282,6 @@ export const deleteComment = (commentID) => {
     return axios
       .delete(`/api/comment/${commentID}/`)
       .then(() => {
-        window.alert("Successfully deleted comment!");
         dispatch(deleteCommentSuccess_(commentID));
       })
       .catch((error) => {

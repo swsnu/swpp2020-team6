@@ -44,12 +44,14 @@ describe("UpperSearchBar", () => {
     const wrapper = component.find(".UpperSearchBar");
     expect(wrapper.length).toBe(1);
     const buttonWrapper = component.find("#search-button");
-    expect(buttonWrapper.length).toBe(1);
+    expect(buttonWrapper.length).toBeTruthy();
   });
 
   it("should not search when input is empty", () => {
     const component = mount(upperSearchBar);
-    const buttonWrapper = component.find("#search-button");
+    const buttonWrapper = component.find(
+      ".MuiButtonBase-root.MuiIconButton-root.MuiIconButton-colorPrimary.Mui-disabled.Mui-disabled",
+    );
     buttonWrapper.simulate("click");
     expect(spySearch).toHaveBeenCalledTimes(0);
   });
@@ -59,7 +61,7 @@ describe("UpperSearchBar", () => {
     const buttonWrapper = component.find("#search-button");
     const inputWrapper = component.find("#search-input");
     inputWrapper.simulate("change", { target: { value: "swpp" } });
-    buttonWrapper.simulate("click");
+    buttonWrapper.at(0).props().onClick();
     expect(spySearch).toHaveBeenCalledTimes(1);
   });
 });

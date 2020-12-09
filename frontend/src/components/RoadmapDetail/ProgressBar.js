@@ -17,7 +17,7 @@ const ProgressBar = (props) => {
   let progressStatus = null;
   let progressDisplay = (
     <Box display="flex" alignItems="center">
-      <Box width="100%" mr={3}>
+      <Box width="100%" mr={1}>
         <LinearProgress variant="determinate" value={progressPercentage} />
       </Box>
       <Box minWidth={35}>
@@ -86,10 +86,8 @@ const ProgressBar = (props) => {
 
     progressBar = (
       <div className="roadmap-progress">
-        <div id="progress-display">
-          {progressStatus}
-          {progressDisplay}
-        </div>
+        <div id="progress-display">{progressStatus}</div>
+        <div className="progress-display-bar">{progressDisplay}</div>
         {progressButton}
       </div>
     );
