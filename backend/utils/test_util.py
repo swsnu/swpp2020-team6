@@ -25,7 +25,9 @@ def signup_signin(client):
     path = USER_PATH + "signin/"
     client.post(
         path,
-        json.dumps({"username": "chris", "email": "chris@gmail.com", "password": "chris"}),
+        json.dumps(
+            {"username": "chris", "email": "chris@gmail.com", "password": "chris"}
+        ),
         content_type=JSON_TYPE,
         HTTP_X_CSRFTOKEN=csrftoken,
     )

@@ -7,8 +7,8 @@ DATABASES = {
         "ENGINE": "django.db.backends.mysql",
         "OPTIONS": {
             "read_default_file": os.path.join(BASE_DIR, "mysql.cnf"),
-            "init_command": "SET sql_mode='STRICT_TRANS_TABLES'" # strict mode 설정 추가
-        }
+            "init_command": "SET sql_mode='STRICT_TRANS_TABLES'",  # strict mode 설정 추가
+        },
     }
 }
 
