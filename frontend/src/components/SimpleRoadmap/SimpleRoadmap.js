@@ -83,7 +83,7 @@ const SimpleRoadmap = (props) => {
   let tagDisplay;
   tagDisplay = tagList.map((tag, tagIndex) => {
     if (tagIndex < 3) {
-      return <Chip className="tag-chip" key={tag.tag_id} label={tag.tag_name} />;
+      return <Chip className="tag-chip" key={tag.tag_id} label={`# ${tag.tag_name}`} />;
     }
     return null;
   });
