@@ -47,48 +47,61 @@ class SignUp extends Component {
 
     return (
       <div className="SignUp">
-        <img src={rotus} alt="" />
-        <h4>Sign up</h4>
-        <p>Create your account to explore our service.</p>
-        <label>Email</label>
-        <input
-          id="email-input"
-          type="email"
-          value={email}
-          onChange={(event) => this.setState({ email: event.target.value })}
-        />
-        <label>Username</label>
-        <input
-          id="username-input"
-          type="username"
-          value={username}
-          onChange={(event) => this.setState({ username: event.target.value })}
-        />
-        <label>Password</label>
-        <input
-          id="password-input"
-          type="password"
-          value={password}
-          onChange={(event) => this.setState({ password: event.target.value })}
-        />
-        <label>Password Confirm</label>
-        <input
-          id="password-confirm-input"
-          type="password"
-          value={passwordConfirm}
-          onChange={(event) => this.setState({ passwordConfirm: event.target.value })}
-        />
-        <button
-          id="signup-button"
-          onClick={() => this.onClickSignUp({ email, username, password })}
-          type="button"
-          disabled={!(emailFilled && usernameFilled && passwordFilled && passwordMatch)}
-        >
-          Sign Up
-        </button>
-        <button id="signin-button" onClick={() => this.onClickSignIn()} type="button">
-          Sign In
-        </button>
+        <div className="left">
+          <img src="https://source.unsplash.com/category/travel/930x750" alt="" />
+        </div>
+        <div className="right">
+          <img src={rotus} width="324" height="130" alt="" />
+          <h4>Sign up</h4>
+          <p>Create your account to explore our service.</p>
+          <label>Email</label>
+          <input
+            id="email-input"
+            type="email"
+            value={email}
+            onChange={(event) => this.setState({ email: event.target.value })}
+            placeholder="Email"
+          />
+          <br />
+          <label>Username</label>
+          <input
+            id="username-input"
+            type="username"
+            value={username}
+            onChange={(event) => this.setState({ username: event.target.value })}
+            placeholder="Username"
+          />
+          <br />
+          <label>Password</label>
+          <input
+            id="password-input"
+            type="password"
+            value={password}
+            onChange={(event) => this.setState({ password: event.target.value })}
+            placeholder="Password"
+          />
+          <br />
+          <label>Password Confirm</label>
+          <input
+            id="password-confirm-input"
+            type="password-confirm"
+            value={passwordConfirm}
+            onChange={(event) => this.setState({ passwordConfirm: event.target.value })}
+            placeholder="Password Confirm"
+          />
+          <br />
+          <button
+            id="signup-button"
+            onClick={() => this.onClickSignUp({ email, username, password })}
+            type="button"
+            disabled={!(emailFilled && usernameFilled && passwordFilled && passwordMatch)}
+          >
+            Sign Up
+          </button>
+          <button id="signin-button" onClick={() => this.onClickSignIn()} type="button">
+            Sign In
+          </button>
+        </div>
       </div>
     );
   }
