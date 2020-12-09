@@ -5,6 +5,8 @@ import PropTypes from "prop-types";
 import "bootstrap/dist/css/bootstrap.min.css";
 import CssBaseline from "@material-ui/core/CssBaseline";
 import exercise from "../../misc/banner/exercise.png";
+import coding from "../../misc/banner/coding.png";
+import level from "../../misc/banner/level.png";
 import RoadmapCarousel from "./RoadmapCarousel";
 
 const MainPage = (props) => {
@@ -26,18 +28,24 @@ const MainPage = (props) => {
             <img src={exercise} alt="Images from Flaticon" width="1838px" height="284px" />
           </Carousel.Item>
           <Carousel.Item>
-            <img src={exercise} alt="This is the first slide" width="1838px" height="284px" />
+            <img src={coding} alt="This is the first slide" width="1838px" height="284px" />
             <Carousel.Caption>
-              <h3>How to get started</h3>
-              <p>A quick walk through with key features and tips to create a great roadmap!</p>
+              <p>
+                Icons made by{" "}
+                <a href="https://www.flaticon.com/authors/prettycons" title="prettycons">
+                  prettycons
+                </a>{" "}
+                from{" "}
+                <a href="https://www.flaticon.com/" title="Flaticon">
+                  {" "}
+                  www.flaticon.com
+                </a>
+              </p>
             </Carousel.Caption>
           </Carousel.Item>
           <Carousel.Item>
-            <img src={exercise} alt="This is the first slide" width="1838px" height="284px" />
-            <Carousel.Caption>
-              <h3>[AD] The world-wide best biscuits</h3>
-              <p>enjoy rotus anywhere!</p>
-            </Carousel.Caption>
+            <img src={level} alt="Diverse level in Rotus" width="1838px" height="284px" />
+            <Carousel.Caption></Carousel.Caption>
           </Carousel.Item>
         </Carousel>
         <div className="RoadmapCarousel">
