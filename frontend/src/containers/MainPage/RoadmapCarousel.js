@@ -58,7 +58,7 @@ const RoadmapCarousel = (props) => {
   return (
     <div className="carousels">
       <div className="best-roadmaps-panel">
-        <h2>Checkout top 12 Roadmaps!</h2>
+        <h2>Checkout Top 12 Roadmaps!</h2>
         <div className="best-roadmaps" style={{ padding: `0 ${chevronWidth}px` }}>
           <ItemsCarousel
             requestToChangeActive={setActiveBestRoadmap}
