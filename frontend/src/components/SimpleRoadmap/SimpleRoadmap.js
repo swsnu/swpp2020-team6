@@ -82,12 +82,16 @@ const SimpleRoadmap = (props) => {
   const tagChipClasses = useTagChipStyles();
   const levelChipClasses = useLevelChipStyles();
 
-  const tagDisplay = tagList.map((tag, tagIndex) => {
+  let tagDisplay;
+  tagDisplay = tagList.map((tag, tagIndex) => {
     if (tagIndex < 3) {
       return <Chip className="tag-chip" key={tag.tag_id} label={tag.tag_name} />;
     }
     return null;
   });
+  if (tagList.length === 0) {
+    tagDisplay = <div class="empty-taglist" />;
+  }
 
   const headerDisplay = isMyPage ? (
     <CardHeader title={date} />
