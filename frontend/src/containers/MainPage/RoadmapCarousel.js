@@ -101,6 +101,7 @@ const RoadmapCarousel = (props) => {
             rightChevron={<button type="button">{">"}</button>}
             outsideChevron
             chevronWidth={chevronWidth}
+            slidesToScroll={4}
           >
             {makeRoadmapItemList(bestRoadmaps)}
           </ItemsCarousel>
@@ -118,6 +119,7 @@ const RoadmapCarousel = (props) => {
             rightChevron={<button type="button">{">"}</button>}
             outsideChevron
             chevronWidth={chevronWidth}
+            slidesToScroll={4}
           >
             {makeRoadmapItemList(newRoadmaps)}
           </ItemsCarousel>
