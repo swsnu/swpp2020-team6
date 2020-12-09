@@ -268,6 +268,7 @@ class SearchResult extends Component {
 
           <br />
         </div>
+
         <div className="right-column">
           <div className="advanced-search-bar">
             <select
@@ -306,22 +307,19 @@ class SearchResult extends Component {
               Search
             </button>
           </div>
-        </div>
 
-        <br />
-
-        <div className="search-result-list">
-          <p>Search Result List</p>
-          {searchResultList}
-        </div>
-
-        <br />
-
-        <div className="pages">
-          {pageList}
           <br />
-          Current Page:
-          {page}
+
+          <div className="search-result-list">{searchResultList}</div>
+
+          <br />
+
+          <div className="pages">
+            {pageList}
+            <br />
+            Page
+            {page}
+          </div>
         </div>
       </div>
     );

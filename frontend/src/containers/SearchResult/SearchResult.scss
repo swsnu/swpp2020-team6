@@ -1,5 +1,6 @@
 @import "../../css/basic.scss";
 @import "../../css/roadmap.scss";
+@import "../../css/mypage.scss";
 
 .SearchResult {
   width: 100%;
@@ -15,18 +16,20 @@
   }
 
   .empty-column {
-    width: 0%;
+    width: 10%;
     display: flex;
+    background-color: $paper-color;
   }
 
   .left-column {
-    margin-top: 50px;
-    width: 60%;
+    border-radius: 7px;
+    background-color: $paper-color;
+    // background-color: $main-light2-color;
+    margin-top: 80px;
+    width: 400px;
     display: flex;
     flex-direction: column;
     align-items: center;
-    border: $create-roadmap-border-style;
-    border-radius: $create-roadmap-border-radius;
     text-align: left;
     button {
       background-color: $create-buttons-background-color;
@@ -37,8 +40,10 @@
       margin-right: 2px;
     }
     .level {
-      width: 25%;
+      margin-top: 20px;
       display: inline;
+      width: 240px;
+      height: 170px;
       flex-direction: column;
       background-color: $grey-dark-color;
       align-items: center;
@@ -51,7 +56,7 @@
     }
 
     .add-tags {
-      margin-left: 26px;
+      margin-left: 30px;
       .add-a-tag {
         display: flex;
         flex-direction: row;
@@ -78,7 +83,7 @@
       background-color: $paper-color;
       min-height: 1px;
       border-radius: 7px;
-      width: 30%;
+      width: 270px;
       display: flex;
       flex-direction: row;
       justify-content: flex-start;
@@ -113,7 +118,7 @@
 
     .topTagsBlock {
       margin-left: 1px;
-      width: 25%;
+      width: 240px;
       display: flex;
       flex-direction: row;
       justify-content: flex-start;
@@ -124,7 +129,7 @@
       }
       .topTagList {
         background-color: $main-light-color;
-        padding: 5px 5px 5px 5px;
+        padding: 5px 0px 5px 5px;
         border-radius: 7px;
         width: 200%;
         .topTags {
@@ -148,13 +153,69 @@
   }
 
   .right-column {
+    border-radius: 7px;
     margin: 10px;
-    display: flex;
+    display: inline-block;
     flex-direction: row;
-    width: 40%;
+    width: 920px;
+    background-color: $paper-color;
+    min-height: 550px;
+    max-height: 1500px;
+
+    .advanced-search-bar {
+      width: 450px;
+      border-style: double;
+      border-radius: 7px;
+      margin-left: 200px;
+      margin-top: 20px;
+      display: flex;
+      flex-direction: row;
+      flex-wrap: nowrap;
+      justify-content: flex-start;
+      align-items: center;
+      padding: 5px;
+      #sortBy {
+        background-color: white;
+        border-radius: 4px;
+      }
+      #advanced-search-input {
+        margin-left: 10px;
+        margin-right: 10px;
+        width: 240px;
+        height: 28px;
+        padding: 5px;
+        border-radius: 4px;
+      }
+      #advanced-search-button {
+        width: 80px;
+        height: 28px;
+        padding: 0px;
+        margin: 1px;
+        border-radius: 7px;
+      }
+    }
+
     .search-result-list {
       display: flex;
       flex-direction: row;
+      flex-wrap: wrap;
+      background-color: $main-light-color;
+      border-radius: 7px;
+      box-shadow: $mypage-tab-panel-box-shadow;
+      padding: 10px;
+      .SimpleRoadmap {
+        margin: 10px;
+      }
+    }
+    .pages {
+      button {
+        background-color: $create-buttons-background-color;
+        color: $create-buttons-color;
+        border: $create-buttons-border-style;
+        border-radius: $create-buttons-border-radius;
+        margin-top: 2px;
+        margin-right: 2px;
+      }
     }
   }
 }
