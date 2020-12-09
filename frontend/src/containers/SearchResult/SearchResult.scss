@@ -1,0 +1,160 @@
+@import "../../css/basic.scss";
+@import "../../css/roadmap.scss";
+
+.SearchResult {
+  width: 100%;
+  height: 100%;
+  margin: auto;
+  min-height: 100vh;
+  display: flex;
+  flex-direction: row;
+  background-color: $paper-color;
+
+  label {
+    margin-left: 10px;
+  }
+
+  .empty-column {
+    width: 0%;
+    display: flex;
+  }
+
+  .left-column {
+    margin-top: 50px;
+    width: 60%;
+    display: flex;
+    flex-direction: column;
+    align-items: center;
+    border: $create-roadmap-border-style;
+    border-radius: $create-roadmap-border-radius;
+    text-align: left;
+    button {
+      background-color: $create-buttons-background-color;
+      color: $create-buttons-color;
+      border: $create-buttons-border-style;
+      border-radius: $create-buttons-border-radius;
+      margin-top: 2px;
+      margin-right: 2px;
+    }
+    .level {
+      width: 25%;
+      display: inline;
+      flex-direction: column;
+      background-color: $grey-dark-color;
+      align-items: center;
+      padding: 20px;
+      color: #ffffff;
+      border-radius: $create-tag-border-radius;
+      h4 {
+        margin-bottom: 10px;
+      }
+    }
+
+    .add-tags {
+      margin-left: 26px;
+      .add-a-tag {
+        display: flex;
+        flex-direction: row;
+        flex-wrap: nowrap;
+        justify-content: flex-start;
+        align-items: center;
+        padding: 0px 0px 5px 5px;
+        #new-tag {
+          width: 240px;
+          padding: 5px;
+          border-radius: 4px;
+        }
+        #add-tag-button {
+          width: 28px;
+          height: 28px;
+          padding: 0px;
+          margin: 0px 0px 0px 5px;
+        }
+      }
+    }
+
+    .taglist {
+      margin-left: 40px;
+      background-color: $paper-color;
+      min-height: 1px;
+      border-radius: 7px;
+      width: 30%;
+      display: flex;
+      flex-direction: row;
+      justify-content: flex-start;
+      align-items: center;
+      flex-wrap: wrap;
+      padding: 5px 5px 5px 5px;
+      .tags {
+        display: inline-flex;
+        flex-direction: row;
+        flex-wrap: nowrap;
+        align-items: center;
+        height: 30px;
+        background-color: $create-buttons-background-color;
+        border-radius: $create-tag-border-radius;
+        padding: $create-tag-padding;
+        margin: $create-tag-margin;
+        .tag-name {
+          text-align: center;
+          font-size: $create-tag-font-size;
+          color: $create-tag-color;
+        }
+        .delete-tag-button {
+          width: 15px;
+          height: 15px;
+          text-align: center;
+          font-size: 70%;
+          padding: 0px;
+          margin: 0px 0px 0px 5px;
+        }
+      }
+    }
+
+    .topTagsBlock {
+      margin-left: 1px;
+      width: 25%;
+      display: flex;
+      flex-direction: row;
+      justify-content: flex-start;
+      align-items: center;
+      flex-wrap: wrap;
+      p {
+        margin-bottom: 1px;
+      }
+      .topTagList {
+        background-color: $main-light-color;
+        padding: 5px 5px 5px 5px;
+        border-radius: 7px;
+        width: 200%;
+        .topTags {
+          display: inline-flex;
+          flex-direction: row;
+          flex-wrap: nowrap;
+          align-items: center;
+          height: 30px;
+          background-color: $create-buttons-background-color;
+          border-radius: $create-tag-border-radius;
+          padding: $create-tag-padding;
+          margin: $create-tag-margin;
+          .tag-name {
+            text-align: center;
+            font-size: $create-tag-font-size;
+            color: $create-tag-color;
+          }
+        }
+      }
+    }
+  }
+
+  .right-column {
+    margin: 10px;
+    display: flex;
+    flex-direction: row;
+    width: 40%;
+    .search-result-list {
+      display: flex;
+      flex-direction: row;
+    }
+  }
+}

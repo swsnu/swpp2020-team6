@@ -77,4 +77,13 @@
       width: 200px;
     }
   }
+
+  @media (max-width: 770px) {
+    width: 70%;
+  }
+
+  @media (max-width: 500px) {
+    width: 80%;
+    margin: 50px auto;
+  }
 }

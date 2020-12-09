@@ -48,7 +48,7 @@ class SignUp extends Component {
     return (
       <div className="SignUp">
         <div className="left">
-          <img src="https://source.unsplash.com/category/travel/930x750" alt="" />
+          <img src="https://source.unsplash.com/category/business-work/930x750" alt="" />
         </div>
         <div className="right">
           <img src={rotus} width="324" height="130" alt="" />
