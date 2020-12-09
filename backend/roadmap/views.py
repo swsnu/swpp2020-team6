@@ -327,7 +327,6 @@ def roadmap_id_progress(request, roadmap_id):
     return HttpResponseNotAllowed(["PUT"])
 
 
-@ensure_csrf_cookie
 def progress_change(roadmap_id, new_progress_state):
     try:
         target_roadmap = Roadmap.objects.get(id=roadmap_id)
