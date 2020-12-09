@@ -9,13 +9,13 @@ import CardContent from "@material-ui/core/CardContent";
 import CardActions from "@material-ui/core/CardActions";
 import Avatar from "@material-ui/core/Avatar";
 import IconButton from "@material-ui/core/IconButton";
-import { red } from "@material-ui/core/colors";
 import Chip from "@material-ui/core/Chip";
 import PropTypes from "prop-types";
 import FavoriteBorderIcon from "@material-ui/icons/FavoriteBorder";
 import BookmarkBorderIcon from "@material-ui/icons/BookmarkBorder";
 import ChatOutlinedIcon from "@material-ui/icons/ChatOutlined";
 import RoadmapLevelIcon from "./RoadmapLevelIcon";
+import { userColor } from "../../constants";
 
 import "./SimpleRoadmap.scss";
 
@@ -33,9 +33,6 @@ const useStyles = makeStyles((theme) => ({
     transition: theme.transitions.create("transform", {
       duration: theme.transitions.duration.shortest,
     }),
-  },
-  avatar: {
-    backgroundColor: red[500],
   },
 }));
 
@@ -68,6 +65,7 @@ const SimpleRoadmap = (props) => {
     roadmapImageId,
     roadmapLevel,
     authorName,
+    authorId,
     likeCount,
     pinCount,
     commentCount,
@@ -82,20 +80,24 @@ const SimpleRoadmap = (props) => {
   const tagChipClasses = useTagChipStyles();
   const levelChipClasses = useLevelChipStyles();
 
-  const tagDisplay = tagList.map((tag, tagIndex) => {
+  let tagDisplay;
+  tagDisplay = tagList.map((tag, tagIndex) => {
     if (tagIndex < 3) {
       return <Chip className="tag-chip" key={tag.tag_id} label={tag.tag_name} />;
     }
     return null;
   });
+  if (tagList.length === 0) {
+    tagDisplay = <div class="empty-taglist" />;
+  }
 
   const headerDisplay = isMyPage ? (
     <CardHeader title={date} />
   ) : (
     <CardHeader
       avatar={
-        <Avatar aria-label="recipe" className={classes.avatar}>
-          {authorName.charAt(0)}
+        <Avatar aria-label="recipe" style={{ backgroundColor: userColor[authorId % 8] }}>
+          {authorName.charAt(0).toUpperCase()}
         </Avatar>
       }
       title={authorName}
@@ -153,6 +155,7 @@ SimpleRoadmap.propTypes = {
   roadmapDescription: PropTypes.string.isRequired,
   roadmapLevel: PropTypes.number.isRequired,
   authorName: PropTypes.string.isRequired,
+  authorId: PropTypes.number.isRequired,
   date: PropTypes.string.isRequired,
   likeCount: PropTypes.number.isRequired,
   pinCount: PropTypes.number.isRequired,
