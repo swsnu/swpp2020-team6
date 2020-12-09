@@ -10,7 +10,7 @@ const initialState = {
   newRoadmapsError: null,
 };
 
-const roadmap = (state = initialState, action) => {
+const roadmap = (state = initialState, action = null) => {
   switch (action.type) {
     case actionTypes.GET_ROADMAP_SUCCESS:
       return { ...state, selectedRoadmap: action.roadmapData };
