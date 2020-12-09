@@ -31,13 +31,24 @@ const MainPage = (props) => {
             <img src={coding} alt="This is the first slide" width="1838px" height="284px" />
             <Carousel.Caption>
               <p>
-                Icons made by{" "}
+                Icons made by
+                {
+                  " " // blank
+                }
                 <a href="https://www.flaticon.com/authors/prettycons" title="prettycons">
                   prettycons
-                </a>{" "}
-                from{" "}
+                </a>
+                {
+                  " " // blank
+                }
+                from
+                {
+                  " " // blank
+                }
                 <a href="https://www.flaticon.com/" title="Flaticon">
-                  {" "}
+                  {
+                    " " // blank
+                  }
                   www.flaticon.com
                 </a>
               </p>
@@ -45,7 +56,6 @@ const MainPage = (props) => {
           </Carousel.Item>
           <Carousel.Item>
             <img src={level} alt="Diverse level in Rotus" width="1838px" height="284px" />
-            <Carousel.Caption></Carousel.Caption>
           </Carousel.Item>
         </Carousel>
         <div className="RoadmapCarousel">
