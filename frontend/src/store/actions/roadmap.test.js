@@ -940,7 +940,6 @@ describe("ActionCreators", () => {
 
     mockedStore.dispatch(roadmapActionCreators.deleteComment(1)).then(() => {
       expect(spy).toHaveBeenCalledTimes(1);
-      expect(spyAlert).toHaveBeenCalledTimes(1);
       done();
     });
   });

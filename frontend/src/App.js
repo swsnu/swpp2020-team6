@@ -64,6 +64,7 @@ class App extends React.Component {
             <Redirect exact from="/" to={landingPage} />
             <Route render={() => <h1>Not Found</h1>} />
           </Switch>
+          <div className="footer">swpp/team6</div>
         </div>
       </ConnectedRouter>
     );

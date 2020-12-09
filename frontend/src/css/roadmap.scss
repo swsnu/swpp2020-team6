@@ -1,7 +1,6 @@
 @import "./basic.scss";
 
 /* ------------------ edit/create roadmap variables ------------------ */
-$create-roadmap-min-width: 1150px;
 $create-roadmap-main-background-color: $main3-red-light-color;
 
 $create-roadmap-body-min-width: 450px;
@@ -11,19 +10,19 @@ $create-roadmap-body-width: 50%;
 
 $create-roadmap-border-style: 0px solid $main3-red-color;
 $create-roadmap-border-radius: 5px;
-$create-roadmap-background-color: $paper-color;
+$create-roadmap-background-color: #ffffff;
 
 $create-section-border-style: 0px solid $main3-red-color;
 $create-section-border-radius: $create-roadmap-border-radius;
-$create-section-background-color: $paper-color;
+$create-section-background-color: #ffffff;
 
 $create-task-border-style: 0px solid $grey-light-color;
 $create-task-border-radius: $create-roadmap-border-radius;
-$create-task-background-color: $paper-color;
+$create-task-background-color: $grey-light2-color;
 $create-task-box-shadow: none; // 2px 2px 7px $grey-dark-color;
 
 $create-buttons-background-color: $main3-red-color;
-$create-buttons-color: #ffffff;
+$create-buttons-color: $paper-color;
 $create-buttons-border-style: none;
 $create-buttons-border-radius: 5px;
 $create-buttons-padding: 15px;
@@ -32,7 +31,7 @@ $create-buttons-font-size: 17px;
 $create-buttons-font-weight: 900;
 $create-buttons-disabled-opacity: 0.5;
 
-$create-buttons2-background-color: #ffffff;
+$create-buttons2-background-color: $paper-color;
 $create-buttons2-color: $main3-red-color;
 
 $create-confirm-button-padding: 20px;
@@ -61,6 +60,7 @@ $create-tag-margin: 0px 5px 2px 0px;
 $create-tag-color: #ffffff;
 
 /* <input> variables */
+$roadmap-input-background-color: #ffffff;
 $roadmap-input-text-color: #111111;
 $roadmap-input-placeholder-color: $grey-medium-color;
 $roadmap-input-placeholder-style: italic;
@@ -84,3 +84,18 @@ $roadmap-description-font-size: 16px;
 $roadmap-description-color: #333333;
 
 $section-title-font-size: 25px;
+$section-title-font-weight: 600;
+
+$task-background-color: $paper-color;
+$task-title-font-size: 20px;
+$task-title-font-weight: 500;
+$task-type-border: 1px solid $grey-light-color;
+$task-description-background-color: $grey-light2-color;
+$task-description-border: $roadmap-description-border;
+$task-description-border-radius: $roadmap-description-border-radius;
+
+$comments-background-color: $main3-red-dark-color;
+$comment-confirm-background-color: $main3-red-light-color;
+$comment-confirm-color: #333333;
+$comment-confirm-font-weight: 700;
+$comment-confirm-font-size: 20px;

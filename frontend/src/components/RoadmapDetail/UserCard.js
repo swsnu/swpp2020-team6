@@ -1,37 +1,36 @@
 import React from "react";
 import PropTypes from "prop-types";
-import CardHeader from "@material-ui/core/CardHeader";
-import Avatar from "@material-ui/core/Avatar";
-import { makeStyles } from "@material-ui/core/styles";
+import PersonIcon from "@material-ui/icons/Person";
+import { userColor } from "../../constants";
 
-const useStyles = makeStyles({
-  avatar: {
-    backgroundColor: "#ff0000",
-  },
-});
+import "./UserCard.scss";
 
 const UserCard = (props) => {
-  const classes = useStyles();
-  const { authorName, onClick } = props;
+  const { authorName, authorId, history } = props;
 
   return (
-    <div className="UserCard">
-      <CardHeader
-        avatar={
-          <Avatar aria-label="recipe" className={classes.avatar}>
-            {authorName.charAt(0)}
-          </Avatar>
-        }
-        title={authorName}
-        onClick={() => onClick()}
-      />
-    </div>
+    <button
+      type="button"
+      className="UserCard"
+      onClick={() => {
+        history.push(`/mypage/${authorId}`);
+      }}
+    >
+      <div className="user-image" style={{ backgroundColor: userColor[authorId % 8] }}>
+        {authorName.charAt(0).toUpperCase()}
+      </div>
+      <div className="user-name">
+        <PersonIcon className="user-icon" />
+        {authorName}
+      </div>
+    </button>
   );
 };
 
 UserCard.propTypes = {
   authorName: PropTypes.string,
-  onClick: PropTypes.func,
+  authorId: PropTypes.number,
+  history: PropTypes.objectOf(PropTypes.any),
 };
 
 export default UserCard;

@@ -1,7 +1,10 @@
 /* ------------------ fonts ------------------ */
-@import url(https://fonts.googleapis.com/css?family=Ubuntu);
-@import url(https://fonts.googleapis.com/css?family=Raleway);
-@import url(https://fonts.googleapis.com/css2?family=Do+Hyeon);
+@import url(https://fonts.googleapis.com/css?family=Ubuntu); // font-family: "Ubuntu", sans-serif;
+@import url(https://fonts.googleapis.com/css?family=Raleway); // font-family: "Raleway", sans-serif;
+@import url(https://fonts.googleapis.com/css2?family=Do+Hyeon); // font-family: "Do Hyeon", sans-serif;
+@import url(https://fonts.googleapis.com/css2?family=Nunito); // font-family: "Nunito", sans-serif;
+@import url(https://fonts.googleapis.com/css2?family=Balsamiq+Sans); // font-family: "Balsamiq Sans", cursive;
+@import url(https://fonts.googleapis.com/css2?family=MuseoModerno); // font-family: "MuseoModerno", cursive;
 
 /* ------------------ background color - main ------------------ */
 $main-color: #f53723;
@@ -22,15 +25,26 @@ $main3-red-color: #ffa393;
 $main3-red-light-color: #fcddd7;
 $main3-red-dark-color: #ff8771;
 $main3-red-dark2-color: #eb664f;
+$main3-red-dark3-color: #f53723;
 $main3-pink-color: #ff7085;
 $main3-pink-light-color: #fecbd3;
 $main3-green-color: #00c792;
 $main3-green-light-color: #95dac8;
 
 /* ------------------ background color - grey, black ------------------ */
-$paper-color: #fafafa;
+$paper-color: #fbfbfb;
 $grey-light-color: #cccccc;
 $grey-light2-color: #eeeeee;
 $grey-medium-color: #aaaaaa;
 $grey-dark-color: #888888;
 $grey-dark2-color: #666666;
+
+/* ------------------ user image color ---------------------- */
+$user0-color: #b81c1c;
+$user1-color: #51ae0f;
+$user2-color: #5d1cb8;
+$user3-color: #0c56b8;
+$user4-color: #f0b84f;
+$user5-color: #fc4375;
+$user6-color: #0aabdc;
+$user7-color: #e95b0e;

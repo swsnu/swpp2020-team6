@@ -2,6 +2,7 @@ import React from "react";
 import PropTypes from "prop-types";
 import { connect } from "react-redux";
 import { withRouter } from "react-router";
+import Badge from "@material-ui/core/Badge";
 import Tooltip from "@material-ui/core/Tooltip";
 import FavoriteIcon from "@material-ui/icons/Favorite";
 import FavoriteBorderIcon from "@material-ui/icons/FavoriteBorder";
@@ -12,6 +13,7 @@ import DeleteForeverIcon from "@material-ui/icons/DeleteForever";
 import CreateIcon from "@material-ui/icons/Create";
 import { IconButton } from "@material-ui/core";
 import * as actionCreators from "../../store/actions/index";
+import "./RoadmapButtons.scss";
 
 const RoadmapButtons = (props) => {
   const onClickEditRoadmap = () => {
@@ -26,7 +28,10 @@ const RoadmapButtons = (props) => {
 
   const onClickDeleteRoadmap = () => {
     const { onDeleteRoadmap, buttonsRoadmapId } = props;
-    onDeleteRoadmap(buttonsRoadmapId);
+    const yes = window.confirm("Are you sure you want to delete this Roadmap?");
+    if (yes) {
+      onDeleteRoadmap(buttonsRoadmapId);
+    }
   };
 
   const onClickPinRoadmap = () => {
@@ -39,17 +44,16 @@ const RoadmapButtons = (props) => {
     toggleRoadmapLike(parseInt(match.params.id, 10));
   };
 
-  // eslint-disable-next-line camelcase
-  const { liked_roadmaps, pinned_roadmaps } = props.selectedUser;
-  const { buttonsRoadmapId } = props;
-  const like = liked_roadmaps.find((roadmap) => roadmap.id === buttonsRoadmapId);
+  const { selectedUser } = props;
+  const { buttonsRoadmapId, likeCount, pinCount } = props;
+  const like = selectedUser.liked_roadmaps.find((roadmap) => roadmap.id === buttonsRoadmapId);
   const likeButton = like !== undefined ? <FavoriteIcon /> : <FavoriteBorderIcon />;
-  const pin = pinned_roadmaps.find((roadmap) => roadmap.id === buttonsRoadmapId);
+  const pin = selectedUser.pinned_roadmaps.find((roadmap) => roadmap.id === buttonsRoadmapId);
   const pinButton = pin !== undefined ? <BookmarkIcon /> : <BookmarkBorderIcon />;
 
   const { isAuthor } = props;
   const roadmapButtons = isAuthor ? (
-    <div className="roadmap-buttons">
+    <>
       <Tooltip title="Edit">
         <IconButton
           aria-label="edit"
@@ -58,16 +62,6 @@ const RoadmapButtons = (props) => {
           onClick={() => onClickEditRoadmap()}
         >
           <CreateIcon />
-        </IconButton>
-      </Tooltip>
-      <Tooltip title="Duplicate">
-        <IconButton
-          aria-label="duplicate"
-          id="duplicate-button"
-          size="medium"
-          onClick={() => onClickDuplicateRoadmap()}
-        >
-          <FileCopyIcon />
         </IconButton>
       </Tooltip>
       <Tooltip title="Delete">
@@ -80,42 +74,57 @@ const RoadmapButtons = (props) => {
           <DeleteForeverIcon />
         </IconButton>
       </Tooltip>
-    </div>
-  ) : (
-    <div className="roadmap-buttons">
-      <Tooltip title="Pin">
-        <IconButton
-          aria-label="pin"
-          id="pin-button"
-          size="medium"
-          onClick={() => onClickPinRoadmap()}
-        >
-          {pinButton}
-        </IconButton>
-      </Tooltip>
-      <Tooltip title="Like">
-        <IconButton
-          aria-label="like"
-          id="like-button"
-          size="medium"
-          onClick={() => onClickLikeRoadmap()}
-        >
-          {likeButton}
-        </IconButton>
-      </Tooltip>
-      <Tooltip title="Duplicate">
-        <IconButton
-          aria-label="duplicate"
-          id="duplicate-button"
-          size="medium"
-          onClick={() => onClickDuplicateRoadmap()}
-        >
-          <FileCopyIcon />
-        </IconButton>
-      </Tooltip>
+    </>
+  ) : null;
+
+  return (
+    <div className="RoadmapButtons">
+      <div className="roadmap-buttons">
+        <Tooltip title="Pin">
+          <Badge color="secondary" badgeContent={pinCount} showZero>
+            <IconButton
+              aria-label="pin"
+              id="pin-button"
+              size="medium"
+              onClick={() => onClickPinRoadmap()}
+              disabled={isAuthor}
+            >
+              {pinButton}
+            </IconButton>
+          </Badge>
+        </Tooltip>
+        <Tooltip title="Like">
+          <Badge color="secondary" badgeContent={likeCount} showZero>
+            <IconButton
+              aria-label="like"
+              id="like-button"
+              size="medium"
+              onClick={() => onClickLikeRoadmap()}
+              disabled={isAuthor}
+            >
+              {likeButton}
+            </IconButton>
+          </Badge>
+        </Tooltip>
+        <Tooltip title="Duplicate">
+          <IconButton
+            aria-label="duplicate"
+            id="duplicate-button"
+            size="medium"
+            onClick={() => onClickDuplicateRoadmap()}
+          >
+            <FileCopyIcon />
+          </IconButton>
+        </Tooltip>
+        {roadmapButtons}
+      </div>
+      <div className="roadmap-anchors">
+        <a href="#roadmap-description">Description</a>
+        <a href="#roadmap-sections">Sections</a>
+        <a href="#roadmap-comments">Comments</a>
+      </div>
     </div>
   );
-  return roadmapButtons;
 };
 
 RoadmapButtons.propTypes = {
@@ -129,6 +138,8 @@ RoadmapButtons.propTypes = {
   onDuplicateRoadmap: PropTypes.func.isRequired,
 
   selectedUser: PropTypes.objectOf(PropTypes.any),
+  likeCount: PropTypes.number,
+  pinCount: PropTypes.number,
 };
 
 const mapDispatchToProps = (dispatch) => {

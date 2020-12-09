@@ -18,19 +18,30 @@ $margin-main: 30px 10px 30px 10px;
     width: $mypage-user-info-width;
     height: $mypage-user-info-height;
     margin: $margin-main;
-    background-color: $mypage-user-info-background-color;
-    border-radius: $mypage-user-info-border-radius;
 
-    h2 {
-      font-size: $mypage-user-info-font-size;
-      margin: 20px 0px 20px 0px;
-    }
+    .UserCard {
+      width: 100%;
+      display: flex;
+      flex-direction: column;
+      align-items: center;
+      background-color: $mypage-user-info-background-color;
+      border: none;
 
-    #user-img {
-      width: $mypage-user-img-width;
-      height: $mypage-user-img-heigth;
-      border: $mypage-user-img-border;
-      border-radius: $mypage-user-img-border-radius;
+      .user-image {
+        width: $mypage-user-info-width * 0.8;
+        height: $mypage-user-info-width * 0.8;
+        font-size: $mypage-user-info-width * 0.6;
+      }
+
+      .user-name {
+        align-self: flex-start;
+        margin: 20px 0px 0px 0px;
+        font-size: 20px;
+
+        .user-icon {
+          margin: 0px 10px 0px 0px;
+        }
+      }
     }
   }
 
