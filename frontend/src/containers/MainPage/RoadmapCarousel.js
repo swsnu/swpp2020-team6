@@ -76,6 +76,7 @@ const RoadmapCarousel = (props) => {
         roadmapTitle={roadmap.title}
         roadmapLevel={roadmap.level}
         authorName={roadmap.author_name}
+        authorId={roadmap.author_id}
         date={roadmap.date}
         likeCount={roadmap.like_count}
         pinCount={roadmap.pin_count}
