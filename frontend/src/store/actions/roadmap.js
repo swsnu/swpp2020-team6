@@ -11,15 +11,12 @@ export const getRoadmapFail_ = () => {
   return { type: actionTypes.GET_ROADMAP_FAILURE };
 };
 
-export const getRoadmap = (roadmapId, duplicated = false) => {
+export const getRoadmap = (roadmapId) => {
   return (dispatch) => {
     return axios
       .get(`/api/roadmap/${roadmapId}/`)
       .then((response) => {
         dispatch(getRoadmapSuccess_(response.data));
-        if (duplicated) {
-          dispatch(push(`/roadmap/${response.data.id}/edit`));
-        }
       })
       .catch((error) => {
         switch (error.response.status) {
@@ -155,7 +152,7 @@ export const duplicateRoadmap = (roadmapId) => {
         dispatch(duplicateRoadmap_(response.data));
         const edit = window.confirm("Successfully duplicated! Would you like to edit?");
         if (edit) {
-          dispatch(getRoadmap(response.data.id, true));
+          dispatch(push(`/roadmap/${response.data.id}/edit`));
         }
       })
       .catch((error) => {
