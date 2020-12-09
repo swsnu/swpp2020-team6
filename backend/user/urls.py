@@ -8,4 +8,5 @@ urlpatterns = [
     path("signout/", views.signout, name="signout"),
     path("users/", views.users, name="all_users"),
     path("<int:user_id>/", views.user_id, name="user_id"),
+    path("recommended/", views.recommend, name="user_recommend")
 ]
