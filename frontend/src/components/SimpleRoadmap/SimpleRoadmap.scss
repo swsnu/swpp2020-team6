@@ -1,10 +1,14 @@
 .SimpleRoadmap {
   width: 280px;
-  height: 369.5px;
+  height: 380px;
 
   .MuiCardActions-root {
     display: inline !important;
     padding: 0px !important;
+  }
+
+  .MuiCardHeader-root {
+    padding: 8px 16px 8px 16px;
   }
 
   .MuiCard-root.MuiPaper-root {
@@ -18,12 +22,22 @@
     width: 80px !important;
   }
 
+  .MuiIconButton-root {
+    .MuiIconButton-label {
+      p {
+        font-size: medium;
+        margin-bottom: 0;
+      }
+    }
+  }
+
   .MuiCardContent-root {
     padding: 0px 12px !important;
   }
 
+  // image size: 4:3
   .makeStyles-media-2 {
-    height: 157.5px !important;
+    height: 210px !important;
     width: 280px !important;
   }
 
