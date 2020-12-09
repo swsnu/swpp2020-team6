@@ -103,7 +103,7 @@ const SimpleRoadmap = (props) => {
     />
   );
 
-  const roadmapImageSrc = require(`misc/roadmap/${roadmapImageId}.png`);
+  const roadmapImageSrc = require(`misc/roadmap/${roadmapImageId}.jpg`);
 
   return (
     <div className="SimpleRoadmap">

@@ -332,7 +332,7 @@ class RoadmapDetail extends Component {
             <div className="roadmap-image-wrapper">
               <img
                 id="roadmap-image"
-                src={require(`misc/roadmap/${selectedRoadmap.image_id}.png`)}
+                src={require(`misc/roadmap/${selectedRoadmap.image_id}.jpg`)}
                 alt="roadmap"
               />
             </div>
