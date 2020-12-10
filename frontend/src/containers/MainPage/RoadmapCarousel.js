@@ -15,27 +15,33 @@ import rotus from "../../misc/only_rotus.png";
 const RoadmapCarousel = (props) => {
   const [activeBestRoadmap, setActiveBestRoadmap] = useState(0);
   const [activeNewRoadmap, setActiveNewRoadmap] = useState(0);
+  const [activeRecommendedRoadmap, setActiveRecommendedRoadmap] = useState(0);
   const chevronWidth = 40;
 
   const {
     bestRoadmaps,
     newRoadmaps,
+    recommendedRoadmaps,
     getBestRoadmaps,
     getNewRoadmaps,
+    getRecommendedRoadmaps,
     newRoadmapsError,
     bestRoadmapsError,
+    recommendedRoadmapsError,
   } = props;
   useEffect(() => {
     getBestRoadmaps(12);
     getNewRoadmaps(12);
 
     return () => {
-      const { onResetBestRoadmaps, onResetNewRoadmaps } = props;
+      const { onResetBestRoadmaps, onResetNewRoadmaps, onResetRecommendedRoadmaps } = props;
       onResetBestRoadmaps();
       onResetNewRoadmaps();
+      onResetRecommendedRoadmaps();
     };
   }, []);
 
+  // || recommendedRoadmaps.length === 0
   if (bestRoadmaps.length === 0 || newRoadmaps.length === 0) {
     const bestRoadmapsLoadingState = bestRoadmapsError ? (
       <p id="get-best-roadmaps-error">
@@ -55,6 +61,17 @@ const RoadmapCarousel = (props) => {
     ) : (
       <p>Loading...Please wait!</p>
     );
+    /*
+    const recommendedRoadmapsLoadingState = recommendedRoadmapsError ? (
+      <p id="get-recommended-roadmaps-error">
+        {`${recommendedRoadmapsError} occurred while loading recommended roadmaps!`}
+        <br />
+        Try refreshing the page!
+      </p>
+    ) : (
+      <p>Loading...Please wait!</p>
+    );
+    */
     return (
       <div className="carousels">
         <div className="best-roadmaps-panel">
@@ -67,6 +84,12 @@ const RoadmapCarousel = (props) => {
         </div>
       </div>
     );
+    /*
+    <div className="recommended-roadmaps-panel">
+          <h2>Checkout some recommended Roadmaps!</h2>
+          {recommendedRoadmapsLoadingState}
+        </div>
+     */
   }
 
   const makeRoadmapItemList = (roadmapList) => {
@@ -133,6 +156,40 @@ const RoadmapCarousel = (props) => {
           </ItemsCarousel>
         </div>
       </div>
+      <div className="recommended-roadmaps-panel">
+        <h3>
+          <span role="img" aria-label="sunglass">
+            😎
+          </span>
+          Checkout Roadmaps recommended for you!
+          <span role="img" aria-label="sunglass">
+            😎
+          </span>
+        </h3>
+        <div className="recommended-roadmaps" style={{ padding: `0 ${chevronWidth}px` }}>
+          <ItemsCarousel
+            requestToChangeActive={setActiveRecommendedRoadmap}
+            activeItemIndex={activeRecommendedRoadmap}
+            numberOfCards={4}
+            gutter={20}
+            leftChevron={
+              <button className="left-button" type="button">
+                <ChevronLeftIcon />
+              </button>
+            }
+            rightChevron={
+              <button className="right-button" type="button">
+                <ChevronRightIcon />
+              </button>
+            }
+            outsideChevron
+            chevronWidth={chevronWidth}
+            slidesToScroll={4}
+          >
+            {makeRoadmapItemList(newRoadmaps)}
+          </ItemsCarousel>
+        </div>
+      </div>
       <div className="new-roadmaps-panel">
         <h3>
           <span role="img" aria-label="baby">
@@ -174,12 +231,16 @@ const RoadmapCarousel = (props) => {
 RoadmapCarousel.propTypes = {
   bestRoadmaps: PropTypes.arrayOf(PropTypes.any).isRequired,
   newRoadmaps: PropTypes.arrayOf(PropTypes.any).isRequired,
+  recommendedRoadmaps: PropTypes.arrayOf(PropTypes.any).isRequired,
   getBestRoadmaps: PropTypes.func.isRequired,
   getNewRoadmaps: PropTypes.func.isRequired,
+  getRecommendedRoadmaps: PropTypes.func.isRequired,
   onResetBestRoadmaps: PropTypes.func.isRequired,
   onResetNewRoadmaps: PropTypes.func.isRequired,
+  onResetRecommendedRoadmaps: PropTypes.func.isRequired,
   newRoadmapsError: PropTypes.number,
   bestRoadmapsError: PropTypes.number,
+  recommendedRoadmapsError: PropTypes.number,
 };
 
 const mapStateToProps = (state) => {
@@ -187,8 +248,10 @@ const mapStateToProps = (state) => {
     selectedUser: state.user.selectedUser,
     bestRoadmaps: state.roadmap.bestRoadmaps,
     newRoadmaps: state.roadmap.newRoadmaps,
+    recommendedRoadmaps: state.roadmap.recommendedRoadmaps,
     bestRoadmapsError: state.roadmap.bestRoadmapsError,
     newRoadmapsError: state.roadmap.newRoadmapsError,
+    recommendedRoadmapsError: state.roadmap.recommendedRoadmapsError,
   };
 };
 
@@ -196,8 +259,10 @@ const mapDispatchToProps = (dispatch) => {
   return {
     getBestRoadmaps: (topN) => dispatch(actionCreators.getBestRoadmaps(topN)),
     getNewRoadmaps: (topN) => dispatch(actionCreators.getNewRoadmaps(topN)),
+    getRecommendedRoadmaps: () => dispatch(actionCreators.getRecommendedRoadmaps()),
     onResetBestRoadmaps: () => dispatch(actionCreators.resetBestRoadmaps_()),
     onResetNewRoadmaps: () => dispatch(actionCreators.resetNewRoadmaps_()),
+    onResetRecommendedRoadmaps: () => dispatch(actionCreators.resetRecommendedRoadmaps_()),
   };
 };
 

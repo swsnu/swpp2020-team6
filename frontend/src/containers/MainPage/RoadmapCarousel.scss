@@ -13,7 +13,8 @@
   }
 
   .best-roadmaps-panel,
-  .new-roadmaps-panel {
+  .new-roadmaps-panel,
+  .recommended-roadmaps-panel {
     padding: 20px;
     margin-bottom: 20px;
     border-radius: 20px;
@@ -46,5 +47,9 @@
 
   .new-roadmaps-panel {
     background-color: rgba(255, 248, 208, 0.925);
+  }
+
+  .recommended-roadmaps-panel {
+    background-color: rgb(204, 235, 255);
   }
 }

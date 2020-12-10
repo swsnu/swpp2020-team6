@@ -22,6 +22,8 @@ const initialRoadmapState = {
   bestRoadmapsError: null,
   newRoadmaps: [],
   newRoadmapsError: null,
+  recommendedRoadmaps: [],
+  recommendedRoadmapsError: null,
 };
 
 const errorRoadmapState = {
@@ -30,6 +32,8 @@ const errorRoadmapState = {
   bestRoadmapsError: 400,
   newRoadmaps: [],
   newRoadmapsError: 400,
+  recommendedRoadmaps: [],
+  recommendedRoadmapsError: 400,
 };
 
 const stubSimpleRoadmap = {
@@ -90,6 +94,8 @@ const filledRoadmapState = {
   bestRoadmapsError: null,
   newRoadmaps: [stubSimpleRoadmap],
   newRoadmapsError: null,
+  recommendedRoadmaps: [stubSimpleRoadmap],
+  recommendedRoadmapsError: null,
 };
 
 const stubSearchState = {
@@ -106,8 +112,11 @@ const mockStoreError = getMockStore(stubUserState, errorRoadmapState, stubSearch
 describe("App", () => {
   let spyGetBestRoadmaps;
   let spyGetNewRoadmaps;
+  let spyGetRecommendedRoadmaps;
   let spyResetBestRoadmaps;
   let spyResetNewRoadmaps;
+  let spyResetRecommendedRoadmaps;
+
   beforeEach(() => {
     spyGetBestRoadmaps = jest
       .spyOn(roadmapActionCreators, "getBestRoadmaps")
@@ -119,6 +128,11 @@ describe("App", () => {
       .mockImplementation(() => {
         return () => {};
       });
+    spyGetRecommendedRoadmaps = jest
+      .spyOn(roadmapActionCreators, "getRecommendedRoadmaps")
+      .mockImplementation(() => {
+        return () => {};
+      });
     spyResetBestRoadmaps = jest
       .spyOn(roadmapActionCreators, "resetBestRoadmaps_")
       .mockImplementation(() => {
@@ -126,6 +140,11 @@ describe("App", () => {
       });
     spyResetNewRoadmaps = jest
       .spyOn(roadmapActionCreators, "resetNewRoadmaps_")
+      .mockImplementation(() => {
+        return () => {};
+      });
+    spyResetRecommendedRoadmaps = jest
+      .spyOn(roadmapActionCreators, "resetRecommendedRoadmaps_")
       .mockImplementation(() => {
         return () => {};
       });
@@ -204,7 +223,7 @@ describe("App", () => {
     expect(spyPush).toHaveBeenCalledTimes(1);
   });
 
-  it("should reset new, best roadmaps on unmount", () => {
+  it("should reset new, best, recommended roadmaps on unmount", () => {
     const component = mount(
       <Provider store={mockStore}>
         <ConnectedRouter history={history}>
@@ -218,5 +237,6 @@ describe("App", () => {
     component.unmount();
     expect(spyResetNewRoadmaps).toHaveBeenCalledTimes(1);
     expect(spyResetBestRoadmaps).toHaveBeenCalledTimes(1);
+    expect(spyResetRecommendedRoadmaps).toHaveBeenCalledTimes(1);
   });
 });
