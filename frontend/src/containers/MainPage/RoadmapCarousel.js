@@ -38,7 +38,7 @@ const RoadmapCarousel = (props) => {
   if (bestRoadmaps.length === 0 || newRoadmaps.length === 0) {
     const bestRoadmapsLoadingState = bestRoadmapsError ? (
       <p id="get-best-roadmaps-error">
-        {bestRoadmapsError} occurred while loading best roadmaps!
+        {`${bestRoadmapsError} occurred while loading best roadmaps!`}
         <br />
         Try refreshing the page!
       </p>
@@ -47,7 +47,7 @@ const RoadmapCarousel = (props) => {
     );
     const newRoadmapsLoadingState = newRoadmapsError ? (
       <p id="get-new-roadmaps-error">
-        {newRoadmapsError} occurred while loading new roadmaps!
+        {`${newRoadmapsError} occurred while loading new roadmaps!`}
         <br />
         Try refreshing the page!
       </p>
@@ -156,6 +156,8 @@ RoadmapCarousel.propTypes = {
   getNewRoadmaps: PropTypes.func.isRequired,
   onResetBestRoadmaps: PropTypes.func.isRequired,
   onResetNewRoadmaps: PropTypes.func.isRequired,
+  newRoadmapsError: PropTypes.number,
+  bestRoadmapsError: PropTypes.number,
 };
 
 const mapStateToProps = (state) => {
