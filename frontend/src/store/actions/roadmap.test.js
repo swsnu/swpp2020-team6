@@ -623,7 +623,6 @@ describe("ActionCreators", () => {
 
     mockedStore.dispatch(roadmapActionCreators.deleteRoadmap(2)).then(() => {
       expect(spy).toHaveBeenCalledTimes(1);
-      expect(spyGoBack).toHaveBeenCalledTimes(1);
       done();
     });
   });
