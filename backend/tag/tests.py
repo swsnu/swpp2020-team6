@@ -4,6 +4,7 @@ from .models import Tag
 
 
 class TasktestCase(TestCase):
+    dump_user = {"username": "chris", "email": "chris@gmail.com", "password": "chris"}
     dump_tags = ["tag1", "tag2", "tag3", "tag4", "tag5"]
     json_type = "application/json"
     tag_path = "/api/tag/"
@@ -30,7 +31,7 @@ class TasktestCase(TestCase):
         response = client.get(path, HTTP_X_CSRFTOKEN=csrftoken)
         self.assertEqual(response.status_code, 401)
 
-        signup_signin(client)
+        signup_signin(client, self.dump_user)
         csrftoken = get_csrf(client)
         for i, tag in enumerate(self.dump_tags):
             Tag.objects.create(tag_name=tag, count_roadmap=i)

@@ -52,19 +52,21 @@ class App extends React.Component {
             {upperUserBar}
             {upperSearchBar}
           </div>
-          <Switch>
-            <Route path="/signup" exact component={SignUp} />
-            <Route path="/signin" exact component={SignIn} />
-            <Route path="/roadmap/create" exact component={CreateRoadmap} />
-            <Route path="/roadmap/:id/edit" exact component={EditRoadmap} />
-            <Route path="/roadmap/:id" exact component={RoadmapDetail} />
-            <Route path="/search" exact component={SearchResult} />
-            <Route path="/mypage/:id" exact component={MyPage} />
-            <Route path="/main" exact component={MainPage} />
-            <Redirect exact from="/" to={landingPage} />
-            <Route render={() => <h1>Not Found</h1>} />
-          </Switch>
-          <div className="footer">swpp/team6</div>
+          <div className="component">
+            <Switch>
+              <Route path="/signup" exact component={SignUp} />
+              <Route path="/signin" exact component={SignIn} />
+              <Route path="/roadmap/create" exact component={CreateRoadmap} />
+              <Route path="/roadmap/:id/edit" exact component={EditRoadmap} />
+              <Route path="/roadmap/:id" exact component={RoadmapDetail} />
+              <Route path="/search" exact component={SearchResult} />
+              <Route path="/mypage/:id" exact component={MyPage} />
+              <Route path="/main" exact component={MainPage} />
+              <Redirect exact from="/" to={landingPage} />
+              <Route render={() => <h1>Not Found</h1>} />
+            </Switch>
+          </div>
+          <div className="footer">swpp2020/team6</div>
         </div>
       </ConnectedRouter>
     );
