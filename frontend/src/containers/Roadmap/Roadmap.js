@@ -474,7 +474,7 @@ class Roadmap extends Component {
                         <LockIcon id="private-icon" />
                       </Tooltip>
                     ) : (
-                      <Tooltip title="Private">
+                      <Tooltip title="Public">
                         <GroupIcon id="public-icon" />
                       </Tooltip>
                     )}

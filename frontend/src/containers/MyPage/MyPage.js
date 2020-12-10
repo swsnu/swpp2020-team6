@@ -37,6 +37,7 @@ class MyPage extends Component {
         roadmapDescription={roadmap.description}
         roadmapTitle={roadmap.title}
         roadmapLevel={roadmap.level}
+        authorId={roadmap.author_id}
         authorName={roadmap.author_name}
         date={roadmap.date}
         likeCount={roadmap.like_count}
