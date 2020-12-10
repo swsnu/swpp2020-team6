@@ -17,7 +17,6 @@
   input,
   button {
     font-family: "Nunito", sans-serif;
-    font-weight: 600;
     box-sizing: border-box;
   }
 
@@ -60,6 +59,10 @@
     h1 {
       margin-left: 730px;
     }
+  }
+
+  .component {
+    min-height: 100vh;
   }
 
   .footer {

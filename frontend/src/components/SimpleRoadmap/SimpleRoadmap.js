@@ -141,7 +141,10 @@ const SimpleRoadmap = (props) => {
             </IconButton>
           </CardActions>
           <div className="overlay-description">
-            <div className="roadmap-description">{roadmapDescription}</div>
+            <div className="overlay-content">
+              <div className="roadmap-title-overlay">{roadmapTitle}</div>
+              <div className="roadmap-description">{roadmapDescription}</div>
+            </div>
           </div>
         </div>
       </Card>

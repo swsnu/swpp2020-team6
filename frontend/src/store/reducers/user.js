@@ -9,7 +9,7 @@ const initialState = {
   myPageUser: undefined,
 };
 
-const reducer = (state = initialState, action) => {
+const user = (state = initialState, action = { type: null }) => {
   const { selectedUser } = state;
   if (action.type === actionTypes.CREATE_ROADMAP || action.type === actionTypes.DUPLICATE_ROADMAP) {
     return {
@@ -104,4 +104,4 @@ const reducer = (state = initialState, action) => {
   return state;
 };
 
-export default reducer;
+export default user;

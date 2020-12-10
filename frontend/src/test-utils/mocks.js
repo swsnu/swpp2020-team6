@@ -8,7 +8,7 @@ const getMockReducer = jest.fn((initialState) => (state) => {
   return state;
 });
 
-const getMockStore = (initialUserState, initialRoadmapState, initialSearchState) => {
+const mocks = (initialUserState, initialRoadmapState, initialSearchState) => {
   const mockUserReducer = getMockReducer(initialUserState);
   const mockRoadmapReducer = getMockReducer(initialRoadmapState);
   const mockSearchReducer = getMockReducer(initialSearchState);
@@ -23,4 +23,4 @@ const getMockStore = (initialUserState, initialRoadmapState, initialSearchState)
   return mockStore;
 };
 
-export default getMockStore;
+export default mocks;

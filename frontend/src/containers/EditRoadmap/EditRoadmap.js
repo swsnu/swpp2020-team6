@@ -9,8 +9,8 @@ import Roadmap from "../Roadmap/Roadmap";
 
 class EditRoadmap extends Component {
   componentDidMount() {
-    const { onGetRoadmap, match } = this.props;
-    onGetRoadmap(match.params.id);
+    const { onGetEditRoadmap, match } = this.props;
+    onGetEditRoadmap(match.params.id);
   }
 
   componentWillUnmount() {
@@ -62,7 +62,7 @@ class EditRoadmap extends Component {
 EditRoadmap.propTypes = {
   selectedEditRoadmap: PropTypes.objectOf(PropTypes.any),
   selectedUser: PropTypes.objectOf(PropTypes.any),
-  onGetRoadmap: PropTypes.func.isRequired,
+  onGetEditRoadmap: PropTypes.func.isRequired,
   onEditRoadmap: PropTypes.func.isRequired,
   onResetEditRoadmap: PropTypes.func.isRequired,
   history: PropTypes.objectOf(PropTypes.any),
@@ -78,7 +78,7 @@ const mapStateToProps = (state) => {
 
 const mapDispatchToProps = (dispatch) => {
   return {
-    onGetRoadmap: (roadmapId) => dispatch(actionCreators.getRoadmap(roadmapId)),
+    onGetEditRoadmap: (roadmapId) => dispatch(actionCreators.getEditRoadmap(roadmapId)),
     onEditRoadmap: (roadmapId, roadmapData) =>
       dispatch(actionCreators.editRoadmap(roadmapId, roadmapData)),
     onResetEditRoadmap: () => dispatch(actionCreators.resetEditRoadmap_()),
