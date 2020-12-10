@@ -19,13 +19,13 @@
       border: none;
       padding: 0px;
       font-size: 17px;
-      font-style: italic;
     }
     input:focus {
       outline: none;
     }
     input::placeholder {
       color: #bbbbbb;
+      font-style: italic;
     }
   }
 }

@@ -120,11 +120,11 @@ $margin-bottom-main: 10px;
             justify-content: flex-start;
             align-items: center;
             width: 100%;
-            padding: 20px 10px 10px 5px;
+            padding: 20px 3px 10px 5px;
 
             #roadmap-private-label {
               width: 13%;
-              margin: 0px 0px 0px 40px;
+              margin: 0px 10px 0px 74px;
             }
           }
 
@@ -197,7 +197,7 @@ $margin-bottom-main: 10px;
         }
 
         .roadmap-image-select {
-          padding: 15px 0px 10px 30px;
+          padding: 15px 0px 10px 20px;
 
           .MuiFormControl-root {
             width: 364px;
@@ -212,22 +212,15 @@ $margin-bottom-main: 10px;
                 justify-content: center;
                 align-items: center;
                 height: 100%;
+                background-color: transparent;
 
                 em {
                   text-align: center;
                 }
 
-                .roadmap-image-wrapper {
-                  overflow: hidden;
+                img {
                   width: 300px;
                   height: 300px * (3/4);
-
-                  img {
-                    background-color: #ffffff;
-                    width: 300px;
-                    height: 300px;
-                    margin: -38px 0px 0px 0px;
-                  }
                 }
               }
             }
