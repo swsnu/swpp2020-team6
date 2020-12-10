@@ -137,4 +137,14 @@ describe("Search Reducer", () => {
     });
     expect(newState).toEqual({ searchResult: [], topTags: [], page: 1, totalCount: 1 });
   });
+
+  it("should handle default case", () => {
+    const newState = reducer();
+    expect(newState).toEqual({
+      searchResult: [],
+      topTags: [],
+      page: 1,
+      totalCount: 1,
+    });
+  });
 });

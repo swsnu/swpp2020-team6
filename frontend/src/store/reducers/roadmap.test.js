@@ -176,6 +176,21 @@ describe("Roadmap Reducer", () => {
     expect(newState).toEqual({ ...initialState, selectedRoadmap: stubSelectedRoadmap });
   });
 
+  it("should set selectedEditRoadmap as undefined ", () => {
+    const newState = reducer(undefined, {
+      type: actionTypes.GET_EDIT_ROADMAP_FAILURE,
+    });
+    expect(newState).toEqual(initialState);
+  });
+
+  it("should set selectedEditRoadmap as the given data ", () => {
+    const newState = reducer(undefined, {
+      type: actionTypes.GET_EDIT_ROADMAP_SUCCESS,
+      roadmapData: stubSelectedRoadmap,
+    });
+    expect(newState).toEqual({ ...initialState, selectedEditRoadmap: stubSelectedRoadmap });
+  });
+
   it("should set selectedroadmap as undefined ", () => {
     const newState = reducer(undefined, {
       type: actionTypes.CREATE_ROADMAP,
@@ -193,6 +208,13 @@ describe("Roadmap Reducer", () => {
   it("should reset selectedroadmap as undefined", () => {
     const newState = reducer(undefined, {
       type: actionTypes.RESET_ROADMAP,
+    });
+    expect(newState).toEqual(initialState);
+  });
+
+  it("should reset selectedEditRoadmap as undefined", () => {
+    const newState = reducer(undefined, {
+      type: actionTypes.RESET_EDIT_ROADMAP,
     });
     expect(newState).toEqual(initialState);
   });
@@ -488,6 +510,18 @@ describe("Roadmap Reducer", () => {
     });
     expect(newState).toEqual({
       ...initialState,
+      newRoadmaps: [],
+      newRoadmapsError: null,
+    });
+  });
+
+  it("should handle default case", () => {
+    const newState = reducer();
+    expect(newState).toEqual({
+      selectedRoadmap: undefined,
+      selectedEditRoadmap: undefined,
+      bestRoadmaps: [],
+      bestRoadmapsError: null,
       newRoadmaps: [],
       newRoadmapsError: null,
     });

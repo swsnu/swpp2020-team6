@@ -423,4 +423,13 @@ describe("User Reducer", () => {
       myPageUser: undefined,
     });
   });
+
+  it("should handle default case", () => {
+    const newState = reducer();
+    expect(newState).toEqual({
+      isSignedIn: undefined,
+      selectedUser: undefined,
+      myPageUser: undefined,
+    });
+  });
 });
