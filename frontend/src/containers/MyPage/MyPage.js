@@ -46,6 +46,7 @@ class MyPage extends Component {
         tagList={roadmap.tags}
         isMyPage={false}
         roadmapImageId={roadmap.image_id}
+        isPrivate={roadmap.private}
       />
     ));
   };

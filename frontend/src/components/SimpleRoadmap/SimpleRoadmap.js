@@ -8,6 +8,7 @@ import CardMedia from "@material-ui/core/CardMedia";
 import CardContent from "@material-ui/core/CardContent";
 import CardActions from "@material-ui/core/CardActions";
 import Avatar from "@material-ui/core/Avatar";
+import LockIcon from "@material-ui/icons/Lock";
 import IconButton from "@material-ui/core/IconButton";
 import Chip from "@material-ui/core/Chip";
 import PropTypes from "prop-types";
@@ -74,6 +75,7 @@ const SimpleRoadmap = (props) => {
     tagList,
     date,
     onClick,
+    isPrivate,
   } = props;
 
   const classes = useStyles();
@@ -113,8 +115,10 @@ const SimpleRoadmap = (props) => {
         <div className="card-wrapper">
           <div className="image-wrapper">
             <CardMedia className={classes.media} image={roadmapImageSrc} title={roadmapTitle} />
+            <div className="overlay-background"></div>
             <div className="overlay-title">
-              <div className="roadmap-title">{roadmapTitle}</div>
+              {isPrivate ? <LockIcon id="lock-icon" /> : null}
+              <h2 className="roadmap-title">{roadmapTitle}</h2>
             </div>
           </div>
           {headerDisplay}
@@ -142,7 +146,8 @@ const SimpleRoadmap = (props) => {
           </CardActions>
           <div className="overlay-description">
             <div className="overlay-content">
-              <div className="roadmap-title-overlay">{roadmapTitle}</div>
+              <h3 className="roadmap-title-overlay">{roadmapTitle}</h3>
+              <hr class="dashed"></hr>
               <div className="roadmap-description">{roadmapDescription}</div>
             </div>
           </div>
