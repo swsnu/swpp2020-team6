@@ -10,6 +10,7 @@ import * as actionCreators from "../../store/actions/index";
 import { history } from "../../store/store";
 import SimpleRoadmap from "../../components/SimpleRoadmap/SimpleRoadmap";
 import "./RoadmapCarousel.scss";
+import rotus from "../../misc/only_rotus.png";
 
 const RoadmapCarousel = (props) => {
   const [activeBestRoadmap, setActiveBestRoadmap] = useState(0);
@@ -93,8 +94,21 @@ const RoadmapCarousel = (props) => {
 
   return (
     <div className="carousels">
+      <h2>
+        <img src={rotus} />
+        Don't know where to start?
+        <img src={rotus} />
+      </h2>
       <div className="best-roadmaps-panel">
-        <h2>Checkout Top 12 Roadmaps!</h2>
+        <h3>
+          <span role="img" aria-label="sparkle">
+            ✨
+          </span>
+          Checkout Top 12 Roadmaps!
+          <span role="img" aria-label="sparkle">
+            ✨
+          </span>
+        </h3>
         <div className="best-roadmaps" style={{ padding: `0 ${chevronWidth}px` }}>
           <ItemsCarousel
             requestToChangeActive={setActiveBestRoadmap}
@@ -120,7 +134,15 @@ const RoadmapCarousel = (props) => {
         </div>
       </div>
       <div className="new-roadmaps-panel">
-        <h2>Checkout some recently created Roadmaps!</h2>
+        <h3>
+          <span role="img" aria-label="baby">
+            👶
+          </span>
+          Checkout some recently created Roadmaps!
+          <span role="img" aria-label="baby">
+            👶
+          </span>
+        </h3>
         <div className="new-roadmaps" style={{ padding: `0 ${chevronWidth}px` }}>
           <ItemsCarousel
             requestToChangeActive={setActiveNewRoadmap}

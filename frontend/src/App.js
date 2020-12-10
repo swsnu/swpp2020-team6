@@ -19,6 +19,8 @@ import LogoButton from "./components/LogoButton/LogoButton";
 import UpperUserBar from "./containers/UpperBar/UpperUserBar";
 import UpperSearchBar from "./containers/UpperBar/UpperSearchBar";
 
+import CopyrightIcon from "@material-ui/icons/Copyright";
+
 class App extends React.Component {
   componentDidMount() {
     const { onGetUserAuth } = this.props;
@@ -66,7 +68,13 @@ class App extends React.Component {
               <Route render={() => <h1>Not Found</h1>} />
             </Switch>
           </div>
-          <div className="footer">swpp2020/team6</div>
+          <div className="footer">
+            <div className="footer-copyright">
+              <p>Copyright</p>
+              <CopyrightIcon />
+              <p>ROTUS. All rights reserved.</p>
+            </div>
+          </div>
         </div>
       </ConnectedRouter>
     );

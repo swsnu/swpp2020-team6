@@ -2,10 +2,22 @@
   width: 1300px;
   margin: auto;
 
+  h2 {
+    margin-top: 7vh;
+    text-shadow: 0px 2px 4px #666666;
+
+    img {
+      height: 40px;
+      margin: 0px 10px;
+    }
+  }
+
   .best-roadmaps-panel,
   .new-roadmaps-panel {
     padding: 20px;
     margin-bottom: 20px;
+    border-radius: 20px;
+    box-shadow: 0 3px 5px 0 rgba(0, 0, 0, 0.3);
 
     .left-button,
     .right-button {
@@ -26,5 +38,13 @@
     .right-button:hover {
       opacity: 1;
     }
+  }
+
+  .best-roadmaps-panel {
+    background-color: rgb(255, 236, 239);
+  }
+
+  .new-roadmaps-panel {
+    background-color: rgba(255, 248, 208, 0.925);
   }
 }
