@@ -20,6 +20,8 @@ export {
   getBestRoadmaps,
   resetNewRoadmaps_,
   getNewRoadmaps,
+  resetRecommendedRoadmaps_,
+  getRecommendedRoadmaps,
 } from "./roadmap";
 
 export { getSimpleSearch, getAdvancedSearch, getTopTags } from "./search";

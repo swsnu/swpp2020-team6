@@ -8,6 +8,8 @@ const initialState = {
   bestRoadmapsError: null,
   newRoadmaps: [],
   newRoadmapsError: null,
+  recommendedRoadmaps: [],
+  recommendedRoadmapsError: null,
 };
 
 const roadmap = (state = initialState, action = { type: null }) => {
@@ -132,6 +134,12 @@ const roadmap = (state = initialState, action = { type: null }) => {
       return { ...state, newRoadmaps: [], newRoadmapsError: action.errorStatus };
     case actionTypes.RESET_NEW_ROADMAP:
       return { ...state, newRoadmaps: [], newRoadmapsError: null };
+    case actionTypes.GET_RECOMMENDED_ROADMAP_SUCCESS:
+      return { ...state, recommendedRoadmaps: action.roadmaps, recommendedRoadmapsError: null };
+    case actionTypes.GET_RECOMMENDED_ROADMAP_FAILURE:
+      return { ...state, recommendedRoadmaps: [], recommendedRoadmapsError: action.errorStatus };
+    case actionTypes.RESET_RECOMMENDED_ROADMAP:
+      return { ...state, recommendedRoadmaps: [], recommendedRoadmapsError: null };
     default:
       break;
   }

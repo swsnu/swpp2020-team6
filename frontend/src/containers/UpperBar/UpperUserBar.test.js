@@ -56,7 +56,18 @@ describe("UpperUserBar", () => {
     const component = mount(upperUserBar);
     const buttonWrapper = component.find("#signout-button");
     expect(buttonWrapper.length).toBeTruthy();
+    const spyConfirmFalse = jest.spyOn(window, "confirm").mockImplementation(() => {
+      return false;
+    });
     buttonWrapper.at(0).props().onClick();
+    expect(spyConfirmFalse).toBeCalledTimes(1);
+    expect(spySignOut).toHaveBeenCalledTimes(0);
+    jest.clearAllMocks();
+    const spyConfirmTrue = jest.spyOn(window, "confirm").mockImplementation(() => {
+      return true;
+    });
+    buttonWrapper.at(0).props().onClick();
+    expect(spyConfirmTrue).toBeCalledTimes(1);
     expect(spySignOut).toHaveBeenCalledTimes(1);
   });
 
