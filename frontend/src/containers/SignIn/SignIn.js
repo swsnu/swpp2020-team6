@@ -7,6 +7,7 @@ import { connect } from "react-redux";
 import PropTypes from "prop-types";
 import * as actionCreators from "../../store/actions/index";
 import rotus from "../../misc/rotus.png";
+import wallpaper from "../../misc/wallpaper.png";
 
 import "./SignIn.scss";
 
@@ -43,7 +44,7 @@ class SignIn extends Component {
     return (
       <div className="SignIn">
         <div className="left">
-          <img src="https://source.unsplash.com/category/business-work/930x750" alt="" />
+          <img src={wallpaper} width="930" height="770" alt="" />
         </div>
         <div className="right">
           <img src={rotus} width="324" height="130" alt="" />
