@@ -19,6 +19,7 @@ describe("<SimpleRoadmap />", () => {
         tagList={["tag1", "tag2"]}
         isMyPage
         roadmapImageId="1"
+        isPrivate={false}
       />,
     );
 
@@ -31,6 +32,9 @@ describe("<SimpleRoadmap />", () => {
 
     const avatar = component.find(".MuiAvatar-root");
     expect(avatar.length).toBe(0);
+
+    const lockIcon = component.find("#lock-icon");
+    expect(lockIcon.length).toBe(0);
   });
 
   it("should render my intermediate level without errors", () => {
@@ -48,11 +52,14 @@ describe("<SimpleRoadmap />", () => {
         tagList={["tag1", "tag2"]}
         isMyPage
         roadmapImageId="1"
+        isPrivate={true}
       />,
     );
 
     const cardWrapper = component.find(".MuiPaper-root");
+    const lockIcon = component.find("#lock-icon");
     expect(cardWrapper.length).toBe(1);
+    expect(lockIcon.length).toBeGreaterThan(0);
   });
 
   it("should render my advanced level without errors", () => {
@@ -70,6 +77,7 @@ describe("<SimpleRoadmap />", () => {
         tagList={["tag1", "tag2"]}
         isMyPage
         roadmapImageId="1"
+        isPrivate={false}
       />,
     );
 
@@ -92,6 +100,7 @@ describe("<SimpleRoadmap />", () => {
         tagList={["tag1", "tag2"]}
         isMyPage={false}
         roadmapImageId="1"
+        isPrivate={false}
       />,
     );
 
@@ -121,6 +130,7 @@ describe("<SimpleRoadmap />", () => {
         tagList={["tag1", "tag2"]}
         isMyPage={false}
         roadmapImageId="1"
+        isPrivate={false}
       />,
     );
 
@@ -143,6 +153,7 @@ describe("<SimpleRoadmap />", () => {
         tagList={["tag1", "tag2"]}
         isMyPage={false}
         roadmapImageId="1"
+        isPrivate={false}
       />,
     );
 
@@ -167,6 +178,7 @@ describe("<SimpleRoadmap />", () => {
         tagList={["tag1", "tag2"]}
         isMyPage
         roadmapImageId="1"
+        isPrivate={false}
       />,
     );
 
@@ -195,6 +207,7 @@ describe("<SimpleRoadmap />", () => {
         tagList={["tag1", "tag2", "tag3", "tag4"]}
         isMyPage
         roadmapImageId="1"
+        isPrivate={false}
       />,
     );
 
