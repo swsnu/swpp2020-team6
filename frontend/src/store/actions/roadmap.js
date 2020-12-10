@@ -158,15 +158,17 @@ export const deleteRoadmap = (roadmapId) => {
       .then(() => {
         window.alert("Roadmap successfully deleted!");
         dispatch(deleteRoadmap_(roadmapId));
-        dispatch(push(`/main`));
+        dispatch(goBack());
       })
       .catch((error) => {
         switch (error.response.status) {
           case 401:
             window.alert("Please sign in!");
+            dispatch(push("/main"));
             break;
           case 404:
             window.alert("No such Roadmap!");
+            dispatch(goBack());
             break;
           case 403:
             window.alert("Only the author can delete the Roadmap!");
@@ -177,7 +179,6 @@ export const deleteRoadmap = (roadmapId) => {
           default:
             break;
         }
-        dispatch(goBack());
       });
   };
 };

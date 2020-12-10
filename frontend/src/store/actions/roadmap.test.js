@@ -623,7 +623,7 @@ describe("ActionCreators", () => {
 
     mockedStore.dispatch(roadmapActionCreators.deleteRoadmap(2)).then(() => {
       expect(spy).toHaveBeenCalledTimes(1);
-      expect(spyPush).toHaveBeenCalledTimes(1);
+      expect(spyGoBack).toHaveBeenCalledTimes(1);
       done();
     });
   });
@@ -640,7 +640,7 @@ describe("ActionCreators", () => {
 
     mockedStore.dispatch(roadmapActionCreators.deleteRoadmap(2)).then(() => {
       expect(spy).toHaveBeenCalledTimes(1);
-      expect(spyGoBack).toHaveBeenCalledTimes(1);
+      expect(spyPush).toHaveBeenCalledTimes(1);
       expect(spyAlert).toHaveBeenCalledTimes(1);
       done();
     });
@@ -676,7 +676,6 @@ describe("ActionCreators", () => {
 
     mockedStore.dispatch(roadmapActionCreators.deleteRoadmap(2)).then(() => {
       expect(spy).toHaveBeenCalledTimes(1);
-      expect(spyGoBack).toHaveBeenCalledTimes(1);
       expect(spyAlert).toHaveBeenCalledTimes(1);
       done();
     });
@@ -694,7 +693,6 @@ describe("ActionCreators", () => {
 
     mockedStore.dispatch(roadmapActionCreators.deleteRoadmap(2)).then(() => {
       expect(spy).toHaveBeenCalledTimes(1);
-      expect(spyGoBack).toHaveBeenCalledTimes(1);
       expect(spyAlert).toHaveBeenCalledTimes(1);
       done();
     });
@@ -712,7 +710,6 @@ describe("ActionCreators", () => {
 
     mockedStore.dispatch(roadmapActionCreators.deleteRoadmap(2)).then(() => {
       expect(spy).toHaveBeenCalledTimes(1);
-      expect(spyGoBack).toHaveBeenCalledTimes(1);
       done();
     });
   });
