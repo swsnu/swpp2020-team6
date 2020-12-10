@@ -146,7 +146,6 @@ class SearchResult extends Component {
           roadmapLevel={simpleObject.level}
           authorId={simpleObject.author_id}
           authorName={simpleObject.author_name}
-          authorID={simpleObject.author_id}
           likeCount={simpleObject.like_count}
           pinCount={simpleObject.pin_count}
           commentCount={simpleObject.comment_count}
