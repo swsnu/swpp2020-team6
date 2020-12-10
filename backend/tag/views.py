@@ -8,9 +8,12 @@ from django.http import (
     HttpResponseNotFound,
     JsonResponse,
 )
+from django.views.decorators.csrf import ensure_csrf_cookie
+
 from .models import Tag
 
 
+@ensure_csrf_cookie
 def tags(request, number):
     if request.method == "GET":
         if not request.user.is_authenticated:

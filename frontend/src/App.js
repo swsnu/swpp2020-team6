@@ -47,7 +47,7 @@ class App extends React.Component {
     return (
       <ConnectedRouter history={history}>
         <div className="App">
-          <div className={isSignedIn ? "upper-bar" : "not-upper-bar"}>
+          <div className={isSignedIn ? "upper-bar" : "nothing"}>
             {logoButton}
             {upperUserBar}
             {upperSearchBar}

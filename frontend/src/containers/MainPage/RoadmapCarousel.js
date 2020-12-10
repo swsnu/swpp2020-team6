@@ -16,7 +16,14 @@ const RoadmapCarousel = (props) => {
   const [activeNewRoadmap, setActiveNewRoadmap] = useState(0);
   const chevronWidth = 40;
 
-  const { bestRoadmaps, newRoadmaps, getBestRoadmaps, getNewRoadmaps } = props;
+  const {
+    bestRoadmaps,
+    newRoadmaps,
+    getBestRoadmaps,
+    getNewRoadmaps,
+    newRoadmapsError,
+    bestRoadmapsError,
+  } = props;
   useEffect(() => {
     getBestRoadmaps(12);
     getNewRoadmaps(12);
@@ -29,9 +36,34 @@ const RoadmapCarousel = (props) => {
   }, []);
 
   if (bestRoadmaps.length === 0 || newRoadmaps.length === 0) {
+    const bestRoadmapsLoadingState = bestRoadmapsError ? (
+      <p id="get-best-roadmaps-error">
+        {`${bestRoadmapsError} occurred while loading best roadmaps!`}
+        <br />
+        Try refreshing the page!
+      </p>
+    ) : (
+      <p>Loading...Please wait!</p>
+    );
+    const newRoadmapsLoadingState = newRoadmapsError ? (
+      <p id="get-new-roadmaps-error">
+        {`${newRoadmapsError} occurred while loading new roadmaps!`}
+        <br />
+        Try refreshing the page!
+      </p>
+    ) : (
+      <p>Loading...Please wait!</p>
+    );
     return (
       <div className="carousels">
-        <hi>Loading...</hi>
+        <div className="best-roadmaps-panel">
+          <h2>Checkout top 12 Roadmaps!</h2>
+          {bestRoadmapsLoadingState}
+        </div>
+        <div className="new-roadmaps-panel">
+          <h2>Checkout some recently created Roadmaps!</h2>
+          {newRoadmapsLoadingState}
+        </div>
       </div>
     );
   }
@@ -54,6 +86,7 @@ const RoadmapCarousel = (props) => {
         tagList={roadmap.tags}
         isMyPage={false}
         roadmapImageId={roadmap.image_id}
+        isPrivate={roadmap.private}
       />
     ));
   };
@@ -61,7 +94,7 @@ const RoadmapCarousel = (props) => {
   return (
     <div className="carousels">
       <div className="best-roadmaps-panel">
-        <h2>Checkout top 12 Roadmaps!</h2>
+        <h2>Checkout Top 12 Roadmaps!</h2>
         <div className="best-roadmaps" style={{ padding: `0 ${chevronWidth}px` }}>
           <ItemsCarousel
             requestToChangeActive={setActiveBestRoadmap}
@@ -80,6 +113,7 @@ const RoadmapCarousel = (props) => {
             }
             outsideChevron
             chevronWidth={chevronWidth}
+            slidesToScroll={4}
           >
             {makeRoadmapItemList(bestRoadmaps)}
           </ItemsCarousel>
@@ -105,6 +139,7 @@ const RoadmapCarousel = (props) => {
             }
             outsideChevron
             chevronWidth={chevronWidth}
+            slidesToScroll={4}
           >
             {makeRoadmapItemList(newRoadmaps)}
           </ItemsCarousel>
@@ -121,6 +156,8 @@ RoadmapCarousel.propTypes = {
   getNewRoadmaps: PropTypes.func.isRequired,
   onResetBestRoadmaps: PropTypes.func.isRequired,
   onResetNewRoadmaps: PropTypes.func.isRequired,
+  newRoadmapsError: PropTypes.number,
+  bestRoadmapsError: PropTypes.number,
 };
 
 const mapStateToProps = (state) => {
@@ -128,6 +165,8 @@ const mapStateToProps = (state) => {
     selectedUser: state.user.selectedUser,
     bestRoadmaps: state.roadmap.bestRoadmaps,
     newRoadmaps: state.roadmap.newRoadmaps,
+    bestRoadmapsError: state.roadmap.bestRoadmapsError,
+    newRoadmapsError: state.roadmap.newRoadmapsError,
   };
 };
 

@@ -24,6 +24,14 @@ const initialRoadmapState = {
   newRoadmapsError: null,
 };
 
+const errorRoadmapState = {
+  selectedRoadmap: undefined,
+  bestRoadmaps: [],
+  bestRoadmapsError: 400,
+  newRoadmaps: [],
+  newRoadmapsError: 400,
+};
+
 const stubSimpleRoadmap = {
   id: 11,
   image_id: 1,
@@ -93,6 +101,7 @@ const stubSearchState = {
 
 const mockStore = getMockStore(stubUserState, initialRoadmapState, stubSearchState);
 const mockStoreFilled = getMockStore(stubUserState, filledRoadmapState, stubSearchState);
+const mockStoreError = getMockStore(stubUserState, errorRoadmapState, stubSearchState);
 
 describe("App", () => {
   let spyGetBestRoadmaps;
@@ -154,6 +163,27 @@ describe("App", () => {
     expect(bestRoadmaps.length).toBe(1);
     expect(spyGetBestRoadmaps).toHaveBeenCalledTimes(1);
     expect(spyGetNewRoadmaps).toHaveBeenCalledTimes(1);
+  });
+
+  it(`should show error message properly if error happened
+      while getting best/new/recommended roadmaps`, () => {
+    const component = mount(
+      <Provider store={mockStoreError}>
+        <ConnectedRouter history={history}>
+          <Switch>
+            <Route path="/" exact component={RoadmapCarousel} />
+          </Switch>
+        </ConnectedRouter>
+      </Provider>,
+    );
+
+    const carousels = component.find(".carousels");
+    expect(carousels.length).toBe(1);
+
+    const bestRoadmapError = component.find("#get-best-roadmaps-error");
+    expect(bestRoadmapError.length).toBe(1);
+    const newRoadmapError = component.find("#get-new-roadmaps-error");
+    expect(newRoadmapError.length).toBe(1);
   });
 
   it("should redirect on clicking Card", () => {

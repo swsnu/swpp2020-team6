@@ -102,7 +102,7 @@ $margin-main: 30px 10px 30px 10px;
       display: flex;
       flex-direction: row;
       flex-wrap: wrap;
-      justify-content: space-between;
+      justify-content: flex-start;
       background-color: $mypage-tab-panel-background-color;
       min-height: $mypage-user-info-height;
       box-shadow: $mypage-tab-panel-box-shadow;

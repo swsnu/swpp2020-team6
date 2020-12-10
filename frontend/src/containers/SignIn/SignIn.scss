@@ -1,28 +1,48 @@
+@import "../../css/basic.scss";
+
 .SignIn {
-  width: 40%;
-  max-width: 400px;
-  margin: 100px auto;
+  background-color: $paper-color;
+  .left {
+    width: 50%;
+    display: inline-block;
+  }
+  .right {
+    margin-top: 100px;
+    width: 50%;
+    display: inline-block;
+    vertical-align: top;
+  }
+  p {
+    line-height: 155%;
+    font-size: 14px;
+    max-width: 400px;
+    margin-left: 250px;
+    margin-bottom: 20px;
+  }
+  h4 {
+    margin-bottom: 20px;
+    color: rgba(#000, 0.5);
+    span {
+      color: rgba(#000, 1);
+      font-weight: 700;
+    }
+  }
   label {
-    position: relative;
-    color: black;
-    margin: 0;
-    margin-left: 10px;
-    padding: 0;
-    font-size: 12px;
+    opacity: 0;
   }
   input[type="username"],
   input[type="password"] {
-    width: 98%;
+    width: 35%;
     padding: 25px 10px 5px 10px;
     font-size: 15px;
     font-weight: 700;
-    margin: -20px 0 20px;
-    margin-right: 2%;
+    margin-right: 50px;
+    margin-bottom: 10px;
     border: 1px solid #ccc;
     box-sizing: border-box;
     &:focus {
       outline: none;
-      border-left: deeppink 4px solid;
+      border-left: $main-light-color 4px solid;
     }
   }
   button {
@@ -31,24 +51,39 @@
     height: 40px;
     border-radius: 3px;
     font-size: 15px;
-    margin-left: 30px;
-    margin-right: 40px;
-    margin-bottom: 20px;
+    margin-top: 10px;
+    margin-bottom: 5px;
+    background-color: $main-dark3-color;
+    color: white;
     cursor: pointer;
     &#signin-button {
+      margin-left: 80px;
       color: white;
-      background-color: black;
+      background-color: $main-light-color;
       &:disabled {
-        background-color: grey;
+        background-color: $main-light2-color;
         cursor: not-allowed;
       }
     }
+    &#signup-button {
+      margin-left: 80px;
+      margin-right: 60px;
+    }
+    &#forgot-password-button {
+      text-shadow: 0px 0px 3px rgba(117, 117, 117, 0.12);
+      background-color: $paper-color;
+      color: orange;
+      padding-top: 15px;
+      width: 200px;
+    }
   }
-  //   @media (max-width: 768px) {
-  //     width: 70%;
-  //   }
-  //   @media (max-width: 500px) {
-  //     width: 80%;
-  //     margin: 50px auto;
-  //   }
+
+  @media (max-width: 770px) {
+    width: 70%;
+  }
+
+  @media (max-width: 500px) {
+    width: 80%;
+    margin: 50px auto;
+  }
 }

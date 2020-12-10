@@ -13,7 +13,10 @@ import "./UpperUserBar.scss";
 class UpperUserBar extends Component {
   onClickSignOut = () => {
     const { onSignOut } = this.props;
-    onSignOut();
+    const yes = window.confirm("Are you sure you want to sign out?");
+    if (yes) {
+      onSignOut();
+    }
   };
 
   onClickCreateRoadmap = () => {

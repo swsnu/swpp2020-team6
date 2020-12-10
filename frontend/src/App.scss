@@ -8,6 +8,7 @@
   width: 100%;
   min-width: 1350px;
   scroll-behavior: smooth;
+  min-height: 100vh;
 
   div,
   h1,
@@ -56,10 +57,13 @@
     .UpperSearchBar {
       order: 1;
     }
+    h1 {
+      margin-left: 730px;
+    }
   }
 
   .component {
-    min-height: 100vh;
+    height: 100%;
   }
 
   .footer {

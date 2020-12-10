@@ -65,6 +65,7 @@
       align-items: center;
       padding: 40px;
       color: #ffffff;
+      border-radius: $create-tag-border-radius;
 
       .roadmap-image-wrapper {
         overflow: hidden;
@@ -87,7 +88,6 @@
         flex-direction: column;
         align-items: flex-start;
         margin-left: 40px;
-
         .roadmap-title {
           order: 0;
           font-size: 30px;
