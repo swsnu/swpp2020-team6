@@ -8,9 +8,7 @@
   width: 100%;
   min-width: 1350px;
   scroll-behavior: smooth;
-  min-height: 100vh;
-
-  div,
+  \ div,
   h1,
   h2,
   h3,
@@ -63,11 +61,14 @@
   }
 
   .component {
-    height: 100%;
+    min-height: 85vh;
   }
 
   .footer {
-    height: 120px;
+    height: 15vh;
+    min-height: 15vh;
+    z-index: 1000;
+    min-height: 10vh;
     background-color: #666666;
     color: #ffffff;
     padding: 30px;

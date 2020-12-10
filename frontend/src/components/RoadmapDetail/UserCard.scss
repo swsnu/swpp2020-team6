@@ -9,6 +9,11 @@
   border: 1px solid $grey-light-color;
   border-radius: 7px;
   padding: 15px;
+  -webkit-transition: all 0.3s ease-in-out;
+  -moz-transition: all 0.3s ease-in-out;
+  -o-transition: all 0.3s ease-in-out;
+  -ms-transition: all 0.3s ease-in-out;
+  transition: all 0.3s ease-in-out;
 
   .user-image {
     border: 1px solid $grey-light-color;
