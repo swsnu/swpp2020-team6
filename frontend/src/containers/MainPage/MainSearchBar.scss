@@ -1,0 +1,40 @@
+@import "../../css/basic.scss";
+
+.MainSearchBar {
+  width: 100%;
+  h3 {
+    margin: 20px auto;
+    font-family: "Nunito", sans-serif;
+    text-shadow: 2px 2px 4px #ff9b89;
+  }
+
+  #input-base {
+    margin: 20px auto;
+    background-color: #e08979a9;
+    width: 800px;
+    height: 60px;
+    display: flex;
+    flex-direction: row;
+    justify-content: center;
+    align-items: center;
+    padding: 0px 0px 0px 20px;
+    border: 1px solid #f57d7d;
+    border-radius: 30px;
+    box-shadow: 0 3px 5px 0 rgba(0, 0, 0, 0.3);
+
+    input {
+      background-color: #eb909000;
+      width: 100%;
+      border: none;
+      padding: 0px;
+      font-size: 17px;
+      font-style: italic;
+    }
+    input:focus {
+      outline: none;
+    }
+    input::placeholder {
+      color: #ffffff;
+    }
+  }
+}

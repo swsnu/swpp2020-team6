@@ -8,6 +8,7 @@ import exercise from "../../misc/banner/exercise.png";
 import coding from "../../misc/banner/coding.png";
 import level from "../../misc/banner/level.png";
 import RoadmapCarousel from "./RoadmapCarousel";
+import MainSearchBar from "./MainSearchBar";
 
 const MainPage = (props) => {
   const { isSignedIn, history } = props;
@@ -58,6 +59,9 @@ const MainPage = (props) => {
             <img src={level} alt="Diverse level in Rotus" width="1838px" height="284px" />
           </Carousel.Item>
         </Carousel>
+        <div className="mainPageSearchBar">
+          <MainSearchBar />
+        </div>
         <div className="RoadmapCarousel">
           <RoadmapCarousel />
         </div>
