@@ -557,6 +557,8 @@ describe("Roadmap Reducer", () => {
       bestRoadmapsError: null,
       newRoadmaps: [],
       newRoadmapsError: null,
+      recommendedRoadmaps: [],
+      recommendedRoadmapsError: null,
     });
   });
 });
