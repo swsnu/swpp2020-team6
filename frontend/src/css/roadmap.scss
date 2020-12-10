@@ -77,18 +77,21 @@ $tag-input-border-radius: $roadmap-input-border-radius;
 $tag-input-font-size: 7px;
 $tag-input-padding: 2px;
 
+$roadmap-title-font-size: 25px;
+$roadmap-title-font-weight: 400;
+
 $roadmap-description-border: 0px solid $grey-light-color;
 $roadmap-description-border-radius: 5px;
 $roadmap-description-background-color: $grey-light2-color;
-$roadmap-description-font-size: 16px;
+$roadmap-description-font-size: 18px;
 $roadmap-description-color: #333333;
 
-$section-title-font-size: 25px;
+$section-title-font-size: 22px;
 $section-title-font-weight: 600;
 
 $task-background-color: $paper-color;
 $task-title-font-size: 20px;
-$task-title-font-weight: 500;
+$task-title-font-weight: 600;
 $task-type-border: 1px solid $grey-light-color;
 $task-description-background-color: $grey-light2-color;
 $task-description-border: $roadmap-description-border;
