@@ -1,10 +1,7 @@
 import React from "react";
 import PropTypes from "prop-types";
-// import Button from "@material-ui/core/Button/Button";
-// import ArrowUpwardOutlinedIcon from "@material-ui/icons/ArrowUpwardOutlined";
-// import ArrowDownwardOutlinedIcon from "@material-ui/icons/ArrowDownwardOutlined";
+import DeleteIcon from "@material-ui/icons/Delete";
 import CreateTask from "../CreateTask/CreateTask";
-// import { Up, Down } from "../Roadmap/StyledComponents/UpDown";
 import "./CreateSection.scss";
 
 const CreateSection = (props) => {
@@ -105,7 +102,7 @@ const CreateSection = (props) => {
           clickDeleteSectionHandler(tmpSectionId);
         }}
       >
-        Delete Section
+        <DeleteIcon className="delete-icon" />
       </button>
     </div>
   );
