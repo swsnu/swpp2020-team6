@@ -13,21 +13,21 @@ def get_csrf(client):
     return response.cookies["csrftoken"].value
 
 
-def signup_signin(client):
+def signup_signin(client, dump_user):
+    # {"username": "chris", "email": "chris@gmail.com", "password": "chris"}
+    dump_user_json = json.dumps(dump_user)
 
     user = User.objects.create_user(
-        username="chris",
-        email="chris@gmail.com",
-        password="chris",
+        username=dump_user["username"],
+        email=dump_user["email"],
+        password=dump_user["password"],
     )
 
     csrftoken = get_csrf(client)
     path = USER_PATH + "signin/"
     client.post(
         path,
-        json.dumps(
-            {"username": "chris", "email": "chris@gmail.com", "password": "chris"}
-        ),
+        dump_user_json,
         content_type=JSON_TYPE,
         HTTP_X_CSRFTOKEN=csrftoken,
     )

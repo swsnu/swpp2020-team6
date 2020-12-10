@@ -6,6 +6,7 @@ from .models import Roadmap
 
 
 class RoadmapTestCase(TestCase):
+    dump_user = {"username": "chris", "email": "chris@gmail.com", "password": "chris"}
     roadmap_path = "/api/roadmap/"
     dump_roadmap_input = {
         "private": False,
@@ -68,7 +69,7 @@ class RoadmapTestCase(TestCase):
         response = client.post(path, HTTP_X_CSRFTOKEN=csrftoken)
         self.assertEqual(response.status_code, 401)
 
-        signup_signin(client)
+        signup_signin(client, self.dump_user)
         csrftoken = get_csrf(client)
         # 400
         response = client.post(
@@ -114,7 +115,7 @@ class RoadmapTestCase(TestCase):
         response = client.post(path, HTTP_X_CSRFTOKEN=csrftoken)
         self.assertEqual(response.status_code, 401)
 
-        signup_signin(client)
+        signup_signin(client, self.dump_user)
         csrftoken = get_csrf(client)
 
         # 404
@@ -229,7 +230,7 @@ class RoadmapTestCase(TestCase):
         response = client.put(path, HTTP_X_CSRFTOKEN=csrftoken)
         self.assertEqual(response.status_code, 401)
 
-        signup_signin(client)
+        signup_signin(client, self.dump_user)
         csrftoken = get_csrf(client)
 
         # 404
@@ -275,7 +276,7 @@ class RoadmapTestCase(TestCase):
         response = client.put(path, HTTP_X_CSRFTOKEN=csrftoken)
         self.assertEqual(response.status_code, 401)
 
-        signup_signin(client)
+        signup_signin(client, self.dump_user)
         csrftoken = get_csrf(client)
 
         # 404
@@ -321,7 +322,7 @@ class RoadmapTestCase(TestCase):
         response = client.get(path, HTTP_X_CSRFTOKEN=csrftoken)
         self.assertEqual(response.status_code, 401)
 
-        user = signup_signin(client)
+        user = signup_signin(client, self.dump_user)
         csrftoken = get_csrf(client)
         # 400
         response = client.get(path, {"page": "page"}, HTTP_X_CSRFTOKEN=csrftoken)
@@ -395,7 +396,7 @@ class RoadmapTestCase(TestCase):
         self.assertEqual(response.status_code, 401)
 
         # sign up -> sign in
-        author_user = signup_signin(client)
+        author_user = signup_signin(client, self.dump_user)
 
         csrftoken = get_csrf(client)
 
@@ -635,7 +636,7 @@ class RoadmapTestCase(TestCase):
         response = client.get(path, HTTP_X_CSRFTOKEN=csrftoken)
         self.assertEqual(response.status_code, 401)
 
-        signup_signin(client)
+        signup_signin(client, self.dump_user)
         csrftoken = get_csrf(client)
 
         # 401
@@ -659,7 +660,7 @@ class RoadmapTestCase(TestCase):
         response = client.get(path, HTTP_X_CSRFTOKEN=csrftoken)
         self.assertEqual(response.status_code, 401)
 
-        signup_signin(client)
+        signup_signin(client, self.dump_user)
         csrftoken = get_csrf(client)
 
         # 401
