@@ -6,10 +6,9 @@
   font-family: "Nunito", sans-serif;
   text-align: center;
   width: 100%;
-  min-width: 1200px;
+  min-width: 1350px;
   scroll-behavior: smooth;
-
-  div,
+  \ div,
   h1,
   h2,
   h3,
@@ -62,11 +61,14 @@
   }
 
   .component {
-    min-height: 100vh;
+    min-height: 85vh;
   }
 
   .footer {
-    height: 120px;
+    height: 15vh;
+    min-height: 15vh;
+    z-index: 1000;
+    min-height: 10vh;
     background-color: #666666;
     color: #ffffff;
     padding: 30px;

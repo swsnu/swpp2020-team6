@@ -63,9 +63,21 @@ $margin-bottom-main: 15px;
     }
   }
 
-  .task-url {
+  .task-url-wrapper {
     width: 100%;
     margin: 20px 0px 30px 0px;
+    display: flex;
+    flex-direction: row;
+    justify-content: center;
+    align-items: center;
+
+    .link-icon {
+      margin: 0px 15px 0px 15px;
+    }
+
+    .task-url {
+      width: 100%;
+    }
   }
 
   .task-description {
@@ -76,5 +88,15 @@ $margin-bottom-main: 15px;
   .delete-task-button {
     float: right;
     background-color: $create-back-delete-button-background-color;
+    width: 40px;
+    height: 40px;
+    display: flex;
+    justify-content: center;
+    align-items: center;
+    padding: 0px;
+
+    .delete-icon {
+      color: #ffffff;
+    }
   }
 }
