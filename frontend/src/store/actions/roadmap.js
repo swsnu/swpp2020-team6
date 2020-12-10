@@ -158,7 +158,7 @@ export const deleteRoadmap = (roadmapId) => {
       .then(() => {
         window.alert("Roadmap successfully deleted!");
         dispatch(deleteRoadmap_(roadmapId));
-        dispatch(goBack());
+        dispatch(push("/main"));
       })
       .catch((error) => {
         switch (error.response.status) {

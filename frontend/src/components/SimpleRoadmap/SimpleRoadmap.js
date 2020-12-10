@@ -115,7 +115,7 @@ const SimpleRoadmap = (props) => {
         <div className="card-wrapper">
           <div className="image-wrapper">
             <CardMedia className={classes.media} image={roadmapImageSrc} title={roadmapTitle} />
-            <div className="overlay-background"></div>
+            <div className="overlay-background" />
             <div className="overlay-title">
               {isPrivate ? <LockIcon id="lock-icon" /> : null}
               <h2 className="roadmap-title">{roadmapTitle}</h2>
@@ -147,7 +147,7 @@ const SimpleRoadmap = (props) => {
           <div className="overlay-description">
             <div className="overlay-content">
               <h3 className="roadmap-title-overlay">{roadmapTitle}</h3>
-              <hr class="dashed"></hr>
+              <hr className="dashed" />
               <div className="roadmap-description">{roadmapDescription}</div>
             </div>
           </div>
@@ -171,6 +171,7 @@ SimpleRoadmap.propTypes = {
   tagList: PropTypes.arrayOf(PropTypes.any).isRequired,
   isMyPage: PropTypes.bool.isRequired,
   roadmapImageId: PropTypes.number,
+  isPrivate: PropTypes.bool,
 };
 
 export default SimpleRoadmap;
