@@ -26,7 +26,7 @@ const MainPage = (props) => {
         <CssBaseline />
         <Carousel>
           <Carousel.Item>
-            <img src={exercise} alt="Images from Flaticon" width="1838px" height="284px" />
+            <img src={level} alt="Diverse level in Rotus" width="1838px" height="284px" />
           </Carousel.Item>
           <Carousel.Item>
             <img src={coding} alt="This is the first slide" width="1838px" height="284px" />
@@ -56,7 +56,22 @@ const MainPage = (props) => {
             </Carousel.Caption>
           </Carousel.Item>
           <Carousel.Item>
-            <img src={level} alt="Diverse level in Rotus" width="1838px" height="284px" />
+            <img src={exercise} alt="Images from Flaticon" width="1838px" height="284px" />
+            <Carousel.Caption>
+              <p>
+                Icons made by{" "}
+                <a
+                  href="https://www.flaticon.com/authors/photo3idea-studio"
+                  title="photo3idea_studio"
+                >
+                  photo3idea_studio
+                </a>{" "}
+                from{" "}
+                <a href="https://www.flaticon.com/" title="Flaticon">
+                  www.flaticon.com
+                </a>
+              </p>
+            </Carousel.Caption>
           </Carousel.Item>
         </Carousel>
         <div className="mainPageSearchBar">
