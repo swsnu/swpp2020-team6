@@ -1,8 +1,9 @@
+@import "../../css/basic.scss";
 .UpperSearchBar {
   width: 100%;
 
   #input-base {
-    margin-left: 450px;
+    margin: auto;
     background-color: #ffffff;
     width: 400px;
     height: 45px;
@@ -11,7 +12,7 @@
     justify-content: center;
     align-items: center;
     padding: 0px 0px 0px 20px;
-    border: 1px solid black;
+    border: 1px solid $main-light-color;
     border-radius: 5px;
 
     input {
