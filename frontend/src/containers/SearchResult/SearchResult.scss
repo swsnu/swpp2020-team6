@@ -16,7 +16,7 @@
   }
 
   .empty-column {
-    width: 10%;
+    width: 2%;
     display: flex;
     background-color: $paper-color;
   }
@@ -24,9 +24,8 @@
   .left-column {
     border-radius: 7px;
     background-color: $paper-color;
-    // background-color: $main-light2-color;
     margin-top: 80px;
-    width: 400px;
+    width: 350px;
     display: flex;
     flex-direction: column;
     align-items: center;
