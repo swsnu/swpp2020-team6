@@ -8,6 +8,7 @@ import PropTypes from "prop-types";
 
 import * as actionCreators from "../../store/actions/index";
 import rotus from "../../misc/rotus.png";
+import wallpaper from "../../misc/wallpaper.png";
 
 import "./SignUp.scss";
 
@@ -48,7 +49,7 @@ class SignUp extends Component {
     return (
       <div className="SignUp">
         <div className="left">
-          <img src="https://source.unsplash.com/category/business-work/930x750" alt="" />
+          <img src={wallpaper} width="900" height="770" alt="" />
         </div>
         <div className="right">
           <img src={rotus} width="324" height="130" alt="" />
@@ -84,7 +85,7 @@ class SignUp extends Component {
           <label>Password Confirm</label>
           <input
             id="password-confirm-input"
-            type="password-confirm"
+            type="password"
             value={passwordConfirm}
             onChange={(event) => this.setState({ passwordConfirm: event.target.value })}
             placeholder="Password Confirm"
