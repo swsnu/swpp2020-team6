@@ -1,0 +1,95 @@
+@import "../../css/roadmap.scss";
+
+.Comment {
+  background-color: #ffffff;
+  width: 100%;
+  height: 100%;
+  display: flex;
+  flex-direction: row;
+  align-items: center;
+  border-radius: 10px;
+  margin: 20px 0px 0px 0px;
+
+  .comment-author-panel {
+    display: flex;
+    flex-direction: column;
+    align-items: flex-end;
+    justify-content: space-between;
+    height: 100%;
+    padding: 20px;
+
+    .UserCard {
+      border: none;
+      width: 200px;
+      padding: 10px;
+      background-color: $grey-light2-color;
+
+      .user-image {
+        width: 30px;
+        height: 30px;
+        font-size: 24px;
+      }
+    }
+
+    .comment-author-buttons {
+      display: flex;
+      flex-direction: row;
+    }
+  }
+
+  .middle-border {
+    height: 80%;
+    width: 2px;
+    background-color: #dddddd;
+  }
+
+  .comment-edit {
+    width: 100%;
+    height: 100%;
+    padding: 20px;
+    display: flex;
+    flex-direction: column;
+    align-items: flex-end;
+
+    textarea {
+      color: $roadmap-input-text-color;
+      border: $roadmap-input-border-style;
+      border-radius: $roadmap-input-border-radius;
+      font-size: $roadmap-input-font-size;
+      padding: $roadmap-input-padding;
+      resize: none;
+      width: 100%;
+      min-height: 110px;
+    }
+
+    textarea::placeholder {
+      color: $roadmap-input-placeholder-color;
+      font-style: $roadmap-input-placeholder-style;
+      font-size: $roadmap-input-placeholder-font-size;
+    }
+
+    textarea:focus {
+      outline: none;
+    }
+
+    .comment-edit-confirm-button {
+      width: 150px;
+      height: 40px;
+      border: none;
+      border-radius: 7px;
+      background-color: $comment-confirm-background-color;
+      color: $comment-confirm-color;
+      font-weight: $comment-confirm-font-weight;
+      font-size: $comment-confirm-font-size;
+      margin: 10px 10px 0px 10px;
+    }
+  }
+
+  .comment-view {
+    width: 100%;
+    height: 100%;
+    padding: 20px;
+    display: flex;
+    align-items: center;
+  }
+}

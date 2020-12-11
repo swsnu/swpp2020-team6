@@ -4,8 +4,8 @@ import { withRouter } from "react-router";
 import PropTypes from "prop-types";
 import MyTab from "../../components/MyPage/StyledComponents/MyTab";
 import SimpleRoadmap from "../../components/SimpleRoadmap/SimpleRoadmap";
+import UserCard from "../../components/RoadmapDetail/UserCard";
 import * as actionCreators from "../../store/actions/index";
-import userImg from "../../misc/rotus-img.png";
 import "./MyPage.scss";
 
 class MyPage extends Component {
@@ -37,6 +37,7 @@ class MyPage extends Component {
         roadmapDescription={roadmap.description}
         roadmapTitle={roadmap.title}
         roadmapLevel={roadmap.level}
+        authorId={roadmap.author_id}
         authorName={roadmap.author_name}
         date={roadmap.date}
         likeCount={roadmap.like_count}
@@ -45,6 +46,7 @@ class MyPage extends Component {
         tagList={roadmap.tags}
         isMyPage={false}
         roadmapImageId={roadmap.image_id}
+        isPrivate={roadmap.private}
       />
     ));
   };
@@ -83,9 +85,7 @@ class MyPage extends Component {
     return (
       <div className="MyPage">
         <div className="user-info">
-          <h2>User Profile</h2>
-          <img id="user-img" src={userImg} alt="user-img" />
-          <h2>{user.username}</h2>
+          <UserCard authorId={user.user_id} authorName={user.username} history={history} />
         </div>
         <div className="mypage-tab">
           <MyTab

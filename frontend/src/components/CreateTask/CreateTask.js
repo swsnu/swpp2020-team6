@@ -1,5 +1,7 @@
 import React from "react";
 import PropTypes from "prop-types";
+import LinkIcon from "@material-ui/icons/Link";
+import DeleteIcon from "@material-ui/icons/Delete";
 import StyledSelect from "../Roadmap/StyledComponents/StyledSelect";
 import "./CreateTask.scss";
 import taskTypeIcons from "./taskTypeIcons";
@@ -65,18 +67,20 @@ const CreateTask = (props) => {
           ▼
         </button>
       </div>
-      <input
-        className="task-url"
-        type="text"
-        value={url}
-        placeholder="Task URL"
-        onChange={(event) => {
-          changeTaskUrlHandler(tmpSectionId, tmpTaskId, event.target.value);
-        }}
-      />
-      <input
+      <div className="task-url-wrapper">
+        <LinkIcon className="link-icon" />
+        <input
+          className="task-url"
+          type="text"
+          value={url}
+          placeholder="Task URL"
+          onChange={(event) => {
+            changeTaskUrlHandler(tmpSectionId, tmpTaskId, event.target.value);
+          }}
+        />
+      </div>
+      <textarea
         className="task-description"
-        type="text"
         value={description}
         placeholder="Task Description"
         onChange={(event) => {
@@ -90,7 +94,7 @@ const CreateTask = (props) => {
           clickDeleteTaskHandler(tmpSectionId, tmpTaskId);
         }}
       >
-        Delete Task
+        <DeleteIcon className="delete-icon" />
       </button>
     </div>
   );

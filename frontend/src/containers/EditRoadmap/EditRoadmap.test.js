@@ -20,11 +20,11 @@ const initialUserState = {
   selectedUser: { user_id: 1, username: "test" },
 };
 const initialRoadmapStateUndefined = {
-  selectedRoadmap: undefined,
+  selectedEditRoadmap: undefined,
 };
 
 const initialRoadmapState = {
-  selectedRoadmap: {
+  selectedEditRoadmap: {
     author_id: 1,
     private: true,
     imageId: 1,
@@ -174,7 +174,7 @@ describe("<EditRoadmap />", () => {
     expect(wrapper.length).toBe(0);
   });
 
-  it("should wait if 'selectedRoadmap' has not been received", () => {
+  it("should wait if 'selectedEditRoadmap' has not been received", () => {
     const tmpEditRoadmap = (
       <Provider store={mockStoreRoadmapUndefined}>
         <ConnectedRouter history={history}>
@@ -217,18 +217,18 @@ describe("<EditRoadmap />", () => {
     expect(spyAlert).toHaveBeenCalledTimes(1);
   });
 
-  it("should set state if selectedRoadmap has been received", () => {
+  it("should set state if selectedEditRoadmap has been received", () => {
     const component = mount(editRoadmap);
     const instance = component.find(Roadmap).instance();
     expect(instance.state).toEqual({
-      ...initialRoadmapState.selectedRoadmap,
-      sections: initialRoadmapState.selectedRoadmap.sections.map((section) => {
+      ...initialRoadmapState.selectedEditRoadmap,
+      sections: initialRoadmapState.selectedEditRoadmap.sections.map((section) => {
         return { ...section, collapse: false };
       }),
       received: true,
       private: undefined,
-      isPrivate: initialRoadmapState.selectedRoadmap.private,
-      imageId: initialRoadmapState.selectedRoadmap.image_id,
+      isPrivate: initialRoadmapState.selectedEditRoadmap.private,
+      imageId: initialRoadmapState.selectedEditRoadmap.image_id,
       author_id: undefined,
       tags: ["tag0", "tag1"],
       newTag: "",
@@ -267,7 +267,7 @@ describe("<EditRoadmap />", () => {
     expect(instance.state.title).toBe(title);
     expect(instance.state.level).toBe(level);
     expect(instance.state.newTag).toBe(newTag);
-    expect(instance.state.isPrivate).toBe(!initialRoadmapState.selectedRoadmap.private);
+    expect(instance.state.isPrivate).toBe(!initialRoadmapState.selectedEditRoadmap.private);
     expect(instance.state.description).toBe(description);
   });
 
@@ -564,8 +564,8 @@ describe("<EditRoadmap />", () => {
     expect(spyEditRoadmap).toHaveBeenCalledTimes(1);
   });
 
-  it("should clear MyPageUser before unmount", () => {
-    const spyReset = jest.spyOn(actionCreators, "resetRoadmap_");
+  it("should clear selectedEditRoadmap before unmount", () => {
+    const spyReset = jest.spyOn(actionCreators, "resetEditRoadmap_");
     const component = mount(editRoadmap);
     component.unmount();
     expect(spyReset).toHaveBeenCalledTimes(1);

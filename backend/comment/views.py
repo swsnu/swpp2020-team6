@@ -1,5 +1,8 @@
 import json
 from json import JSONDecodeError
+
+from django.views.decorators.csrf import ensure_csrf_cookie
+
 from .models import Roadmap
 from django.http import (
     HttpResponse,
@@ -13,6 +16,7 @@ from django.core.exceptions import ObjectDoesNotExist
 from .models import Comment
 
 
+@ensure_csrf_cookie
 def comment(request):
     if request.method == "POST":
         if not request.user.is_authenticated:
@@ -35,6 +39,7 @@ def comment(request):
     return HttpResponseNotAllowed(["POST"])
 
 
+@ensure_csrf_cookie
 def comment_id(request, comment_id):
     if request.method == "PUT":
         if not request.user.is_authenticated:

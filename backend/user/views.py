@@ -26,6 +26,7 @@ def token(request):
     return HttpResponseNotAllowed(["GET"])
 
 
+@ensure_csrf_cookie
 def user(request):
     if request.method == "POST":
         try:
@@ -52,6 +53,7 @@ def user(request):
         return HttpResponseNotAllowed(["GET", "POST"])
 
 
+@ensure_csrf_cookie
 def signin(request):
     if request.method == "POST":
         try:
@@ -71,6 +73,7 @@ def signin(request):
     return HttpResponseNotAllowed(["POST"])
 
 
+@ensure_csrf_cookie
 def signout(request):
     if request.method == "GET":
         if request.user.is_authenticated:
@@ -81,6 +84,7 @@ def signout(request):
     return HttpResponseNotAllowed(["GET"])
 
 
+@ensure_csrf_cookie
 def users(request):
     if request.method == "GET":
         user_list = [
@@ -91,6 +95,7 @@ def users(request):
     return HttpResponseNotAllowed(["GET"])
 
 
+@ensure_csrf_cookie
 def user_id(request, user_id):
     if request.method == "GET":
         if not request.user.is_authenticated:

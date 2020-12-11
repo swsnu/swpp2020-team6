@@ -217,6 +217,8 @@ const stubInitialRoadmapState = {
   bestRoadmapsError: null,
   newRoadmaps: [],
   newRoadmapsError: null,
+  recommendedRoadmaps: [],
+  recommendedRoadmapsError: null,
 };
 
 const stubInitialSearchState = {
@@ -330,6 +332,95 @@ describe("ActionCreators", () => {
     });
 
     mockedStore.dispatch(roadmapActionCreators.getRoadmap(1)).then(() => {
+      expect(spy).toHaveBeenCalledTimes(1);
+      expect(spyGoBack).toHaveBeenCalledTimes(1);
+      done();
+    });
+  });
+
+  /* ---------------------- Get Roadmap ---------------------- */
+  it(`'getEditRoadmap' should fetch the roadmap correctly`, (done) => {
+    const spy = jest.spyOn(axios, "get").mockImplementation((url) => {
+      return new Promise((resolve, reject) => {
+        const result = {
+          status: 200,
+          data: stubRoadmapData,
+        };
+        resolve(result);
+      });
+    });
+
+    mockedStore.dispatch(roadmapActionCreators.getEditRoadmap(1)).then(() => {
+      expect(spy).toHaveBeenCalledTimes(1);
+      done();
+    });
+  });
+
+  it(`404 error from 'getEditRoadmap' during axios.get should be catched`, (done) => {
+    const spy = jest.spyOn(axios, "get").mockImplementation((url, roadmapData) => {
+      return new Promise((resolve, reject) => {
+        const result = {
+          response: { status: 404 },
+        };
+        reject(result);
+      });
+    });
+
+    mockedStore.dispatch(roadmapActionCreators.getEditRoadmap(1)).then(() => {
+      expect(spy).toHaveBeenCalledTimes(1);
+      expect(spyGoBack).toHaveBeenCalledTimes(1);
+      expect(spyAlert).toHaveBeenCalledTimes(1);
+      done();
+    });
+  });
+
+  it(`401 error from 'getEditRoadmap' during axios.get should be catched`, (done) => {
+    const spy = jest.spyOn(axios, "get").mockImplementation((url, roadmapData) => {
+      return new Promise((resolve, reject) => {
+        const result = {
+          response: { status: 401 },
+        };
+        reject(result);
+      });
+    });
+
+    mockedStore.dispatch(roadmapActionCreators.getEditRoadmap(1)).then(() => {
+      expect(spy).toHaveBeenCalledTimes(1);
+      expect(spyGoBack).toHaveBeenCalledTimes(1);
+      expect(spyAlert).toHaveBeenCalledTimes(1);
+      done();
+    });
+  });
+
+  it(`400 error from 'getEditRoadmap' during axios.get should be catched`, (done) => {
+    const spy = jest.spyOn(axios, "get").mockImplementation((url, roadmapData) => {
+      return new Promise((resolve, reject) => {
+        const result = {
+          response: { status: 400 },
+        };
+        reject(result);
+      });
+    });
+
+    mockedStore.dispatch(roadmapActionCreators.getEditRoadmap(1)).then(() => {
+      expect(spy).toHaveBeenCalledTimes(1);
+      expect(spyGoBack).toHaveBeenCalledTimes(1);
+      expect(spyAlert).toHaveBeenCalledTimes(1);
+      done();
+    });
+  });
+
+  it(`random error from 'getEditRoadmap' during axios.get should be catched`, (done) => {
+    const spy = jest.spyOn(axios, "get").mockImplementation((url, roadmapData) => {
+      return new Promise((resolve, reject) => {
+        const result = {
+          response: { status: 302 },
+        };
+        reject(result);
+      });
+    });
+
+    mockedStore.dispatch(roadmapActionCreators.getEditRoadmap(1)).then(() => {
       expect(spy).toHaveBeenCalledTimes(1);
       expect(spyGoBack).toHaveBeenCalledTimes(1);
       done();
@@ -532,7 +623,6 @@ describe("ActionCreators", () => {
 
     mockedStore.dispatch(roadmapActionCreators.deleteRoadmap(2)).then(() => {
       expect(spy).toHaveBeenCalledTimes(1);
-      expect(spyPush).toHaveBeenCalledTimes(1);
       done();
     });
   });
@@ -549,7 +639,7 @@ describe("ActionCreators", () => {
 
     mockedStore.dispatch(roadmapActionCreators.deleteRoadmap(2)).then(() => {
       expect(spy).toHaveBeenCalledTimes(1);
-      expect(spyGoBack).toHaveBeenCalledTimes(1);
+      expect(spyPush).toHaveBeenCalledTimes(1);
       expect(spyAlert).toHaveBeenCalledTimes(1);
       done();
     });
@@ -585,7 +675,6 @@ describe("ActionCreators", () => {
 
     mockedStore.dispatch(roadmapActionCreators.deleteRoadmap(2)).then(() => {
       expect(spy).toHaveBeenCalledTimes(1);
-      expect(spyGoBack).toHaveBeenCalledTimes(1);
       expect(spyAlert).toHaveBeenCalledTimes(1);
       done();
     });
@@ -603,7 +692,6 @@ describe("ActionCreators", () => {
 
     mockedStore.dispatch(roadmapActionCreators.deleteRoadmap(2)).then(() => {
       expect(spy).toHaveBeenCalledTimes(1);
-      expect(spyGoBack).toHaveBeenCalledTimes(1);
       expect(spyAlert).toHaveBeenCalledTimes(1);
       done();
     });
@@ -621,7 +709,6 @@ describe("ActionCreators", () => {
 
     mockedStore.dispatch(roadmapActionCreators.deleteRoadmap(2)).then(() => {
       expect(spy).toHaveBeenCalledTimes(1);
-      expect(spyGoBack).toHaveBeenCalledTimes(1);
       done();
     });
   });
@@ -940,7 +1027,6 @@ describe("ActionCreators", () => {
 
     mockedStore.dispatch(roadmapActionCreators.deleteComment(1)).then(() => {
       expect(spy).toHaveBeenCalledTimes(1);
-      expect(spyAlert).toHaveBeenCalledTimes(1);
       done();
     });
   });
@@ -1595,6 +1681,11 @@ describe("ActionCreators", () => {
     });
   });
 
+  it(`should properly call 'resetBestRoadmaps_' `, () => {
+    const val = mockedStore.dispatch(roadmapActionCreators.resetBestRoadmaps_);
+    expect(val).toEqual({ type: actionTypes.RESET_BEST_ROADMAP });
+  });
+
   /* ---------------------- Get New Roadmap ---------------------- */
   it(`'getNewRoadmaps' should fetch top_n new roadmaps correctly`, (done) => {
     const spy = jest.spyOn(axios, "get").mockImplementation((url) => {
@@ -1627,5 +1718,55 @@ describe("ActionCreators", () => {
       expect(spy).toHaveBeenCalledTimes(1);
       done();
     });
+  });
+
+  it(`should properly call 'resetNewRoadmaps_' `, () => {
+    const val = mockedStore.dispatch(roadmapActionCreators.resetNewRoadmaps_);
+    expect(val).toEqual({ type: actionTypes.RESET_NEW_ROADMAP });
+  });
+
+  /* ---------------------- Get Recommended Roadmap ---------------------- */
+  it(`'getRecommendedRoadmaps' should fetch 12 recommended roadmaps correctly`, (done) => {
+    const spy = jest.spyOn(axios, "get").mockImplementation((url) => {
+      return new Promise((resolve, reject) => {
+        const result = {
+          status: 200,
+          data: [stubRoadmapSimpleData, stubRoadmapSimpleData2],
+        };
+        resolve(result);
+      });
+    });
+
+    mockedStore.dispatch(roadmapActionCreators.getRecommendedRoadmaps()).then(() => {
+      expect(spy).toHaveBeenCalledTimes(1);
+      done();
+    });
+  });
+
+  it(`error from 'getRecommendedRoadmaps' during axios.get should be catched`, (done) => {
+    const spy = jest.spyOn(axios, "get").mockImplementation((url, roadmapData) => {
+      return new Promise((resolve, reject) => {
+        const result = {
+          response: { status: 401 },
+        };
+        reject(result);
+      });
+    });
+
+    mockedStore.dispatch(roadmapActionCreators.getRecommendedRoadmaps()).then(() => {
+      expect(spy).toHaveBeenCalledTimes(1);
+      done();
+    });
+  });
+
+  it(`should properly call 'resetRecommendedRoadmaps_' `, () => {
+    const val = mockedStore.dispatch(roadmapActionCreators.resetRecommendedRoadmaps_);
+    expect(val).toEqual({ type: actionTypes.RESET_RECOMMENDED_ROADMAP });
+  });
+
+  // ------------ reset roadmap ---------- //
+  it(`should properly call 'resetRoadmap_' `, () => {
+    const val = mockedStore.dispatch(roadmapActionCreators.resetRoadmap_);
+    expect(val).toEqual({ type: actionTypes.RESET_ROADMAP });
   });
 });

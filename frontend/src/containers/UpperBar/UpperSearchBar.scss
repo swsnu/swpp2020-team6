@@ -1,0 +1,31 @@
+.UpperSearchBar {
+  width: 100%;
+
+  #input-base {
+    margin: auto;
+    background-color: #ffffff;
+    width: 400px;
+    height: 45px;
+    display: flex;
+    flex-direction: row;
+    justify-content: center;
+    align-items: center;
+    padding: 0px 0px 0px 20px;
+    border: 1px solid #dddddd;
+    border-radius: 5px;
+
+    input {
+      width: 100%;
+      border: none;
+      padding: 0px;
+      font-size: 17px;
+      font-style: italic;
+    }
+    input:focus {
+      outline: none;
+    }
+    input::placeholder {
+      color: #bbbbbb;
+    }
+  }
+}

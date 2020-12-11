@@ -7,8 +7,6 @@ $margin-bottom-main: 10px;
   width: 100%;
   height: 100%;
   min-height: 100vh;
-  min-width: $create-roadmap-min-width;
-  padding-bottom: 200px;
   display: flex;
   flex-direction: row;
   justify-content: space-between;
@@ -17,19 +15,24 @@ $margin-bottom-main: 10px;
   align-items: flex-end;
   background-color: $create-roadmap-main-background-color;
 
-  input {
+  input,
+  textarea {
+    background-color: $roadmap-input-background-color;
     color: $roadmap-input-text-color;
     border: $roadmap-input-border-style;
     border-radius: $roadmap-input-border-radius;
     font-size: $roadmap-input-font-size;
     padding: $roadmap-input-padding;
+    resize: none;
   }
-  input::placeholder {
+  input::placeholder,
+  textarea::placeholder {
     color: $roadmap-input-placeholder-color;
     font-style: $roadmap-input-placeholder-style;
     font-size: $roadmap-input-placeholder-font-size;
   }
-  input:focus {
+  input:focus,
+  textarea:focus {
     outline: none;
   }
 
@@ -42,10 +45,18 @@ $margin-bottom-main: 10px;
     margin-top: $create-buttons-margin-top;
     font-size: $create-buttons-font-size;
     font-weight: $create-buttons-font-weight;
+    -webkit-transition: all 0.3s ease-in-out;
+    -moz-transition: all 0.3s ease-in-out;
+    -o-transition: all 0.3s ease-in-out;
+    -ms-transition: all 0.3s ease-in-out;
+    transition: all 0.3s ease-in-out;
   }
 
   button:disabled {
     opacity: $create-buttons-disabled-opacity;
+  }
+  button:hover:enabled {
+    box-shadow: 0px 0px 5px #999999;
   }
 
   .main {
@@ -65,7 +76,6 @@ $margin-bottom-main: 10px;
     }
 
     .roadmap {
-      position: relative;
       display: flex;
       width: 100%;
       flex-direction: column;
@@ -112,12 +122,9 @@ $margin-bottom-main: 10px;
             width: 100%;
             padding: 20px 10px 10px 5px;
 
-            .roadmap-level-select {
-            }
-
             #roadmap-private-label {
               width: 13%;
-              margin: 0px 15px 0px 30px;
+              margin: 0px 0px 0px 40px;
             }
           }
 
@@ -140,7 +147,7 @@ $margin-bottom-main: 10px;
 
               #new-tag {
                 width: 150px;
-                padding: 5px;
+                padding: 5px 5px 5px 10px;
                 border-radius: 4px;
               }
               #add-tag-button {
@@ -190,9 +197,11 @@ $margin-bottom-main: 10px;
         }
 
         .roadmap-image-select {
+          padding: 15px 0px 10px 30px;
+
           .MuiFormControl-root {
             width: 364px;
-            height: 240px;
+            height: 364px * (3/4);
 
             .MuiInputBase-root {
               height: 100%;
@@ -208,9 +217,17 @@ $margin-bottom-main: 10px;
                   text-align: center;
                 }
 
-                img {
+                .roadmap-image-wrapper {
+                  overflow: hidden;
                   width: 300px;
-                  height: 200px;
+                  height: 300px * (3/4);
+
+                  img {
+                    background-color: #ffffff;
+                    width: 300px;
+                    height: 300px;
+                    margin: -38px 0px 0px 0px;
+                  }
                 }
               }
             }

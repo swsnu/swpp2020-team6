@@ -10,7 +10,7 @@ import { sortType } from "../../constants";
 import * as actionCreators from "../../store/actions/index";
 import SimpleRoadmap from "../../components/SimpleRoadmap/SimpleRoadmap";
 
-// import "./SearchResult.scss";
+import "./SearchResult.scss";
 
 class SearchResult extends Component {
   state = {
@@ -144,6 +144,7 @@ class SearchResult extends Component {
           roadmapTitle={simpleObject.title}
           roadmapImageId={simpleObject.image_id}
           roadmapLevel={simpleObject.level}
+          authorId={simpleObject.author_id}
           authorName={simpleObject.author_name}
           likeCount={simpleObject.like_count}
           pinCount={simpleObject.pin_count}
@@ -160,13 +161,15 @@ class SearchResult extends Component {
     const tagList = tags.map((tag, index) => {
       return (
         <div className="tags">
-          <p key={tag}>{tag}</p>
+          <div className="tag-name" key={tag}>
+            {tag}
+          </div>
           <button
             className="delete-tag-button"
             type="button"
             onClick={() => this.onClickDeleteTag(index)}
           >
-            delete
+            x
           </button>
         </div>
       );
@@ -205,104 +208,118 @@ class SearchResult extends Component {
 
     return (
       <div className="SearchResult">
-        <h1>Search Result</h1>
+        <div className="empty-column" />
+        <div className="left-column">
+          <div className="level">
+            <h4>Level</h4>
+            <div className="basic">
+              <input
+                type="checkbox"
+                id="basic"
+                checked={basicChecked}
+                onChange={this.onClickBasic}
+              />
+              <label>Basic</label>
+            </div>
+            <div className="intermediate">
+              <input
+                type="checkbox"
+                id="intermediate"
+                checked={intermediateChecked}
+                onChange={this.onClickIntermediate}
+              />
+              <label> Intermediate</label>
+            </div>
+            <div className="advanced">
+              <input
+                type="checkbox"
+                id="advanced"
+                checked={advancedChecked}
+                onChange={this.onClickAdvanced}
+              />
+              <label>Advanced</label>
+            </div>
+          </div>
 
-        <div className="level">
-          <label>Level: </label>
-          <input type="checkbox" id="basic" checked={basicChecked} onChange={this.onClickBasic} />
-          <label>Basic</label>
-          <input
-            type="checkbox"
-            id="intermediate"
-            checked={intermediateChecked}
-            onChange={this.onClickIntermediate}
-          />
-          <label>Intermediate</label>
-          <input
-            type="checkbox"
-            id="advanced"
-            checked={advancedChecked}
-            onChange={this.onClickAdvanced}
-          />
-          <label>Advanced</label>
-        </div>
-
-        <br />
-
-        <div className="tags">
-          <label>Tags</label>
-          {tagList}
-          <input
-            id="new-tag"
-            value={newTag}
-            onChange={(event) => this.onSetNewTag(event.target.value)}
-          />
-          <button id="add-tag-button" type="button" onClick={() => this.onClickAddTag()}>
-            add
-          </button>
-        </div>
-
-        <br />
-
-        <div className="topTags">
-          <label>Top Tags</label>
-          {topTagList}
-        </div>
-
-        <br />
-
-        <div className="advanced-search-bar">
-          <select
-            id="sortBy"
-            value={sortBy}
-            onChange={(event) => {
-              return this.onChangeSortBy(event.target.value);
-            }}
-          >
-            <option value={sortType.LIKE}>Sort by: Like</option>
-            <option value={sortType.PIN}>Sort by: Pin</option>
-            <option value={sortType.NEW}>Sort by: New</option>
-          </select>
-          <input
-            id="advanced-search-input"
-            value={advancedSearchInput}
-            placeholder="Roadmap to search..."
-            onChange={(event) => this.setState({ advancedSearchInput: event.target.value })}
-          />
-          <button
-            id="advanced-search-button"
-            onClick={
-              () =>
-                this.onClickAdvancedSearch({
-                  title: advancedSearchInput,
-                  tags,
-                  levels: this.calcLevelData(basicChecked, intermediateChecked, advancedChecked),
-                  sort: sortBy,
-                  page: 1,
-                  perpage: 9,
-                })
-              // eslint-disable-next-line react/jsx-curly-newline
-            }
-            type="button"
-          >
-            Search
-          </button>
-        </div>
-
-        <br />
-
-        <div className="search-result-list">
-          <p>Search Result List</p>
-          {searchResultList}
-        </div>
-
-        <br />
-
-        <div className="pages">
-          {pageList}
           <br />
-          Current Page:
-          {page}
+
+          <div className="add-tags">
+            <div className="add-a-tag">
+              <input
+                id="new-tag"
+                value={newTag}
+                onChange={(event) => this.onSetNewTag(event.target.value)}
+                placeholder="Add tags to search"
+              />
+              <button id="add-tag-button" type="button" onClick={() => this.onClickAddTag()}>
+                +
+              </button>
+            </div>
+          </div>
+
+          <div className="taglist">{tagList}</div>
+
+          <br />
+
+          <div className="topTagsBlock">
+            <p>Search by top trending tags!</p>
+            <div className="topTagList">{topTagList}</div>
+          </div>
+
+          <br />
+        </div>
+
+        <div className="right-column">
+          <div className="advanced-search-bar">
+            <select
+              id="sortBy"
+              value={sortBy}
+              onChange={(event) => {
+                return this.onChangeSortBy(event.target.value);
+              }}
+            >
+              <option value={sortType.LIKE}>Sort by: Like</option>
+              <option value={sortType.PIN}>Sort by: Pin</option>
+              <option value={sortType.NEW}>Sort by: New</option>
+            </select>
+            <input
+              id="advanced-search-input"
+              value={advancedSearchInput}
+              placeholder="Roadmap to search..."
+              onChange={(event) => this.setState({ advancedSearchInput: event.target.value })}
+            />
+            <button
+              id="advanced-search-button"
+              onClick={
+                () =>
+                  this.onClickAdvancedSearch({
+                    title: advancedSearchInput,
+                    tags,
+                    levels: this.calcLevelData(basicChecked, intermediateChecked, advancedChecked),
+                    sort: sortBy,
+                    page: 1,
+                    perpage: 9,
+                  })
+                // eslint-disable-next-line react/jsx-curly-newline
+              }
+              type="button"
+            >
+              Search
+            </button>
+          </div>
+
+          <br />
+
+          <div className="search-result-list">{searchResultList}</div>
+
+          <br />
+
+          <div className="pages">
+            {pageList}
+            <br />
+            Page
+            {page}
+          </div>
         </div>
       </div>
     );

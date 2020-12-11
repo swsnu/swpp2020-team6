@@ -3,18 +3,19 @@
 @import "./css/basic.scss";
 
 .App {
-  font-family: "Ubuntu", sans-serif;
+  font-family: "Nunito", sans-serif;
   text-align: center;
   width: 100%;
-
-  div,
+  min-width: 1350px;
+  scroll-behavior: smooth;
+  \ div,
   h1,
   h2,
   h3,
   p,
   input,
   button {
-    font-family: "Ubuntu", sans-serif;
+    font-family: "Nunito", sans-serif;
     box-sizing: border-box;
   }
 
@@ -31,20 +32,19 @@
   .upper-bar {
     position: sticky;
     top: 0px;
+    z-index: 1000;
     height: 70px;
     display: flex;
     flex-direction: row;
     align-items: center;
     justify-content: flex-start;
     padding: 0px 0px 0px 10px;
-    background-color: $main3-red-dark2-color;
+    background-color: #ffffff;
+    box-shadow: 0px 0px 5px #999999;
 
     .LogoButton {
       order: 0;
-      height: 80%;
-      button {
-        height: 100%;
-      }
+      height: 100%;
     }
 
     .UpperUserBar {
@@ -54,7 +54,24 @@
 
     .UpperSearchBar {
       order: 1;
-      width: 100%;
     }
+    h1 {
+      margin-left: 730px;
+    }
+  }
+
+  .component {
+    min-height: 85vh;
+  }
+
+  .footer {
+    height: 15vh;
+    min-height: 15vh;
+    z-index: 1000;
+    min-height: 10vh;
+    background-color: #666666;
+    color: #ffffff;
+    padding: 30px;
+    text-align: left;
   }
 }

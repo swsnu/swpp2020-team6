@@ -1,0 +1,221 @@
+@import "../../css/basic.scss";
+@import "../../css/roadmap.scss";
+@import "../../css/mypage.scss";
+
+.SearchResult {
+  width: 100%;
+  height: 100%;
+  margin: auto;
+  min-height: 100vh;
+  display: flex;
+  flex-direction: row;
+  background-color: $paper-color;
+
+  label {
+    margin-left: 10px;
+  }
+
+  .empty-column {
+    width: 10%;
+    display: flex;
+    background-color: $paper-color;
+  }
+
+  .left-column {
+    border-radius: 7px;
+    background-color: $paper-color;
+    // background-color: $main-light2-color;
+    margin-top: 80px;
+    width: 400px;
+    display: flex;
+    flex-direction: column;
+    align-items: center;
+    text-align: left;
+    button {
+      background-color: $create-buttons-background-color;
+      color: $create-buttons-color;
+      border: $create-buttons-border-style;
+      border-radius: $create-buttons-border-radius;
+      margin-top: 2px;
+      margin-right: 2px;
+    }
+    .level {
+      margin-top: 20px;
+      display: inline;
+      width: 240px;
+      height: 170px;
+      flex-direction: column;
+      background-color: $grey-dark-color;
+      align-items: center;
+      padding: 20px;
+      color: #ffffff;
+      border-radius: $create-tag-border-radius;
+      h4 {
+        margin-bottom: 10px;
+      }
+    }
+
+    .add-tags {
+      margin-left: 30px;
+      .add-a-tag {
+        display: flex;
+        flex-direction: row;
+        flex-wrap: nowrap;
+        justify-content: flex-start;
+        align-items: center;
+        padding: 0px 0px 5px 5px;
+        #new-tag {
+          width: 240px;
+          padding: 5px;
+          border-radius: 4px;
+        }
+        #add-tag-button {
+          width: 28px;
+          height: 28px;
+          padding: 0px;
+          margin: 0px 0px 0px 5px;
+        }
+      }
+    }
+
+    .taglist {
+      margin-left: 40px;
+      background-color: $paper-color;
+      min-height: 1px;
+      border-radius: 7px;
+      width: 270px;
+      display: flex;
+      flex-direction: row;
+      justify-content: flex-start;
+      align-items: center;
+      flex-wrap: wrap;
+      padding: 5px 5px 5px 5px;
+      .tags {
+        display: inline-flex;
+        flex-direction: row;
+        flex-wrap: nowrap;
+        align-items: center;
+        height: 30px;
+        background-color: $create-buttons-background-color;
+        border-radius: $create-tag-border-radius;
+        padding: $create-tag-padding;
+        margin: $create-tag-margin;
+        .tag-name {
+          text-align: center;
+          font-size: $create-tag-font-size;
+          color: $create-tag-color;
+        }
+        .delete-tag-button {
+          width: 15px;
+          height: 15px;
+          text-align: center;
+          font-size: 70%;
+          padding: 0px;
+          margin: 0px 0px 0px 5px;
+        }
+      }
+    }
+
+    .topTagsBlock {
+      margin-left: 1px;
+      width: 240px;
+      display: flex;
+      flex-direction: row;
+      justify-content: flex-start;
+      align-items: center;
+      flex-wrap: wrap;
+      p {
+        margin-bottom: 1px;
+      }
+      .topTagList {
+        background-color: $main-light-color;
+        padding: 5px 0px 5px 5px;
+        border-radius: 7px;
+        width: 200%;
+        .topTags {
+          display: inline-flex;
+          flex-direction: row;
+          flex-wrap: nowrap;
+          align-items: center;
+          height: 30px;
+          background-color: $create-buttons-background-color;
+          border-radius: $create-tag-border-radius;
+          padding: $create-tag-padding;
+          margin: $create-tag-margin;
+          .tag-name {
+            text-align: center;
+            font-size: $create-tag-font-size;
+            color: $create-tag-color;
+          }
+        }
+      }
+    }
+  }
+
+  .right-column {
+    border-radius: 7px;
+    margin: 10px;
+    display: inline-block;
+    flex-direction: row;
+    width: 920px;
+    background-color: $paper-color;
+    min-height: 550px;
+    max-height: 1500px;
+
+    .advanced-search-bar {
+      width: 450px;
+      border-style: double;
+      border-radius: 7px;
+      margin-left: 200px;
+      margin-top: 20px;
+      display: flex;
+      flex-direction: row;
+      flex-wrap: nowrap;
+      justify-content: flex-start;
+      align-items: center;
+      padding: 5px;
+      #sortBy {
+        background-color: white;
+        border-radius: 4px;
+      }
+      #advanced-search-input {
+        margin-left: 10px;
+        margin-right: 10px;
+        width: 240px;
+        height: 28px;
+        padding: 5px;
+        border-radius: 4px;
+      }
+      #advanced-search-button {
+        width: 80px;
+        height: 28px;
+        padding: 0px;
+        margin: 1px;
+        border-radius: 7px;
+      }
+    }
+
+    .search-result-list {
+      display: flex;
+      flex-direction: row;
+      flex-wrap: wrap;
+      background-color: $main-light-color;
+      border-radius: 7px;
+      box-shadow: $mypage-tab-panel-box-shadow;
+      padding: 10px;
+      .SimpleRoadmap {
+        margin: 10px;
+      }
+    }
+    .pages {
+      button {
+        background-color: $create-buttons-background-color;
+        color: $create-buttons-color;
+        border: $create-buttons-border-style;
+        border-radius: $create-buttons-border-radius;
+        margin-top: 2px;
+        margin-right: 2px;
+      }
+    }
+  }
+}

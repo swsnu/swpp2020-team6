@@ -2,17 +2,13 @@ import { createStore, combineReducers, applyMiddleware, compose } from "redux";
 import { connectRouter } from "connected-react-router";
 
 import { history, middlewares } from "../store/store";
-// import * as actionTypes from "../store/actions/actionTypes";
 
-const getMockReducer = jest.fn((initialState) => (state = initialState, action) => {
-  switch (action.type) {
-    default:
-      break;
-  }
+const getMockReducer = jest.fn((initialState) => (state) => {
+  if (typeof state === "undefined") return initialState;
   return state;
 });
 
-const getMockStore = (initialUserState, initialRoadmapState, initialSearchState) => {
+const mocks = (initialUserState, initialRoadmapState, initialSearchState) => {
   const mockUserReducer = getMockReducer(initialUserState);
   const mockRoadmapReducer = getMockReducer(initialRoadmapState);
   const mockSearchReducer = getMockReducer(initialSearchState);
@@ -27,4 +23,4 @@ const getMockStore = (initialUserState, initialRoadmapState, initialSearchState)
   return mockStore;
 };
 
-export default getMockStore;
+export default mocks;

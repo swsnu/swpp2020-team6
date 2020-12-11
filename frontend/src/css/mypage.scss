@@ -3,8 +3,10 @@
 /* ------------------ MyPage variables ------------------ */
 $mypage-main-background-color: $grey-light2-color;
 
-$mypage-user-info-width: 230px;
-$mypage-user-info-height: 400px;
+$mypage-min-width: 1200px;
+
+$mypage-user-info-width: 200px;
+$mypage-user-info-height: 350px;
 $mypage-user-info-background-color: #ffffff;
 $mypage-user-info-border-radius: 20px;
 $mypage-user-info-font-size: 20px;
@@ -25,14 +27,17 @@ $mypage-tab-menu-height: 70px;
 $mypage-tab-menu-color: #ffffff;
 $mypage-tab-menu-margin: 0px 10px 0px 0px;
 
-$mypage-tab-width: 950px;
+$mypage-tab-panel-padding: 40px;
+$mypage-tab-panel-background-color: #ffffff;
+$mypage-tab-panel-box-shadow: none;
+
+$mypage-tab-item-width: 280px;
+$mypage-tab-item-margin: 5px;
+$mypage-tab-width: ($mypage-tab-item-width + $mypage-tab-item-margin * 2) * 3 +
+  $mypage-tab-panel-padding * 2;
 $mypage-tab-box-shadow: none;
 $mypage-tab-background-color: $grey-light-color;
 $mypage-tab-border-radius: $mypage-tab-menu-border-radius;
-
-$mypage-tab-panel-background-color: #ffffff;
-$mypage-tab-panel-box-shadow: none;
-$mypage-tab-panel-padding: 50px;
 
 $mypage-tab-menu-clicked-background-color: $mypage-tab-panel-background-color;
 $mypage-tab-menu-clicked-border-style: $mypage-tab-menu-border-style;
@@ -47,8 +52,3 @@ $mypage-tab-menu-hover-enabled-background-color: $main3-red-dark2-color;
 
 $mypage-tab-menu-disabled-opacity: 0.5;
 $mypage-tab-menu-disabled-cursor: not-allowed;
-
-$mypage-tab-item-background-color: $grey-light-color;
-$mypage-tab-item-width: 250px;
-$mypage-tab-item-height: 250px;
-$mypage-tab-item-margin: 0px 23px 0px 0px;

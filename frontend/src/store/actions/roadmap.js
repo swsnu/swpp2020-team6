@@ -37,6 +37,42 @@ export const getRoadmap = (roadmapId) => {
       });
   };
 };
+
+export const getEditRoadmapSuccess_ = (roadmapData) => {
+  return { type: actionTypes.GET_EDIT_ROADMAP_SUCCESS, roadmapData };
+};
+
+export const getEditRoadmapFail_ = () => {
+  return { type: actionTypes.GET_EDIT_ROADMAP_FAILURE };
+};
+
+export const getEditRoadmap = (roadmapId) => {
+  return (dispatch) => {
+    return axios
+      .get(`/api/roadmap/${roadmapId}/`)
+      .then((response) => {
+        dispatch(getEditRoadmapSuccess_(response.data));
+      })
+      .catch((error) => {
+        switch (error.response.status) {
+          case 404:
+            window.alert("No such Roadmap!");
+            break;
+          case 401:
+            window.alert("Please sign in!");
+            break;
+          case 400:
+            window.alert("Parsing error!");
+            break;
+          default:
+            break;
+        }
+        dispatch(goBack());
+        dispatch(getEditRoadmapFail_());
+      });
+  };
+};
+
 export const createRoadmap_ = (roadmapData) => {
   return { type: actionTypes.CREATE_ROADMAP, roadmapData };
 };
@@ -105,6 +141,12 @@ export const resetRoadmap_ = () => {
   };
 };
 
+export const resetEditRoadmap_ = () => {
+  return {
+    type: actionTypes.RESET_EDIT_ROADMAP,
+  };
+};
+
 export const deleteRoadmap_ = (roadmapId) => {
   return { type: actionTypes.DELETE_ROADMAP, roadmapId };
 };
@@ -116,15 +158,17 @@ export const deleteRoadmap = (roadmapId) => {
       .then(() => {
         window.alert("Roadmap successfully deleted!");
         dispatch(deleteRoadmap_(roadmapId));
-        dispatch(push(`/main`));
+        dispatch(push("/main"));
       })
       .catch((error) => {
         switch (error.response.status) {
           case 401:
             window.alert("Please sign in!");
+            dispatch(push("/main"));
             break;
           case 404:
             window.alert("No such Roadmap!");
+            dispatch(goBack());
             break;
           case 403:
             window.alert("Only the author can delete the Roadmap!");
@@ -135,7 +179,6 @@ export const deleteRoadmap = (roadmapId) => {
           default:
             break;
         }
-        dispatch(goBack());
       });
   };
 };
@@ -240,7 +283,6 @@ export const deleteComment = (commentID) => {
     return axios
       .delete(`/api/comment/${commentID}/`)
       .then(() => {
-        window.alert("Successfully deleted comment!");
         dispatch(deleteCommentSuccess_(commentID));
       })
       .catch((error) => {
@@ -484,6 +526,31 @@ export const getNewRoadmaps = (topN) => {
       })
       .catch((error) => {
         dispatch(getNewRoadmapsFail_(error.response.status));
+      });
+  };
+};
+
+export const getRecommendedRoadmapsSuccess_ = (roadmapData) => {
+  return { type: actionTypes.GET_RECOMMENDED_ROADMAP_SUCCESS, roadmaps: roadmapData.roadmaps };
+};
+
+export const getRecommendedRoadmapsFail_ = (errorStatus) => {
+  return { type: actionTypes.GET_RECOMMENDED_ROADMAP_FAILURE, errorStatus };
+};
+
+export const resetRecommendedRoadmaps_ = () => {
+  return { type: actionTypes.RESET_RECOMMENDED_ROADMAP };
+};
+
+export const getRecommendedRoadmaps = () => {
+  return (dispatch) => {
+    return axios
+      .get(`/api/user/recommended/`)
+      .then((response) => {
+        dispatch(getRecommendedRoadmapsSuccess_(response.data));
+      })
+      .catch((error) => {
+        dispatch(getRecommendedRoadmapsFail_(error.response.status));
       });
   };
 };

@@ -100,5 +100,6 @@ backend/.python-version
 backend/htmlcov
 backend/backend/settings/secrets.json
 backend/backend/secrets.json
+backend/mysql.cnf
 
 .coveralls.yml

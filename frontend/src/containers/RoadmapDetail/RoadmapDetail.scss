@@ -1,25 +1,65 @@
 @import "../../css/roadmap.scss";
 
 .RoadmapDetail {
-  width: 80%;
+  width: 100%;
   height: 100%;
   margin: auto;
   min-height: 100vh;
   display: flex;
   flex-direction: row;
+  background-color: $paper-color;
+
+  input,
+  textarea {
+    color: $roadmap-input-text-color;
+    border: $roadmap-input-border-style;
+    border-radius: $roadmap-input-border-radius;
+    font-size: $roadmap-input-font-size;
+    padding: $roadmap-input-padding;
+    resize: none;
+  }
+  input::placeholder,
+  textarea::placeholder {
+    color: $roadmap-input-placeholder-color;
+    font-style: $roadmap-input-placeholder-style;
+    font-size: $roadmap-input-placeholder-font-size;
+  }
+  input:focus,
+  textarea:focus {
+    outline: none;
+  }
+
+  div,
+  a {
+    -webkit-transition: all 0.3s ease-in-out;
+    -moz-transition: all 0.3s ease-in-out;
+    -o-transition: all 0.3s ease-in-out;
+    -ms-transition: all 0.3s ease-in-out;
+    transition: all 0.3s ease-in-out;
+  }
 
   button:disabled {
     opacity: $create-buttons-disabled-opacity;
   }
 
+  .emptycolumn {
+    width: 10%;
+  }
+
   .leftcolumn {
-    width: 70%;
+    width: 60%;
     display: flex;
     flex-direction: column;
     align-items: center;
     border: $create-roadmap-border-style;
     border-radius: $create-roadmap-border-radius;
     text-align: left;
+    margin-bottom: 100px;
+
+    a {
+      padding-top: 110px;
+      margin-top: -110px;
+    }
 
     .roadmap-info {
       width: 100%;
@@ -29,11 +69,20 @@
       align-items: center;
       padding: 40px;
       color: #ffffff;
+      border-radius: $create-tag-border-radius;
 
-      #roadmap-image {
-        background-color: #ffffff;
+      .roadmap-image-wrapper {
+        overflow: hidden;
         width: 250px;
-        height: 250px * (9/16);
+        min-width: 250px;
+        height: 250px * (3/4);
+        min-height: 250px * (3/4);
+
+        #roadmap-image {
+          background-color: #ffffff;
+          width: 100%;
+          margin: -33px 0px 0px 0px;
+        }
       }
 
       .title-author-level-tags {
@@ -43,10 +92,16 @@
         flex-direction: column;
         align-items: flex-start;
         margin-left: 40px;
-
         .roadmap-title {
           order: 0;
           font-size: 30px;
+          margin: 0px 0px 10px 0px;
+          display: flex;
+          align-items: center;
+
+          #lock-icon {
+            margin: 0px 10px 0px 0px;
+          }
         }
         .roadmap-level {
           order: 1;
@@ -56,6 +111,7 @@
           order: 2;
           display: flex;
           flex-direction: row;
+          flex-wrap: wrap;
           justify-content: flex-start;
           margin: 0px 0px 3px 0px;
 
@@ -66,7 +122,7 @@
             height: $create-tag-height;
             background-color: $create-buttons-background-color;
             border-radius: $create-tag-border-radius;
-            margin: $create-tag-margin;
+            margin: 0px 3px 3px 0px;
             padding: 1px 6px 1px 6px;
           }
         }
@@ -86,9 +142,9 @@
       flex-direction: column;
       align-items: center;
       padding: 40px 20px 40px 20px;
+      background-color: $paper-color;
 
       .roadmap-description {
-        order: 2;
         width: 100%;
         border: $roadmap-description-border;
         border-radius: $roadmap-description-border-radius;
@@ -96,42 +152,120 @@
         background-color: $roadmap-description-background-color;
         color: $roadmap-description-color;
         padding: 15px;
+        margin-bottom: 50px;
       }
 
       .roadmap-sections {
-        order: 3;
+        width: 100%;
+      }
+    }
+
+    .comments {
+      width: 100%;
+      display: flex;
+      flex-direction: column;
+      align-items: center;
+      background-color: $comments-background-color;
+      border-radius: 5px;
+      padding: 30px;
+
+      #roadmap-comment-count {
+        width: 100%;
+        margin: 10px 0px 30px 0px;
+        padding-left: 8px;
+        display: flex;
+        flex-direction: row;
+        align-items: flex-start;
+        justify-content: flex-start;
+        font-size: 20px;
+        font-weight: 800;
+      }
+
+      .comment-input {
+        display: flex;
+        flex-direction: column;
+        align-items: flex-end;
+        width: 100%;
+        margin-bottom: 20px;
+
+        #new-comment-content-input {
+          width: 100%;
+          height: 100px;
+        }
+
+        #confirm-create-comment-button {
+          width: 150px;
+          height: 40px;
+          border: none;
+          border-radius: 7px;
+          background-color: $comment-confirm-background-color;
+          color: $comment-confirm-color;
+          font-weight: $comment-confirm-font-weight;
+          font-size: $comment-confirm-font-size;
+          margin-top: 10px;
+        }
+      }
+
+      .roadmap-comments {
+        display: flex;
+        flex-direction: column;
+        align-items: center;
+        justify-content: flex-start;
         width: 100%;
       }
     }
   }
 
   .rightcolumn {
+    margin: 10px;
     display: flex;
     flex-direction: column;
-    width: 30%;
+    width: 20%;
 
     .roadmap-panel {
+      position: sticky;
+      top: 80px;
       display: flex;
       flex-direction: column;
       width: 100%;
 
-      .progress-bar {
-        background-color: #dddddd;
-      }
-
       .roadmap-author {
-      }
+        display: flex;
+        flex-direction: row;
+        width: 100%;
 
-      .roadmap-statistics {
+        .UserCard {
+          width: 100%;
+        }
       }
     }
+  }
 
-    .comment-input {
-      .new-comment-content-input {
-      }
+  .anchors {
+    width: 10%;
+    display: flex;
+    flex-direction: column;
+    justify-content: flex-end;
 
-      .roadmap-comments {
-      }
+    .top-anchor {
+      align-self: flex-end;
+      display: flex;
+      flex-direction: column;
+      align-items: center;
+      position: sticky;
+      bottom: 30px;
+      border-radius: 7px;
+      border: 1px solid $grey-light-color;
+      padding: 10px;
+      margin: 0px 40px 40px 0px;
+      color: $grey-dark2-color;
+      width: 70px;
+    }
+
+    .top-anchor:hover {
+      text-decoration: none;
+      cursor: grab;
+      box-shadow: 0px 0px 3px #999999;
     }
   }
 }

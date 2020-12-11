@@ -2,15 +2,29 @@
   width: 1300px;
   margin: auto;
 
-  .best-roadmaps-panel {
-    background-color: #f77a6c;
-    padding: 20px;
-    margin-bottom: 20px;
-  }
-
+  .best-roadmaps-panel,
   .new-roadmaps-panel {
-    background-color: #f4aaa2;
     padding: 20px;
     margin-bottom: 20px;
+
+    .left-button,
+    .right-button {
+      width: 50px;
+      height: 50px;
+      min-width: 50px;
+      min-height: 50px;
+      background-color: #ffffff;
+      border: 1px solid #dddddd;
+      border-radius: 70%;
+      box-shadow: 1px 1px 5px #666666;
+      font-size: 20px;
+      opacity: 0.7;
+      transition: opacity 0.3s ease-in-out;
+    }
+
+    .left-button:hover,
+    .right-button:hover {
+      opacity: 1;
+    }
   }
 }

@@ -9,8 +9,17 @@ const initialState = {
   myPageUser: undefined,
 };
 
-const reducer = (state = initialState, action) => {
+const user = (state = initialState, action = { type: null }) => {
   const { selectedUser } = state;
+  if (action.type === actionTypes.CREATE_ROADMAP || action.type === actionTypes.DUPLICATE_ROADMAP) {
+    return {
+      ...state,
+      selectedUser: {
+        ...selectedUser,
+        my_roadmaps: selectedUser.my_roadmaps.concat(action.roadmapData),
+      },
+    };
+  }
   switch (action.type) {
     case actionTypes.GET_USER_AUTH:
       return { ...state, isSignedIn: action.isSignedIn, selectedUser: action.selectedUser };
@@ -20,14 +29,6 @@ const reducer = (state = initialState, action) => {
       return { ...state };
     case actionTypes.SIGN_OUT_SUCCESS:
       return { ...state, isSignedIn: false, selectedUser: undefined };
-    case actionTypes.CREATE_ROADMAP:
-      return {
-        ...state,
-        selectedUser: {
-          ...selectedUser,
-          my_roadmaps: selectedUser.my_roadmaps.concat(action.roadmapData),
-        },
-      };
     case actionTypes.EDIT_ROADMAP:
       return {
         ...state,
@@ -49,14 +50,6 @@ const reducer = (state = initialState, action) => {
           my_roadmaps: selectedUser.my_roadmaps.filter(
             (roadmap) => roadmap.id !== action.roadmapId,
           ),
-        },
-      };
-    case actionTypes.DUPLICATE_ROADMAP:
-      return {
-        ...state,
-        selectedUser: {
-          ...selectedUser,
-          my_roadmaps: selectedUser.my_roadmaps.concat(action.roadmapData),
         },
       };
     case actionTypes.ROADMAP_LIKE:
@@ -111,4 +104,4 @@ const reducer = (state = initialState, action) => {
   return state;
 };
 
-export default reducer;
+export default user;
