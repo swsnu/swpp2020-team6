@@ -182,6 +182,7 @@ describe("App", () => {
     expect(bestRoadmaps.length).toBe(1);
     expect(spyGetBestRoadmaps).toHaveBeenCalledTimes(1);
     expect(spyGetNewRoadmaps).toHaveBeenCalledTimes(1);
+    expect(spyGetRecommendedRoadmaps).toHaveBeenCalledTimes(1);
   });
 
   it(`should show error message properly if error happened
@@ -203,6 +204,8 @@ describe("App", () => {
     expect(bestRoadmapError.length).toBe(1);
     const newRoadmapError = component.find("#get-new-roadmaps-error");
     expect(newRoadmapError.length).toBe(1);
+    const recommendedRoadmapError = component.find("#get-recommended-roadmaps-error");
+    expect(recommendedRoadmapError.length).toBe(1);
   });
 
   it("should redirect on clicking Card", () => {

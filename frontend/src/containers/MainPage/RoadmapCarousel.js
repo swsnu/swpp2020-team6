@@ -32,6 +32,7 @@ const RoadmapCarousel = (props) => {
   useEffect(() => {
     getBestRoadmaps(12);
     getNewRoadmaps(12);
+    getRecommendedRoadmaps();
 
     return () => {
       const { onResetBestRoadmaps, onResetNewRoadmaps, onResetRecommendedRoadmaps } = props;
@@ -40,57 +41,6 @@ const RoadmapCarousel = (props) => {
       onResetRecommendedRoadmaps();
     };
   }, []);
-
-  // || recommendedRoadmaps.length === 0
-  if (bestRoadmaps.length === 0 || newRoadmaps.length === 0) {
-    const bestRoadmapsLoadingState = bestRoadmapsError ? (
-      <p id="get-best-roadmaps-error">
-        {`${bestRoadmapsError} occurred while loading best roadmaps!`}
-        <br />
-        Try refreshing the page!
-      </p>
-    ) : (
-      <p>Loading...Please wait!</p>
-    );
-    const newRoadmapsLoadingState = newRoadmapsError ? (
-      <p id="get-new-roadmaps-error">
-        {`${newRoadmapsError} occurred while loading new roadmaps!`}
-        <br />
-        Try refreshing the page!
-      </p>
-    ) : (
-      <p>Loading...Please wait!</p>
-    );
-    /*
-    const recommendedRoadmapsLoadingState = recommendedRoadmapsError ? (
-      <p id="get-recommended-roadmaps-error">
-        {`${recommendedRoadmapsError} occurred while loading recommended roadmaps!`}
-        <br />
-        Try refreshing the page!
-      </p>
-    ) : (
-      <p>Loading...Please wait!</p>
-    );
-    */
-    return (
-      <div className="carousels">
-        <div className="best-roadmaps-panel">
-          <h2>Checkout top 12 Roadmaps!</h2>
-          {bestRoadmapsLoadingState}
-        </div>
-        <div className="new-roadmaps-panel">
-          <h2>Checkout some recently created Roadmaps!</h2>
-          {newRoadmapsLoadingState}
-        </div>
-      </div>
-    );
-    /*
-    <div className="recommended-roadmaps-panel">
-          <h2>Checkout some recommended Roadmaps!</h2>
-          {recommendedRoadmapsLoadingState}
-        </div>
-     */
-  }
 
   const makeRoadmapItemList = (roadmapList) => {
     return roadmapList.map((roadmap) => (
@@ -115,12 +65,121 @@ const RoadmapCarousel = (props) => {
     ));
   };
 
+  let bestRoadmapsDisplay;
+  let newRoadmapsDisplay;
+  let recommendedRoadmapsDisplay;
+  if (bestRoadmaps.length === 0) {
+    bestRoadmapsDisplay = bestRoadmapsError ? (
+      <p id="get-best-roadmaps-error">
+        {`${bestRoadmapsError} occurred while loading best roadmaps!`}
+        <br />
+        Try refreshing the page!
+      </p>
+    ) : (
+      <p>Loading...Please wait!</p>
+    );
+  } else {
+    bestRoadmapsDisplay = (
+      <ItemsCarousel
+        requestToChangeActive={setActiveBestRoadmap}
+        activeItemIndex={activeBestRoadmap}
+        numberOfCards={4}
+        gutter={20}
+        leftChevron={
+          <button className="left-button" type="button">
+            <ChevronLeftIcon />
+          </button>
+        }
+        rightChevron={
+          <button className="right-button" type="button">
+            <ChevronRightIcon />
+          </button>
+        }
+        outsideChevron
+        chevronWidth={chevronWidth}
+        slidesToScroll={4}
+      >
+        {makeRoadmapItemList(bestRoadmaps)}
+      </ItemsCarousel>
+    );
+  }
+  if (newRoadmaps.length === 0) {
+    newRoadmapsDisplay = newRoadmapsError ? (
+      <p id="get-new-roadmaps-error">
+        {`${newRoadmapsError} occurred while loading new roadmaps!`}
+        <br />
+        Try refreshing the page!
+      </p>
+    ) : (
+      <p>Loading...Please wait!</p>
+    );
+  } else {
+    newRoadmapsDisplay = (
+      <ItemsCarousel
+        requestToChangeActive={setActiveNewRoadmap}
+        activeItemIndex={activeNewRoadmap}
+        numberOfCards={4}
+        gutter={20}
+        leftChevron={
+          <button className="left-button" type="button">
+            <ChevronLeftIcon />
+          </button>
+        }
+        rightChevron={
+          <button className="right-button" type="button">
+            <ChevronRightIcon />
+          </button>
+        }
+        outsideChevron
+        chevronWidth={chevronWidth}
+        slidesToScroll={4}
+      >
+        {makeRoadmapItemList(newRoadmaps)}
+      </ItemsCarousel>
+    );
+  }
+  if (recommendedRoadmaps.length === 0) {
+    recommendedRoadmapsDisplay = recommendedRoadmapsError ? (
+      <p id="get-recommended-roadmaps-error">
+        {`${recommendedRoadmapsError} occurred while loading recommended roadmaps!`}
+        <br />
+        Try refreshing the page!
+      </p>
+    ) : (
+      <p>Loading...Please wait!</p>
+    );
+  } else {
+    recommendedRoadmapsDisplay = (
+      <ItemsCarousel
+        requestToChangeActive={setActiveRecommendedRoadmap}
+        activeItemIndex={activeRecommendedRoadmap}
+        numberOfCards={4}
+        gutter={20}
+        leftChevron={
+          <button className="left-button" type="button">
+            <ChevronLeftIcon />
+          </button>
+        }
+        rightChevron={
+          <button className="right-button" type="button">
+            <ChevronRightIcon />
+          </button>
+        }
+        outsideChevron
+        chevronWidth={chevronWidth}
+        slidesToScroll={4}
+      >
+        {makeRoadmapItemList(recommendedRoadmaps)}
+      </ItemsCarousel>
+    );
+  }
+
   return (
     <div className="carousels">
       <h2>
-        <img src={rotus} />
-        Don't know where to start?
-        <img src={rotus} />
+        <img src={rotus} alt="rotus logo" />
+        Don&apos;t know where to start?
+        <img src={rotus} alt="rotus logo" />
       </h2>
       <div className="best-roadmaps-panel">
         <h3>
@@ -133,27 +192,7 @@ const RoadmapCarousel = (props) => {
           </span>
         </h3>
         <div className="best-roadmaps" style={{ padding: `0 ${chevronWidth}px` }}>
-          <ItemsCarousel
-            requestToChangeActive={setActiveBestRoadmap}
-            activeItemIndex={activeBestRoadmap}
-            numberOfCards={4}
-            gutter={20}
-            leftChevron={
-              <button className="left-button" type="button">
-                <ChevronLeftIcon />
-              </button>
-            }
-            rightChevron={
-              <button className="right-button" type="button">
-                <ChevronRightIcon />
-              </button>
-            }
-            outsideChevron
-            chevronWidth={chevronWidth}
-            slidesToScroll={4}
-          >
-            {makeRoadmapItemList(bestRoadmaps)}
-          </ItemsCarousel>
+          {bestRoadmapsDisplay}
         </div>
       </div>
       <div className="recommended-roadmaps-panel">
@@ -167,27 +206,7 @@ const RoadmapCarousel = (props) => {
           </span>
         </h3>
         <div className="recommended-roadmaps" style={{ padding: `0 ${chevronWidth}px` }}>
-          <ItemsCarousel
-            requestToChangeActive={setActiveRecommendedRoadmap}
-            activeItemIndex={activeRecommendedRoadmap}
-            numberOfCards={4}
-            gutter={20}
-            leftChevron={
-              <button className="left-button" type="button">
-                <ChevronLeftIcon />
-              </button>
-            }
-            rightChevron={
-              <button className="right-button" type="button">
-                <ChevronRightIcon />
-              </button>
-            }
-            outsideChevron
-            chevronWidth={chevronWidth}
-            slidesToScroll={4}
-          >
-            {makeRoadmapItemList(newRoadmaps)}
-          </ItemsCarousel>
+          {recommendedRoadmapsDisplay}
         </div>
       </div>
       <div className="new-roadmaps-panel">
@@ -201,27 +220,7 @@ const RoadmapCarousel = (props) => {
           </span>
         </h3>
         <div className="new-roadmaps" style={{ padding: `0 ${chevronWidth}px` }}>
-          <ItemsCarousel
-            requestToChangeActive={setActiveNewRoadmap}
-            activeItemIndex={activeNewRoadmap}
-            numberOfCards={4}
-            gutter={20}
-            leftChevron={
-              <button className="left-button" type="button">
-                <ChevronLeftIcon />
-              </button>
-            }
-            rightChevron={
-              <button className="right-button" type="button">
-                <ChevronRightIcon />
-              </button>
-            }
-            outsideChevron
-            chevronWidth={chevronWidth}
-            slidesToScroll={4}
-          >
-            {makeRoadmapItemList(newRoadmaps)}
-          </ItemsCarousel>
+          {newRoadmapsDisplay}
         </div>
       </div>
     </div>

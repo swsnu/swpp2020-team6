@@ -545,7 +545,7 @@ export const resetRecommendedRoadmaps_ = () => {
 export const getRecommendedRoadmaps = () => {
   return (dispatch) => {
     return axios
-      .get(`/api/user/recommended/`)
+      .get(`/api/user/recommend/`)
       .then((response) => {
         dispatch(getRecommendedRoadmapsSuccess_(response.data));
       })
