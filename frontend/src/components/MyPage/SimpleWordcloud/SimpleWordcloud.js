@@ -3,23 +3,28 @@ import WordCloud from "react-wordcloud";
 import PropTypes from "prop-types";
 
 const SimpleWordcloud = (props) => {
-  const myRoadmaps = props.myPageUser.my_roadmaps;
+  const { myPageUser } = props;
+  // eslint-disable-next-line camelcase
+  const { my_roadmaps } = myPageUser;
   const tags = {};
 
-  myRoadmaps.map((roadmap) => {
+  // eslint-disable-next-line camelcase
+  my_roadmaps.map((roadmap) => {
     roadmap.tags.map((tag) => {
       if (tag.tag_name in tags) {
         tags[tag.tag_name] += 1;
       } else {
         tags[tag.tag_name] = 1;
       }
+      return null;
     });
+    return null;
   });
 
-  let words = [];
-  for (const [key, value] of Object.entries(tags)) {
-    words.push({ text: key, value: value });
-  }
+  const words = [];
+  Object.keys(tags).forEach((key) => {
+    words.push({ text: key, value: tags[key] });
+  });
 
   const options = {
     colors: ["#1f77b4", "#ff7f0e", "#2ca02c", "#d62728", "#9467bd", "#8c564b"],

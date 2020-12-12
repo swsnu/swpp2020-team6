@@ -1,5 +1,5 @@
 import React from "react";
-import { mount, shallow } from "enzyme";
+import { mount } from "enzyme";
 import SimpleWordcloud from "./SimpleWordcloud";
 
 const stubMyPageUserData = {
@@ -65,5 +65,7 @@ jest.mock("react-wordcloud", () => () => <mock-cloud />);
 describe("wordcloud", () => {
   it("should render without errors", () => {
     const component = mount(<SimpleWordcloud myPageUser={stubMyPageUserData} />);
+    const mockedCloud = component.find("mock-cloud");
+    expect(mockedCloud.length).toBe(1);
   });
 });
