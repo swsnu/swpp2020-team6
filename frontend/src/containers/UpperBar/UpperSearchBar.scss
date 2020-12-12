@@ -1,3 +1,4 @@
+@import "../../css/basic.scss";
 .UpperSearchBar {
   width: 100%;
 
@@ -11,7 +12,7 @@
     justify-content: center;
     align-items: center;
     padding: 0px 0px 0px 20px;
-    border: 1px solid #dddddd;
+    border: 1px solid $main-light-color;
     border-radius: 5px;
 
     input {
@@ -19,13 +20,13 @@
       border: none;
       padding: 0px;
       font-size: 17px;
-      font-style: italic;
     }
     input:focus {
       outline: none;
     }
     input::placeholder {
       color: #bbbbbb;
+      font-style: italic;
     }
   }
 }

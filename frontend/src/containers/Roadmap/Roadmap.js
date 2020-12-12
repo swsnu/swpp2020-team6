@@ -398,15 +398,13 @@ class Roadmap extends Component {
     for (let i = 1; i <= roadmapImageNum; i += 1) {
       imageList = imageList.concat({
         name: (
-          <div className="roadmap-image-wrapper">
-            <img
-              className="roadmap-image"
-              src={require(`misc/roadmap/${i}.png`)}
-              width="150"
-              height="150"
-              alt={`roadmap-${i}`}
-            />
-          </div>
+          <img
+            className="roadmap-image"
+            src={require(`misc/roadmap/${i}.jpg`)}
+            width="300"
+            height="225"
+            alt={`roadmap-${i}`}
+          />
         ),
         value: i,
       });

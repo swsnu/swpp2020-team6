@@ -3,7 +3,6 @@ from roadmap import views
 
 urlpatterns = [
     path("", views.roadmap, name="roadmap"),
-    # path("duplicate/", views.duplicate, name="roadmap_duplicate"),
     path("<int:roadmap_id>/", views.roadmap_id, name="roadmap_id"),
     path("<int:roadmap_id>/like/", views.roadmap_id_like, name="roadmap_id_like"),
     path("<int:roadmap_id>/pin/", views.roadmap_id_pin, name="roadmap_id_pin"),
@@ -14,7 +13,5 @@ urlpatterns = [
     ),
     path("best/<int:top_n>/", views.best, name="roadmap_best"),
     path("new/<int:top_n>/", views.new, name="roadmap_new"),
-    # path("simple_search/", views.simple_search, name="roadmap_simple_search"),
-    # path("advanced_search/", views.advanced_search, name="roadmap_advanced_search"),
     path("search/", views.search, name="roadmap_search"),
 ]

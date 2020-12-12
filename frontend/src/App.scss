@@ -6,9 +6,8 @@
   font-family: "Nunito", sans-serif;
   text-align: center;
   width: 100%;
-  min-width: 1200px;
+  min-width: 1350px;
   scroll-behavior: smooth;
-
   div,
   h1,
   h2,
@@ -56,17 +55,38 @@
     .UpperSearchBar {
       order: 1;
     }
+    h1 {
+      margin-left: 730px;
+    }
   }
 
   .component {
-    min-height: 100vh;
+    min-height: 85vh;
   }
 
   .footer {
-    height: 120px;
+    height: 15vh;
+    min-height: 15vh;
+    z-index: 1000;
+    min-height: 10vh;
     background-color: #666666;
     color: #ffffff;
     padding: 30px;
     text-align: left;
+
+    .footer-copyright {
+      display: flex;
+      flex-direction: row;
+      align-items: center;
+      justify-content: center;
+
+      p {
+        margin-bottom: 0;
+      }
+
+      .MuiSvgIcon-root {
+        margin: 0px 5px;
+      }
+    }
   }
 }

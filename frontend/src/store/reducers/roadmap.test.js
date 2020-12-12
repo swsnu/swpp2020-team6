@@ -7,6 +7,8 @@ const initialState = {
   bestRoadmapsError: null,
   newRoadmaps: [],
   newRoadmapsError: null,
+  recommendedRoadmaps: [],
+  recommendedRoadmapsError: null,
 };
 
 const stubSelectedRoadmap = {
@@ -452,7 +454,7 @@ describe("Roadmap Reducer", () => {
     });
   });
 
-  // ------------- get best, new roadmaps -------------
+  // ------------- get best, new, recommended roadmaps -------------
   it("should set bestRoadmapsError as the error status ", () => {
     const newState = reducer(undefined, {
       type: actionTypes.GET_BEST_ROADMAP_FAILURE,
@@ -493,6 +495,26 @@ describe("Roadmap Reducer", () => {
     });
   });
 
+  it("should set recommendedRoadmapsError as the error status ", () => {
+    const newState = reducer(undefined, {
+      type: actionTypes.GET_RECOMMENDED_ROADMAP_FAILURE,
+      errorStatus: 401,
+    });
+    expect(newState).toEqual({ ...initialState, recommendedRoadmapsError: 401 });
+  });
+
+  it("should set recommendedRoadmaps as the given data ", () => {
+    const newState = reducer(undefined, {
+      type: actionTypes.GET_RECOMMENDED_ROADMAP_SUCCESS,
+      roadmaps: [stubSimpleRoadmap],
+    });
+    expect(newState).toEqual({
+      ...initialState,
+      recommendedRoadmaps: [stubSimpleRoadmap],
+      recommendedRoadmapsError: null,
+    });
+  });
+
   it("should reset bestRoadmaps,bestRoadmapsError as the initial state ", () => {
     const newState = reducer(undefined, {
       type: actionTypes.RESET_BEST_ROADMAP,
@@ -515,6 +537,17 @@ describe("Roadmap Reducer", () => {
     });
   });
 
+  it("should reset recommendedRoadmaps,recommendedRoadmapsError as the initial state ", () => {
+    const newState = reducer(undefined, {
+      type: actionTypes.RESET_RECOMMENDED_ROADMAP,
+    });
+    expect(newState).toEqual({
+      ...initialState,
+      recommendedRoadmaps: [],
+      recommendedRoadmapsError: null,
+    });
+  });
+
   it("should handle default case", () => {
     const newState = reducer();
     expect(newState).toEqual({
@@ -524,6 +557,8 @@ describe("Roadmap Reducer", () => {
       bestRoadmapsError: null,
       newRoadmaps: [],
       newRoadmapsError: null,
+      recommendedRoadmaps: [],
+      recommendedRoadmapsError: null,
     });
   });
 });

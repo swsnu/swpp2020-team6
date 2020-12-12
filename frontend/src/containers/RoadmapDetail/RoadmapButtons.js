@@ -16,7 +16,7 @@ import * as actionCreators from "../../store/actions/index";
 import "./RoadmapButtons.scss";
 
 const RoadmapButtons = (props) => {
-  const { selectedUser, buttonsRoadmapId, likeCount, pinCount } = props;
+  const { selectedUser, buttonsRoadmapId, likeCount, pinCount, sectionsNum } = props;
 
   const onClickEditRoadmap = () => {
     const { history } = props;
@@ -77,6 +77,16 @@ const RoadmapButtons = (props) => {
     </>
   ) : null;
 
+  let sectionAnchors = [];
+  for (let i = 1; i <= sectionsNum; i += 1) {
+    sectionAnchors = sectionAnchors.concat(
+      <a href={`#roadmap-section-${i}`}>
+        Section
+        {` ${i}`}
+      </a>,
+    );
+  }
+
   return (
     <div className="RoadmapButtons">
       <div className="roadmap-buttons">
@@ -120,7 +130,7 @@ const RoadmapButtons = (props) => {
       </div>
       <div className="roadmap-anchors">
         <a href="#roadmap-description">Description</a>
-        <a href="#roadmap-sections">Sections</a>
+        {sectionAnchors}
         <a href="#roadmap-comments">Comments</a>
       </div>
     </div>
@@ -140,6 +150,7 @@ RoadmapButtons.propTypes = {
   selectedUser: PropTypes.objectOf(PropTypes.any),
   likeCount: PropTypes.number,
   pinCount: PropTypes.number,
+  sectionsNum: PropTypes.number,
 };
 
 const mapDispatchToProps = (dispatch) => {

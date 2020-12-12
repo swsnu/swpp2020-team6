@@ -22,7 +22,8 @@ BASE_DIR = Path(__file__).resolve().parent.parent.parent
 # See https://docs.djangoproject.com/en/3.1/howto/deployment/checklist/
 
 
-ALLOWED_HOSTS = ["18.206.120.0", ".localhost", "127.0.0.1", "[::1]"]
+ALLOWED_HOSTS = ["rotus.shop", "52.201.217.56", "localhost", "127.0.0.1", "[::1]"]
+
 
 # Application definition
 

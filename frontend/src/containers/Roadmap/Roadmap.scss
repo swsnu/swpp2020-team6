@@ -45,10 +45,18 @@ $margin-bottom-main: 10px;
     margin-top: $create-buttons-margin-top;
     font-size: $create-buttons-font-size;
     font-weight: $create-buttons-font-weight;
+    -webkit-transition: all 0.3s ease-in-out;
+    -moz-transition: all 0.3s ease-in-out;
+    -o-transition: all 0.3s ease-in-out;
+    -ms-transition: all 0.3s ease-in-out;
+    transition: all 0.3s ease-in-out;
   }
 
   button:disabled {
     opacity: $create-buttons-disabled-opacity;
+  }
+  button:hover:enabled {
+    box-shadow: 0px 0px 5px #999999;
   }
 
   .main {
@@ -112,11 +120,11 @@ $margin-bottom-main: 10px;
             justify-content: flex-start;
             align-items: center;
             width: 100%;
-            padding: 20px 10px 10px 5px;
+            padding: 20px 3px 10px 5px;
 
             #roadmap-private-label {
               width: 13%;
-              margin: 0px 0px 0px 40px;
+              margin: 0px 10px 0px 74px;
             }
           }
 
@@ -139,7 +147,7 @@ $margin-bottom-main: 10px;
 
               #new-tag {
                 width: 150px;
-                padding: 5px;
+                padding: 5px 5px 5px 10px;
                 border-radius: 4px;
               }
               #add-tag-button {
@@ -189,7 +197,7 @@ $margin-bottom-main: 10px;
         }
 
         .roadmap-image-select {
-          padding: 15px 0px 10px 30px;
+          padding: 15px 0px 10px 20px;
 
           .MuiFormControl-root {
             width: 364px;
@@ -204,22 +212,15 @@ $margin-bottom-main: 10px;
                 justify-content: center;
                 align-items: center;
                 height: 100%;
+                background-color: transparent;
 
                 em {
                   text-align: center;
                 }
 
-                .roadmap-image-wrapper {
-                  overflow: hidden;
+                img {
                   width: 300px;
                   height: 300px * (3/4);
-
-                  img {
-                    background-color: #ffffff;
-                    width: 300px;
-                    height: 300px;
-                    margin: -38px 0px 0px 0px;
-                  }
                 }
               }
             }

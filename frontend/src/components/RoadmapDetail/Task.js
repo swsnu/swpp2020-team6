@@ -4,6 +4,7 @@ import React from "react";
 import PropTypes from "prop-types";
 import Checkbox from "@material-ui/core/Checkbox";
 import LinkIcon from "@material-ui/icons/Link";
+import Tooltip from "@material-ui/core/Tooltip";
 import taskTypeIcons from "../CreateTask/taskTypeIcons";
 
 import "./Task.scss";
@@ -36,19 +37,21 @@ const Task = (props) => {
     ) : null;
   // 'task-type' will be changed into icon corresponding to the type
 
+  const validUrl = url.length >= 4 && url.substring(0, 4) === "http";
+
   return (
     <div className="Task">
       {checkbox}
       <div className="task-content">
-        <div className="task-type-title">
-          <div className="task-type">{type ? taskTypeIcons[type].name : null}</div>
-          <div className="task-title">{title}</div>
-        </div>
+        <div className="task-title">{title}</div>
         <div className="task-url">
+          <div className="task-type">{type ? taskTypeIcons[type].name : null}</div>
           <LinkIcon className="link-icon" />
-          <a href={url} className="url" target="_blank">
-            {url}
-          </a>
+          <Tooltip title={url}>
+            <a href={url} className="url" target="_blank">
+              {validUrl ? "Go to Link" : ""}
+            </a>
+          </Tooltip>
         </div>
         <div className="task-description">{description}</div>
       </div>

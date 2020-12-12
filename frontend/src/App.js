@@ -4,6 +4,8 @@ import { ConnectedRouter } from "connected-react-router";
 import { connect } from "react-redux";
 import PropTypes from "prop-types";
 
+import CopyrightIcon from "@material-ui/icons/Copyright";
+
 import CreateRoadmap from "./containers/CreateRoadmap/CreateRoadmap";
 import EditRoadmap from "./containers/EditRoadmap/EditRoadmap";
 import * as actionCreators from "./store/actions/index";
@@ -47,7 +49,7 @@ class App extends React.Component {
     return (
       <ConnectedRouter history={history}>
         <div className="App">
-          <div className={isSignedIn ? "upper-bar" : "not-upper-bar"}>
+          <div className={isSignedIn ? "upper-bar" : "nothing"}>
             {logoButton}
             {upperUserBar}
             {upperSearchBar}
@@ -66,7 +68,13 @@ class App extends React.Component {
               <Route render={() => <h1>Not Found</h1>} />
             </Switch>
           </div>
-          <div className="footer">swpp2020/team6</div>
+          <div className="footer">
+            <div className="footer-copyright">
+              <p>Copyright</p>
+              <CopyrightIcon />
+              <p>ROTUS. All rights reserved.</p>
+            </div>
+          </div>
         </div>
       </ConnectedRouter>
     );
