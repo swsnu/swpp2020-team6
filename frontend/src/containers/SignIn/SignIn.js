@@ -44,7 +44,7 @@ class SignIn extends Component {
     return (
       <div className="SignIn">
         <div className="left">
-          <img src={wallpaper} width="800" height="770" alt="" />
+          <img src={wallpaper} width="900" height="770" alt="" />
         </div>
         <div className="right">
           <img src={rotus} width="324" height="130" alt="" />
