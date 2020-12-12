@@ -44,7 +44,7 @@ class SignIn extends Component {
     return (
       <div className="SignIn">
         <div className="left">
-          <img src={wallpaper} width="900" height="770" alt="" />
+          <img id="left-image" src={wallpaper} alt="" />
         </div>
         <div className="right">
           <img src={rotus} width="324" height="130" alt="" />
@@ -53,7 +53,6 @@ class SignIn extends Component {
             <span> Rotus!</span>
           </h4>
           <p>Sign in to create and search for roadmaps.</p>
-          <label>Username</label>
           <input
             id="username-input"
             type="username"
@@ -61,8 +60,6 @@ class SignIn extends Component {
             onChange={(event) => this.setState({ username: event.target.value })}
             placeholder="Username"
           />
-          <br />
-          <label>Password</label>
           <input
             id="password-input"
             type="password"
@@ -70,19 +67,19 @@ class SignIn extends Component {
             onChange={(event) => this.setState({ password: event.target.value })}
             placeholder="Password"
           />
-          <br />
-          <button
-            id="signin-button"
-            onClick={() => this.onClickSignIn({ username, password })}
-            type="button"
-            disabled={!(username && password)}
-          >
-            Sign In
-          </button>
-          <button id="signup-button" onClick={() => this.onClickSignUp()} type="button">
-            Sign Up
-          </button>
-          <br />
+          <div className="buttons">
+            <button
+              id="signin-button"
+              onClick={() => this.onClickSignIn({ username, password })}
+              type="button"
+              disabled={!(username && password)}
+            >
+              Sign In
+            </button>
+            <button id="signup-button" onClick={() => this.onClickSignUp()} type="button">
+              Sign Up
+            </button>
+          </div>
           <button
             id="forgot-password-button"
             onClick={() => this.onClickForgotPassword()}
