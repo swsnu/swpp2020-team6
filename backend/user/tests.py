@@ -1,5 +1,7 @@
 import json
 from django.test import TestCase, Client
+
+from utils.test_util import get_csrf, signup_signin
 from .models import User
 from roadmap.models import Roadmap
 
@@ -241,3 +243,27 @@ class UserTestCase(TestCase):
         )
         self.assertNotIn("roadmap_title1", response.content.decode())
         self.assertIn("roadmap_title2", response.content.decode())
+
+    def test_recommend(self):
+        client = Client(enforce_csrf_checks=True)
+        csrftoken = get_csrf(client)
+        path = self.user_path + "recommend/"
+
+        # 405 (PUT, DELETE, POST)
+        response = client.put(path, HTTP_X_CSRFTOKEN=csrftoken)
+        self.assertEqual(response.status_code, 405)
+        response = client.delete(path, HTTP_X_CSRFTOKEN=csrftoken)
+        self.assertEqual(response.status_code, 405)
+        response = client.post(path, HTTP_X_CSRFTOKEN=csrftoken)
+        self.assertEqual(response.status_code, 405)
+
+        # 401 (GET)
+        response = client.get(path, HTTP_X_CSRFTOKEN=csrftoken)
+        self.assertEqual(response.status_code, 401)
+
+        signup_signin(client)
+        csrftoken = get_csrf(client)
+
+        # 200 - Recommendation for new user
+        response = client.get(path, HTTP_X_CSRFTOKEN=csrftoken)
+        self.assertEqual(response.status_code, 200)

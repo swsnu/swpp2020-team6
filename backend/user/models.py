@@ -69,3 +69,16 @@ class User(AbstractUser):
         )
 
         return data
+
+    def picked_roadmap(self):
+        """
+        Gather picked(pinned and liked) roadmaps by the user
+        :return: picked roadmaps' id lists
+        """
+        options = self._meta
+        roadmap_id = []
+        for f in chain(options.many_to_many):
+            if f.name == "pinned_roadmaps" or f.name == "liked_roadmaps":
+                roadmap_id += list(roadmap.id for roadmap in f.value_from_object(self))
+
+        return roadmap_id
