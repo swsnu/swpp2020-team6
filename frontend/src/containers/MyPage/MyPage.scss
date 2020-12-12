@@ -19,6 +19,19 @@ $margin-main: 30px 10px 30px 10px;
     height: $mypage-user-info-height;
     margin: $margin-main;
 
+    .mypage-wordcloud {
+      margin-top: 20px;
+      background-color: white;
+      height: 336px;
+
+      p {
+        margin: 10px 15px;
+        font-size: 20px;
+        font-weight: bold;
+        border-bottom: 1px solid black;
+      }
+    }
+
     .UserCard {
       width: 100%;
       display: flex;
