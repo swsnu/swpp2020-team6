@@ -7,9 +7,10 @@
   .left {
     width: 50%;
     display: inline-block;
-    min-width: 800px;
+    overflow: hidden;
   }
   .right {
+    min-width: 500px;
     margin-top: 100px;
     width: 50%;
     display: inline-block;
