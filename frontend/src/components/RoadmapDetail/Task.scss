@@ -12,6 +12,8 @@ $padding-main: 40px;
 
   .task-check {
     width: 66px;
+    display: flex;
+    justify-content: center;
 
     .checkbox-wrapper {
       display: flex;
@@ -22,6 +24,7 @@ $padding-main: 40px;
       height: 42px;
       background-color: #ffffff;
       border-radius: 70%;
+      margin-right: 15px;
     }
   }
 
@@ -33,13 +36,18 @@ $padding-main: 40px;
     background-color: $task-background-color;
     box-shadow: $create-task-box-shadow;
 
-    .task-type-title {
+    .task-title {
       width: 100%;
+      font-size: $task-title-font-size;
+      font-weight: $task-title-font-weight;
+    }
+
+    .task-url {
       display: flex;
-      justify-content: center;
-      align-items: center;
       flex-direction: row;
-      flex-wrap: nowrap;
+      align-items: center;
+      width: 100%;
+      margin: 20px 0px 30px 0px;
 
       .task-type {
         display: flex;
@@ -50,24 +58,10 @@ $padding-main: 40px;
         border: $task-type-border;
         border-radius: $task-description-border-radius;
         padding: 0px 20px 0px 20px;
+        margin-right: 40px;
         min-width: 60px;
         min-height: 40px;
       }
-
-      .task-title {
-        width: 100%;
-        margin: 0px 20px 0px 20px;
-        font-size: $task-title-font-size;
-        font-weight: $task-title-font-weight;
-      }
-    }
-
-    .task-url {
-      display: flex;
-      flex-direction: row;
-      align-items: center;
-      width: 100%;
-      margin: 20px 0px 30px 0px;
 
       .link-icon {
         margin: 0px 15px 0px 0px;

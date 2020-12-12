@@ -32,13 +32,17 @@
 
   .roadmap-anchors {
     width: 100%;
+    height: 55vh;
     display: flex;
     flex-direction: column;
     justify-content: flex-start;
-    align-items: flex-start;
+    align-items: center;
+    overflow-x: visible;
+    overflow-y: auto;
+    padding: 3px;
 
     a {
-      height: 50px;
+      min-height: 50px;
       width: 100%;
       margin: 0px 0px 10px 0px;
       border: 1px solid $grey-light-color;
