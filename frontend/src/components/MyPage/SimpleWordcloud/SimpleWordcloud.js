@@ -3,10 +3,10 @@ import WordCloud from "react-wordcloud";
 import PropTypes from "prop-types";
 
 const SimpleWordcloud = (props) => {
-  const { my_roadmaps } = props.myPageUser;
+  const myRoadmaps = props.myPageUser.my_roadmaps;
   const tags = {};
 
-  my_roadmaps.map((roadmap) => {
+  myRoadmaps.map((roadmap) => {
     roadmap.tags.map((tag) => {
       if (tag.tag_name in tags) {
         tags[tag.tag_name] += 1;

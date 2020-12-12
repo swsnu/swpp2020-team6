@@ -5,7 +5,7 @@ import PropTypes from "prop-types";
 import MyTab from "../../components/MyPage/StyledComponents/MyTab";
 import SimpleRoadmap from "../../components/SimpleRoadmap/SimpleRoadmap";
 import UserCard from "../../components/RoadmapDetail/UserCard";
-import SimpleWordcloud from "./SimpleWordcloud";
+import SimpleWordcloud from "../../components/MyPage/SimpleWordcloud/SimpleWordcloud";
 import * as actionCreators from "../../store/actions/index";
 import "./MyPage.scss";
 
