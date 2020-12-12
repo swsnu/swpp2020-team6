@@ -1,8 +1,8 @@
 import React from "react";
 import ReactWordcloud from "react-wordcloud";
-import React, { Component } from "react";
 import PropTypes from "prop-types";
 
+/*
 const stubMyPageUserData = {
   my_roadmaps: [
     {
@@ -26,6 +26,7 @@ const stubMyPageUserData = {
     },
   ],
 };
+*/
 
 const SimpleWordcloud = (props) => {
   const { my_roadmaps } = props.myPageUser;
