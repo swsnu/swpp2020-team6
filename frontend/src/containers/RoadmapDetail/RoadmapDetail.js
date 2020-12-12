@@ -260,17 +260,22 @@ class RoadmapDetail extends Component {
     const { onChangeCheckbox, history } = this.props;
     const roadmapSections = selectedRoadmap.sections.map((section, index) => {
       return (
-        <Section
-          key={section.section_id}
-          collapse={sectionCollapse[index]}
-          tmpSectionId={index}
-          isAuthor={selectedRoadmap.author_id === selectedUser.user_id}
-          progressStatus={selectedRoadmap.progress}
-          title={section.section_title}
-          tasks={section.tasks}
-          clickSectionCollapse={this.onClickSectionCollapse}
-          changeCheckbox={onChangeCheckbox}
-        />
+        <>
+          <a className="section-anchor-target" id={`roadmap-section-${index + 1}`}>
+            0
+          </a>
+          <Section
+            key={section.section_id}
+            collapse={sectionCollapse[index]}
+            tmpSectionId={index}
+            isAuthor={selectedRoadmap.author_id === selectedUser.user_id}
+            progressStatus={selectedRoadmap.progress}
+            title={section.section_title}
+            tasks={section.tasks}
+            clickSectionCollapse={this.onClickSectionCollapse}
+            changeCheckbox={onChangeCheckbox}
+          />
+        </>
       );
     });
 
@@ -327,7 +332,7 @@ class RoadmapDetail extends Component {
       <div className="RoadmapDetail">
         <div className="emptycolumn" />
         <div className="leftcolumn">
-          <a name="top" />
+          <a className="top-anchor-target" name="top" />
           <div className="roadmap-info">
             <div className="roadmap-image-wrapper">
               <img
@@ -350,13 +355,12 @@ class RoadmapDetail extends Component {
             </div>
           </div>
           <div className="roadmap">
-            <a name="roadmap-description" />
+            <a className="description-anchor-target" id="roadmap-description" />
             <div className="roadmap-description">{selectedRoadmap.description}</div>
-            <a name="roadmap-sections" />
             <div className="roadmap-sections">{roadmapSections}</div>
           </div>
           <div className="comments">
-            <a name="roadmap-comments" />
+            <a className="comment-anchor-target" id="roadmap-comments" />
             <div id="roadmap-comment-count">
               {`${selectedRoadmap.comment_count} `}
               Comments
@@ -406,6 +410,7 @@ class RoadmapDetail extends Component {
               likeCount={selectedRoadmap.like_count}
               pinCount={selectedRoadmap.pin_count}
               commentCount={selectedRoadmap.comment_count}
+              sectionsNum={selectedRoadmap.sections.length}
             />
           </div>
         </div>

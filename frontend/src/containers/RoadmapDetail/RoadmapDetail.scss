@@ -56,9 +56,13 @@
     text-align: left;
     margin-bottom: 100px;
 
-    a {
-      padding-top: 110px;
-      margin-top: -110px;
+    .top-anchor-target,
+    .description-anchor-target,
+    .section-anchor-target,
+    .comment-anchor-target {
+      padding-top: 110px !important;
+      margin-top: -110px !important;
+      color: transparent;
     }
 
     .roadmap-info {
@@ -92,15 +96,17 @@
         flex-direction: column;
         align-items: flex-start;
         margin-left: 40px;
+
         .roadmap-title {
           order: 0;
-          font-size: 30px;
+          font-size: $roadmap-title-font-size;
+          font-weight: $roadmap-title-font-weight;
           margin: 0px 0px 10px 0px;
           display: flex;
-          align-items: center;
+          align-items: flex-start;
 
           #lock-icon {
-            margin: 0px 10px 0px 0px;
+            margin: 10px 10px 0px 0px;
           }
         }
         .roadmap-level {
