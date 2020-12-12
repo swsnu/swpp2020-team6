@@ -11,6 +11,7 @@ import FileCopyIcon from "@material-ui/icons/FileCopy";
 import BookmarkIcon from "@material-ui/icons/Bookmark";
 import DeleteForeverIcon from "@material-ui/icons/DeleteForever";
 import CreateIcon from "@material-ui/icons/Create";
+import ArrowForwardIosIcon from "@material-ui/icons/ArrowForwardIos";
 import { IconButton } from "@material-ui/core";
 import * as actionCreators from "../../store/actions/index";
 import "./RoadmapButtons.scss";
@@ -83,6 +84,7 @@ const RoadmapButtons = (props) => {
       <a href={`#roadmap-section-${i}`}>
         Section
         {` ${i}`}
+        <ArrowForwardIosIcon className="arrow-icon" />
       </a>,
     );
   }
@@ -129,9 +131,15 @@ const RoadmapButtons = (props) => {
         {roadmapButtons}
       </div>
       <div className="roadmap-anchors">
-        <a href="#roadmap-description">Description</a>
+        <a href="#roadmap-description">
+          Description
+          <ArrowForwardIosIcon className="arrow-icon" />
+        </a>
         {sectionAnchors}
-        <a href="#roadmap-comments">Comments</a>
+        <a href="#roadmap-comments">
+          Comments
+          <ArrowForwardIosIcon className="arrow-icon" />
+        </a>
       </div>
     </div>
   );

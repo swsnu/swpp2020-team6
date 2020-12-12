@@ -37,6 +37,11 @@
   }
 
   .MuiLinearProgress-root {
-    height: 10px;
+    height: 15px;
+    border-radius: 10px;
+  }
+
+  .MuiLinearProgress-colorPrimary {
+    background-color: $grey-light2-color;
   }
 }

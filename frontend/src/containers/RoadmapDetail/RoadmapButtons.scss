@@ -48,6 +48,8 @@
       border: 1px solid $grey-light-color;
       border-radius: 7px;
       display: flex;
+      flex-direction: row;
+      justify-content: space-between;
       align-items: center;
       padding: 0px 20px 0px 20px;
       color: $grey-dark2-color;
@@ -57,6 +59,10 @@
       text-decoration: none;
       cursor: grab;
       box-shadow: 0px 0px 3px #999999;
+    }
+
+    .arrow-icon {
+      height: 30%;
     }
   }
 }

@@ -47,9 +47,14 @@ const Task = (props) => {
         <div className="task-url">
           <div className="task-type">{type ? taskTypeIcons[type].name : null}</div>
           <LinkIcon className="link-icon" />
-          <Tooltip title={url}>
-            <a href={url} className="url" target="_blank">
-              {validUrl ? "Go to Link" : ""}
+          <Tooltip title={validUrl ? "Go to Link" : "Invalid URL"}>
+            <a
+              href={validUrl ? url : null}
+              className={`url-${validUrl ? "valid" : "invalid"}`}
+              target="_blank"
+              disabled={validUrl}
+            >
+              {url}
             </a>
           </Tooltip>
         </div>

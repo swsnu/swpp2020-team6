@@ -45,7 +45,7 @@ $padding-main: 40px;
     .task-url {
       display: flex;
       flex-direction: row;
-      align-items: center;
+      align-items: flex-start;
       width: 100%;
       margin: 20px 0px 30px 0px;
 
@@ -57,14 +57,25 @@ $padding-main: 40px;
         background-color: #ffffff;
         border: $task-type-border;
         border-radius: $task-description-border-radius;
-        padding: 0px 20px 0px 20px;
+        padding: 0px 0px 0px 0px;
         margin-right: 40px;
-        min-width: 60px;
+        min-width: 120px;
         min-height: 40px;
       }
 
       .link-icon {
-        margin: 0px 15px 0px 0px;
+        margin: 7px 15px 0px 0px;
+      }
+
+      .url-valid,
+      .url-invalid {
+        word-break: break-all;
+        margin-top: 7px;
+      }
+
+      .url-invalid:hover {
+        text-decoration: none;
+        color: #007bff;
       }
     }
 
