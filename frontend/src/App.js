@@ -4,6 +4,8 @@ import { ConnectedRouter } from "connected-react-router";
 import { connect } from "react-redux";
 import PropTypes from "prop-types";
 
+import CopyrightIcon from "@material-ui/icons/Copyright";
+
 import CreateRoadmap from "./containers/CreateRoadmap/CreateRoadmap";
 import EditRoadmap from "./containers/EditRoadmap/EditRoadmap";
 import * as actionCreators from "./store/actions/index";
@@ -18,8 +20,6 @@ import MainPage from "./containers/MainPage/MainPage";
 import LogoButton from "./components/LogoButton/LogoButton";
 import UpperUserBar from "./containers/UpperBar/UpperUserBar";
 import UpperSearchBar from "./containers/UpperBar/UpperSearchBar";
-
-import CopyrightIcon from "@material-ui/icons/Copyright";
 
 class App extends React.Component {
   componentDidMount() {

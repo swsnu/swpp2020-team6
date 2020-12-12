@@ -52,7 +52,7 @@ describe("<SimpleRoadmap />", () => {
         tagList={["tag1", "tag2"]}
         isMyPage
         roadmapImageId="1"
-        isPrivate={true}
+        isPrivate
       />,
     );
 

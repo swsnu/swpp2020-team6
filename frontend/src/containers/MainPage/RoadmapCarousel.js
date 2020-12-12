@@ -127,7 +127,7 @@ const RoadmapCarousel = (props) => {
           <span role="img" aria-label="sparkle">
             ✨
           </span>
-          Checkout Top 12 Roadmaps!
+          Best Roadmaps!
           <span role="img" aria-label="sparkle">
             ✨
           </span>
@@ -161,7 +161,7 @@ const RoadmapCarousel = (props) => {
           <span role="img" aria-label="sunglass">
             😎
           </span>
-          Checkout Roadmaps recommended for you!
+          Roadmaps Recommended for You!
           <span role="img" aria-label="sunglass">
             😎
           </span>
@@ -195,7 +195,7 @@ const RoadmapCarousel = (props) => {
           <span role="img" aria-label="baby">
             👶
           </span>
-          Checkout some recently created Roadmaps!
+          New Roadmaps!
           <span role="img" aria-label="baby">
             👶
           </span>
