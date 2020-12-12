@@ -47,7 +47,7 @@ class SignIn extends Component {
           <img id="left-image" src={wallpaper} alt="" />
         </div>
         <div className="right">
-          <img src={rotus} width="324" height="130" alt="" />
+          <img src={rotus} width="350" height="130" alt="" />
           <h4>
             Welcome to
             <span> Rotus!</span>
