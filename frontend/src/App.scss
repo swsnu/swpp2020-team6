@@ -73,5 +73,20 @@
     color: #ffffff;
     padding: 30px;
     text-align: left;
+
+    .footer-copyright {
+      display: flex;
+      flex-direction: row;
+      align-items: center;
+      justify-content: center;
+
+      p {
+        margin-bottom: 0;
+      }
+
+      .MuiSvgIcon-root {
+        margin: 0px 5px;
+      }
+    }
   }
 }

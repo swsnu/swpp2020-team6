@@ -261,7 +261,7 @@ class UserTestCase(TestCase):
         response = client.get(path, HTTP_X_CSRFTOKEN=csrftoken)
         self.assertEqual(response.status_code, 401)
 
-        signup_signin(client)
+        signup_signin(client, self.dump_user)
         csrftoken = get_csrf(client)
 
         # 200 - Recommendation for new user

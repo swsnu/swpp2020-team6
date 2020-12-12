@@ -37,8 +37,7 @@ const Task = (props) => {
     ) : null;
   // 'task-type' will be changed into icon corresponding to the type
 
-  const validUrl =
-    url.length >= 4 && (url.substring(0, 4) === "http" || url.substring(0, 4) === "www.");
+  const validUrl = url.length >= 4 && url.substring(0, 4) === "http";
 
   return (
     <div className="Task">
