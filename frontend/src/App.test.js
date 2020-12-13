@@ -38,7 +38,6 @@ jest.mock("./containers/RoadmapDetail/RoadmapDetail", () => {
   });
 });
 
-
 jest.mock("./containers/MainPage/MainPage", () => {
   return jest.fn(() => {
     return (
@@ -46,6 +45,12 @@ jest.mock("./containers/MainPage/MainPage", () => {
         <p>test</p>
       </div>
     );
+  });
+});
+
+jest.mock("./components/MyPage/SimpleWordcloud/SimpleWordcloud", () => {
+  return jest.fn(() => {
+    return <div className="spySimpleWordcloud" />;
   });
 });
 
@@ -92,7 +97,6 @@ const mockFalseStore = getMockStore(
   stubInitialSearchState,
 );
 
-
 describe("App", () => {
   let app;
   let spyGetUserAuth;
@@ -136,7 +140,6 @@ describe("App", () => {
     expect(component.find(".loading").length).toBe(1);
   });
 
-
   it("should render main", () => {
     history.push("/main");
     const component = mount(app);
@@ -146,7 +149,11 @@ describe("App", () => {
 
   it("should render SignUp", () => {
     history.push("/signup");
-    const mockInitStore = getMockStore(stubFalseUserState, initialRoadmapState, stubInitialSearchState);
+    const mockInitStore = getMockStore(
+      stubFalseUserState,
+      initialRoadmapState,
+      stubInitialSearchState,
+    );
     const component = mount(
       <Provider store={mockInitStore}>
         <App history={history} />

@@ -231,6 +231,12 @@ const mockStoreOther = getMockStore(
   stubInitialSearchState,
 );
 
+jest.mock("../../components/MyPage/SimpleWordcloud/SimpleWordcloud", () => {
+  return jest.fn(() => {
+    return <div className="spySimpleWordcloud" />;
+  });
+});
+
 describe("<MyPage />", () => {
   let spyHistoryPush;
   let spyAlert;

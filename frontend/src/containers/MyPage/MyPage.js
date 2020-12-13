@@ -5,6 +5,7 @@ import PropTypes from "prop-types";
 import MyTab from "../../components/MyPage/StyledComponents/MyTab";
 import SimpleRoadmap from "../../components/SimpleRoadmap/SimpleRoadmap";
 import UserCard from "../../components/RoadmapDetail/UserCard";
+import SimpleWordcloud from "../../components/MyPage/SimpleWordcloud/SimpleWordcloud";
 import * as actionCreators from "../../store/actions/index";
 import "./MyPage.scss";
 
@@ -86,6 +87,10 @@ class MyPage extends Component {
       <div className="MyPage">
         <div className="user-info">
           <UserCard authorId={user.user_id} authorName={user.username} history={history} />
+          <div className="mypage-wordcloud">
+            <p>Interested Topics</p>
+            <SimpleWordcloud myPageUser={myPageUser} />
+          </div>
         </div>
         <div className="mypage-tab">
           <MyTab
