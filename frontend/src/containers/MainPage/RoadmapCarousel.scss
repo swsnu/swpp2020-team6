@@ -20,6 +20,23 @@
     border-radius: 20px;
     box-shadow: 0 3px 5px 0 rgba(0, 0, 0, 0.3);
 
+    .roadmap-title {
+      color: black;
+      font-size: 35px;
+      position: absolute;
+      top: 20%;
+      left: 50%;
+      -webkit-transform: translate(-50%, -50%);
+      -ms-transform: translate(-50%, -50%);
+      transform: translate(-50%, -50%);
+      text-align: center;
+      overflow: hidden;
+      text-overflow: ellipsis;
+      display: -webkit-box;
+      -webkit-line-clamp: 2; /* number of lines to show */
+      -webkit-box-orient: vertical;
+    }
+
     h3 {
       margin-bottom: 20px;
     }

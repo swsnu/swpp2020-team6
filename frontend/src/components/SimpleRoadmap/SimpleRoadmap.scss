@@ -56,6 +56,10 @@
           // transition: 0.5s ease;
           background-color: none;
 
+          .roadmap-title {
+            width: 100%;
+          }
+
           #lock-icon {
             margin: 20px 0px 0px 220px;
           }
@@ -98,23 +102,6 @@
 
       .MuiTypography-body2 {
         text-align: start;
-      }
-
-      .roadmap-title {
-        color: black;
-        font-size: 35px;
-        position: absolute;
-        top: 20%;
-        left: 50%;
-        -webkit-transform: translate(-50%, -50%);
-        -ms-transform: translate(-50%, -50%);
-        transform: translate(-50%, -50%);
-        text-align: center;
-        overflow: hidden;
-        text-overflow: ellipsis;
-        display: -webkit-box;
-        -webkit-line-clamp: 2; /* number of lines to show */
-        -webkit-box-orient: vertical;
       }
 
       .overlay-description {
