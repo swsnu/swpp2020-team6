@@ -16,7 +16,7 @@ cd ./frontend
 yarn install && yarn start
 ```
 
-##### Testing (Not yet)
+##### Testing
 
 ```shell
 yarn test --coverage --watchAll=false
