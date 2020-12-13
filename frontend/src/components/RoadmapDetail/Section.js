@@ -19,6 +19,7 @@ const Section = (props) => {
     tmpSectionId,
     changeCheckbox,
   } = props;
+
   const taskList = tasks.map((task) => {
     return (
       <Task
@@ -50,7 +51,7 @@ const Section = (props) => {
       <div
         className="section"
         style={{
-          maxHeight: collapse ? "0px" : "100vh",
+          maxHeight: collapse ? "0px" : `${tasks.length}000px`,
         }}
       >
         {taskList}

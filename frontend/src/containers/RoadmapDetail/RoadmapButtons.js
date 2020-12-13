@@ -1,4 +1,4 @@
-import React from "react";
+import React, { Component } from "react";
 import PropTypes from "prop-types";
 import { connect } from "react-redux";
 import { withRouter } from "react-router";
@@ -12,138 +12,173 @@ import BookmarkIcon from "@material-ui/icons/Bookmark";
 import DeleteForeverIcon from "@material-ui/icons/DeleteForever";
 import CreateIcon from "@material-ui/icons/Create";
 import ArrowForwardIosIcon from "@material-ui/icons/ArrowForwardIos";
+import ExpandMoreIcon from "@material-ui/icons/ExpandMore";
+import ExpandLessIcon from "@material-ui/icons/ExpandLess";
 import { IconButton } from "@material-ui/core";
 import * as actionCreators from "../../store/actions/index";
 import "./RoadmapButtons.scss";
 
-const RoadmapButtons = (props) => {
-  const { selectedUser, buttonsRoadmapId, likeCount, pinCount, sectionsNum } = props;
+class RoadmapButtons extends Component {
+  state = {
+    sectionAnchorsCollapse: true,
+  };
 
-  const onClickEditRoadmap = () => {
-    const { history } = props;
+  onClickEditRoadmap = () => {
+    const { history, buttonsRoadmapId } = this.props;
     history.push(`/roadmap/${buttonsRoadmapId}/edit`);
   };
 
-  const onClickDuplicateRoadmap = () => {
-    const { onDuplicateRoadmap, match } = props;
+  onClickDuplicateRoadmap = () => {
+    const { onDuplicateRoadmap, match } = this.props;
     onDuplicateRoadmap(match.params.id);
   };
 
-  const onClickDeleteRoadmap = () => {
-    const { onDeleteRoadmap } = props;
+  onClickDeleteRoadmap = () => {
+    const { onDeleteRoadmap, buttonsRoadmapId } = this.props;
     const yes = window.confirm("Are you sure you want to delete this Roadmap?");
     if (yes) {
       onDeleteRoadmap(buttonsRoadmapId);
     }
   };
 
-  const onClickPinRoadmap = () => {
-    const { match, toggleRoadmapPin } = props;
+  onClickPinRoadmap = () => {
+    const { match, toggleRoadmapPin } = this.props;
     toggleRoadmapPin(parseInt(match.params.id, 10));
   };
 
-  const onClickLikeRoadmap = () => {
-    const { match, toggleRoadmapLike } = props;
+  onClickLikeRoadmap = () => {
+    const { match, toggleRoadmapLike } = this.props;
     toggleRoadmapLike(parseInt(match.params.id, 10));
   };
 
-  const like = selectedUser.liked_roadmaps.find((roadmap) => roadmap.id === buttonsRoadmapId);
-  const likeButton = like !== undefined ? <FavoriteIcon /> : <FavoriteBorderIcon />;
-  const pin = selectedUser.pinned_roadmaps.find((roadmap) => roadmap.id === buttonsRoadmapId);
-  const pinButton = pin !== undefined ? <BookmarkIcon /> : <BookmarkBorderIcon />;
+  render() {
+    const {
+      selectedUser,
+      buttonsRoadmapId,
+      isAuthor,
+      sectionsNum,
+      pinCount,
+      likeCount,
+    } = this.props;
 
-  const { isAuthor } = props;
-  const roadmapButtons = isAuthor ? (
-    <>
-      <Tooltip title="Edit">
-        <IconButton
-          aria-label="edit"
-          id="edit-roadmap-button"
-          size="medium"
-          onClick={() => onClickEditRoadmap()}
-        >
-          <CreateIcon />
-        </IconButton>
-      </Tooltip>
-      <Tooltip title="Delete">
-        <IconButton
-          aria-label="delete"
-          id="delete-roadmap-button"
-          size="medium"
-          onClick={() => onClickDeleteRoadmap()}
-        >
-          <DeleteForeverIcon />
-        </IconButton>
-      </Tooltip>
-    </>
-  ) : null;
+    const { sectionAnchorsCollapse } = this.state;
 
-  let sectionAnchors = [];
-  for (let i = 1; i <= sectionsNum; i += 1) {
-    sectionAnchors = sectionAnchors.concat(
-      <a href={`#roadmap-section-${i}`}>
-        Section
-        {` ${i}`}
-        <ArrowForwardIosIcon className="arrow-icon" />
-      </a>,
-    );
-  }
+    const like = selectedUser.liked_roadmaps.find((roadmap) => roadmap.id === buttonsRoadmapId);
+    const likeButton = like !== undefined ? <FavoriteIcon /> : <FavoriteBorderIcon />;
+    const pin = selectedUser.pinned_roadmaps.find((roadmap) => roadmap.id === buttonsRoadmapId);
+    const pinButton = pin !== undefined ? <BookmarkIcon /> : <BookmarkBorderIcon />;
 
-  return (
-    <div className="RoadmapButtons">
-      <div className="roadmap-buttons">
-        <Tooltip title="Pin">
-          <Badge color="secondary" badgeContent={pinCount} showZero>
-            <IconButton
-              aria-label="pin"
-              id="pin-button"
-              size="medium"
-              onClick={() => onClickPinRoadmap()}
-              disabled={isAuthor}
-            >
-              {pinButton}
-            </IconButton>
-          </Badge>
-        </Tooltip>
-        <Tooltip title="Like">
-          <Badge color="secondary" badgeContent={likeCount} showZero>
-            <IconButton
-              aria-label="like"
-              id="like-button"
-              size="medium"
-              onClick={() => onClickLikeRoadmap()}
-              disabled={isAuthor}
-            >
-              {likeButton}
-            </IconButton>
-          </Badge>
-        </Tooltip>
-        <Tooltip title="Duplicate">
+    const roadmapButtons = isAuthor ? (
+      <>
+        <Tooltip title="Edit">
           <IconButton
-            aria-label="duplicate"
-            id="duplicate-button"
+            aria-label="edit"
+            id="edit-roadmap-button"
             size="medium"
-            onClick={() => onClickDuplicateRoadmap()}
+            onClick={() => this.onClickEditRoadmap()}
           >
-            <FileCopyIcon />
+            <CreateIcon />
           </IconButton>
         </Tooltip>
-        {roadmapButtons}
-      </div>
-      <div className="roadmap-anchors">
-        <a href="#roadmap-description">
-          Description
+        <Tooltip title="Delete">
+          <IconButton
+            aria-label="delete"
+            id="delete-roadmap-button"
+            size="medium"
+            onClick={() => this.onClickDeleteRoadmap()}
+          >
+            <DeleteForeverIcon />
+          </IconButton>
+        </Tooltip>
+      </>
+    ) : null;
+
+    let sectionAnchors = [];
+    for (let i = 1; i <= sectionsNum; i += 1) {
+      sectionAnchors = sectionAnchors.concat(
+        <a className="section-anchor" href={`#roadmap-section-${i}`}>
+          Section
+          {` ${i}`}
           <ArrowForwardIosIcon className="arrow-icon" />
-        </a>
-        {sectionAnchors}
-        <a href="#roadmap-comments">
-          Comments
-          <ArrowForwardIosIcon className="arrow-icon" />
-        </a>
+        </a>,
+      );
+    }
+
+    return (
+      <div className="RoadmapButtons">
+        <div className="roadmap-buttons">
+          <Tooltip title="Pin">
+            <Badge color="secondary" badgeContent={pinCount} showZero>
+              <IconButton
+                aria-label="pin"
+                id="pin-button"
+                size="medium"
+                onClick={() => this.onClickPinRoadmap()}
+                disabled={isAuthor}
+              >
+                {pinButton}
+              </IconButton>
+            </Badge>
+          </Tooltip>
+          <Tooltip title="Like">
+            <Badge color="secondary" badgeContent={likeCount} showZero>
+              <IconButton
+                aria-label="like"
+                id="like-button"
+                size="medium"
+                onClick={() => this.onClickLikeRoadmap()}
+                disabled={isAuthor}
+              >
+                {likeButton}
+              </IconButton>
+            </Badge>
+          </Tooltip>
+          <Tooltip title="Duplicate">
+            <IconButton
+              aria-label="duplicate"
+              id="duplicate-button"
+              size="medium"
+              onClick={() => this.onClickDuplicateRoadmap()}
+            >
+              <FileCopyIcon />
+            </IconButton>
+          </Tooltip>
+          {roadmapButtons}
+        </div>
+        <div className="roadmap-anchors">
+          <a href="#roadmap-description">
+            Description
+            <ArrowForwardIosIcon className="arrow-icon" />
+          </a>
+          <button
+            className="section-anchor-button"
+            type="button"
+            onClick={() => this.setState({ sectionAnchorsCollapse: !sectionAnchorsCollapse })}
+          >
+            Sections
+            {sectionAnchorsCollapse ? (
+              <ExpandMoreIcon className="section-anchor-collapse-icon" />
+            ) : (
+              <ExpandLessIcon className="section-anchor-collapse-icon" />
+            )}
+          </button>
+          <div
+            className="section-anchors"
+            style={{
+              maxHeight: sectionAnchorsCollapse ? "0px" : "30vh",
+            }}
+          >
+            {sectionAnchors}
+          </div>
+          <a href="#roadmap-comments">
+            Comments
+            <ArrowForwardIosIcon className="arrow-icon" />
+          </a>
+        </div>
       </div>
-    </div>
-  );
-};
+    );
+  }
+}
 
 RoadmapButtons.propTypes = {
   buttonsRoadmapId: PropTypes.number,
