@@ -84,14 +84,14 @@ class RoadmapDetail extends Component {
   onClickCollapseAll = () => {
     const { sectionCollapse } = this.state;
     this.setState({
-      sectionCollapse: sectionCollapse.map((collapse) => true),
+      sectionCollapse: sectionCollapse.map(() => true),
     });
   };
 
   onClickExpandAll = () => {
     const { sectionCollapse } = this.state;
     this.setState({
-      sectionCollapse: sectionCollapse.map((collapse) => false),
+      sectionCollapse: sectionCollapse.map(() => false),
     });
   };
 
