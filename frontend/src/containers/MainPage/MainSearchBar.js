@@ -22,7 +22,7 @@ class MainSearchBar extends Component {
 
     return (
       <div className="MainSearchBar">
-        <h3>Learn and Share your knowledge</h3>
+        <h3>Learn and Share Your Knowledge</h3>
         <div id="input-base">
           <input
             id="search-input"
