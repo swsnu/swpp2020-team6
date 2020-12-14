@@ -29,13 +29,6 @@ class SearchResult extends Component {
     onGetTopTags(10);
   }
 
-  /*
-  onClickSimpleSearch = (searchWord) => {
-    const { onGetSimpleSearch } = this.props;
-    onGetSimpleSearch({ title: searchWord });
-  };
-  */
-
   onClickAdvancedSearch = (searchData) => {
     const { onGetAdvancedSearch } = this.props;
     onGetAdvancedSearch(searchData);
@@ -329,7 +322,6 @@ class SearchResult extends Component {
 }
 
 SearchResult.propTypes = {
-  onGetSimpleSearch: PropTypes.func,
   onGetAdvancedSearch: PropTypes.func,
   onGetTopTags: PropTypes.func,
   searchResult: PropTypes.objectOf(PropTypes.any),
@@ -348,7 +340,6 @@ const mapStateToProps = (state) => {
 
 const mapDispatchToProps = (dispatch) => {
   return {
-    onGetSimpleSearch: (searchData) => dispatch(actionCreators.getSimpleSearch(searchData)),
     onGetAdvancedSearch: (searchData) => dispatch(actionCreators.getAdvancedSearch(searchData)),
     onGetTopTags: (tagCount) => dispatch(actionCreators.getTopTags(tagCount)),
   };

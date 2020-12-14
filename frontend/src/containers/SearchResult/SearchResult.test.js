@@ -162,7 +162,7 @@ describe("<Search />", () => {
 
   it("should simulate changing SortBy", () => {
     const component = mount(searchResult);
-    let wrapper = component.find("#sortBy");
+    const wrapper = component.find("#sortBy");
     wrapper.simulate("change", { target: { value: "1" } });
   });
 
