@@ -59,6 +59,7 @@ const ProgressBar = (props) => {
             <button
               id="finish-progress-button"
               type="button"
+              disabled={progressPercentage < 100}
               onClick={() => onChangeRoadmapProgressStatus("finish")}
             >
               Finish
