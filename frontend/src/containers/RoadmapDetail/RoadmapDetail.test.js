@@ -862,8 +862,6 @@ describe("<RoadmapDetail />", () => {
     const finishButton = component.find("#finish-progress-button");
     expect(finishButton.at(0).text()).toBe("Finish");
     finishButton.simulate("click");
-    // need to mock onChangeRoadmapProgressStatus
-    // expect(spyConfirm).toHaveBeenCalledTimes(1);
 
     const taskCheckboxs = component.find(Checkbox);
     expect(taskCheckboxs.length).toBe(3);
@@ -1269,7 +1267,7 @@ describe("<RoadmapDetail />", () => {
     expect(notEmpty.length).toBeTruthy();
   });
 
-  it(`should should collapse/expand sections properly.`, () => {
+  it(`should collapse/expand sections properly.`, () => {
     const component = mount(
       <Provider store={mockAuthorizedUserMyRoadmapInProgressStore}>
         <ConnectedRouter history={history}>
@@ -1294,7 +1292,7 @@ describe("<RoadmapDetail />", () => {
     expect(instance.state.sectionCollapse).toEqual([false, false]);
   });
 
-  it(`should should show link properly if the url is valid.`, () => {
+  it(`should show link properly if the url is valid.`, () => {
     const component = mount(
       <Provider store={mockAuthorizedUserMyRoadmapValidUrlStore}>
         <ConnectedRouter history={history}>
@@ -1311,5 +1309,45 @@ describe("<RoadmapDetail />", () => {
 
     const url = component.find(".url-valid");
     expect(url.length).toBe(1);
+  });
+
+  it(`should change state if tasks are all checked properly.`, () => {
+    const component = mount(
+      <Provider store={mockAuthorizedUserMyRoadmapValidUrlStore}>
+        <ConnectedRouter history={history}>
+          <Switch>
+            <Route
+              path="/"
+              exact
+              render={() => <RoadmapDetail history={history} match={{ params: { id: 1 } }} />}
+            />
+          </Switch>
+        </ConnectedRouter>
+      </Provider>,
+    );
+
+    const finishButton = component.find("#finish-progress-button");
+    expect(finishButton.at(0).text()).toBe("Finish");
+    finishButton.simulate("click");
+    expect(spyChangeProgress).toHaveBeenCalledTimes(1);
+  });
+
+  it(`should operate anchor properly.`, () => {
+    const component = mount(
+      <Provider store={mockAuthorizedUserMyRoadmapValidUrlStore}>
+        <ConnectedRouter history={history}>
+          <Switch>
+            <Route
+              path="/"
+              exact
+              render={() => <RoadmapDetail history={history} match={{ params: { id: 1 } }} />}
+            />
+          </Switch>
+        </ConnectedRouter>
+      </Provider>,
+    );
+
+    const anchorButton = component.find(".section-anchor-button");
+    anchorButton.simulate("click");
   });
 });
