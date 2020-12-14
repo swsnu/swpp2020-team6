@@ -26,7 +26,7 @@ class UpperSearchBar extends Component {
           <input
             id="search-input"
             type="text"
-            placeholder="Search Roadmap by title"
+            placeholder="Search for Roadmaps by title"
             value={searchInput}
             onChange={(event) => this.setState({ searchInput: event.target.value })}
           />

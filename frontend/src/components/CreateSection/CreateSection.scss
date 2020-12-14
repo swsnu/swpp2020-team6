@@ -63,10 +63,18 @@ $margin-bottom-main: 10px;
     flex-direction: column;
     align-items: flex-start;
     width: 100%;
+    overflow: hidden;
     margin-bottom: $margin-bottom-main;
     border: $create-section-border-style;
     border-radius: $create-section-border-radius;
     background-color: $create-section-background-color;
+    -webkit-transition: all 0.7s ease-in-out;
+    -moz-transition: all 0.7s ease-in-out;
+    -o-transition: all 0.7s ease-in-out;
+    -ms-transition: all 0.7s ease-in-out;
+    transition: all 0.7s ease-in-out;
+    flex-shrink: 0;
+
     .create-task-button {
       align-self: center;
     }
