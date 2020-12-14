@@ -34,12 +34,12 @@ pip install -r requirements.txt
 python3 manage.py makemigrations user roadmap section task tag comment
 python3 manage.py migrate
 
-python3 manage.py runserver	
+python3 manage.py runserver
 ```
 
 ##### Testing
 
 ```shell
-coverage run --source="./user/","./roadmap/","./section/","./task/","./tag/","./comment/" --omit='manage.py','*/__init__.py','backend/*' manage.py test
+coverage run --source="./user/","./roadmap/","./section/","./task/","./tag/","./comment/" --omit='manage.py','*/__init__.py','backend/*','utils/*' manage.py test --settings=backend.settings.ci
 ```
 
