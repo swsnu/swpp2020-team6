@@ -29,10 +29,12 @@ class SearchResult extends Component {
     onGetTopTags(10);
   }
 
+  /*
   onClickSimpleSearch = (searchWord) => {
     const { onGetSimpleSearch } = this.props;
     onGetSimpleSearch({ title: searchWord });
   };
+  */
 
   onClickAdvancedSearch = (searchData) => {
     const { onGetAdvancedSearch } = this.props;
