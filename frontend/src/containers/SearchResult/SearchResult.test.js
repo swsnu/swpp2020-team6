@@ -199,7 +199,7 @@ describe("<Search />", () => {
 
     // click advanced search button
     wrapper = component.find("#advanced-search-button");
-    wrapper.simulate("click");
+    wrapper.at(0).simulate("click");
     expect(spyGetAdvancedSearch).toHaveBeenCalledTimes(1);
   });
 });
