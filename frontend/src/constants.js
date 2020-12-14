@@ -25,7 +25,7 @@ export const sortType = {
   NEW: 3,
 };
 
-export const roadmapImageNum = 6;
+export const roadmapImageNum = 9;
 
 export const userColor = [
   "#b81c1c",
