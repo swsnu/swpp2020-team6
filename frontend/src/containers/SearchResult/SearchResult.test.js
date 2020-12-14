@@ -162,8 +162,8 @@ describe("<Search />", () => {
 
   it("should simulate changing SortBy", () => {
     const component = mount(searchResult);
-    const searchResultInstance = component.find(SearchResult.WrappedComponent).instance();
-    searchResultInstance.onChangeSortBy(1);
+    let wrapper = component.find("#sortBy");
+    wrapper.simulate("change", { target: { value: "1" } });
   });
 
   it("should work properly when clicking page button", () => {
@@ -173,11 +173,21 @@ describe("<Search />", () => {
     expect(spyGetAdvancedSearch).toHaveBeenCalledTimes(1);
   });
 
-  it("should simulate various methods", () => {
+  it("should add & delete tag properly", () => {
     const component = mount(searchResult);
     const searchResultInstance = component.find(SearchResult.WrappedComponent).instance();
-    searchResultInstance.onClickDeleteTag(1);
-    searchResultInstance.onClickPageNumber(1);
+
+    // add tag
+    const addTagButton = component.find("#add-tag-button");
+    const tagInput = component.find("#new-tag");
+    tagInput.simulate("change", { target: { value: "tag" } });
+    addTagButton.simulate("click");
+
+    // delete tag
+    const deleteTagButton = component.find(".delete-tag-button");
+    expect(deleteTagButton.length).toBe(1);
+    deleteTagButton.at(0).simulate("click");
+    expect(searchResultInstance.state.tags.length).toBe(0);
   });
 
   it("should work properly with advanced search ", () => {
