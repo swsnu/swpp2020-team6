@@ -66,7 +66,7 @@ const stubTopTags = { tags: ["stubTag1", "stubTag2"] };
 describe("Search Reducer", () => {
   it("should return default state", () => {
     const newState = reducer(undefined, {}); // initialize
-    expect(newState).toEqual({ searchResult: [], topTags: [], page: 1, totalCount: 1 });
+    expect(newState).toEqual({ searchResult: [], topTags: [], page: 1, totalCount: null });
   });
 
   it("should work properly on 'GET_SIMPLE_SEARCH_SUCCESS'", () => {
@@ -89,7 +89,7 @@ describe("Search Reducer", () => {
     const newState = reducer(undefined, {
       type: actionTypes.GET_SIMPLE_SEARCH_FAILURE,
     });
-    expect(newState).toEqual({ searchResult: [], topTags: [], page: 1, totalCount: 1 });
+    expect(newState).toEqual({ searchResult: [], topTags: [], page: 1, totalCount: null });
   });
 
   it("should work properly on 'GET_ADVANCED_SEARCH_SUCCESS'", () => {
@@ -112,7 +112,7 @@ describe("Search Reducer", () => {
     const newState = reducer(undefined, {
       type: actionTypes.GET_SIMPLE_ADVANCED_FAILURE,
     });
-    expect(newState).toEqual({ searchResult: [], topTags: [], page: 1, totalCount: 1 });
+    expect(newState).toEqual({ searchResult: [], topTags: [], page: 1, totalCount: null });
   });
 
   it("should work properly on 'GET_TOP_TAGS_SUCCESS'", () => {
@@ -121,13 +121,13 @@ describe("Search Reducer", () => {
       searchResult: stubSearchResult,
       topTags: stubTopTags,
       page: 1,
-      totalCount: 1,
+      totalCount: null,
     });
     expect(newState).toEqual({
       searchResult: [],
       topTags: stubTopTags,
       page: 1,
-      totalCount: 1,
+      totalCount: null,
     });
   });
 
@@ -135,7 +135,7 @@ describe("Search Reducer", () => {
     const newState = reducer(undefined, {
       type: actionTypes.GET_TOP_TAGS_SUCCESS_FAILURE,
     });
-    expect(newState).toEqual({ searchResult: [], topTags: [], page: 1, totalCount: 1 });
+    expect(newState).toEqual({ searchResult: [], topTags: [], page: 1, totalCount: null });
   });
 
   it("should handle default case", () => {
@@ -144,7 +144,7 @@ describe("Search Reducer", () => {
       searchResult: [],
       topTags: [],
       page: 1,
-      totalCount: 1,
+      totalCount: null,
     });
   });
 });
