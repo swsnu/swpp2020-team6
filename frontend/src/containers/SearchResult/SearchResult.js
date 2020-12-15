@@ -286,7 +286,7 @@ class SearchResult extends Component {
                 onChange={(event) => {
                   return this.onChangeSortBy(event.target.value);
                 }}
-              ></StyledSelect>
+              />
             </div>
             <div id="input-base">
               <input
