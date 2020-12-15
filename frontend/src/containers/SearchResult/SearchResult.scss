@@ -11,25 +11,33 @@
   flex-direction: row;
   background-color: $paper-color;
 
+  div,
+  a,
+  button {
+    -webkit-transition: all 0.3s ease-in-out;
+    -moz-transition: all 0.3s ease-in-out;
+    -o-transition: all 0.3s ease-in-out;
+    -ms-transition: all 0.3s ease-in-out;
+    transition: all 0.3s ease-in-out;
+  }
+
   label {
     margin-left: 10px;
   }
 
-  .empty-column {
-    width: 5%;
-    display: flex;
-    background-color: $paper-color;
-  }
-
   .left-column {
     border-radius: 7px;
-    background-color: $paper-color;
-    margin-top: 80px;
-    width: 350px;
+    background-color: #ffffff;
+    border: 1px solid $grey-light2-color;
+    margin: 20px 0px 20px 20px;
+    width: 320px;
+    min-width: 320px;
     display: flex;
     flex-direction: column;
     align-items: center;
+    padding: 20px;
     text-align: left;
+
     button {
       background-color: $create-buttons-background-color;
       color: $create-buttons-color;
@@ -38,113 +46,165 @@
       margin-top: 2px;
       margin-right: 2px;
     }
+
     .level {
-      margin-top: 20px;
-      display: inline;
-      width: 240px;
-      height: 170px;
+      width: 100%;
+      display: flex;
       flex-direction: column;
       background-color: $grey-dark-color;
-      align-items: center;
-      padding: 20px;
+      align-items: flex-start;
+      padding: 15px;
       color: #ffffff;
       border-radius: $create-tag-border-radius;
-      h4 {
-        margin-bottom: 10px;
-      }
-    }
+      margin-bottom: 30px;
 
-    .add-tags {
-      margin-left: 30px;
-      .add-a-tag {
+      .basic,
+      .intermediate,
+      .advanced {
         display: flex;
         flex-direction: row;
-        flex-wrap: nowrap;
+        align-items: center;
+        width: 100%;
+
+        input {
+          margin: 10px;
+        }
+      }
+
+      h4 {
+        margin: 10px;
+        font-weight: 600;
+      }
+    }
+
+    .tag-block {
+      width: 100%;
+      padding: 15px;
+      background-color: $grey-light2-color;
+      border-radius: 4px;
+
+      h4 {
+        margin: 10px;
+        font-weight: 600;
+      }
+
+      .add-tags {
+        width: 100%;
+        margin-bottom: 10px;
+
+        .add-a-tag {
+          width: 100%;
+          display: flex;
+          flex-direction: row;
+          flex-wrap: nowrap;
+          justify-content: flex-start;
+          align-items: center;
+
+          #new-tag {
+            width: 100%;
+            padding: 7px;
+            font-size: 15px;
+            border: 2px solid $grey-light-color;
+            border-radius: 4px;
+          }
+          #new-tag:focus {
+            outline: none;
+          }
+          #new-tag::placeholder {
+            font-style: italic;
+          }
+
+          #add-tag-button {
+            min-width: 35px;
+            min-height: 35px;
+            padding: 0px;
+            margin: 0px 0px 0px 10px;
+            font-size: 20px;
+            font-weight: 600;
+            background-color: $main-light2-color;
+          }
+        }
+      }
+
+      .taglist {
+        width: 100%;
+        display: flex;
+        flex-direction: row;
         justify-content: flex-start;
         align-items: center;
-        padding: 0px 0px 5px 5px;
-        #new-tag {
-          width: 240px;
-          padding: 5px;
-          border-radius: 4px;
-        }
-        #add-tag-button {
-          width: 28px;
-          height: 28px;
-          padding: 0px;
-          margin: 0px 0px 0px 5px;
-        }
-      }
-    }
-
-    .taglist {
-      margin-left: 40px;
-      background-color: $paper-color;
-      min-height: 1px;
-      border-radius: 7px;
-      width: 270px;
-      display: flex;
-      flex-direction: row;
-      justify-content: flex-start;
-      align-items: center;
-      flex-wrap: wrap;
-      padding: 5px 5px 5px 5px;
-      .tags {
-        display: inline-flex;
-        flex-direction: row;
-        flex-wrap: nowrap;
-        align-items: center;
-        height: 30px;
-        background-color: $create-buttons-background-color;
-        border-radius: $create-tag-border-radius;
-        padding: $create-tag-padding;
-        margin: $create-tag-margin;
-        .tag-name {
-          text-align: center;
-          font-size: $create-tag-font-size;
-          color: $create-tag-color;
-        }
-        .delete-tag-button {
-          width: 15px;
-          height: 15px;
-          text-align: center;
-          font-size: 70%;
-          padding: 0px;
-          margin: 0px 0px 0px 5px;
-        }
-      }
-    }
-
-    .topTagsBlock {
-      margin-left: 1px;
-      width: 240px;
-      display: flex;
-      flex-direction: row;
-      justify-content: flex-start;
-      align-items: center;
-      flex-wrap: wrap;
-      p {
-        margin-bottom: 1px;
-      }
-      .topTagList {
-        background-color: $main-light-color;
-        padding: 5px 0px 5px 5px;
+        flex-wrap: wrap;
         border-radius: 7px;
-        width: 200%;
-        .topTags {
-          display: inline-flex;
+        margin-bottom: 35px;
+        padding: 0px;
+
+        .tags {
+          display: flex;
           flex-direction: row;
           flex-wrap: nowrap;
           align-items: center;
-          height: 30px;
-          background-color: $create-buttons-background-color;
+          height: 26px;
+          background-color: $main-light2-color;
           border-radius: $create-tag-border-radius;
-          padding: $create-tag-padding;
-          margin: $create-tag-margin;
+          margin: 2px;
+          padding: 0px 3px 0px 7px;
+
           .tag-name {
-            text-align: center;
-            font-size: $create-tag-font-size;
             color: $create-tag-color;
+            font-size: 15px;
+            padding: 0px;
+            margin: 0px;
+          }
+
+          .delete-tag-button {
+            width: 16px;
+            height: 16px;
+            font-size: 12px;
+            text-align: center;
+            line-height: 8px;
+            background-color: $main-light2-color;
+            margin: 0px;
+            padding: 0px;
+          }
+        }
+      }
+
+      .topTagsBlock {
+        width: 100%;
+        display: flex;
+        flex-direction: column;
+        justify-content: center;
+        align-items: center;
+        flex-wrap: wrap;
+        margin: 0px;
+
+        p {
+          margin-bottom: 5px;
+          font-weight: 600;
+          color: $grey-dark2-color;
+        }
+
+        .topTagList {
+          width: 100%;
+          display: flex;
+          flex-direction: row;
+          justify-content: flex-start;
+          align-items: center;
+          flex-wrap: wrap;
+          border-radius: 7px;
+          background-color: $main3-red-light-color;
+          padding: 5px;
+
+          .topTags {
+            margin: 2px;
+            .add-top-tag-button {
+              font-size: $create-tag-font-size;
+              background-color: $main3-red-dark-color;
+              color: $create-tag-color;
+              border-radius: $create-tag-border-radius;
+              margin: 2px;
+              font-size: 15px;
+              padding: 2px 7px;
+            }
           }
         }
       }
@@ -153,24 +213,24 @@
 
   .right-column {
     border-radius: 7px;
-    margin: 10px;
-    display: inline-block;
-    flex-direction: row;
-    width: 920px;
-    background-color: $paper-color;
-    min-height: 550px;
-    max-height: 1500px;
+    margin: 20px 0px 20px 20px;
+    display: flex;
+    flex-direction: column;
+    width: $mypage-tab-width + 2px;
+    min-width: $mypage-tab-width + 2px;
+    background-color: transparent;
 
     .advanced-search-bar {
-      margin: 20px 0px 0px 0px;
       display: flex;
       flex-direction: row;
       flex-wrap: nowrap;
       justify-content: flex-start;
       align-items: center;
-      background-color: #f4aaa2c4;
+      background-color: #ffffff;
       border-radius: 7px;
-      padding: 20px 5px 20px 25px;
+      border: 1px solid $grey-light2-color;
+      padding: 20px 25px;
+      margin-bottom: 20px;
 
       .sort-by {
         display: flex;
@@ -184,9 +244,9 @@
           font-weight: bold;
         }
 
-        #sortBy {
-          background-color: #ffe3e0;
-          border-radius: 4px;
+        .StyledSelect-formControl-1 {
+          min-width: 100px;
+          max-width: 100px;
         }
       }
 
@@ -194,13 +254,13 @@
         margin: auto;
         background-color: #ffe3e0;
         width: 80%;
-        height: 45px;
+        height: 44px;
         display: flex;
         flex-direction: row;
         justify-content: center;
         align-items: center;
-        padding: 0px 0px 0px 20px;
-        border: 1px solid $main-light-color;
+        padding: 0px 0px 0px 15px;
+        border: 2px solid $main3-red-color;
         border-radius: 5px;
 
         input {
@@ -220,46 +280,107 @@
       }
     }
 
-    .search-result-list {
+    .search-result-list-panel {
       display: flex;
-      flex-direction: row;
-      flex-wrap: wrap;
-      background-color: $main-light-color;
+      flex-direction: column;
+      align-items: flex-start;
+      border: 1px solid $grey-light2-color;
       border-radius: 7px;
       box-shadow: $mypage-tab-panel-box-shadow;
-      padding: 10px;
-      .SimpleRoadmap {
-        position: relative;
-        width: $mypage-tab-item-width;
-        margin: $mypage-tab-item-margin;
+      background-color: #ffffff;
+      flex-grow: 1;
+      margin-bottom: 30px;
 
-        .roadmap-title {
-          color: black;
-          font-size: 35px;
-          position: absolute;
-          top: 50%;
-          left: 50%;
-          -webkit-transform: translate(-50%, -50%);
-          -ms-transform: translate(-50%, -50%);
-          transform: translate(-50%, -50%);
-          text-align: center;
-          overflow: hidden;
-          text-overflow: ellipsis;
-          display: -webkit-box;
-          -webkit-line-clamp: 2; /* number of lines to show */
-          -webkit-box-orient: vertical;
+      .total-count-indicator {
+        color: $grey-dark-color;
+        padding: 30px 20px 20px 45px;
+      }
+
+      .search-result-list {
+        display: flex;
+        flex-direction: row;
+        flex-wrap: wrap;
+        justify-content: flex-start;
+        padding: 0px $mypage-tab-panel-padding $mypage-tab-panel-padding $mypage-tab-panel-padding;
+
+        .SimpleRoadmap {
+          position: relative;
+          width: $mypage-tab-item-width;
+          margin: $mypage-tab-item-margin;
+
+          .roadmap-title {
+            color: black;
+            font-size: 35px;
+            position: absolute;
+            top: 50%;
+            left: 50%;
+            -webkit-transform: translate(-50%, -50%);
+            -ms-transform: translate(-50%, -50%);
+            transform: translate(-50%, -50%);
+            text-align: center;
+            overflow: hidden;
+            text-overflow: ellipsis;
+            display: -webkit-box;
+            -webkit-line-clamp: 2; /* number of lines to show */
+            -webkit-box-orient: vertical;
+          }
         }
       }
     }
     .pages {
+      margin: 30px;
+
       button {
         background-color: $create-buttons-background-color;
         color: $create-buttons-color;
         border: $create-buttons-border-style;
         border-radius: $create-buttons-border-radius;
-        margin-top: 2px;
-        margin-right: 2px;
+        margin: 5px;
+        width: 30px;
+        height: 30px;
+        padding: 5px;
+        text-align: center;
+        line-height: 15px;
+        font-size: 20px;
+        font-weight: 600;
       }
+      button:hover {
+        box-shadow: 0px 0px 3px #666666;
+      }
+
+      .page-now {
+        background-color: $main3-red-dark2-color;
+      }
+    }
+  }
+
+  .empty-column {
+    width: 100%;
+    min-width: 80px;
+    display: flex;
+    flex-direction: row;
+    justify-content: center;
+    align-items: flex-end;
+
+    .top-anchor {
+      align-self: flex-end;
+      display: flex;
+      flex-direction: column;
+      align-items: center;
+      position: sticky;
+      bottom: 30px;
+      border-radius: 7px;
+      border: 1px solid $grey-light-color;
+      padding: 10px;
+      margin-bottom: 30px;
+      color: $grey-dark2-color;
+      width: 70px;
+    }
+
+    .top-anchor:hover {
+      text-decoration: none;
+      cursor: grab;
+      box-shadow: 0px 0px 3px #999999;
     }
   }
 }

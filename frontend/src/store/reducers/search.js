@@ -4,7 +4,7 @@ const initialState = {
   searchResult: [],
   topTags: [],
   page: 1,
-  totalCount: 1,
+  totalCount: null,
 };
 
 const search = (state = initialState, action = { type: null }) => {

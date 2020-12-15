@@ -60,8 +60,26 @@ const stubInitialSearchState2 = {
   totalCount: 9,
 };
 
+const stubInitialSearchState3 = {
+  searchResult: [
+    {
+      title: "test-search-result-title",
+      tags: [
+        { tag_id: 1, tag_name: "tag1" },
+        { tag_id: 2, tag_name: "tag2" },
+      ],
+      author_name: "test_user",
+      image_id: 1,
+    },
+  ],
+  topTags: ["top_tag1"],
+  page: 2,
+  totalCount: 10,
+};
+
 const mockStore = getMockStore(stubUserState, stubInitialRoadmapState, stubInitialSearchState);
 const mockStore2 = getMockStore(stubUserState, stubInitialRoadmapState, stubInitialSearchState2);
+const mockStore3 = getMockStore(stubUserState, stubInitialRoadmapState, stubInitialSearchState3);
 
 describe("<Search />", () => {
   let searchResult;
@@ -163,12 +181,28 @@ describe("<Search />", () => {
   it("should simulate changing SortBy", () => {
     const component = mount(searchResult);
     const wrapper = component.find("#sortBy");
-    wrapper.simulate("change", { target: { value: "1" } });
+    wrapper
+      .at(0)
+      .props()
+      .onChange({ target: { value: "1" } });
   });
 
   it("should work properly when clicking page button", () => {
-    const component = mount(searchResult);
-    const wrapper = component.find("#page1");
+    let component = mount(searchResult);
+    let wrapper = component.find("#page1");
+    expect(wrapper.length).toBe(0);
+    component.unmount();
+
+    component = mount(
+      <Provider store={mockStore3}>
+        <ConnectedRouter history={history}>
+          <Switch>
+            <Route path="/" exact render={() => <SearchResult history={history} />} />
+          </Switch>
+        </ConnectedRouter>
+      </Provider>,
+    );
+    wrapper = component.find("#page1");
     wrapper.simulate("click");
     expect(spyGetAdvancedSearch).toHaveBeenCalledTimes(1);
   });

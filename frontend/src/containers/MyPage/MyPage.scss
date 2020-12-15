@@ -22,9 +22,11 @@ $margin-main: 30px 10px 30px 10px;
     .mypage-wordcloud {
       margin-top: 20px;
       background-color: white;
+      border-radius: 7px;
       height: 336px;
 
       p {
+        padding: 10px 0px 3px 0px;
         margin: 10px 15px;
         font-size: 20px;
         font-weight: bold;

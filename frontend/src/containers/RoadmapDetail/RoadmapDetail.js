@@ -347,7 +347,6 @@ class RoadmapDetail extends Component {
       <div className="RoadmapDetail">
         <div className="emptycolumn" />
         <div className="leftcolumn">
-          <a className="top-anchor-target" name="top" />
           <div className="roadmap-info">
             <div className="roadmap-image-wrapper">
               <img

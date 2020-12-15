@@ -8,9 +8,11 @@ import { connect } from "react-redux";
 import PropTypes from "prop-types";
 import IconButton from "@material-ui/core/IconButton";
 import SearchIcon from "@material-ui/icons/Search";
+import ExpandLessOutlinedIcon from "@material-ui/icons/ExpandLessOutlined";
 import { sortType } from "../../constants";
 import * as actionCreators from "../../store/actions/index";
 import SimpleRoadmap from "../../components/SimpleRoadmap/SimpleRoadmap";
+import StyledSelect from "../../components/Roadmap/StyledComponents/StyledSelect";
 
 import "./SearchResult.scss";
 
@@ -195,17 +197,23 @@ class SearchResult extends Component {
       pageCount = parseInt(totalCount / 9, 10) + 1;
     }
     let pageList = [];
-    for (let i = 1; i <= pageCount; i += 1) {
-      pageList = pageList.concat(
-        <button id={`page${i}`} onClick={() => this.onClickPageNumber(i)} type="button">
-          {i}
-        </button>,
-      );
+    if (pageCount !== 1) {
+      for (let i = 1; i <= pageCount; i += 1) {
+        pageList = pageList.concat(
+          <button
+            id={`page${i}`}
+            className={`page${i === page ? "-now" : ""}`}
+            onClick={() => this.onClickPageNumber(i)}
+            type="button"
+          >
+            {i}
+          </button>,
+        );
+      }
     }
 
     return (
       <div className="SearchResult">
-        <div className="empty-column" />
         <div className="left-column">
           <div className="level">
             <h4>Level</h4>
@@ -216,7 +224,7 @@ class SearchResult extends Component {
                 checked={basicChecked}
                 onChange={this.onClickBasic}
               />
-              <label>Basic</label>
+              <div>Basic</div>
             </div>
             <div className="intermediate">
               <input
@@ -225,7 +233,7 @@ class SearchResult extends Component {
                 checked={intermediateChecked}
                 onChange={this.onClickIntermediate}
               />
-              <label> Intermediate</label>
+              <div> Intermediate</div>
             </div>
             <div className="advanced">
               <input
@@ -234,53 +242,51 @@ class SearchResult extends Component {
                 checked={advancedChecked}
                 onChange={this.onClickAdvanced}
               />
-              <label>Advanced</label>
+              <div>Advanced</div>
             </div>
           </div>
 
-          <br />
+          <div className="tag-block">
+            <h4>Tags</h4>
+            <div className="add-tags">
+              <div className="add-a-tag">
+                <input
+                  id="new-tag"
+                  value={newTag}
+                  onChange={(event) => this.onSetNewTag(event.target.value)}
+                  placeholder="Add tags to search"
+                />
+                <button id="add-tag-button" type="button" onClick={() => this.onClickAddTag()}>
+                  +
+                </button>
+              </div>
+            </div>
 
-          <div className="add-tags">
-            <div className="add-a-tag">
-              <input
-                id="new-tag"
-                value={newTag}
-                onChange={(event) => this.onSetNewTag(event.target.value)}
-                placeholder="Add tags to search"
-              />
-              <button id="add-tag-button" type="button" onClick={() => this.onClickAddTag()}>
-                +
-              </button>
+            <div className="taglist">{tagList}</div>
+
+            <div className="topTagsBlock">
+              <p>Search by top trending tags!</p>
+              <div className="topTagList">{topTagList}</div>
             </div>
           </div>
-
-          <div className="taglist">{tagList}</div>
-
-          <br />
-
-          <div className="topTagsBlock">
-            <p>Search by top trending tags!</p>
-            <div className="topTagList">{topTagList}</div>
-          </div>
-
-          <br />
         </div>
-
         <div className="right-column">
           <div className="advanced-search-bar">
             <div className="sort-by">
               <p>Sort by </p>
-              <select
+              <StyledSelect
+                items={[
+                  { name: "Like", value: sortType.LIKE },
+                  { name: "Pin", value: sortType.PIN },
+                  { name: "New", value: sortType.NEW },
+                ]}
+                customId="sortBy"
                 id="sortBy"
                 value={sortBy}
                 onChange={(event) => {
                   return this.onChangeSortBy(event.target.value);
                 }}
-              >
-                <option value={sortType.LIKE}>Like</option>
-                <option value={sortType.PIN}>Pin</option>
-                <option value={sortType.NEW}>New</option>
-              </select>
+              />
             </div>
             <div id="input-base">
               <input
@@ -316,18 +322,21 @@ class SearchResult extends Component {
             </div>
           </div>
 
-          <br />
-
-          <div className="search-result-list">{searchResultList}</div>
-
-          <br />
-
-          <div className="pages">
-            {pageList}
-            <br />
-            Page
-            {page}
+          <div className="search-result-list-panel">
+            <div className="total-count-indicator">
+              {" "}
+              {totalCount !== null && `${totalCount} results`}
+            </div>
+            <div className="search-result-list">{searchResultList}</div>
           </div>
+
+          <div className="pages">{pageList}</div>
+        </div>
+        <div className="empty-column">
+          <a className="top-anchor" href="#top">
+            <ExpandLessOutlinedIcon />
+            Top
+          </a>
         </div>
       </div>
     );
