@@ -1,6 +1,7 @@
 import React from "react";
 import PropTypes from "prop-types";
 import DeleteIcon from "@material-ui/icons/Delete";
+import Tooltip from "@material-ui/core/Tooltip";
 import CreateTask from "../CreateTask/CreateTask";
 import "./CreateSection.scss";
 
@@ -49,13 +50,15 @@ const CreateSection = (props) => {
 
   return (
     <div className="CreateSection">
-      <button
-        className="section-collapse"
-        type="button"
-        onClick={() => clickSectionCollapse(tmpSectionId)}
-      >
-        {collapse ? "+" : "-"}
-      </button>
+      <Tooltip title={collapse ? "Expand" : "Collapse"}>
+        <button
+          className="section-collapse"
+          type="button"
+          onClick={() => clickSectionCollapse(tmpSectionId)}
+        >
+          {collapse ? "+" : "-"}
+        </button>
+      </Tooltip>
       <div className="title-up-down">
         <input
           className="section-title"
@@ -83,7 +86,10 @@ const CreateSection = (props) => {
           ▼
         </button>
       </div>
-      <div className="section" style={{ display: collapse ? "none" : "block" }}>
+      <div
+        className="section"
+        style={{ maxHeight: collapse ? "0px" : `${tasks.length * 450 + 100}px` }}
+      >
         {Tasks}
         <button
           className="create-task-button"
@@ -95,15 +101,17 @@ const CreateSection = (props) => {
           Create Task
         </button>
       </div>
-      <button
-        className="delete-section-button"
-        type="button"
-        onClick={() => {
-          clickDeleteSectionHandler(tmpSectionId);
-        }}
-      >
-        <DeleteIcon className="delete-icon" />
-      </button>
+      <Tooltip title="Delete Section">
+        <button
+          className="delete-section-button"
+          type="button"
+          onClick={() => {
+            clickDeleteSectionHandler(tmpSectionId);
+          }}
+        >
+          <DeleteIcon className="delete-icon" />
+        </button>
+      </Tooltip>
     </div>
   );
 };

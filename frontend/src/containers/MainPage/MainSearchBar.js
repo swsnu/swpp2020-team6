@@ -22,12 +22,12 @@ class MainSearchBar extends Component {
 
     return (
       <div className="MainSearchBar">
-        <h3>Learn and Share you knowledge</h3>
+        <h3>Learn and Share Your Knowledge</h3>
         <div id="input-base">
           <input
             id="search-input"
             type="text"
-            placeholder="Search Roadmaps that you are interested in!"
+            placeholder="Search for Roadmaps of your interest!"
             value={mainSearchInput}
             onChange={(event) => this.setState({ mainSearchInput: event.target.value })}
           />

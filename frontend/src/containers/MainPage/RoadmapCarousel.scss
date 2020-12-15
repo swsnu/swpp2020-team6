@@ -12,6 +12,11 @@
     }
   }
 
+  .carousel-description {
+    font-size: 35px;
+    margin-bottom: 30px;
+  }
+
   .best-roadmaps-panel,
   .new-roadmaps-panel,
   .recommended-roadmaps-panel {
@@ -19,6 +24,12 @@
     margin: 20px 0px 40px 0px;
     border-radius: 20px;
     box-shadow: 0 3px 5px 0 rgba(0, 0, 0, 0.3);
+
+    .carousel-title {
+      margin: 10px 0px 26px 0px;
+      font-weight: 600;
+      font-size: 30px;
+    }
 
     .roadmap-title {
       color: black;
