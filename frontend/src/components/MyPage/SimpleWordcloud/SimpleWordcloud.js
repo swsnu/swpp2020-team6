@@ -3,13 +3,17 @@ import WordCloud from "react-wordcloud";
 import PropTypes from "prop-types";
 
 const SimpleWordcloud = (props) => {
-  const { myPageUser } = props;
+  const { myPageUser, selectedUser, tab } = props;
   // eslint-disable-next-line camelcase
   const { my_roadmaps } = myPageUser;
+  // eslint-disable-next-line camelcase
+  const { pinned_roadmaps } = selectedUser;
+  // eslint-disable-next-line camelcase
+  const myRoadmaps = tab === 0 ? my_roadmaps : pinned_roadmaps;
   const tags = {};
 
   // eslint-disable-next-line camelcase
-  my_roadmaps.map((roadmap) => {
+  myRoadmaps.map((roadmap) => {
     roadmap.tags.map((tag) => {
       if (tag.tag_name in tags) {
         tags[tag.tag_name] += 1;
@@ -48,6 +52,8 @@ const SimpleWordcloud = (props) => {
 
 SimpleWordcloud.propTypes = {
   myPageUser: PropTypes.objectOf(PropTypes.any),
+  selectedUser: PropTypes.objectOf(PropTypes.any),
+  tab: PropTypes.number.isRequired,
 };
 
 export default SimpleWordcloud;
