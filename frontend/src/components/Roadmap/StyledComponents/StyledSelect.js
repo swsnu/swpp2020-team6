@@ -38,7 +38,6 @@ const StyledMenuItem = withStyles((theme) => ({
 const stylesSelect = (theme) => ({
   formControl: {
     padding: theme.spacing(1),
-    minWidth: 170,
   },
   MenuProps: {
     PopoverClasses: {
