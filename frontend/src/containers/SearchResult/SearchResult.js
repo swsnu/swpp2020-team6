@@ -6,6 +6,8 @@
 import React, { Component } from "react";
 import { connect } from "react-redux";
 import PropTypes from "prop-types";
+import IconButton from "@material-ui/core/IconButton";
+import SearchIcon from "@material-ui/icons/Search";
 import { sortType } from "../../constants";
 import * as actionCreators from "../../store/actions/index";
 import SimpleRoadmap from "../../components/SimpleRoadmap/SimpleRoadmap";
@@ -28,11 +30,6 @@ class SearchResult extends Component {
     const { onGetTopTags } = this.props;
     onGetTopTags(10);
   }
-
-  onClickSimpleSearch = (searchWord) => {
-    const { onGetSimpleSearch } = this.props;
-    onGetSimpleSearch({ title: searchWord });
-  };
 
   onClickAdvancedSearch = (searchData) => {
     const { onGetAdvancedSearch } = this.props;
@@ -271,41 +268,52 @@ class SearchResult extends Component {
 
         <div className="right-column">
           <div className="advanced-search-bar">
-            <select
-              id="sortBy"
-              value={sortBy}
-              onChange={(event) => {
-                return this.onChangeSortBy(event.target.value);
-              }}
-            >
-              <option value={sortType.LIKE}>Sort by: Like</option>
-              <option value={sortType.PIN}>Sort by: Pin</option>
-              <option value={sortType.NEW}>Sort by: New</option>
-            </select>
-            <input
-              id="advanced-search-input"
-              value={advancedSearchInput}
-              placeholder="Roadmap to search..."
-              onChange={(event) => this.setState({ advancedSearchInput: event.target.value })}
-            />
-            <button
-              id="advanced-search-button"
-              onClick={
-                () =>
-                  this.onClickAdvancedSearch({
-                    title: advancedSearchInput,
-                    tags,
-                    levels: this.calcLevelData(basicChecked, intermediateChecked, advancedChecked),
-                    sort: sortBy,
-                    page: 1,
-                    perpage: 9,
-                  })
-                // eslint-disable-next-line react/jsx-curly-newline
-              }
-              type="button"
-            >
-              Search
-            </button>
+            <div className="sort-by">
+              <p>Sort by </p>
+              <select
+                id="sortBy"
+                value={sortBy}
+                onChange={(event) => {
+                  return this.onChangeSortBy(event.target.value);
+                }}
+              >
+                <option value={sortType.LIKE}>Like</option>
+                <option value={sortType.PIN}>Pin</option>
+                <option value={sortType.NEW}>New</option>
+              </select>
+            </div>
+            <div id="input-base">
+              <input
+                id="advanced-search-input"
+                value={advancedSearchInput}
+                placeholder="Roadmap to search..."
+                onChange={(event) => this.setState({ advancedSearchInput: event.target.value })}
+              />
+              <IconButton
+                id="advanced-search-button"
+                aria-label="search-button"
+                disabled={advancedSearchInput === ""}
+                color="primary"
+                onClick={
+                  () =>
+                    this.onClickAdvancedSearch({
+                      title: advancedSearchInput,
+                      tags,
+                      levels: this.calcLevelData(
+                        basicChecked,
+                        intermediateChecked,
+                        advancedChecked,
+                      ),
+                      sort: sortBy,
+                      page: 1,
+                      perpage: 9,
+                    })
+                  // eslint-disable-next-line react/jsx-curly-newline
+                }
+              >
+                <SearchIcon />
+              </IconButton>
+            </div>
           </div>
 
           <br />
@@ -327,7 +335,6 @@ class SearchResult extends Component {
 }
 
 SearchResult.propTypes = {
-  onGetSimpleSearch: PropTypes.func,
   onGetAdvancedSearch: PropTypes.func,
   onGetTopTags: PropTypes.func,
   searchResult: PropTypes.objectOf(PropTypes.any),
@@ -346,7 +353,6 @@ const mapStateToProps = (state) => {
 
 const mapDispatchToProps = (dispatch) => {
   return {
-    onGetSimpleSearch: (searchData) => dispatch(actionCreators.getSimpleSearch(searchData)),
     onGetAdvancedSearch: (searchData) => dispatch(actionCreators.getAdvancedSearch(searchData)),
     onGetTopTags: (tagCount) => dispatch(actionCreators.getTopTags(tagCount)),
   };

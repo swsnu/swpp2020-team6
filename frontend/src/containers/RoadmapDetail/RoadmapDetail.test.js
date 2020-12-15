@@ -17,6 +17,93 @@ const profileURL = "./misc/rotus.png";
 const beforeStudying = 1;
 const inProgress = 2;
 const finished = 3;
+const tagSample = [
+  {
+    tag_id: 1,
+    tag_name: "tag 1",
+  },
+  {
+    tag_id: 2,
+    tag_name: "tag 2",
+  },
+  {
+    tag_id: 3,
+    tag_name: "tag 3",
+  },
+];
+const commentSample = [
+  {
+    comment_id: 1,
+    roadmap_id: 1,
+    content: "it is great!",
+    author_id: 5,
+    author_name: "user5",
+    author_picture_url: profileURL,
+  },
+  {
+    comment_id: 2,
+    roadmap_id: 1,
+    content: "it is great!",
+    author_id: 1,
+    author_name: "user1",
+    author_picture_url: profileURL,
+  },
+];
+const sectionSample = [
+  {
+    section_id: 1,
+    section_title: "section title 1",
+    tasks: [
+      {
+        task_id: 1,
+        task_title: "task title 1-1",
+        task_type: 3,
+        task_url: "task url 1-1",
+        task_description: "task description 1-1",
+        task_checked: true,
+      },
+      {
+        task_id: 2,
+        task_title: "task title 1-2",
+        task_type: 1,
+        task_url: "task url 1-2",
+        task_description: "task description 1-2",
+        task_checked: true,
+      },
+    ],
+  },
+  {
+    section_id: 2,
+    section_title: "section title 2",
+    tasks: [
+      {
+        task_id: 3,
+        task_title: "task title 2-1",
+        task_type: 3,
+        task_url: "task url 2-1",
+        task_description: "task description 2-1",
+        task_checked: false,
+      },
+    ],
+  },
+];
+
+const sectionSampleWithValidUrl = [
+  {
+    section_id: 1,
+    section_title: "section title 1",
+    tasks: [
+      {
+        task_id: 1,
+        task_title: "task title 1-1",
+        task_type: 3,
+        task_url: "https://www.naver.com",
+        task_description: "task description 1-1",
+        task_checked: true,
+      },
+    ],
+  },
+];
 
 // eslint-disable-next-line no-unused-vars
 const stubInitialUserState = {
@@ -66,20 +153,7 @@ const stubAuthorizedUserLikePinState = {
         author_id: 2,
         author_name: "user2",
         author_user_picture_url: profileURL,
-        tags: [
-          {
-            tag_id: 1,
-            tag_name: "tag 1",
-          },
-          {
-            tag_id: 2,
-            tag_name: "tag 2",
-          },
-          {
-            tag_id: 3,
-            tag_name: "tag 3",
-          },
-        ],
+        tags: tagSample,
       },
     ],
     liked_roadmaps: [
@@ -99,20 +173,7 @@ const stubAuthorizedUserLikePinState = {
         author_id: 2,
         author_name: "user2",
         author_user_picture_url: profileURL,
-        tags: [
-          {
-            tag_id: 1,
-            tag_name: "tag 1",
-          },
-          {
-            tag_id: 2,
-            tag_name: "tag 2",
-          },
-          {
-            tag_id: 3,
-            tag_name: "tag 3",
-          },
-        ],
+        tags: tagSample,
       },
     ],
     my_roadmaps: [],
@@ -141,20 +202,7 @@ const stubMyRoadmapBeforeStudyingState = {
     author_id: 1,
     author_name: "user1",
     author_user_picture_url: profileURL,
-    tags: [
-      {
-        tag_id: 1,
-        tag_name: "tag 1",
-      },
-      {
-        tag_id: 2,
-        tag_name: "tag 2",
-      },
-      {
-        tag_id: 3,
-        tag_name: "tag 3",
-      },
-    ],
+    tags: tagSample,
     sections: [
       {
         section_id: 1,
@@ -215,59 +263,16 @@ const stubMyRoadmapInProgressState = {
     author_id: 1,
     author_name: "user1",
     author_user_picture_url: profileURL,
-    tags: [
-      {
-        tag_id: 1,
-        tag_name: "tag 1",
-      },
-      {
-        tag_id: 2,
-        tag_name: "tag 2",
-      },
-      {
-        tag_id: 3,
-        tag_name: "tag 3",
-      },
-    ],
-    sections: [
-      {
-        section_id: 1,
-        section_title: "section title 1",
-        tasks: [
-          {
-            task_id: 1,
-            task_title: "task title 1-1",
-            task_type: 3,
-            task_url: "task url 1-1",
-            task_description: "task description 1-1",
-            task_checked: true,
-          },
-          {
-            task_id: 2,
-            task_title: "task title 1-2",
-            task_type: 1,
-            task_url: "task url 1-2",
-            task_description: "task description 1-2",
-            task_checked: true,
-          },
-        ],
-      },
-      {
-        section_id: 2,
-        section_title: "section title 2",
-        tasks: [
-          {
-            task_id: 3,
-            task_title: "task title 2-1",
-            task_type: 3,
-            task_url: "task url 2-1",
-            task_description: "task description 2-1",
-            task_checked: false,
-          },
-        ],
-      },
-    ],
+    tags: tagSample,
+    sections: sectionSample,
     comments: [],
+  },
+};
+
+const stubRoadmapWithValidUrl = {
+  selectedRoadmap: {
+    ...stubMyRoadmapInProgressState.selectedRoadmap,
+    sections: sectionSampleWithValidUrl,
   },
 };
 
@@ -289,58 +294,8 @@ const stubMyRoadmapFinishedState = {
     author_id: 1,
     author_name: "user1",
     author_user_picture_url: profileURL,
-    tags: [
-      {
-        tag_id: 1,
-        tag_name: "tag 1",
-      },
-      {
-        tag_id: 2,
-        tag_name: "tag 2",
-      },
-      {
-        tag_id: 3,
-        tag_name: "tag 3",
-      },
-    ],
-    sections: [
-      {
-        section_id: 1,
-        section_title: "section title 1",
-        tasks: [
-          {
-            task_id: 1,
-            task_title: "task title 1-1",
-            task_type: 3,
-            task_url: "task url 1-1",
-            task_description: "task description 1-1",
-            task_checked: true,
-          },
-          {
-            task_id: 2,
-            task_title: "task title 1-2",
-            task_type: 1,
-            task_url: "task url 1-2",
-            task_description: "task description 1-2",
-            task_checked: true,
-          },
-        ],
-      },
-      {
-        section_id: 2,
-        section_title: "section title 2",
-        tasks: [
-          {
-            task_id: 3,
-            task_title: "task title 2-1",
-            task_type: 3,
-            task_url: "task url 2-1",
-            task_description: "task description 2-1",
-            task_checked: true,
-          },
-        ],
-      },
-    ],
+    tags: tagSample,
+    sections: sectionSample,
     comments: [],
   },
 };
@@ -363,58 +318,8 @@ const stubBuggyState = {
     author_id: 1,
     author_name: "user1",
     author_user_picture_url: profileURL,
-    tags: [
-      {
-        tag_id: 1,
-        tag_name: "tag 1",
-      },
-      {
-        tag_id: 2,
-        tag_name: "tag 2",
-      },
-      {
-        tag_id: 3,
-        tag_name: "tag 3",
-      },
-    ],
-    sections: [
-      {
-        section_id: 1,
-        section_title: "section title 1",
-        tasks: [
-          {
-            task_id: 1,
-            task_title: "task title 1-1",
-            task_type: 3,
-            task_url: "task url 1-1",
-            task_description: "task description 1-1",
-            task_checked: true,
-          },
-          {
-            task_id: 2,
-            task_title: "task title 1-2",
-            task_type: 1,
-            task_url: "task url 1-2",
-            task_description: "task description 1-2",
-            task_checked: true,
-          },
-        ],
-      },
-      {
-        section_id: 2,
-        section_title: "section title 2",
-        tasks: [
-          {
-            task_id: 3,
-            task_title: "task title 2-1",
-            task_type: 3,
-            task_url: "task url 2-1",
-            task_description: "task description 2-1",
-            task_checked: false,
-          },
-        ],
-      },
-    ],
+    tags: tagSample,
+    sections: sectionSample,
     comments: [],
   },
 };
@@ -437,76 +342,9 @@ const stubOtherRoadmapState = {
     author_id: 2,
     author_name: "user2",
     author_user_picture_url: profileURL,
-    tags: [
-      {
-        tag_id: 1,
-        tag_name: "tag 1",
-      },
-      {
-        tag_id: 2,
-        tag_name: "tag 2",
-      },
-      {
-        tag_id: 3,
-        tag_name: "tag 3",
-      },
-    ],
-    sections: [
-      {
-        section_id: 1,
-        section_title: "section title 1",
-        tasks: [
-          {
-            task_id: 1,
-            task_title: "task title 1-1",
-            task_type: 3,
-            task_url: "task url 1-1",
-            task_description: "task description 1-1",
-            task_checked: false,
-          },
-          {
-            task_id: 2,
-            task_title: "task title 1-2",
-            task_type: 1,
-            task_url: "task url 1-2",
-            task_description: "task description 1-2",
-            task_checked: false,
-          },
-        ],
-      },
-      {
-        section_id: 2,
-        section_title: "section title 2",
-        tasks: [
-          {
-            task_id: 3,
-            task_title: "task title 2-1",
-            task_type: 3,
-            task_url: "task url 2-1",
-            task_description: "task description 2-1",
-            task_checked: false,
-          },
-        ],
-      },
-    ],
-    comments: [
-      {
-        comment_id: 1,
-        roadmap_id: 1,
-        content: "it is great!",
-        author_id: 5,
-        author_name: "user5",
-        author_picture_url: profileURL,
-      },
-      {
-        comment_id: 2,
-        roadmap_id: 1,
-        content: "it is great!",
-        author_id: 1,
-        author_name: "user1",
-        author_picture_url: profileURL,
-      },
-    ],
+    tags: tagSample,
+    sections: sectionSample,
+    comments: commentSample,
   },
 };
 
@@ -528,76 +366,9 @@ const stubOtherPrivateRoadmapState = {
     author_id: 2,
     author_name: "user2",
     author_user_picture_url: profileURL,
-    tags: [
-      {
-        tag_id: 1,
-        tag_name: "tag 1",
-      },
-      {
-        tag_id: 2,
-        tag_name: "tag 2",
-      },
-      {
-        tag_id: 3,
-        tag_name: "tag 3",
-      },
-    ],
-    sections: [
-      {
-        section_id: 1,
-        section_title: "section title 1",
-        tasks: [
-          {
-            task_id: 1,
-            task_title: "task title 1-1",
-            task_type: 3,
-            task_url: "task url 1-1",
-            task_description: "task description 1-1",
-            task_checked: false,
-          },
-          {
-            task_id: 2,
-            task_title: "task title 1-2",
-            task_type: 1,
-            task_url: "task url 1-2",
-            task_description: "task description 1-2",
-            task_checked: false,
-          },
-        ],
-      },
-      {
-        section_id: 2,
-        section_title: "section title 2",
-        tasks: [
-          {
-            task_id: 3,
-            task_title: "task title 2-1",
-            task_type: 3,
-            task_url: "task url 2-1",
-            task_description: "task description 2-1",
-            task_checked: false,
-          },
-        ],
-      },
-    ],
-    comments: [
-      {
-        comment_id: 1,
-        roadmap_id: 1,
-        content: "it is great!",
-        author_id: 5,
-        author_name: "user5",
-        author_picture_url: profileURL,
-      },
-      {
-        comment_id: 2,
-        roadmap_id: 1,
-        content: "it is great!",
-        author_id: 1,
-        author_name: "user1",
-        author_picture_url: profileURL,
-      },
-    ],
+    tags: tagSample,
+    sections: sectionSample,
+    comments: commentSample,
   },
 };
 
@@ -659,6 +430,12 @@ const mockAuthorizedUserOtherPrivateRoadmapStore = getMockStore(
 const mockAuthorizedUserLikePinRoadmapStore = getMockStore(
   stubAuthorizedUserLikePinState,
   stubOtherRoadmapState,
+  stubInitialSearchState,
+);
+
+const mockAuthorizedUserMyRoadmapValidUrlStore = getMockStore(
+  stubAuthorizedUserState,
+  stubRoadmapWithValidUrl,
   stubInitialSearchState,
 );
 
@@ -1085,8 +862,6 @@ describe("<RoadmapDetail />", () => {
     const finishButton = component.find("#finish-progress-button");
     expect(finishButton.at(0).text()).toBe("Finish");
     finishButton.simulate("click");
-    // need to mock onChangeRoadmapProgressStatus
-    // expect(spyConfirm).toHaveBeenCalledTimes(1);
 
     const taskCheckboxs = component.find(Checkbox);
     expect(taskCheckboxs.length).toBe(3);
@@ -1468,27 +1243,111 @@ describe("<RoadmapDetail />", () => {
     component.unmount();
     expect(spyResetRoadmap).toHaveBeenCalledTimes(1);
   });
-});
 
-it(`should show Task type properly.`, () => {
-  const component = mount(
-    <Provider store={mockAuthorizedUserMyRoadmapBeforeStudyingStore}>
-      <ConnectedRouter history={history}>
-        <Switch>
-          <Route
-            path="/"
-            exact
-            render={() => <RoadmapDetail history={history} match={{ params: { id: 1 } }} />}
-          />
-        </Switch>
-      </ConnectedRouter>
-    </Provider>,
-  );
+  it(`should show Task type properly.`, () => {
+    const component = mount(
+      <Provider store={mockAuthorizedUserMyRoadmapBeforeStudyingStore}>
+        <ConnectedRouter history={history}>
+          <Switch>
+            <Route
+              path="/"
+              exact
+              render={() => <RoadmapDetail history={history} match={{ params: { id: 1 } }} />}
+            />
+          </Switch>
+        </ConnectedRouter>
+      </Provider>,
+    );
 
-  const wrapper = component.find(".task-type");
+    const wrapper = component.find(".task-type");
 
-  const empty = wrapper.at(0).find(".task-type-select-item-icon");
-  const notEmpty = wrapper.at(1).find(".task-type-select-item-icon");
-  expect(empty.length).toBeFalsy();
-  expect(notEmpty.length).toBeTruthy();
+    const empty = wrapper.at(0).find(".task-type-select-item-icon");
+    const notEmpty = wrapper.at(1).find(".task-type-select-item-icon");
+    expect(empty.length).toBeFalsy();
+    expect(notEmpty.length).toBeTruthy();
+  });
+
+  it(`should collapse/expand sections properly.`, () => {
+    const component = mount(
+      <Provider store={mockAuthorizedUserMyRoadmapInProgressStore}>
+        <ConnectedRouter history={history}>
+          <Switch>
+            <Route
+              path="/"
+              exact
+              render={() => <RoadmapDetail history={history} match={{ params: { id: 1 } }} />}
+            />
+          </Switch>
+        </ConnectedRouter>
+      </Provider>,
+    );
+    const instance = component.find(RoadmapDetail.WrappedComponent).instance();
+
+    const collapseButton = component.find("#collapse-all-button");
+    collapseButton.at(0).simulate("click");
+    expect(instance.state.sectionCollapse).toEqual([true, true]);
+
+    const expandButton = component.find("#expand-all-button");
+    expandButton.at(0).simulate("click");
+    expect(instance.state.sectionCollapse).toEqual([false, false]);
+  });
+
+  it(`should show link properly if the url is valid.`, () => {
+    const component = mount(
+      <Provider store={mockAuthorizedUserMyRoadmapValidUrlStore}>
+        <ConnectedRouter history={history}>
+          <Switch>
+            <Route
+              path="/"
+              exact
+              render={() => <RoadmapDetail history={history} match={{ params: { id: 1 } }} />}
+            />
+          </Switch>
+        </ConnectedRouter>
+      </Provider>,
+    );
+
+    const url = component.find(".url-valid");
+    expect(url.length).toBe(1);
+  });
+
+  it(`should change state if tasks are all checked properly.`, () => {
+    const component = mount(
+      <Provider store={mockAuthorizedUserMyRoadmapValidUrlStore}>
+        <ConnectedRouter history={history}>
+          <Switch>
+            <Route
+              path="/"
+              exact
+              render={() => <RoadmapDetail history={history} match={{ params: { id: 1 } }} />}
+            />
+          </Switch>
+        </ConnectedRouter>
+      </Provider>,
+    );
+
+    const finishButton = component.find("#finish-progress-button");
+    expect(finishButton.at(0).text()).toBe("Finish");
+    finishButton.simulate("click");
+    expect(spyChangeProgress).toHaveBeenCalledTimes(1);
+  });
+
+  it(`should operate anchor properly.`, () => {
+    const component = mount(
+      <Provider store={mockAuthorizedUserMyRoadmapValidUrlStore}>
+        <ConnectedRouter history={history}>
+          <Switch>
+            <Route
+              path="/"
+              exact
+              render={() => <RoadmapDetail history={history} match={{ params: { id: 1 } }} />}
+            />
+          </Switch>
+        </ConnectedRouter>
+      </Provider>,
+    );
+
+    const anchorButton = component.find(".section-anchor-button");
+    anchorButton.simulate("click");
+  });
 });
