@@ -35,7 +35,10 @@ class SearchResult extends Component {
     const [title, tags, levels, sort, page, perpage] = location.search.substring(1).split("&");
     const searchData = {};
     searchData.title = decodeURI(title);
-    searchData.tags = tags !== "" ? tags.split(" ") : [];
+    const tmpTaglist = tags !== "" ? tags.split("+") : [];
+    searchData.tags = tmpTaglist.map((tag) => {
+      return decodeURI(tag);
+    });
     const [basic, intermediate, advanced] = levels.split("");
     searchData.levels = this.calcLevelData(basic === "1", intermediate === "1", advanced === "1");
     searchData.sort = parseInt(sort, 10);
@@ -66,9 +69,8 @@ class SearchResult extends Component {
     } = this.state;
 
     let tagQuery = "";
-    /* eslint-disable no-useless-escape */
     tags.forEach((tag) => {
-      tagQuery = tagQuery.concat(`${tag}\ `);
+      tagQuery = tagQuery.concat(`${encodeURI(tag)}+`);
       return null;
     });
     tagQuery = tagQuery.slice(0, -1);
@@ -81,7 +83,9 @@ class SearchResult extends Component {
     /* tags: tag1 tag2 tag3 */
     /* levels: basic, intermediate, advanced -> 111 */
     window.location.replace(
-      `/search/?${advancedSearchInput}&${tagQuery}&${levelQuery}&${sortBy}&${page}&${perPage}`,
+      `/search/?${encodeURI(
+        advancedSearchInput,
+      )}&${tagQuery}&${levelQuery}&${sortBy}&${page}&${perPage}`,
     );
   };
 
