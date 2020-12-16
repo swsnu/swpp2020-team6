@@ -1,10 +1,9 @@
 import React from "react";
 import YouTube from "react-youtube";
-import YouTubeIcon from "@material-ui/icons/YouTube";
-import rotus from "../../misc/rotus_letter.png";
-import "./Youtube.scss";
 import KeyboardArrowRightIcon from "@material-ui/icons/KeyboardArrowRight";
 import KeyboardArrowLeftIcon from "@material-ui/icons/KeyboardArrowLeft";
+import rotus from "../../misc/rotus_letter.png";
+import "./Youtube.scss";
 
 class Youtube extends React.Component {
   state = {
@@ -13,8 +12,8 @@ class Youtube extends React.Component {
 
   render() {
     const opts = {
-      height: "273",
-      width: "448",
+      height: "312",
+      width: "512",
       playerVars: {
         // https://developers.google.com/youtube/player_parameters
         autoplay: 0,
@@ -26,22 +25,21 @@ class Youtube extends React.Component {
     return (
       <div className="Youtube">
         <div className={open ? "open-video" : "close-video"}>
-          <YouTube videoId="zZkiPKhb_Yc" opts={opts} onReady={this._onReady} />
+          <YouTube videoId="zZkiPKhb_Yc" opts={opts} />
         </div>
-        <button type="button" onClick={() => this.setState({ open: !open })}>
+        <button
+          className="side-button"
+          type="button"
+          onClick={() => this.setState({ open: !open })}
+        >
           <div className="button-text">
             <p>How to use</p>
-            <img src={rotus}></img>
+            <img alt="rotus logo" src={rotus} />
           </div>
           {arrow}
         </button>
       </div>
     );
-  }
-
-  _onReady(event) {
-    // access to player in all event handlers via event.target
-    event.target.pauseVideo();
   }
 }
 
