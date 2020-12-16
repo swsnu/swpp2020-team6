@@ -22,7 +22,7 @@ def top_n_cluster(cluster_data, user_roadmaps, n=3):
     return user_roadmap_df["cluster_predicted"].value_counts()[:n].index.tolist()
 
 
-def recommend_roadmaps(user_roadmaps, n_cluster=3, n_roadmap=12):
+def recommend_roadmaps(user_id, user_roadmaps, n_cluster=3, n_roadmap=12):
     """
     Recommend roadmap 하는 전체 함수
     :param user_roadmaps: User의 roadmap id list
@@ -33,9 +33,7 @@ def recommend_roadmaps(user_roadmaps, n_cluster=3, n_roadmap=12):
     cluster_data = pd.read_csv(
         "clustering_result.csv",
     )
-    print(cluster_data)
     n_cluster_id = top_n_cluster(cluster_data, user_roadmaps, n=n_cluster)
-    print(n_cluster_id)
     # 골라진 cluster와 거기에 해당하는 roadmap mapping
     # row: roadmap
     # column1: cluster_predicted
@@ -51,6 +49,7 @@ def recommend_roadmaps(user_roadmaps, n_cluster=3, n_roadmap=12):
 
     result_roadmaps = (
         Roadmap.objects.filter(reduce(and_, cluster_filter))
+        .exclude(original_author_id__exact=user_id)
         .annotate(good_index=F("like_count") + F("pin_count") + F("comment_count"))
         .order_by("good_index")[:n_roadmap]
     )
@@ -58,9 +57,11 @@ def recommend_roadmaps(user_roadmaps, n_cluster=3, n_roadmap=12):
     return result_roadmaps
 
 
-def naive_recommend_roadmaps(n_roadmap=12):
-    result_roadmaps = Roadmap.objects.annotate(
-        good_index=F("like_count") + F("pin_count") + F("comment_count")
-    ).order_by("good_index")[:n_roadmap]
+def naive_recommend_roadmaps(user_id, n_roadmap=12):
+    result_roadmaps = (
+        Roadmap.objects.exclude(original_author_id__exact=user_id)
+        .annotate(good_index=F("like_count") + F("pin_count") + F("comment_count"))
+        .order_by("good_index")[:n_roadmap]
+    )
 
     return result_roadmaps
