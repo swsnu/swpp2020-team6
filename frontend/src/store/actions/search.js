@@ -2,51 +2,8 @@
  * Send request to the backend using the desired API, then receive response.
  */
 import axios from "axios";
-import { push } from "connected-react-router";
 import qs from "qs";
 import * as actionTypes from "./actionTypes";
-
-export const getSimpleSearchFailure_ = () => {
-  return { type: actionTypes.GET_SIMPLE_SEARCH_FAILURE };
-};
-
-export const getSimpleSearchSuccess_ = (data) => {
-  return {
-    type: actionTypes.GET_SIMPLE_SEARCH_SUCCESS,
-    searchResult: data.roadmaps,
-    page: data.page,
-    totalCount: data.total_count,
-  };
-};
-
-export const getSimpleSearch = (searchData) => {
-  return (dispatch) => {
-    return axios
-      .get("/api/roadmap/search/", { params: searchData })
-      .then((res) => {
-        dispatch(getSimpleSearchSuccess_(res.data));
-      })
-      .catch((error) => {
-        switch (error.response.status) {
-          case 405:
-            window.alert("Bad Request!");
-            break;
-          case 401:
-            window.alert("Please sign in!");
-            break;
-          case 400:
-            window.alert("Parsing error!");
-            break;
-          default:
-            break;
-        }
-        dispatch(getSimpleSearchFailure_());
-      })
-      .then(() => {
-        dispatch(push("/search"));
-      });
-  };
-};
 
 export const getAdvancedSearchFailure_ = () => {
   return { type: actionTypes.GET_ADVANCED_SEARCH_FAILURE };
