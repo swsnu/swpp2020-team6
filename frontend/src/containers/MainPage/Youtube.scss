@@ -1,0 +1,50 @@
+@import "../../css/basic.scss";
+
+.Youtube {
+  z-index: 100;
+  position: fixed;
+  display: flex;
+  justify-content: flex-start;
+  align-items: flex-start;
+  margin-top: 20px;
+
+  button {
+    background-color: white;
+    border-color: #99544c;
+    height: 15vh;
+    display: flex;
+    justify-content: flex-start;
+    align-items: center;
+
+    .button-text {
+      width: auto;
+      p {
+        font-family: "Nunito", sans-serif;
+        text-align: center;
+        font-size: 25px;
+        font-weight: 600;
+        margin-bottom: 5px;
+      }
+
+      img {
+        height: 5vh;
+        background-color: none;
+      }
+    }
+
+    svg {
+      .MuiSvgIcon-root {
+        font-size: 2rem;
+      }
+    }
+  }
+
+  .close-video {
+    width: 1px;
+    overflow-x: hidden;
+  }
+
+  .open-video {
+    margin-left: 10px;
+  }
+}
