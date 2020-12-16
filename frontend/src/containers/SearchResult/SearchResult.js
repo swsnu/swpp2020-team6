@@ -34,7 +34,7 @@ class SearchResult extends Component {
 
     const [title, tags, levels, sort, page, perpage] = location.search.substring(1).split("&");
     const searchData = {};
-    searchData.title = title;
+    searchData.title = decodeURI(title);
     searchData.tags = tags !== "" ? tags.split(" ") : [];
     const [basic, intermediate, advanced] = levels.split("");
     searchData.levels = this.calcLevelData(basic === "1", intermediate === "1", advanced === "1");
