@@ -1,9 +1,7 @@
 import React, { Component } from "react";
-import { connect } from "react-redux";
-import PropTypes from "prop-types";
 import IconButton from "@material-ui/core/IconButton";
 import SearchIcon from "@material-ui/icons/Search";
-import * as actionCreators from "../../store/actions/index";
+import { perPage } from "../../constants";
 
 import "./MainSearchBar.scss";
 
@@ -13,8 +11,10 @@ class MainSearchBar extends Component {
   };
 
   onClickSearch = (title) => {
-    const { onGetSimpleSearch } = this.props;
-    onGetSimpleSearch({ title });
+    /* title & tags & levels & sort & page & perpage */
+    /* tags: tag1 tag2 tag3 */
+    /* levels: basic, intermediate, advanced -> 111 */
+    window.location.replace(`/search/?${title}&&111&1&1&${perPage}`);
   };
 
   render() {
@@ -46,12 +46,4 @@ class MainSearchBar extends Component {
   }
 }
 
-MainSearchBar.propTypes = {
-  onGetSimpleSearch: PropTypes.func.isRequired,
-};
-const mapDispatchToProps = (dispatch) => {
-  return {
-    onGetSimpleSearch: (searchData) => dispatch(actionCreators.getSimpleSearch(searchData)),
-  };
-};
-export default connect(null, mapDispatchToProps)(MainSearchBar);
+export default MainSearchBar;

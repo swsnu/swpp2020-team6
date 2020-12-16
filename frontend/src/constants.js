@@ -37,3 +37,5 @@ export const userColor = [
   "#0aabdc",
   "#e95b0e",
 ];
+
+export const perPage = 9;

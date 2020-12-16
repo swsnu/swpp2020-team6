@@ -9,7 +9,7 @@ import PropTypes from "prop-types";
 import IconButton from "@material-ui/core/IconButton";
 import SearchIcon from "@material-ui/icons/Search";
 import ExpandLessOutlinedIcon from "@material-ui/icons/ExpandLessOutlined";
-import { sortType } from "../../constants";
+import { sortType, perPage } from "../../constants";
 import * as actionCreators from "../../store/actions/index";
 import SimpleRoadmap from "../../components/SimpleRoadmap/SimpleRoadmap";
 import StyledSelect from "../../components/Roadmap/StyledComponents/StyledSelect";
@@ -29,14 +29,60 @@ class SearchResult extends Component {
   };
 
   componentDidMount() {
-    const { onGetTopTags } = this.props;
+    const { onGetTopTags, location, onGetAdvancedSearch } = this.props;
     onGetTopTags(10);
+
+    const [title, tags, levels, sort, page, perpage] = location.search.substring(1).split("&");
+    const searchData = {};
+    searchData.title = title;
+    searchData.tags = tags !== "" ? tags.split(" ") : [];
+    const [basic, intermediate, advanced] = levels.split("");
+    searchData.levels = this.calcLevelData(basic === "1", intermediate === "1", advanced === "1");
+    searchData.sort = parseInt(sort, 10);
+    searchData.page = parseInt(page, 10);
+    searchData.perpage = parseInt(perpage, 10);
+
+    this.setState({
+      advancedSearchInput: searchData.title,
+      sortBy: searchData.sort,
+      basicChecked: basic === "1",
+      intermediateChecked: intermediate === "1",
+      advancedChecked: advanced === "1",
+      tags: searchData.tags,
+      page: searchData.page,
+    });
+
+    onGetAdvancedSearch(searchData);
   }
 
-  onClickAdvancedSearch = (searchData) => {
-    const { onGetAdvancedSearch } = this.props;
-    onGetAdvancedSearch(searchData);
-    this.setState({ page: 1 });
+  onClickAdvancedSearch = (page) => {
+    const {
+      advancedSearchInput,
+      sortBy,
+      basicChecked,
+      intermediateChecked,
+      advancedChecked,
+      tags,
+    } = this.state;
+
+    let tagQuery = "";
+    /* eslint-disable no-useless-escape */
+    tags.forEach((tag) => {
+      tagQuery = tagQuery.concat(`${tag}\ `);
+      return null;
+    });
+    tagQuery = tagQuery.slice(0, -1);
+    let levelQuery = "";
+    levelQuery = levelQuery.concat(+basicChecked);
+    levelQuery = levelQuery.concat(+intermediateChecked);
+    levelQuery = levelQuery.concat(+advancedChecked);
+
+    /* title & tags & levels & sort & page & perpage */
+    /* tags: tag1 tag2 tag3 */
+    /* levels: basic, intermediate, advanced -> 111 */
+    window.location.replace(
+      `/search/?${advancedSearchInput}&${tagQuery}&${levelQuery}&${sortBy}&${page}&${perPage}`,
+    );
   };
 
   onClickBasic = (event) => {
@@ -99,28 +145,7 @@ class SearchResult extends Component {
   };
 
   onClickPageNumber = (pageNumber) => {
-    const { onGetAdvancedSearch } = this.props;
-    const {
-      advancedSearchInput,
-      tags,
-      basicChecked,
-      intermediateChecked,
-      advancedChecked,
-      sortBy,
-    } = this.state;
-
-    this.setState({ page: pageNumber });
-
-    onGetAdvancedSearch({
-      title: advancedSearchInput,
-      tags,
-      levels: this.calcLevelData(basicChecked, intermediateChecked, advancedChecked),
-      sort: sortBy,
-      page: pageNumber,
-      perpage: 9,
-    });
-
-    this.setState({ page: pageNumber });
+    this.onClickAdvancedSearch(pageNumber);
   };
 
   render() {
@@ -190,12 +215,7 @@ class SearchResult extends Component {
     });
 
     // Create page buttons.
-    let pageCount;
-    if (totalCount % 9 === 0) {
-      pageCount = totalCount / 9;
-    } else {
-      pageCount = parseInt(totalCount / 9, 10) + 1;
-    }
+    const pageCount = parseInt((totalCount + 8) / 9, 10);
     let pageList = [];
     if (pageCount !== 1) {
       for (let i = 1; i <= pageCount; i += 1) {
@@ -300,22 +320,7 @@ class SearchResult extends Component {
                 aria-label="search-button"
                 disabled={advancedSearchInput === ""}
                 color="primary"
-                onClick={
-                  () =>
-                    this.onClickAdvancedSearch({
-                      title: advancedSearchInput,
-                      tags,
-                      levels: this.calcLevelData(
-                        basicChecked,
-                        intermediateChecked,
-                        advancedChecked,
-                      ),
-                      sort: sortBy,
-                      page: 1,
-                      perpage: 9,
-                    })
-                  // eslint-disable-next-line react/jsx-curly-newline
-                }
+                onClick={() => this.onClickAdvancedSearch(1)}
               >
                 <SearchIcon />
               </IconButton>
@@ -350,6 +355,7 @@ SearchResult.propTypes = {
   topTags: PropTypes.objectOf(PropTypes.any),
   history: PropTypes.objectOf(PropTypes.any),
   totalCount: PropTypes.number,
+  location: PropTypes.objectOf(PropTypes.any),
 };
 
 const mapStateToProps = (state) => {
