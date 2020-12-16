@@ -9,6 +9,7 @@ import coding from "../../misc/banner/coding.png";
 import level from "../../misc/banner/level.png";
 import RoadmapCarousel from "./RoadmapCarousel";
 import MainSearchBar from "./MainSearchBar";
+import Youtube from "./Youtube";
 
 const MainPage = (props) => {
   const { isSignedIn, history } = props;
@@ -74,6 +75,7 @@ const MainPage = (props) => {
             </Carousel.Caption>
           </Carousel.Item>
         </Carousel>
+        <Youtube />
         <div className="mainPageSearchBar">
           <MainSearchBar />
         </div>

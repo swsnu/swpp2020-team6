@@ -19,13 +19,6 @@ class MyPage extends Component {
     onGetMyPageUser(match.params.id);
   }
 
-  componentDidUpdate() {
-    const { match, onGetMyPageUser, myPageUser } = this.props;
-    if (parseInt(match.params.id, 10) !== myPageUser.user_id) {
-      onGetMyPageUser(match.params.id);
-    }
-  }
-
   componentWillUnmount() {
     const { onResetMyPageUser } = this.props;
     onResetMyPageUser();
