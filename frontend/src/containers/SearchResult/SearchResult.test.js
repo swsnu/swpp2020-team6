@@ -97,8 +97,8 @@ const sortBy = 1;
 const page = 1;
 const perpage = 9;
 
-const stubSearchQuery = `/search/?${advancedSearchInput}&${tagQuery}&${levelQuery}&${sortBy}&${page}&${perpage}`;
-const stubSearchQueryEmptyTags = `/search/?${advancedSearchInput}&&${levelQuery}&${sortBy}&${page}&${perpage}`;
+const stubSearchQuery = `?${advancedSearchInput}&${tagQuery}&${levelQuery}&${sortBy}&${page}&${perpage}`;
+const stubSearchQueryEmptyTags = `?${advancedSearchInput}&&${levelQuery}&${sortBy}&${page}&${perpage}`;
 
 const mockStore = getMockStore(stubUserState, stubInitialRoadmapState, stubInitialSearchState);
 const mockStore3 = getMockStore(stubUserState, stubInitialRoadmapState, stubInitialSearchState3);

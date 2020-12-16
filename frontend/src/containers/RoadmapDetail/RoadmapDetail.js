@@ -370,7 +370,7 @@ class RoadmapDetail extends Component {
           </div>
           <div className="roadmap">
             <a className="description-anchor-target" id="roadmap-description" />
-            <div className="roadmap-description">{selectedRoadmap.description}</div>
+            <pre className="roadmap-description">{selectedRoadmap.description}</pre>
             <div className="roadmap-sections">{roadmapSections}</div>
           </div>
           <div className="comments">
