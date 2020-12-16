@@ -49,13 +49,12 @@ class SignUp extends Component {
     return (
       <div className="SignUp">
         <div className="left">
-          <img src={wallpaper} width="900" height="770" alt="" />
+          <img id="left-image" src={wallpaper} alt="" />
         </div>
         <div className="right">
           <img src={rotus} width="324" height="130" alt="" />
           <h4>Sign up</h4>
           <p>Create your account to explore our service.</p>
-          <label>Email</label>
           <input
             id="email-input"
             type="email"
@@ -63,8 +62,6 @@ class SignUp extends Component {
             onChange={(event) => this.setState({ email: event.target.value })}
             placeholder="Email"
           />
-          <br />
-          <label>Username</label>
           <input
             id="username-input"
             type="username"
@@ -72,8 +69,6 @@ class SignUp extends Component {
             onChange={(event) => this.setState({ username: event.target.value })}
             placeholder="Username"
           />
-          <br />
-          <label>Password</label>
           <input
             id="password-input"
             type="password"
@@ -81,8 +76,6 @@ class SignUp extends Component {
             onChange={(event) => this.setState({ password: event.target.value })}
             placeholder="Password"
           />
-          <br />
-          <label>Password Confirm</label>
           <input
             id="password-confirm-input"
             type="password"
@@ -90,18 +83,19 @@ class SignUp extends Component {
             onChange={(event) => this.setState({ passwordConfirm: event.target.value })}
             placeholder="Password Confirm"
           />
-          <br />
-          <button
-            id="signup-button"
-            onClick={() => this.onClickSignUp({ email, username, password })}
-            type="button"
-            disabled={!(emailFilled && usernameFilled && passwordFilled && passwordMatch)}
-          >
-            Sign Up
-          </button>
-          <button id="signin-button" onClick={() => this.onClickSignIn()} type="button">
-            Sign In
-          </button>
+          <div className="buttons">
+            <button
+              id="signup-button"
+              onClick={() => this.onClickSignUp({ email, username, password })}
+              type="button"
+              disabled={!(emailFilled && usernameFilled && passwordFilled && passwordMatch)}
+            >
+              Sign Up
+            </button>
+            <button id="signin-button" onClick={() => this.onClickSignIn()} type="button">
+              Sign In
+            </button>
+          </div>
         </div>
       </div>
     );
