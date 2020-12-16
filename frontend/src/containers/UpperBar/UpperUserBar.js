@@ -25,9 +25,9 @@ class UpperUserBar extends Component {
   };
 
   onClickMyPage = () => {
-    const { history, selectedUser } = this.props;
+    const { selectedUser } = this.props;
     if (selectedUser !== undefined) {
-      //history.push(`/mypage/${selectedUser.user_id}`);
+      // history.push(`/mypage/${selectedUser.user_id}`);
       window.location.replace(`/mypage/${selectedUser.user_id}`);
     } else {
       window.alert("Please sign in!");
