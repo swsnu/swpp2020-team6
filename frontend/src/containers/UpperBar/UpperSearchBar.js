@@ -14,7 +14,7 @@ class UpperSearchBar extends Component {
     /* title & tags & levels & sort & page & perpage */
     /* tags: tag1 tag2 tag3 */
     /* levels: basic, intermediate, advanced -> 111 */
-    window.location.replace(`/search/?${title}&&111&1&1&${perPage}`);
+    window.location.replace(`/search/?${encodeURI(title)}&&111&1&1&${perPage}`);
   };
 
   render() {

@@ -91,7 +91,7 @@ const stubInitialSearchState4 = {
 };
 
 const advancedSearchInput = "test";
-const tagQuery = "tag1 tag2";
+const tagQuery = "tag1+tag2";
 const levelQuery = "011";
 const sortBy = 1;
 const page = 1;
