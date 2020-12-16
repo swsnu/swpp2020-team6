@@ -21,7 +21,7 @@ class MyPage extends Component {
 
   componentDidUpdate() {
     const { match, onGetMyPageUser, myPageUser } = this.props;
-    if (parseInt(match.params.id) !== myPageUser.user_id) {
+    if (parseInt(match.params.id, 10) !== myPageUser.user_id) {
       onGetMyPageUser(match.params.id);
     }
   }
