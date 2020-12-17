@@ -55,8 +55,11 @@ def roadmap(request):
         for tag in tag_list:
             tag_query = Tag.objects.filter(tag_name__iexact=tag)
             if tag_query.exists():
-                new_roadmap.tags.add(tag_query.first())
-                tag_query.first().increment_count_roadmap()
+                target_tag = tag_query.first()
+                new_roadmap.tags.add(target_tag)
+                target_tag.increment_count_roadmap()
+                target_tag.save()
+
             else:
                 new_tag = Tag(tag_name=tag)
                 new_tag.increment_count_roadmap()
