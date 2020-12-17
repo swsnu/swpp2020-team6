@@ -22,7 +22,7 @@ def top_n_cluster(cluster_data, user_roadmaps, n=3):
     return user_roadmap_df["cluster_predicted"].value_counts()[:n].index.tolist()
 
 
-def recommend_roadmaps(user_id, user_roadmaps, n_cluster=3, n_roadmap=12):
+def recommend_roadmaps(user_id, user_roadmaps, n_cluster=2, n_roadmap=12):
     """
     Recommend roadmap 하는 전체 함수
     :param user_roadmaps: User의 roadmap id list
@@ -49,6 +49,7 @@ def recommend_roadmaps(user_id, user_roadmaps, n_cluster=3, n_roadmap=12):
 
     result_roadmaps = (
         Roadmap.objects.filter(reduce(and_, cluster_filter))
+        .filter(private=False)
         .exclude(original_author_id__exact=user_id)
         .annotate(good_index=F("like_count") + F("pin_count") + F("comment_count"))
         .order_by("good_index")[:n_roadmap]

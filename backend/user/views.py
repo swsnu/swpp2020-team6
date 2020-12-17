@@ -124,7 +124,7 @@ def recommend(request, top_n=12):
             recommend_result = naive_recommend_roadmaps(user.id, top_n)
         else:
             recommend_result = recommend_roadmaps(
-                user.id, picked_roadmap, n_cluster=3, n_roadmap=top_n
+                user.id, picked_roadmap, n_cluster=2, n_roadmap=top_n
             )
             if recommend_result.count() < 12:
                 recommend_result = recommend_result.union(
