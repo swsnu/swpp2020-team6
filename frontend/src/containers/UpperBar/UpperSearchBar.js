@@ -1,9 +1,7 @@
 import React, { Component } from "react";
-import { connect } from "react-redux";
-import PropTypes from "prop-types";
 import IconButton from "@material-ui/core/IconButton";
 import SearchIcon from "@material-ui/icons/Search";
-import * as actionCreators from "../../store/actions/index";
+import { perPage } from "../../constants";
 
 import "./UpperSearchBar.scss";
 
@@ -13,8 +11,10 @@ class UpperSearchBar extends Component {
   };
 
   onClickSearch = (title) => {
-    const { onGetSimpleSearch } = this.props;
-    onGetSimpleSearch({ title });
+    /* title & tags & levels & sort & page & perpage */
+    /* tags: tag1 tag2 tag3 */
+    /* levels: basic, intermediate, advanced -> 111 */
+    window.location.replace(`/search/?${encodeURI(title)}&&111&1&1&${perPage}`);
   };
 
   render() {
@@ -26,7 +26,7 @@ class UpperSearchBar extends Component {
           <input
             id="search-input"
             type="text"
-            placeholder="Search Roadmap by title"
+            placeholder="Search for Roadmaps by title"
             value={searchInput}
             onChange={(event) => this.setState({ searchInput: event.target.value })}
           />
@@ -45,12 +45,4 @@ class UpperSearchBar extends Component {
   }
 }
 
-UpperSearchBar.propTypes = {
-  onGetSimpleSearch: PropTypes.func.isRequired,
-};
-const mapDispatchToProps = (dispatch) => {
-  return {
-    onGetSimpleSearch: (searchData) => dispatch(actionCreators.getSimpleSearch(searchData)),
-  };
-};
-export default connect(null, mapDispatchToProps)(UpperSearchBar);
+export default UpperSearchBar;

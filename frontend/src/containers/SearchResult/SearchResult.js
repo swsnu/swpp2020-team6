@@ -6,9 +6,13 @@
 import React, { Component } from "react";
 import { connect } from "react-redux";
 import PropTypes from "prop-types";
-import { sortType } from "../../constants";
+import IconButton from "@material-ui/core/IconButton";
+import SearchIcon from "@material-ui/icons/Search";
+import ExpandLessOutlinedIcon from "@material-ui/icons/ExpandLessOutlined";
+import { sortType, perPage } from "../../constants";
 import * as actionCreators from "../../store/actions/index";
 import SimpleRoadmap from "../../components/SimpleRoadmap/SimpleRoadmap";
+import StyledSelect from "../../components/Roadmap/StyledComponents/StyledSelect";
 
 import "./SearchResult.scss";
 
@@ -25,19 +29,64 @@ class SearchResult extends Component {
   };
 
   componentDidMount() {
-    const { onGetTopTags } = this.props;
+    const { onGetTopTags, location, onGetAdvancedSearch } = this.props;
     onGetTopTags(10);
+
+    const [title, tags, levels, sort, page, perpage] = location.search.substring(1).split("&");
+    const searchData = {};
+    searchData.title = decodeURI(title);
+    const tmpTaglist = tags !== "" ? tags.split("+") : [];
+    searchData.tags = tmpTaglist.map((tag) => {
+      return decodeURI(tag);
+    });
+    const [basic, intermediate, advanced] = levels.split("");
+    searchData.levels = this.calcLevelData(basic === "1", intermediate === "1", advanced === "1");
+    searchData.sort = parseInt(sort, 10);
+    searchData.page = parseInt(page, 10);
+    searchData.perpage = parseInt(perpage, 10);
+
+    this.setState({
+      advancedSearchInput: searchData.title,
+      sortBy: searchData.sort,
+      basicChecked: basic === "1",
+      intermediateChecked: intermediate === "1",
+      advancedChecked: advanced === "1",
+      tags: searchData.tags,
+      page: searchData.page,
+    });
+
+    onGetAdvancedSearch(searchData);
   }
 
-  onClickSimpleSearch = (searchWord) => {
-    const { onGetSimpleSearch } = this.props;
-    onGetSimpleSearch({ title: searchWord });
-  };
+  onClickAdvancedSearch = (page) => {
+    const {
+      advancedSearchInput,
+      sortBy,
+      basicChecked,
+      intermediateChecked,
+      advancedChecked,
+      tags,
+    } = this.state;
 
-  onClickAdvancedSearch = (searchData) => {
-    const { onGetAdvancedSearch } = this.props;
-    onGetAdvancedSearch(searchData);
-    this.setState({ page: 1 });
+    let tagQuery = "";
+    tags.forEach((tag) => {
+      tagQuery = tagQuery.concat(`${encodeURI(tag)}+`);
+      return null;
+    });
+    tagQuery = tagQuery.slice(0, -1);
+    let levelQuery = "";
+    levelQuery = levelQuery.concat(+basicChecked);
+    levelQuery = levelQuery.concat(+intermediateChecked);
+    levelQuery = levelQuery.concat(+advancedChecked);
+
+    /* title & tags & levels & sort & page & perpage */
+    /* tags: tag1 tag2 tag3 */
+    /* levels: basic, intermediate, advanced -> 111 */
+    window.location.replace(
+      `/search/?${encodeURI(
+        advancedSearchInput,
+      )}&${tagQuery}&${levelQuery}&${sortBy}&${page}&${perPage}`,
+    );
   };
 
   onClickBasic = (event) => {
@@ -100,28 +149,7 @@ class SearchResult extends Component {
   };
 
   onClickPageNumber = (pageNumber) => {
-    const { onGetAdvancedSearch } = this.props;
-    const {
-      advancedSearchInput,
-      tags,
-      basicChecked,
-      intermediateChecked,
-      advancedChecked,
-      sortBy,
-    } = this.state;
-
-    this.setState({ page: pageNumber });
-
-    onGetAdvancedSearch({
-      title: advancedSearchInput,
-      tags,
-      levels: this.calcLevelData(basicChecked, intermediateChecked, advancedChecked),
-      sort: sortBy,
-      page: pageNumber,
-      perpage: 9,
-    });
-
-    this.setState({ page: pageNumber });
+    this.onClickAdvancedSearch(pageNumber);
   };
 
   render() {
@@ -191,24 +219,25 @@ class SearchResult extends Component {
     });
 
     // Create page buttons.
-    let pageCount;
-    if (totalCount % 9 === 0) {
-      pageCount = totalCount / 9;
-    } else {
-      pageCount = parseInt(totalCount / 9, 10) + 1;
-    }
+    const pageCount = parseInt((totalCount + 8) / 9, 10);
     let pageList = [];
-    for (let i = 1; i <= pageCount; i += 1) {
-      pageList = pageList.concat(
-        <button id={`page${i}`} onClick={() => this.onClickPageNumber(i)} type="button">
-          {i}
-        </button>,
-      );
+    if (pageCount !== 1) {
+      for (let i = 1; i <= pageCount; i += 1) {
+        pageList = pageList.concat(
+          <button
+            id={`page${i}`}
+            className={`page${i === page ? "-now" : ""}`}
+            onClick={() => this.onClickPageNumber(i)}
+            type="button"
+          >
+            {i}
+          </button>,
+        );
+      }
     }
 
     return (
       <div className="SearchResult">
-        <div className="empty-column" />
         <div className="left-column">
           <div className="level">
             <h4>Level</h4>
@@ -219,7 +248,7 @@ class SearchResult extends Component {
                 checked={basicChecked}
                 onChange={this.onClickBasic}
               />
-              <label>Basic</label>
+              <div>Basic</div>
             </div>
             <div className="intermediate">
               <input
@@ -228,7 +257,7 @@ class SearchResult extends Component {
                 checked={intermediateChecked}
                 onChange={this.onClickIntermediate}
               />
-              <label> Intermediate</label>
+              <div> Intermediate</div>
             </div>
             <div className="advanced">
               <input
@@ -237,89 +266,86 @@ class SearchResult extends Component {
                 checked={advancedChecked}
                 onChange={this.onClickAdvanced}
               />
-              <label>Advanced</label>
+              <div>Advanced</div>
             </div>
           </div>
 
-          <br />
+          <div className="tag-block">
+            <h4>Tags</h4>
+            <div className="add-tags">
+              <div className="add-a-tag">
+                <input
+                  id="new-tag"
+                  value={newTag}
+                  onChange={(event) => this.onSetNewTag(event.target.value)}
+                  placeholder="Add tags to search"
+                />
+                <button id="add-tag-button" type="button" onClick={() => this.onClickAddTag()}>
+                  +
+                </button>
+              </div>
+            </div>
 
-          <div className="add-tags">
-            <div className="add-a-tag">
-              <input
-                id="new-tag"
-                value={newTag}
-                onChange={(event) => this.onSetNewTag(event.target.value)}
-                placeholder="Add tags to search"
-              />
-              <button id="add-tag-button" type="button" onClick={() => this.onClickAddTag()}>
-                +
-              </button>
+            <div className="taglist">{tagList}</div>
+
+            <div className="topTagsBlock">
+              <p>Search by top trending tags!</p>
+              <div className="topTagList">{topTagList}</div>
             </div>
           </div>
-
-          <div className="taglist">{tagList}</div>
-
-          <br />
-
-          <div className="topTagsBlock">
-            <p>Search by top trending tags!</p>
-            <div className="topTagList">{topTagList}</div>
-          </div>
-
-          <br />
         </div>
-
         <div className="right-column">
           <div className="advanced-search-bar">
-            <select
-              id="sortBy"
-              value={sortBy}
-              onChange={(event) => {
-                return this.onChangeSortBy(event.target.value);
-              }}
-            >
-              <option value={sortType.LIKE}>Sort by: Like</option>
-              <option value={sortType.PIN}>Sort by: Pin</option>
-              <option value={sortType.NEW}>Sort by: New</option>
-            </select>
-            <input
-              id="advanced-search-input"
-              value={advancedSearchInput}
-              placeholder="Roadmap to search..."
-              onChange={(event) => this.setState({ advancedSearchInput: event.target.value })}
-            />
-            <button
-              id="advanced-search-button"
-              onClick={
-                () =>
-                  this.onClickAdvancedSearch({
-                    title: advancedSearchInput,
-                    tags,
-                    levels: this.calcLevelData(basicChecked, intermediateChecked, advancedChecked),
-                    sort: sortBy,
-                    page: 1,
-                    perpage: 9,
-                  })
-                // eslint-disable-next-line react/jsx-curly-newline
-              }
-              type="button"
-            >
-              Search
-            </button>
+            <div className="sort-by">
+              <p>Sort by </p>
+              <StyledSelect
+                items={[
+                  { name: "Like", value: sortType.LIKE },
+                  { name: "Pin", value: sortType.PIN },
+                  { name: "New", value: sortType.NEW },
+                ]}
+                customId="sortBy"
+                id="sortBy"
+                value={sortBy}
+                onChange={(event) => {
+                  return this.onChangeSortBy(event.target.value);
+                }}
+              />
+            </div>
+            <div id="input-base">
+              <input
+                id="advanced-search-input"
+                value={advancedSearchInput}
+                placeholder="Roadmap to search..."
+                onChange={(event) => this.setState({ advancedSearchInput: event.target.value })}
+              />
+              <IconButton
+                id="advanced-search-button"
+                aria-label="search-button"
+                disabled={advancedSearchInput === ""}
+                color="primary"
+                onClick={() => this.onClickAdvancedSearch(1)}
+              >
+                <SearchIcon />
+              </IconButton>
+            </div>
           </div>
 
-          <br />
-
-          <div className="search-result-list">{searchResultList}</div>
-
-          <br />
-
-          <div className="pages">
-            {pageList}
-            <br />
-            Page
-            {page}
+          <div className="search-result-list-panel">
+            <div className="total-count-indicator">
+              {" "}
+              {totalCount !== null && `${totalCount} results`}
+            </div>
+            <div className="search-result-list">{searchResultList}</div>
           </div>
+
+          <div className="pages">{pageList}</div>
+        </div>
+        <div className="empty-column">
+          <a className="top-anchor" href="#top">
+            <ExpandLessOutlinedIcon />
+            Top
+          </a>
         </div>
       </div>
     );
@@ -327,13 +353,13 @@ class SearchResult extends Component {
 }
 
 SearchResult.propTypes = {
-  onGetSimpleSearch: PropTypes.func,
   onGetAdvancedSearch: PropTypes.func,
   onGetTopTags: PropTypes.func,
   searchResult: PropTypes.objectOf(PropTypes.any),
   topTags: PropTypes.objectOf(PropTypes.any),
   history: PropTypes.objectOf(PropTypes.any),
   totalCount: PropTypes.number,
+  location: PropTypes.objectOf(PropTypes.any),
 };
 
 const mapStateToProps = (state) => {
@@ -346,7 +372,6 @@ const mapStateToProps = (state) => {
 
 const mapDispatchToProps = (dispatch) => {
   return {
-    onGetSimpleSearch: (searchData) => dispatch(actionCreators.getSimpleSearch(searchData)),
     onGetAdvancedSearch: (searchData) => dispatch(actionCreators.getAdvancedSearch(searchData)),
     onGetTopTags: (tagCount) => dispatch(actionCreators.getTopTags(tagCount)),
   };

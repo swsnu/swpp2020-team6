@@ -14,6 +14,7 @@ import DialogContentText from "@material-ui/core/DialogContentText";
 import DialogTitle from "@material-ui/core/DialogTitle";
 import Slide from "@material-ui/core/Slide";
 import LockIcon from "@material-ui/icons/Lock";
+import Tooltip from "@material-ui/core/Tooltip";
 import ExpandLessOutlinedIcon from "@material-ui/icons/ExpandLessOutlined";
 import * as actionCreators from "../../store/actions/index";
 import "./RoadmapDetail.scss";
@@ -77,6 +78,20 @@ class RoadmapDetail extends Component {
         }
         return collapse;
       }),
+    });
+  };
+
+  onClickCollapseAll = () => {
+    const { sectionCollapse } = this.state;
+    this.setState({
+      sectionCollapse: sectionCollapse.map(() => true),
+    });
+  };
+
+  onClickExpandAll = () => {
+    const { sectionCollapse } = this.state;
+    this.setState({
+      sectionCollapse: sectionCollapse.map(() => false),
     });
   };
 
@@ -332,7 +347,6 @@ class RoadmapDetail extends Component {
       <div className="RoadmapDetail">
         <div className="emptycolumn" />
         <div className="leftcolumn">
-          <a className="top-anchor-target" name="top" />
           <div className="roadmap-info">
             <div className="roadmap-image-wrapper">
               <img
@@ -356,7 +370,7 @@ class RoadmapDetail extends Component {
           </div>
           <div className="roadmap">
             <a className="description-anchor-target" id="roadmap-description" />
-            <div className="roadmap-description">{selectedRoadmap.description}</div>
+            <pre className="roadmap-description">{selectedRoadmap.description}</pre>
             <div className="roadmap-sections">{roadmapSections}</div>
           </div>
           <div className="comments">
@@ -412,6 +426,26 @@ class RoadmapDetail extends Component {
               commentCount={selectedRoadmap.comment_count}
               sectionsNum={selectedRoadmap.sections.length}
             />
+            <div className="collapse-expand">
+              <Tooltip title="Collapse All">
+                <Button
+                  type="button"
+                  id="collapse-all-button"
+                  onClick={() => this.onClickCollapseAll()}
+                >
+                  Collapse All
+                </Button>
+              </Tooltip>
+              <Tooltip title="Expand All">
+                <Button
+                  type="button"
+                  id="expand-all-button"
+                  onClick={() => this.onClickExpandAll()}
+                >
+                  Expand All
+                </Button>
+              </Tooltip>
+            </div>
           </div>
         </div>
         <div className="anchors">

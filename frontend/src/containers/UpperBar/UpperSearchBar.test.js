@@ -1,11 +1,8 @@
 import React from "react";
 import { mount } from "enzyme";
-import { ConnectedRouter } from "connected-react-router";
 import { Provider } from "react-redux";
 import UpperSearchBar from "./UpperSearchBar";
-import { history } from "../../store/store";
 import getMockStore from "../../test-utils/mocks";
-import * as searchActionCreators from "../../store/actions/search";
 
 const stubUserData = { user_id: 1, username: "john" };
 const stubUserState = { selectedUser: stubUserData };
@@ -19,18 +16,16 @@ const stubSearchState = {
 const mockStore = getMockStore(stubUserState, stubRoadmapState, stubSearchState);
 
 describe("UpperSearchBar", () => {
-  let spySearch;
+  let spyReplace;
   let upperSearchBar;
 
   beforeEach(() => {
-    spySearch = jest.spyOn(searchActionCreators, "getSimpleSearch").mockImplementation(() => {
+    spyReplace = jest.spyOn(window.location, "replace").mockImplementation(() => {
       return () => {};
     });
     upperSearchBar = (
       <Provider store={mockStore}>
-        <ConnectedRouter history={history}>
-          <UpperSearchBar />
-        </ConnectedRouter>
+        <UpperSearchBar />
       </Provider>
     );
   });
@@ -53,7 +48,7 @@ describe("UpperSearchBar", () => {
       ".MuiButtonBase-root.MuiIconButton-root.MuiIconButton-colorPrimary.Mui-disabled.Mui-disabled",
     );
     buttonWrapper.simulate("click");
-    expect(spySearch).toHaveBeenCalledTimes(0);
+    expect(spyReplace).toHaveBeenCalledTimes(0);
   });
 
   it("should search with the input and redirect to search result page", () => {
@@ -62,6 +57,6 @@ describe("UpperSearchBar", () => {
     const inputWrapper = component.find("#search-input");
     inputWrapper.simulate("change", { target: { value: "swpp" } });
     buttonWrapper.at(0).props().onClick();
-    expect(spySearch).toHaveBeenCalledTimes(1);
+    expect(spyReplace).toHaveBeenCalledTimes(1);
   });
 });

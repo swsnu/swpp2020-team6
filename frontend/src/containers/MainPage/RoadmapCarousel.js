@@ -176,17 +176,17 @@ const RoadmapCarousel = (props) => {
 
   return (
     <div className="carousels">
-      <h2>
+      <h2 className="carousel-description">
         <img src={rotus} alt="rotus logo" />
         Don&apos;t know where to start?
         <img src={rotus} alt="rotus logo" />
       </h2>
       <div className="best-roadmaps-panel">
-        <h3>
+        <h3 className="carousel-title">
           <span role="img" aria-label="sparkle">
             ✨
           </span>
-          Best Roadmaps!
+          {" Best Roadmaps! "}
           <span role="img" aria-label="sparkle">
             ✨
           </span>
@@ -196,11 +196,11 @@ const RoadmapCarousel = (props) => {
         </div>
       </div>
       <div className="recommended-roadmaps-panel">
-        <h3>
+        <h3 className="carousel-title">
           <span role="img" aria-label="sunglass">
             😎
           </span>
-          Roadmaps Recommended for You!
+          {" Roadmaps Recommended for You! "}
           <span role="img" aria-label="sunglass">
             😎
           </span>
@@ -210,11 +210,11 @@ const RoadmapCarousel = (props) => {
         </div>
       </div>
       <div className="new-roadmaps-panel">
-        <h3>
+        <h3 className="carousel-title">
           <span role="img" aria-label="baby">
             👶
           </span>
-          New Roadmaps!
+          {" New Roadmaps! "}
           <span role="img" aria-label="baby">
             👶
           </span>

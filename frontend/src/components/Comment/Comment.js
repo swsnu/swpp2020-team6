@@ -63,7 +63,7 @@ const Comment = (props) => {
         </button>
       </div>
     ) : (
-      <div className="comment-view">{content}</div>
+      <pre className="comment-view">{content}</pre>
     );
 
   return (

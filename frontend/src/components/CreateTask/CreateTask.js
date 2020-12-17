@@ -2,6 +2,7 @@ import React from "react";
 import PropTypes from "prop-types";
 import LinkIcon from "@material-ui/icons/Link";
 import DeleteIcon from "@material-ui/icons/Delete";
+import Tooltip from "@material-ui/core/Tooltip";
 import StyledSelect from "../Roadmap/StyledComponents/StyledSelect";
 import "./CreateTask.scss";
 import taskTypeIcons from "./taskTypeIcons";
@@ -87,15 +88,17 @@ const CreateTask = (props) => {
           changeTaskDescriptionHandler(tmpSectionId, tmpTaskId, event.target.value);
         }}
       />
-      <button
-        className="delete-task-button"
-        type="button"
-        onClick={() => {
-          clickDeleteTaskHandler(tmpSectionId, tmpTaskId);
-        }}
-      >
-        <DeleteIcon className="delete-icon" />
-      </button>
+      <Tooltip title="Delete Task">
+        <button
+          className="delete-task-button"
+          type="button"
+          onClick={() => {
+            clickDeleteTaskHandler(tmpSectionId, tmpTaskId);
+          }}
+        >
+          <DeleteIcon className="delete-icon" />
+        </button>
+      </Tooltip>
     </div>
   );
 };

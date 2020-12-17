@@ -4,14 +4,11 @@ const initialState = {
   searchResult: [],
   topTags: [],
   page: 1,
-  totalCount: 1,
+  totalCount: null,
 };
 
 const search = (state = initialState, action = { type: null }) => {
-  if (
-    action.type === actionTypes.GET_SIMPLE_SEARCH_SUCCESS ||
-    action.type === actionTypes.GET_ADVANCED_SEARCH_SUCCESS
-  ) {
+  if (action.type === actionTypes.GET_ADVANCED_SEARCH_SUCCESS) {
     return {
       ...state,
       searchResult: action.searchResult,
@@ -20,8 +17,6 @@ const search = (state = initialState, action = { type: null }) => {
     };
   }
   switch (action.type) {
-    case actionTypes.GET_SIMPLE_SEARCH_FAILURE:
-      return { ...state };
     case actionTypes.GET_ADVANCED_SEARCH_FAILURE:
       return { ...state };
     case actionTypes.GET_TOP_TAGS_SUCCESS:

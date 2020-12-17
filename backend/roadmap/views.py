@@ -161,14 +161,17 @@ def roadmap_id(request, roadmap_id):
             if tag_query.exists():
                 target_tag = tag_query.first()
                 target_tag.decrement_count_roadmap()
+                target_tag.save()
                 roadmap.tags.remove(target_tag)
 
         # Add new tags m2m field in roadmap
         for tag in added_tag_list:
             tag_query = Tag.objects.filter(tag_name__iexact=tag)
             if tag_query.exists():
-                roadmap.tags.add(tag_query.first())
-                tag_query.first().increment_count_roadmap()
+                target_tag = tag_query.first()
+                roadmap.tags.add(target_tag)
+                target_tag.increment_count_roadmap()
+                target_tag.save()
             else:
                 new_tag = Tag(tag_name=tag)
                 new_tag.increment_count_roadmap()
@@ -188,6 +191,10 @@ def roadmap_id(request, roadmap_id):
             return HttpResponseNotFound()
         if not roadmap.author_id == request.user.id:
             return HttpResponseForbidden()
+
+        for tag in roadmap.tags.all():
+            tag.decrement_count_roadmap()
+            tag.save()
 
         roadmap.delete()
         return HttpResponse(status=204)
@@ -214,6 +221,8 @@ def roadmap_id(request, roadmap_id):
         # Add copied tags m2m fields
         for tag in roadmap.tags.all():
             new_roadmap.tags.add(tag)
+            tag.increment_count_roadmap()
+            tag.save()
         new_roadmap.save()
 
         # Add copied sections and tasks

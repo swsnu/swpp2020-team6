@@ -89,7 +89,7 @@ class MyPage extends Component {
           <UserCard authorId={user.user_id} authorName={user.username} history={history} />
           <div className="mypage-wordcloud">
             <p>Interested Topics</p>
-            <SimpleWordcloud myPageUser={myPageUser} />
+            <SimpleWordcloud myPageUser={myPageUser} tab={tab} selectedUser={selectedUser} />
           </div>
         </div>
         <div className="mypage-tab">

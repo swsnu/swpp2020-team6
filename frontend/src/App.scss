@@ -15,9 +15,16 @@
   h3,
   p,
   input,
-  button {
+  button,
+  pre {
     font-family: "Nunito", sans-serif;
     box-sizing: border-box;
+  }
+
+  pre {
+    white-space: pre-wrap;
+    margin: 0px;
+    font-size: 18px;
   }
 
   button:focus {

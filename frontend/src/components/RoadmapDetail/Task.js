@@ -58,7 +58,7 @@ const Task = (props) => {
             </a>
           </Tooltip>
         </div>
-        <div className="task-description">{description}</div>
+        <pre className="task-description">{description}</pre>
       </div>
     </div>
   );

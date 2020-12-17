@@ -24,4 +24,4 @@ export {
   getRecommendedRoadmaps,
 } from "./roadmap";
 
-export { getSimpleSearch, getAdvancedSearch, getTopTags } from "./search";
+export { getAdvancedSearch, getTopTags } from "./search";

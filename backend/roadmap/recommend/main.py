@@ -6,7 +6,7 @@
 """
 from .train_data import *
 
-build_tag_sample = False
+build_tag_sample = True
 build_roadmap_data = True
 print("Training Start...")
 print(

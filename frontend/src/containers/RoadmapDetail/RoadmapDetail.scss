@@ -245,6 +245,21 @@
           width: 100%;
         }
       }
+
+      .collapse-expand {
+        #collapse-all-button {
+          margin: 0px 2% 0px 0px;
+          width: 48%;
+          background-color: #dddddd;
+          border-radius: 7px;
+        }
+        #expand-all-button {
+          margin: 0px 0px 0px 2%;
+          width: 48%;
+          background-color: #dddddd;
+          border-radius: 7px;
+        }
+      }
     }
   }
 

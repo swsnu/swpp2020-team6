@@ -10,7 +10,7 @@
   align-items: center;
 
   .left {
-    width: 100%;
+    width: 60%;
     height: 100%;
     overflow: hidden;
 
@@ -21,7 +21,7 @@
   }
 
   .right {
-    width: 600px;
+    width: 40%;
     min-width: 600px;
     display: flex;
     flex-direction: column;

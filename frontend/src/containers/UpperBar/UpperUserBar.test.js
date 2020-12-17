@@ -26,6 +26,7 @@ describe("UpperUserBar", () => {
   let spyAlert;
   let upperUserBar;
   let spySignOut;
+  let spyReplace;
 
   beforeEach(() => {
     spyPush = jest.spyOn(history, "push").mockImplementation(() => {});
@@ -33,6 +34,7 @@ describe("UpperUserBar", () => {
     spySignOut = jest.spyOn(actionCreatorsUser, "signOut").mockImplementation(() => {
       return () => {};
     });
+    spyReplace = jest.spyOn(window.location, "replace").mockImplementation(() => {});
     upperUserBar = (
       <Provider store={mockStore}>
         <ConnectedRouter history={history}>
@@ -84,8 +86,8 @@ describe("UpperUserBar", () => {
     const buttonWrapper = component.find("#my-page-button");
     expect(buttonWrapper.length).toBeTruthy();
     buttonWrapper.at(0).props().onClick();
-    expect(spyPush).toHaveBeenCalledTimes(1);
-    expect(spyPush).toHaveBeenCalledWith(`/mypage/${stubUserData.user_id}`);
+    expect(spyReplace).toHaveBeenCalledTimes(1);
+    expect(spyReplace).toHaveBeenCalledWith(`/mypage/${stubUserData.user_id}`);
   });
   it("should not redirect to my page when user is not sign in", () => {
     const stubEmptyUserState = { selectedUser: undefined };
@@ -101,7 +103,7 @@ describe("UpperUserBar", () => {
     const component = mount(upperUserBar);
     const buttonWrapper = component.find("#my-page-button");
     buttonWrapper.at(0).props().onClick();
-    expect(spyPush).toHaveBeenCalledTimes(0);
+    expect(spyReplace).toHaveBeenCalledTimes(0);
     expect(spyAlert).toHaveBeenCalledTimes(1);
   });
 });

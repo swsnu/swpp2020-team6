@@ -122,6 +122,10 @@ $margin-bottom-main: 10px;
             width: 100%;
             padding: 20px 3px 10px 5px;
 
+            .MuiFormControl-root {
+              min-width: 170px;
+            }
+
             #roadmap-private-label {
               width: 13%;
               margin: 0px 10px 0px 74px;
