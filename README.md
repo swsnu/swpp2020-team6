@@ -18,7 +18,7 @@ All commands for backend assume an activated virtualenv.
 ##### (1) installing requirements for frontend
 ```
 sudo apt-get install npm
-npm install -g yarn
+sudo npm install -g yarn
 cd frontend
 yarn install (if not working, "yarn install --ignore-engines")
 ```
