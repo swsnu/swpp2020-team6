@@ -25,15 +25,16 @@ yarn install (if not working, "yarn install --ignore-engines")
 ##### (2) preparing virtualenv
 ```
 sudo apt-get install python3-virtualenv
-pip install virtualenv
-virtualenv --python=python3.7 rotus-env
+sudo apt install python3-pip
+pip3 install virtualenv
+virtualenv --python=python3 rotus-env
 source rotus-env/bin/activate
 ```
 ##### (3) installing requirements for backend
 ```
 sudo apt-get install python3.7-dev default-libmysqlclient-dev
 cd backend
-pip install -r requirements.txt
+pip3 install -r requirements.txt
 python3 manage.py makemigrations user roadmap section task tag comment
 python3 manage.py migrate
 ```
